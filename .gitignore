@@ -1,0 +1,22 @@
+# XCODE/MAC stuff
+.DS_Store
+*.swp
+*~.nib
+
+build/
+Pods/
+
+*.pbxuser
+*.perspective
+*.perspectivev3
+xcuserdata
+
+*.mode1v3
+*.mode2v3
+
+# NODE STUFF
+node_modules
+
+
+
+
