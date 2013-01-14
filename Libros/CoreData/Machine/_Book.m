@@ -4,6 +4,7 @@
 #import "_Book.h"
 
 const struct BookAttributes BookAttributes = {
+	.bookId = @"bookId",
 	.title = @"title",
 };
 
@@ -42,6 +43,13 @@ const struct BookFetchedProperties BookFetchedProperties = {
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic bookId;
+
+
 
 
 

@@ -22,6 +22,9 @@
 
 /* Begin PBXBuildFile section */
 		780FFF0116A09A85003AE067 /* ObjectStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FFF0016A09A85003AE067 /* ObjectStore.m */; };
+		780FFF0516A0C2C9003AE067 /* _User.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FFF0416A0C2C9003AE067 /* _User.m */; };
+		780FFF0816A0C2D1003AE067 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FFF0716A0C2D1003AE067 /* User.m */; };
+		780FFF0B16A0C675003AE067 /* UserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FFF0A16A0C675003AE067 /* UserService.m */; };
 		7827BD90169CE4A900053231 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7827BD8F169CE4A900053231 /* UIKit.framework */; };
 		7827BD92169CE4A900053231 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7827BD91169CE4A900053231 /* Foundation.framework */; };
 		7827BD94169CE4A900053231 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7827BD93169CE4A900053231 /* CoreGraphics.framework */; };
@@ -41,6 +44,7 @@
 		7827BDC1169CE4A900053231 /* LibrosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7827BDC0169CE4A900053231 /* LibrosTests.m */; };
 		7847A4B316A0900800106764 /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 7847A4AF16A0900800106764 /* Book.m */; };
 		7847A4B416A0900800106764 /* _Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 7847A4B216A0900800106764 /* _Book.m */; };
+		7849639D16A47D2300331C80 /* NSObject+Reflection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7849639C16A47D2300331C80 /* NSObject+Reflection.m */; };
 		784D20F6169F3756003AC6F2 /* MyBooksVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 784D20F4169F3756003AC6F2 /* MyBooksVC.m */; };
 		784D21AA169F3AAE003AC6F2 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 784D21A9169F3AAE003AC6F2 /* MainStoryboard_iPhone.storyboard */; };
 		784D21AE169F3B79003AC6F2 /* StoreVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 784D21AC169F3B79003AC6F2 /* StoreVC.m */; };
@@ -61,6 +65,12 @@
 /* Begin PBXFileReference section */
 		780FFEFF16A09A85003AE067 /* ObjectStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectStore.h; sourceTree = "<group>"; };
 		780FFF0016A09A85003AE067 /* ObjectStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectStore.m; sourceTree = "<group>"; };
+		780FFF0316A0C2C9003AE067 /* _User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _User.h; sourceTree = "<group>"; };
+		780FFF0416A0C2C9003AE067 /* _User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _User.m; sourceTree = "<group>"; };
+		780FFF0616A0C2D1003AE067 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		780FFF0716A0C2D1003AE067 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		780FFF0916A0C675003AE067 /* UserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserService.h; sourceTree = "<group>"; };
+		780FFF0A16A0C675003AE067 /* UserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserService.m; sourceTree = "<group>"; };
 		7827BD8B169CE4A900053231 /* Libros.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Libros.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7827BD8F169CE4A900053231 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7827BD91169CE4A900053231 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -86,6 +96,8 @@
 		7847A4AF16A0900800106764 /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
 		7847A4B116A0900800106764 /* _Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Book.h; sourceTree = "<group>"; };
 		7847A4B216A0900800106764 /* _Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Book.m; sourceTree = "<group>"; };
+		7849639B16A47D2300331C80 /* NSObject+Reflection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Reflection.h"; sourceTree = "<group>"; };
+		7849639C16A47D2300331C80 /* NSObject+Reflection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Reflection.m"; sourceTree = "<group>"; };
 		784D20F3169F3756003AC6F2 /* MyBooksVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBooksVC.h; sourceTree = "<group>"; };
 		784D20F4169F3756003AC6F2 /* MyBooksVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBooksVC.m; sourceTree = "<group>"; };
 		784D21A9169F3AAE003AC6F2 /* MainStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
@@ -208,6 +220,8 @@
 			children = (
 				7847A4AE16A0900800106764 /* Book.h */,
 				7847A4AF16A0900800106764 /* Book.m */,
+				780FFF0616A0C2D1003AE067 /* User.h */,
+				780FFF0716A0C2D1003AE067 /* User.m */,
 			);
 			name = Human;
 			path = CoreData/Human;
@@ -218,6 +232,8 @@
 			children = (
 				7847A4B116A0900800106764 /* _Book.h */,
 				7847A4B216A0900800106764 /* _Book.m */,
+				780FFF0316A0C2C9003AE067 /* _User.h */,
+				780FFF0416A0C2C9003AE067 /* _User.m */,
 			);
 			name = Machine;
 			path = CoreData/Machine;
@@ -252,6 +268,10 @@
 			children = (
 				784D21B0169F432D003AC6F2 /* BookService.h */,
 				784D21B1169F432D003AC6F2 /* BookService.m */,
+				780FFF0916A0C675003AE067 /* UserService.h */,
+				780FFF0A16A0C675003AE067 /* UserService.m */,
+				7849639B16A47D2300331C80 /* NSObject+Reflection.h */,
+				7849639C16A47D2300331C80 /* NSObject+Reflection.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -404,6 +424,10 @@
 				7847A4B316A0900800106764 /* Book.m in Sources */,
 				7847A4B416A0900800106764 /* _Book.m in Sources */,
 				780FFF0116A09A85003AE067 /* ObjectStore.m in Sources */,
+				780FFF0516A0C2C9003AE067 /* _User.m in Sources */,
+				780FFF0816A0C2D1003AE067 /* User.m in Sources */,
+				780FFF0B16A0C675003AE067 /* UserService.m in Sources */,
+				7849639D16A47D2300331C80 /* NSObject+Reflection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,17 +8,21 @@
 
 #import <Foundation/Foundation.h>
 #import <RestKit/RestKit.h>
+#import "User.h"
 
 @interface ObjectStore : NSObject
 
-@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (strong, nonatomic) RKObjectManager* objectManager;
+@property (strong, nonatomic) RKManagedObjectStore * objectStore;
 
-- (void)initWithApplicationDocumentsDirectory:(NSURL*)directory;
+// use [UserService main] instead of calling this
+@property (strong, nonatomic) User* mainUser;
 
-- (void)saveContext;
 + (ObjectStore*)shared;
+- (NSManagedObjectContext*)context;
+- (void)saveContext;
+
+- (RKEntityMapping*)mappingForEntityForName:(NSString*)entityName;
+- (void)addResponseDescriptor:(RKResponseDescriptor*)descriptor;
 
 @end

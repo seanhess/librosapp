@@ -10,6 +10,9 @@
 
 @interface BookService : NSObject
 
-+(void)myBooks:(void(^)(NSArray*))cb;
+
++(BookService*)shared;
+-(void)myBooks:(void(^)(NSArray*))cb;
+-(void)loadStore;
 
 @end

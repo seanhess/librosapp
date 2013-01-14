@@ -10,11 +10,44 @@
 #import "Book.h"
 #import <RestKit/RestKit.h>
 #import "ObjectStore.h"
+#import "NSObject+Reflection.h"
+
+@interface BookService ()
+@end
+
+
 
 @implementation BookService
 
-+(void)initialBooks:(void(^)(NSArray*))cb {
-    [[ObjectStore shared].objectManager getObjectsAtPath:@"/books/initial/" parameters:nil success:^(RKObjectRequestOperation * operation, RKMappingResult *mappingResult) {
++ (BookService *)shared
+{
+    static BookService *instance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        instance = [[BookService alloc] init];
+        
+        // Add mappings
+        RKEntityMapping *bookMapping = [ObjectStore.shared mappingForEntityForName:@"Book"];
+        [bookMapping setIdentificationAttributes:@[@"bookId"]];
+        [bookMapping addAttributeMappingsFromArray:[_Book propertyNames]];
+        
+        RKResponseDescriptor * responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:bookMapping pathPattern:@"/books" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+        [ObjectStore.shared addResponseDescriptor:responseDescriptor];
+        
+    });
+    return instance;
+}
+
+// So you can compose with compoundPredicates. Wahoo.
+// Or just let the dumb view controllers do whatever they want. it's not THAT bad
+// not that great either
+
+// You can execute fetch requests right on the context
+// OR you can make a fetched results controller and give it a fetch request
+
+-(void)loadStore {
+    [[ObjectStore shared].objectManager getObjectsAtPath:@"/books" parameters:nil success:^(RKObjectRequestOperation * operation, RKMappingResult *mappingResult) {
         NSLog(@"SUCCESS %@ %@", operation, mappingResult);
     } failure: ^(RKObjectRequestOperation * operation, NSError * error) {
         NSLog(@"FAILURE %@", error);
@@ -29,7 +62,7 @@
                                      
                                      
 
-+(void)myBooks:(void (^)(NSArray *))cb {
+-(void)myBooks:(void (^)(NSArray *))cb {
     
 //    [self initialBooks:cb];
     cb(@[]);

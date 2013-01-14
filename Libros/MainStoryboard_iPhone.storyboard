@@ -72,6 +72,11 @@
                         </prototypes>
                     </tableView>
                     <navigationItem key="navigationItem" title="Popular" id="Cs7-71-DEJ">
+                        <barButtonItem key="leftBarButtonItem" title="Refresh" id="KKD-AY-QSk">
+                            <connections>
+                                <action selector="refresh:" destination="UiE-gf-KKM" id="gp2-Yw-1yZ"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="My Books" id="FeV-K3-HGa">
                             <connections>
                                 <segue destination="DzE-EZ-K2P" kind="modal" modalTransitionStyle="flipHorizontal" id="DwD-Ky-9No"/>
@@ -101,8 +106,14 @@
         </scene>
     </scenes>
     <classes>
+        <class className="MyBooksVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MyBooksVC.h"/>
+        </class>
         <class className="StoreVC" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreVC.h"/>
+            <relationships>
+                <relationship kind="action" name="refresh:"/>
+            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

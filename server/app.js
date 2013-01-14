@@ -2,8 +2,13 @@ var express = require('express')
 
 var app = express()
 
-app.get('/books/initial', function(req, res) {
-    res.send([{age: "1", title:"one"}, {age: "2", title:"two"}])
+
+// should I actually start making the store?
+// no, not really
+// ooh! try rethinkdb
+
+app.get('/books', function(req, res) {
+    res.send([{bookId: "1", title:"one"}, {bookId: "2", title:"two"}, {bookId: "3", title:"wahoo"}])
 })
 
 app.listen(3000)

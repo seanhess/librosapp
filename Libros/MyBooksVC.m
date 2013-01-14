@@ -31,7 +31,7 @@
 {
     [super viewDidLoad];
     
-    [BookService myBooks:^(NSArray*books) {
+    [[BookService shared] myBooks:^(NSArray*books) {
         self.books = books;
         [self.tableView reloadData];
     }];

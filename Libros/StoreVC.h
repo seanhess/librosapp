@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface StoreVC : UITableViewController
+@interface StoreVC : UITableViewController <NSFetchedResultsControllerDelegate>
+
+-(IBAction)refresh:(id)sender;
 
 @end

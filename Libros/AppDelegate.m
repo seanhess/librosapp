@@ -16,7 +16,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // override point for customization after application launch.
-    [[ObjectStore shared] initWithApplicationDocumentsDirectory:self.applicationDocumentsDirectory];
     return YES;
 }
 

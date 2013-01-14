@@ -7,8 +7,15 @@
 //
 
 #import "StoreVC.h"
+#import <RestKit/RestKit.h>
+#import "BookService.h"
+#import "Book.h"
+#import "ObjectStore.h"
+#import "UserService.h"
 
 @interface StoreVC ()
+
+@property (nonatomic, strong) NSFetchedResultsController * fetchedResultsController;
 
 @end
 
@@ -28,12 +35,42 @@
     [super viewDidLoad];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     // Do any additional setup after loading the view from its nib.
+    
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
+    fetchRequest.sortDescriptors = @[descriptor];
+    
+    NSError *error = nil;
+    // If you set it to the normal managed object context it will be confused!
+    // You MUST use that one!
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[ObjectStore shared].context sectionNameKeyPath:nil cacheName:nil];
+    
+    
+    [self.fetchedResultsController setDelegate:self];
+    
+    // call the server!
+    [[BookService shared] loadStore];
+    
+    [self.fetchedResultsController performFetch:&error];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark NSFetchedResultsControllerDelegate methods
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView reloadData];
+}
+
+-(IBAction)refresh:(id)sender {
+    // [self.tableView reloadData];
+    [[BookService shared] loadStore];
 }
 
 
@@ -48,8 +85,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    return 0;
+    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -61,6 +98,10 @@
     }
     
     // Configure the cell...
+    
+    Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    cell.textLabel.text = book.title;
     
     return cell;
 }
@@ -108,13 +149,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    // render them differently if so
+    Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [UserService addBook:book];
 }
 
 
