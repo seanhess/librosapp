@@ -43,8 +43,6 @@
     self.objectStore = [[RKManagedObjectStore alloc] initWithManagedObjectModel:self.managedObjectModel];
     self.objectManager.managedObjectStore = self.objectStore;
     
-
-    
     // Other Initialization (move this to app delegate)
     [self.objectStore createPersistentStoreCoordinator];
     
@@ -56,7 +54,7 @@
     
     [self.objectStore createManagedObjectContexts];
     
-    self.objectStore.managedObjectCache = [[RKInMemoryManagedObjectCache alloc] initWithManagedObjectContext:self.objectStore.persistentStoreManagedObjectContext];
+    self.objectStore.managedObjectCache = [[RKInMemoryManagedObjectCache alloc] initWithManagedObjectContext:self.context];
 }
 
 // some demeters law, don't access the store and stuff, just add them here.
@@ -82,7 +80,9 @@
 }
 
 - (NSManagedObjectContext *)context {
-    return self.objectStore.mainQueueManagedObjectContext;
+    // the mainQueueManagedObjectContext is a child of this one, but it doesn't persist. I'm not exactly sure what it is for.
+    // either way, we need to use this one if we want things to save
+    return self.objectStore.persistentStoreManagedObjectContext;
 }
 
 - (void)saveContext

@@ -7,7 +7,6 @@
 //
 
 #import "StoreVC.h"
-#import <RestKit/RestKit.h>
 #import "BookService.h"
 #import "Book.h"
 #import "ObjectStore.h"
@@ -43,8 +42,7 @@
     NSError *error = nil;
     // If you set it to the normal managed object context it will be confused!
     // You MUST use that one!
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[ObjectStore shared].context sectionNameKeyPath:nil cacheName:nil];
-    
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:ObjectStore.shared.context sectionNameKeyPath:nil cacheName:nil];
     
     [self.fetchedResultsController setDelegate:self];
     
@@ -91,7 +89,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"StoreBookCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -100,7 +98,6 @@
     // Configure the cell...
     
     Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
     cell.textLabel.text = book.title;
     
     return cell;
@@ -151,7 +148,7 @@
 {
     // render them differently if so
     Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [UserService addBook:book];
+    [UserService.shared addBook:book];
 }
 
 

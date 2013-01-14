@@ -12,7 +12,10 @@
 
 @interface UserService : NSObject
 
-+(User*)main;
-+(void)addBook:(Book*)book;
+@property (nonatomic, strong) User * main;
+
++(UserService*)shared;
+-(User*)main;
+-(void)addBook:(Book*)book;
 
 @end

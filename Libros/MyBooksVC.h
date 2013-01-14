@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyBooksVC : UITableViewController
+@interface MyBooksVC : UITableViewController <NSFetchedResultsControllerDelegate>
 
 @end

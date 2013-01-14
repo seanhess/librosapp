@@ -14,12 +14,12 @@
 
 @property (strong, nonatomic) RKObjectManager* objectManager;
 @property (strong, nonatomic) RKManagedObjectStore * objectStore;
+@property (readonly, nonatomic) NSManagedObjectContext * context;
 
 // use [UserService main] instead of calling this
 @property (strong, nonatomic) User* mainUser;
 
 + (ObjectStore*)shared;
-- (NSManagedObjectContext*)context;
 - (void)saveContext;
 
 - (RKEntityMapping*)mappingForEntityForName:(NSString*)entityName;

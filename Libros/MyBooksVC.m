@@ -8,13 +8,16 @@
 
 #import "MyBooksVC.h"
 #import "BookService.h"
+#import "UserService.h"
 #import "Book.h"
+#import "ObjectStore.h"
 
 @interface MyBooksVC ()
 
-@property NSArray* books;
-
+@property (nonatomic, strong) NSFetchedResultsController * fetchedResultsController;
 @end
+
+
 
 @implementation MyBooksVC
 
@@ -31,22 +34,32 @@
 {
     [super viewDidLoad];
     
-    [[BookService shared] myBooks:^(NSArray*books) {
-        self.books = books;
-        [self.tableView reloadData];
-    }];
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"user == %@", UserService.shared.main];
+    fetchRequest.predicate = predicate;
+    fetchRequest.sortDescriptors = @[descriptor];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSError *error = nil;
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:ObjectStore.shared.context sectionNameKeyPath:nil cacheName:nil];
+    
+    [self.fetchedResultsController setDelegate:self];
+   
+    [self.fetchedResultsController performFetch:&error];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark NSFetchedResultsControllerDelegate methods
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -59,19 +72,20 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    return [self.books count];
+    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"MyBookCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    // Configure the cell...
+    Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textLabel.text = book.title;
     
     return cell;
 }
