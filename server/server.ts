@@ -32,6 +32,10 @@ app.get('/books', function(req, res) {
   res.send([{bookId: "1", title: "one"}, {bookId: "2", title: "two"}])
 })
 
+app.post('/books', function(req, res) {
+  res.send(200)
+})
+
 // Send the Angular app for everything. 
 // So we can use HTML5 mode
 app.get(/^[a-zA-Z\/\-\_]+$/, function(req, res) {

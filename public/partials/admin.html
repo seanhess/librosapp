@@ -1,2 +1,23 @@
-<h1>Admin 4</h1>
-<p>{{message}}</p>
+<h1>Libros Admin</h1>
+
+<table>
+  <!--<tr>-->
+    <!--<th></th>-->
+    <!--<th>Title</th>-->
+  <!--</tr>-->
+  <tr ng-repeat="book in books">
+    <td><a>x</a></td>
+    <td><a href="/admin/books/{{book.bookId}}">{{book.title}}</a></td>
+  </tr>
+</table>
+<p><a href="/admin/books/create">Add Book</a></p>
+
+<!-- 
+LIST
+  shows all books, link to edit and delete
+
+EDIT/NEW
+  title
+  upload files
+-->
+
