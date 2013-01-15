@@ -1,7 +1,7 @@
 all: build
 
 build:
-	node_modules/.bin/tsc server.ts
+	server/node_modules/.bin/tsc --out public/app.js public/app.ts server/server.ts 
 
 nothing:
 	echo "Nothing"
@@ -36,3 +36,4 @@ nothing:
 	#node_modules/.bin/uglifyjs --overwrite --no-copyright --no-mangle --verbose public/main.js > public/main-uglified.js
 	#rm public/main.js
 	#mv public/main-uglified.js public/main.js
+

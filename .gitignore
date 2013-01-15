@@ -17,5 +17,5 @@ xcuserdata
 # NODE STUFF
 node_modules
 public/components
-
+*.js
 

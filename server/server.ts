@@ -34,11 +34,10 @@ app.get('/books', function(req, res) {
 
 // Send the Angular app for everything. 
 // So we can use HTML5 mode
-app.get('*', function(req, res) {
+app.get(/^[a-zA-Z\/\-\_]+$/, function(req, res) {
   res.sendfile(path.join(__dirname, '..', 'public', 'index.html'))
 })
 
 app.listen(PORT, () => {
   console.log("RUNNING " + PORT)
 })
-

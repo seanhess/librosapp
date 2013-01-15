@@ -7,14 +7,14 @@
 ///<reference path="controls/Admin.ts"/>
 // require controllers here
 
-console.log("Register: App3")
+console.log("Register: App")
 
 var app = angular.module('app', ['controllers'], function ($routeProvider: ng.IRouteProviderProvider, $locationProvider: ng.ILocationProvider) {
   $locationProvider.html5Mode(true)
   $routeProvider.when('/404', {templateUrl: 'partials/404.html'})
   $routeProvider.when('/admin', {templateUrl: 'partials/admin.html', controller: "AdminCtrl"})
   //$routeProvider.when('/admin/:gameId', {templateUrl: 'partials/game.html', controller: "GameCtrl"})
-  $routeProvider.otherwise({redirectTo: '/404'})
+  $routeProvider.otherwise({redirectTo: '/admin'})
 })
 
 // ng-app wasn't always working. Make sure you don't have both!
