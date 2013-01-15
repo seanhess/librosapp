@@ -1,15 +1,21 @@
 {
-  "name": "server",
+  "name": "Libros",
   "version": "0.0.0",
-  "description": "ERROR: No README.md file found!",
+  "description": "CMS for Libros",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": "",
-  "author": "",
+  "author": "Sean Hess",
   "license": "BSD",
   "dependencies": {
-    "express": "~3.0.6"
+    "express": "~3.0.6",
+    "rethinkdb": "~1.2.6-1",
+    "bower": "~0.6.8",
+    "typescript": "~0.8.0",
+    "stylus": "~0.32.0",
+    "nib": "~0.9.1",
+    "connect": "~2.7.2"
   }
 }

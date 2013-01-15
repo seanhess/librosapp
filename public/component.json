@@ -1,0 +1,10 @@
+{
+  "name": "Libros",
+  "version": "0.0.1",
+  "main": "./path/to/main.css",
+  "directory": "public/components",
+  "dependencies": {
+    "DefinitelyTyped": "latest"
+  }
+}
+

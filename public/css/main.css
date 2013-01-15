@@ -1,0 +1,16 @@
+body,
+html,
+a,
+div,
+p,
+h1,
+h2,
+h3,
+h4,
+h5 {
+  padding: 0px;
+  margin: 0px;
+  background: #333;
+  font-family: "Helvetica";
+  color: #fff;
+}
