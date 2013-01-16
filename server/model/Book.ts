@@ -19,7 +19,8 @@ export function init(db) {
 
 // just makes the query, doesn't execute it.
 export function saveBook(book:IBook) {
-  return books.insert(book)
+  var overwrite = !!book.bookId
+  return books.insert(book, overwrite)
 }
 
 export function allBooks() {
