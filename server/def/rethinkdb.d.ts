@@ -24,6 +24,7 @@ declare module "rethinkdb" {
     run(cb?:IErrorCb):ICursor;
     runp(cb:IErrorCb);
     del():IQuery;
+    orderBy(...keys:string[]):IQuery;
   }
 
   interface IConnection {
