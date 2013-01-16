@@ -29,3 +29,7 @@ export function allBooks() {
 export function getBook(bookId:string) {
   return books.get(bookId, "bookId")
 }
+
+export function removeBook(bookId:string) {
+  return getBook(bookId).del()
+}

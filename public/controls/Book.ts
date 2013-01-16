@@ -6,6 +6,11 @@ module book {
     bookId: string;
   }
 
+  export interface IBook {
+    bookId:string;
+    title:string;
+  }
+
 }
 
 angular.module('controllers')
@@ -21,6 +26,12 @@ angular.module('controllers')
         console.log("POSTED")
         $location.path("/admin")
       })
+  }
+
+  $scope.remove = function() {
+    $http.delete('/books/' + $scope.book.bookId).success(function() {
+      $location.path("/admin")
+    })
   }
 
   $http.get("/books/" + $scope.bookId).success(function(book) {

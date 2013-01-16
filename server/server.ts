@@ -60,6 +60,12 @@ app.get('/books/:bookId', function(req, res) {
   })
 })
 
+app.del('/books/:bookId', function(req, res) {
+  Book.removeBook(req.params.bookId).run(function(book) {
+    res.send(book)
+  })
+})
+
 app.post('/books', function(req, res) {
   // TODO validate book
   var book = req.body
@@ -68,10 +74,12 @@ app.post('/books', function(req, res) {
   })
 })
 
+
 // Send the Angular app for everything under /admin
 app.get(/\/admin[\w\/\-]*$/, function(req, res) {
   res.sendfile(path.join(__dirname, '..', 'public', 'index.html'))
 })
+
 
 app.listen(PORT, () => {
   console.log("RUNNING " + PORT)

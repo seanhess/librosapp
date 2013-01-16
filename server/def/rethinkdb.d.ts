@@ -23,6 +23,7 @@ declare module "rethinkdb" {
   interface IQuery {
     run(cb?:IErrorCb):ICursor;
     runp(cb:IErrorCb);
+    del():IQuery;
   }
 
   interface IConnection {

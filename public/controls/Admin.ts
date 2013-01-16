@@ -8,9 +8,12 @@ interface AdminScope extends ng.IScope {
 angular.module('controllers')
 .controller('AdminCtrl', function($scope: AdminScope, $http: ng.IHttpService) {
   $scope.message = "hello3"
-  //$scope.books = [{bookId: "one", title:"one"}]
-  $http.get('/books').success(function(books) {
-    console.log("BOOKS", books)
-    $scope.books = books
-  })
+  load()
+
+  function load() {
+    $http.get('/books').success(function(books) {
+      console.log("BOOKS", books)
+      $scope.books = books
+    })
+  }
 })
