@@ -14,7 +14,7 @@ var app = angular.module('app', ['controllers'], function ($routeProvider: ng.IR
   $locationProvider.html5Mode(true)
   $routeProvider.when('/404', {templateUrl: '/partials/404.html'})
   $routeProvider.when('/admin', {templateUrl: '/partials/admin.html', controller: "AdminCtrl"})
-  $routeProvider.when('/admin/books/:id', {templateUrl: '/partials/book.html', controller: "BookCtrl"})
+  $routeProvider.when('/admin/books/:bookId', {templateUrl: '/partials/book.html', controller: "BookCtrl"})
   $routeProvider.otherwise({redirectTo: '/admin'})
 })
 

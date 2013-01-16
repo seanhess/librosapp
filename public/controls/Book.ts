@@ -11,6 +11,9 @@ module book {
 angular.module('controllers')
 .controller('BookCtrl', function($scope, $routeParams: book.Params, $location:ng.ILocationService, $http:ng.IHttpService) {
   $scope.bookId = $routeParams.bookId
+  console.log("CHECK", $routeParams)
+
+  $scope.book = {}
 
   $scope.save = function(book) {
     $http.post("/books/", $scope.book).
@@ -19,5 +22,9 @@ angular.module('controllers')
         $location.path("/admin")
       })
   }
+
+  $http.get("/books/" + $scope.bookId).success(function(book) {
+    $scope.book = book
+  })
 })
 
