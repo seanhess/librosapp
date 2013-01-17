@@ -21,8 +21,8 @@ declare module "rethinkdb" {
   }
 
   interface IQuery {
-    run(cb?:IErrorCb):ICursor;
-    runp(cb:IErrorCb);
+    run(cb?:Function):ICursor;
+    runp(cb:Function);
     del():IQuery;
     orderBy(...keys:string[]):IQuery;
     skip(n:number):IQuery;
@@ -54,7 +54,7 @@ declare module "rethinkdb" {
     table(name:string, allowOutOfDate?:bool):ITable;
   }
 
-  interface ITable extends IQuery {
+  interface ITable extends IQuery, ISelection {
     insert(obj:Object, overwrite?:bool):IQuery;
     insert(obj:Object[]):IQuery;
     update(obj:Object):IQuery;

@@ -28,6 +28,7 @@ r.connect({host:'localhost', port: 28015}, function(conn) {
       var db = r.db('libros')
       conn.use('libros')
       conn.run(Book.init(db), ignoreError)
+      conn.run(File.init(db), ignoreError)
     })
 }, handleError)
 
@@ -72,7 +73,14 @@ app.del('/books/:bookId', function(req, res) {
   })
 })
 
+// create a new book, just an id really
 app.post('/books', function(req, res) {
+  Book.create().run(function(info) {
+    res.send({bookId:info.generated_keys[0]})
+  })
+})
+
+app.put('/books/:bookId', function(req, res) {
   var book = req.body
   Book.saveBook(book).run(function(err) {
     if (err instanceof Error) return res.send(500, err.message)
@@ -84,7 +92,8 @@ app.post('/books', function(req, res) {
 
 
 
-// files
+
+
 app.get('/books/:bookId/files', function(req, res) {
   File.byBookId(req.params.bookId).run().collect(function(files) {
     res.send(files)
@@ -92,21 +101,33 @@ app.get('/books/:bookId/files', function(req, res) {
 })
 
 app.del('/files/:fileId', function(req, res) {
-  File.remove(req.params.fileId).run(function(file) {
-    res.send(file)
+  File.deleteFile(req.params.fileId, function(err) {
+    if (err instanceof Error) return res.send(500, err.message)
+    res.send(200)
   })
 })
 
-app.post('/books/:bookId/files', function(req, res) {
-  var file = req.body
-  console.log("WAHOO", req.body, req.files.files.length)
-  res.send(200)
-  //File.save(file).run(function(err) {
-    ////if (err) return res.send(500, err.message)
-    //res.send(200)
-  //})
+// downloads the file
+app.get('/files/:fileId', function(req, res) {
+  //var path = File.filePath(req.params.fileId)
+  //res.redirect(path)
+  // or redirect to the url
 })
 
+// edit the file metadata. move the file if you change the name?
+app.put('/files/:fileId', function(req, res) {
+
+})
+
+// new files. form upload!
+app.post('/books/:bookId/files', function(req, res) {
+  var files = req.files.files
+  files = (files instanceof Array) ? files : [files]
+  File.addFilesToBook(req.params.bookId, files, function(err) {
+    if (err instanceof Error) return res.send(500, err.message)
+    res.send(200)
+  })
+})
 
 
 

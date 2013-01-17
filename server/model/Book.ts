@@ -23,6 +23,10 @@ export function saveBook(book:IBook) {
   return books.insert(book, overwrite)
 }
 
+export function create() {
+  return books.insert({title:"New Book"})
+}
+
 export function allBooks() {
   return r.db('libros').table('books').orderBy('title')
 }
@@ -35,6 +39,3 @@ export function removeBook(bookId:string) {
   return getBook(bookId).del()
 }
 
-
-
-// Files

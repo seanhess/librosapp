@@ -1,28 +1,24 @@
 <div class="book_edit">
 
 <form>
-  <label>bookId</label>
-  <div><input disabled ng-model="book.bookId"></div>
+  <!--<label>bookId</label>-->
+  <!--<div><input disabled ng-model="book.bookId"></div>-->
 
   <label>title</label>
   <div><input ng-model="book.title"/></div>
 
-  <label ng-hide="create">Files</label>
-  <div ng-hide="create" class="files" dragupload="onDrop">
+  <label>Files</label>
+  <div class="files" dragupload="onDrop">
     <div class="instructions">Drop files here (.mp3 or .txt)</div>
+    <div class="file" ng-repeat="file in files">
+      <div><a ng-click="removeFile(file)">x</a> <a href="{{file.url}}">{{file.name}}.{{file.ext}}</a></div>
+    </div>
   </div>
 
   <p>
-    <button ng-hide="create" ng-click="save()">Save</button>
-    <button ng-show="create" ng-click="save()">Create</button>
-    <button ng-click="remove()">Remove</button>
+    <button ng-disabled="!book" ng-click="save()">Save</button>
+    <button ng-disabled="!book" ng-click="remove()">Remove</button>
   </p>
-</form>
-
-<h3>Test</h3>
-<form action="/books/{{bookId}}/files" method="POST" enctype="multipart/form-data">
-  <input type="file" name="image"/>
-  <input type="submit"/>
 </form>
 
 </div>

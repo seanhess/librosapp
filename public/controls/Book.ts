@@ -11,17 +11,25 @@ module book {
     title:string;
   }
 
+  export interface IFile {
+    bookId: string;
+    fileId: string;
+    name:string;
+    ext:string;
+    url:string;
+  }
+
 }
 
 angular.module('controllers')
 .controller('BookCtrl', function($scope, $routeParams: book.Params, $location:ng.ILocationService, $http:ng.IHttpService) {
   $scope.bookId = $routeParams.bookId
 
-  $scope.book = {}
+  $scope.book = null
   $scope.files = []
-  $scope.create = ($scope.bookId === "create")
 
   loadBook()
+  loadFiles()
 
   function loadBook() {
     $http.get("/books/" + $scope.bookId).success(function(book) {
@@ -31,14 +39,14 @@ angular.module('controllers')
 
   function loadFiles() {
     $http.get("/books/" + $scope.bookId + "/files").success(function(files) {
+      console.log(files)
       $scope.files = files
     })
   }
 
   $scope.save = function(book) {
-    $http.post("/books/", $scope.book).
+    $http.put("/books/" + $scope.bookId, $scope.book).
       success(function() {
-        console.log("POSTED")
         $location.path("/admin")
       })
   }
@@ -49,12 +57,18 @@ angular.module('controllers')
     })
   }
 
+  $scope.removeFile = function(file:book.IFile) {
+    $http.delete('/files/' + file.fileId).success(function() {
+      loadFiles()
+    })
+  }
+
   $scope.onDrop = function(files, formData) {
-    console.log("ON DROP FILES", files, formData)
     $http({
       method: 'POST',
       url: '/books/' + $scope.book.bookId + "/files",
       data: formData,
+      // no idea why you need both of these, but you do
       transformRequest: angular.identity,
       headers: {'Content-Type': undefined},
     })
@@ -62,6 +76,5 @@ angular.module('controllers')
       loadFiles()
     })
   }
-
 })
 
