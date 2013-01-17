@@ -34,3 +34,7 @@ export function getBook(bookId:string) {
 export function removeBook(bookId:string) {
   return getBook(bookId).del()
 }
+
+
+
+// Files

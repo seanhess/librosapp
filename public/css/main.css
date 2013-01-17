@@ -3,3 +3,24 @@ html {
   font-family: "Helvetica";
   font-size: 14px;
 }
+.book_edit label {
+  margin-top: 8px;
+  margin-bottom: 2px;
+  display: block;
+}
+.book_edit .files {
+  min-height: 200px;
+  border: dashed 2px #888;
+  padding: 10px;
+  position: relative;
+}
+.book_edit .files.drag {
+  border: solid 2px #33a;
+  background-color: #ddf;
+}
+.book_edit .files .instructions {
+  position: absolute;
+  bottom: 4px;
+  color: #888;
+  pointer-events: none;
+}

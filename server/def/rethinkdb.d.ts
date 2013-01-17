@@ -25,6 +25,12 @@ declare module "rethinkdb" {
     runp(cb:IErrorCb);
     del():IQuery;
     orderBy(...keys:string[]):IQuery;
+    skip(n:number):IQuery;
+    limit(n:number):IQuery;
+    slice(start:number, end?:number):IQuery;
+    nth(n:number):IQuery;
+    pluck(...keys:string[]):IQuery;
+    without(...keys:string[]):IQuery;
   }
 
   interface IConnection {

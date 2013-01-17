@@ -6,9 +6,20 @@
 ///<reference path="modules.ts"/>
 ///<reference path="controls/Admin.ts"/>
 ///<reference path="controls/Book.ts"/>
+
+///<reference path="directives/dragupload.ts"/>
+
 // require controllers here
 
 console.log("Register: App")
+
+
+// Simple Stuff
+
+//angular.module('services')
+//.factory('Books', function($resource:ng.resource.IResourceService) {
+
+//})
 
 var app = angular.module('app', ['controllers'], function ($routeProvider: ng.IRouteProviderProvider, $locationProvider: ng.ILocationProvider) {
   $locationProvider.html5Mode(true)

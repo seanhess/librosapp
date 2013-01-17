@@ -16,9 +16,24 @@ module book {
 angular.module('controllers')
 .controller('BookCtrl', function($scope, $routeParams: book.Params, $location:ng.ILocationService, $http:ng.IHttpService) {
   $scope.bookId = $routeParams.bookId
-  console.log("CHECK", $routeParams)
 
   $scope.book = {}
+  $scope.files = []
+  $scope.create = ($scope.bookId === "create")
+
+  loadBook()
+
+  function loadBook() {
+    $http.get("/books/" + $scope.bookId).success(function(book) {
+      $scope.book = book
+    })
+  }
+
+  function loadFiles() {
+    $http.get("/books/" + $scope.bookId + "/files").success(function(files) {
+      $scope.files = files
+    })
+  }
 
   $scope.save = function(book) {
     $http.post("/books/", $scope.book).
@@ -34,8 +49,19 @@ angular.module('controllers')
     })
   }
 
-  $http.get("/books/" + $scope.bookId).success(function(book) {
-    $scope.book = book
-  })
+  $scope.onDrop = function(files, formData) {
+    console.log("ON DROP FILES", files, formData)
+    $http({
+      method: 'POST',
+      url: '/books/' + $scope.book.bookId + "/files",
+      data: formData,
+      transformRequest: angular.identity,
+      headers: {'Content-Type': undefined},
+    })
+    .success(function() {
+      loadFiles()
+    })
+  }
+
 })
 
