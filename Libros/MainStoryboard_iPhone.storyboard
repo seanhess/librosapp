@@ -7,7 +7,7 @@
         <!--My BooksVC - My Books-->
         <scene sceneID="3EG-Ax-xSd">
             <objects>
-                <tableViewController id="ZSf-1r-QQa" customClass="MyBooksVC" sceneMemberID="viewController">
+                <tableViewController title="My Books" id="ZSf-1r-QQa" customClass="MyBooksVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="KDV-nm-sRD">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -105,17 +105,6 @@
             <point key="canvasLocation" x="-32" y="1262"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="MyBooksVC" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MyBooksVC.h"/>
-        </class>
-        <class className="StoreVC" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreVC.h"/>
-            <relationships>
-                <relationship kind="action" name="refresh:"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

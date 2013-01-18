@@ -76,7 +76,12 @@
 }
 
 -(NSString*)localPath:(File *)file {
-    return [NSString stringWithFormat:@"%@/%@", self.documentsDirectory, @"filename.png"];
+    return [NSString stringWithFormat:@"%@/%@.%@", self.documentsDirectory, file.fileId, file.ext];
+}
+
+-(NSString*)readAsText:(File *)file {
+    NSError * error = nil;
+    return [NSString stringWithContentsOfFile:[self localPath:file] encoding:NSUTF8StringEncoding error:&error];
 }
 
 

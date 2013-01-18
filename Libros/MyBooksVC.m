@@ -12,6 +12,7 @@
 #import "UserService.h"
 #import "Book.h"
 #import "ObjectStore.h"
+#import "ReaderVC.h"
 
 @interface MyBooksVC ()
 
@@ -138,13 +139,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    ReaderVC * readervc = [ReaderVC new];
+    readervc.book = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [self.navigationController pushViewController:readervc animated:YES];
 }
 
 @end

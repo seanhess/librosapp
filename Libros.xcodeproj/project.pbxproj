@@ -28,6 +28,8 @@
 		781EF87C16A9BCAD000CB62E /* FileService.m in Sources */ = {isa = PBXBuildFile; fileRef = 781EF87B16A9BCAD000CB62E /* FileService.m */; };
 		781EF88016A9BE5B000CB62E /* File.m in Sources */ = {isa = PBXBuildFile; fileRef = 781EF87F16A9BE5B000CB62E /* File.m */; };
 		781EF88316A9BE65000CB62E /* _File.m in Sources */ = {isa = PBXBuildFile; fileRef = 781EF88216A9BE65000CB62E /* _File.m */; };
+		781EF88916A9C69F000CB62E /* ReaderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 781EF88716A9C69F000CB62E /* ReaderVC.m */; };
+		781EF88A16A9C69F000CB62E /* ReaderVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 781EF88816A9C69F000CB62E /* ReaderVC.xib */; };
 		7827BD90169CE4A900053231 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7827BD8F169CE4A900053231 /* UIKit.framework */; };
 		7827BD92169CE4A900053231 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7827BD91169CE4A900053231 /* Foundation.framework */; };
 		7827BD94169CE4A900053231 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7827BD93169CE4A900053231 /* CoreGraphics.framework */; };
@@ -80,6 +82,9 @@
 		781EF87F16A9BE5B000CB62E /* File.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = File.m; sourceTree = "<group>"; };
 		781EF88116A9BE65000CB62E /* _File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _File.h; sourceTree = "<group>"; };
 		781EF88216A9BE65000CB62E /* _File.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _File.m; sourceTree = "<group>"; };
+		781EF88616A9C69F000CB62E /* ReaderVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderVC.h; sourceTree = "<group>"; };
+		781EF88716A9C69F000CB62E /* ReaderVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderVC.m; sourceTree = "<group>"; };
+		781EF88816A9C69F000CB62E /* ReaderVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReaderVC.xib; sourceTree = "<group>"; };
 		7827BD8B169CE4A900053231 /* Libros.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Libros.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7827BD8F169CE4A900053231 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7827BD91169CE4A900053231 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -145,6 +150,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		781EF88416A9C673000CB62E /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				784D21AB169F3B78003AC6F2 /* StoreVC.h */,
+				784D21AC169F3B79003AC6F2 /* StoreVC.m */,
+			);
+			name = Store;
+			sourceTree = "<group>";
+		};
+		781EF88516A9C67B000CB62E /* MyBooks */ = {
+			isa = PBXGroup;
+			children = (
+				784D20F3169F3756003AC6F2 /* MyBooksVC.h */,
+				784D20F4169F3756003AC6F2 /* MyBooksVC.m */,
+				781EF88616A9C69F000CB62E /* ReaderVC.h */,
+				781EF88716A9C69F000CB62E /* ReaderVC.m */,
+				781EF88816A9C69F000CB62E /* ReaderVC.xib */,
+			);
+			name = MyBooks;
+			sourceTree = "<group>";
+		};
 		7827BD80169CE4A900053231 = {
 			isa = PBXGroup;
 			children = (
@@ -256,10 +282,8 @@
 			isa = PBXGroup;
 			children = (
 				784D21A9169F3AAE003AC6F2 /* MainStoryboard_iPhone.storyboard */,
-				784D20F3169F3756003AC6F2 /* MyBooksVC.h */,
-				784D20F4169F3756003AC6F2 /* MyBooksVC.m */,
-				784D21AB169F3B78003AC6F2 /* StoreVC.h */,
-				784D21AC169F3B79003AC6F2 /* StoreVC.m */,
+				781EF88516A9C67B000CB62E /* MyBooks */,
+				781EF88416A9C673000CB62E /* Store */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -369,6 +393,7 @@
 				7827BDA6169CE4A900053231 /* Default@2x.png in Resources */,
 				7827BDA8169CE4A900053231 /* Default-568h@2x.png in Resources */,
 				784D21AA169F3AAE003AC6F2 /* MainStoryboard_iPhone.storyboard in Resources */,
+				781EF88A16A9C69F000CB62E /* ReaderVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +471,7 @@
 				781EF87C16A9BCAD000CB62E /* FileService.m in Sources */,
 				781EF88016A9BE5B000CB62E /* File.m in Sources */,
 				781EF88316A9BE65000CB62E /* _File.m in Sources */,
+				781EF88916A9C69F000CB62E /* ReaderVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

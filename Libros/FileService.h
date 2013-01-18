@@ -20,5 +20,6 @@
 
 -(NSURL*)url:(File*)file;
 -(NSString*)localPath:(File*)file;
+-(NSString*)readAsText:(File*)file;
 
 @end
