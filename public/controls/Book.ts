@@ -39,7 +39,6 @@ angular.module('controllers')
 
   function loadFiles() {
     $http.get("/books/" + $scope.bookId + "/files").success(function(files) {
-      console.log(files)
       $scope.files = files
     })
   }
@@ -60,6 +59,26 @@ angular.module('controllers')
   $scope.removeFile = function(file:book.IFile) {
     $http.delete('/files/' + file.fileId).success(function() {
       loadFiles()
+    })
+  }
+
+  $scope.isEditing = function(file) {
+    return $scope.editing && $scope.editing.fileId == file.fileId
+  }
+
+  $scope.editFile = function(file:book.IFile) {
+    $scope.editing = _.clone(file)
+  }
+
+  $scope.cancelEdit = function() {
+    delete $scope.editing
+  }
+
+  $scope.updateFile = function(file) {
+    file.name = $scope.editing.name
+    $scope.cancelEdit()
+    $http.put('/files/' + file.fileId, file).success(function() {
+      //loadFiles()
     })
   }
 

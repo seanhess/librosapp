@@ -13,14 +13,28 @@ html {
   border: dashed 2px #888;
   padding: 10px;
   position: relative;
+  padding-bottom: 25px;
 }
 .book_edit .files.drag {
   border: solid 2px #33a;
   background-color: #ddf;
+}
+.book_edit .files .file {
+  height: 25px;
+}
+.book_edit .files .file input {
+  display: inline-block;
+  width: 300px;
 }
 .book_edit .files .instructions {
   position: absolute;
   bottom: 4px;
   color: #888;
   pointer-events: none;
+}
+.external_link {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAVklEQVR4Xn3PgQkAMQhDUXfqTu7kTtkpd5RA8AInfArtQ2iRXFWT2QedAfttj2FsPIOE1eCOlEuoWWjgzYaB/IkeGOrxXhqB+uA9Bfcm0lAZuh+YIeAD+cAqSz4kCMUAAAAASUVORK5CYII=") center right no-repeat;
+  min-width: 10px;
+  min-height: 10px;
+  display: inline-block;
 }

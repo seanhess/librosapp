@@ -116,7 +116,10 @@ app.get('/files/:fileId', function(req, res) {
 
 // edit the file metadata. move the file if you change the name?
 app.put('/files/:fileId', function(req, res) {
-
+  File.update(req.body).run(function(err) {
+    if (err instanceof Error) return res.send(500, err.message)
+    res.send(200)
+  })
 })
 
 // new files. form upload!

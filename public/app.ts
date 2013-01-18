@@ -8,6 +8,7 @@
 ///<reference path="controls/Book.ts"/>
 
 ///<reference path="directives/dragupload.ts"/>
+///<reference path="directives/blur.ts"/>
 
 // require controllers here
 

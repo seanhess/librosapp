@@ -57,7 +57,7 @@ export function update(file:IFile) {
 }
 
 export function byBookId(bookId:string) {
-  return files.filter({bookId: bookId})
+  return files.filter({bookId: bookId}).orderBy('name')
 }
 
 export function byFileId(fileId:string) {

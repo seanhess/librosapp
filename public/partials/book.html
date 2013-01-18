@@ -10,8 +10,18 @@
   <label>Files</label>
   <div class="files" dragupload="onDrop">
     <div class="instructions">Drop files here (.mp3 or .txt)</div>
-    <div class="file" ng-repeat="file in files">
-      <div><a ng-click="removeFile(file)">x</a> <a href="{{file.url}}">{{file.name}}.{{file.ext}}</a></div>
+
+    <div class="file" ng-repeat="file in files | orderBy:'name'">
+      <div ng-hide="isEditing(file)">
+        <a ng-click="removeFile(file)">x</a> 
+        <a ng-click="editFile(file)">{{file.name}}.{{file.ext}}</a>
+        <a class="external_link" href="{{file.url}}"></a>
+      </div>
+      <div ng-show="isEditing(file)">
+        <input ng-model="editing.name">
+        <button ng-click="updateFile(file)">Save</button>
+        <a ng-click="cancelEdit()">Cancel</a>
+      </div>
     </div>
   </div>
 
