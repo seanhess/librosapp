@@ -65,7 +65,7 @@ angular.module('controllers')
   $scope.removeFile = function(file:book.IFile) {
     $scope.files = _.without($scope.files, file)
     $http.delete('/files/' + file.fileId).success(function() {
-      loadFiles()
+      //loadFiles()
     })
   }
 
@@ -98,7 +98,7 @@ angular.module('controllers')
     files.forEach(addFile)
   }
 
-  $scope.isLoading = function(file:IFile) {
+  $scope.isLoading = function(file:book.IFile) {
     return !file.fileId
   }
 
