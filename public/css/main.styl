@@ -22,9 +22,20 @@ body, html
       background-color #DDF
     .file
       height 25px
+      &.loading
+        .remove
+          display: none
+        .external_link
+          display: none
+        a
+          color #AAA
+          text-decoration none
+          pointer-events none
+          cursor normal
       input
         display inline-block
         width 300px
+      //&.loading a
     .instructions
       position absolute
       bottom 4px

@@ -19,6 +19,12 @@ module book {
     url:string;
   }
 
+  export interface IHTMLFile {
+    lastModifiedDate: Date;
+    name: string;
+    type: string; // mime type
+    size: number; // bytes
+  }
 }
 
 angular.module('controllers')
@@ -57,6 +63,7 @@ angular.module('controllers')
   }
 
   $scope.removeFile = function(file:book.IFile) {
+    $scope.files = _.without($scope.files, file)
     $http.delete('/files/' + file.fileId).success(function() {
       loadFiles()
     })
@@ -82,7 +89,40 @@ angular.module('controllers')
     })
   }
 
-  $scope.onDrop = function(files, formData) {
+  $scope.onDrop = function(files:book.IHTMLFile[]) {
+
+    console.log("ON DROP", files)
+    // files.forEach($scope.addFile)
+    // fatzo
+    //addFile(files[0])
+    files.forEach(addFile)
+  }
+
+  $scope.isLoading = function(file:IFile) {
+    return !file.fileId
+  }
+
+  function toPendingFile(htmlFile:book.IHTMLFile):book.IFile {
+    var ext = htmlFile.name.match(/\.(\w+)$/)[1]
+    var name = htmlFile.name.replace("." + ext, "")
+
+    // you can tell it's pending because it doesn't have url, fileId, bookId
+    return {
+      name:name,
+      ext:ext,
+      url:undefined,
+      fileId:undefined,
+      bookId:undefined,
+    }
+  }
+
+  function addFile(file:book.IHTMLFile) {
+    var pendingFile = toPendingFile(file)
+    $scope.files.push(pendingFile)
+
+    var formData = new FormData()
+    formData.append('files', file)
+
     $http({
       method: 'POST',
       url: '/books/' + $scope.book.bookId + "/files",
@@ -91,8 +131,9 @@ angular.module('controllers')
       transformRequest: angular.identity,
       headers: {'Content-Type': undefined},
     })
-    .success(function() {
-      loadFiles()
+    .success(function(files:book.IFile[]) {
+      var file = files[0]
+       _.extend(pendingFile, file)
     })
   }
 })

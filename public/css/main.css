@@ -22,6 +22,18 @@ html {
 .book_edit .files .file {
   height: 25px;
 }
+.book_edit .files .file.loading .remove {
+  display: none;
+}
+.book_edit .files .file.loading .external_link {
+  display: none;
+}
+.book_edit .files .file.loading a {
+  color: #aaa;
+  text-decoration: none;
+  pointer-events: none;
+  cursor: normal;
+}
 .book_edit .files .file input {
   display: inline-block;
   width: 300px;

@@ -44,6 +44,10 @@ export interface IUploadFile {
   mime: string; // ??
 }
 
+function fileId(file:IFile) {
+  return file.fileId
+}
+
 export function init(db) {
   return db.tableCreate({tableName:'files', primaryKey:'fileId'})
 }
@@ -105,29 +109,39 @@ export function removeUrl(file:IFile, cb:(err:Error) => void) {
   })
 }
 
-export function addFileToBook(bookId:string, uploadedFile:IUploadFile, cb:(err:Error) => void) {
+export function addFileToBook(bookId:string, uploadedFile:IUploadFile, cb:(err:Error, file:IFile) => void) {
   var file = toFile(bookId, uploadedFile)
   uploadToUrl(file, uploadedFile, function(err) {
-    if (err) return cb(err)
-    insert(file).run(function(info) {
-      console.log("INSERTED", file, (info instanceof Error))
-      cb(info)
+    if (err) return cb(err, null)
+    insert(file).run(function(err) {
+      // console.log("INSERTED", file, (info instanceof Error))
+      if (err instanceof Error) return cb(err, null)
+      cb(null, file)
     })
   })
 }
 
-export function addFilesToBook(bookId:string, uploadedFiles:IUploadFile[], cb:(err:Error) => void) {
-  async.forEach(uploadedFiles, function(uploadedFile:IUploadFile, done) {
+export function addFilesToBook(bookId:string, uploadedFiles:IUploadFile[], cb:(err:Error, files:IFile[]) => void) {
+  async.map(uploadedFiles, function(uploadedFile:IUploadFile, done) {
     addFileToBook(bookId, uploadedFile, done)
   }, <AsyncCallback> <any> cb)
 }
 
 
 export function deleteFile(fileId:string, cb:(err:Error) => void) {
-  byFileId(fileId).run(function(file) {
+  byFileId(fileId).run(function(file:IFile) { 
     removeUrl(file, function(err) {
       if (err) return cb(err)
       remove(fileId).run(cb)
     })
+  })
+}
+
+export function deleteFilesForBook(bookId:string, cb:(err:Error) => void) {
+  byBookId(bookId).run().collect(function(files:IFile[]) {
+    //var fileIds = files.map(fileId)
+    async.forEach(files, function(file:IFile, done) {
+      deleteFile(file.fileId, done)
+    }, <AsyncCallback> <any> cb)
   })
 }

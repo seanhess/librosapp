@@ -1,5 +1,7 @@
 <div class="book_edit">
 
+<!--<pre>{{files}}</pre>-->
+
 <form>
   <!--<label>bookId</label>-->
   <!--<div><input disabled ng-model="book.bookId"></div>-->
@@ -7,13 +9,13 @@
   <label>title</label>
   <div><input ng-model="book.title"/></div>
 
-  <label>Files</label>
+  <label>files</label>
   <div class="files" dragupload="onDrop">
     <div class="instructions">Drop files here (.mp3 or .txt)</div>
 
-    <div class="file" ng-repeat="file in files | orderBy:'name'">
+    <div class="file" ng-class="{loading: isLoading(file)}" ng-repeat="file in files | orderBy:'name'">
       <div ng-hide="isEditing(file)">
-        <a ng-click="removeFile(file)">x</a> 
+        <a class="remove" ng-click="removeFile(file)">x</a> 
         <a ng-click="editFile(file)">{{file.name}}.{{file.ext}}</a>
         <a class="external_link" href="{{file.url}}"></a>
       </div>
@@ -29,6 +31,7 @@
     <button ng-disabled="!book" ng-click="save()">Save</button>
     <button ng-disabled="!book" ng-click="remove()">Remove</button>
   </p>
+
 </form>
 
 </div>

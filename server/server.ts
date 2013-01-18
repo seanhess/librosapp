@@ -68,8 +68,13 @@ app.get('/books/:bookId', function(req, res) {
 })
 
 app.del('/books/:bookId', function(req, res) {
-  Book.removeBook(req.params.bookId).run(function(book) {
-    res.send(book)
+  var bookId = req.params.bookId
+  File.deleteFilesForBook(bookId, function(err) {
+    if (err instanceof Error) return res.send(500, err.message)
+    Book.removeBook(req.params.bookId).run(function(err) {
+      if (err instanceof Error) return res.send(500, err.message)
+      res.send(200)
+    })
   })
 })
 
@@ -87,6 +92,7 @@ app.put('/books/:bookId', function(req, res) {
     res.send(200)
   })
 })
+
 
 
 
@@ -126,13 +132,11 @@ app.put('/files/:fileId', function(req, res) {
 app.post('/books/:bookId/files', function(req, res) {
   var files = req.files.files
   files = (files instanceof Array) ? files : [files]
-  File.addFilesToBook(req.params.bookId, files, function(err) {
+  File.addFilesToBook(req.params.bookId, files, function(err, files) {
     if (err instanceof Error) return res.send(500, err.message)
-    res.send(200)
+    res.json(files)
   })
 })
-
-
 
 
 // Send the Angular app for everything under /admin

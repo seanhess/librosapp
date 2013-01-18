@@ -62,32 +62,10 @@ angular.module('directives')
       // convert files to array
       var files = Array.prototype.slice.call(e.dataTransfer.files, 0)
 
-      var formData = new FormData()
-      for (var i in files) {
-        formData.append('files', files[i])
-      }
-
-      // you can post formData directly to the server. Will be under "files"
-      onDrop(files, formData)
+      scope.$apply(function() {
+        onDrop(files)
+      })
     })
   }
 })
 
-//.directive('focus', function() {
-  //return function(scope:ng.IScope, element:JQuery, attrs) {
-    //scope.$watch(attrs.focus, function(value) {
-      //if (value) element.focus()
-    //}) 
-  //}
-//})
-
-//.directive('onEnter', function($parse:ng.IParseService) {
-  //return function(scope:ng.IScope, element:JQuery, attrs) {
-    //var onEnter = $parse(attrs.onEnter)
-    //element.bind("keydown", function(e) {
-      //if (e.keyCode == 13) {
-        //onEnter(scope)
-      //}
-    //})
-  //}
-//})
