@@ -10,11 +10,15 @@ extern const struct BookAttributes {
 } BookAttributes;
 
 extern const struct BookRelationships {
+	__unsafe_unretained NSString *files;
+	__unsafe_unretained NSString *user;
 } BookRelationships;
 
 extern const struct BookFetchedProperties {
 } BookFetchedProperties;
 
+@class File;
+@class User;
 
 
 
@@ -48,10 +52,29 @@ extern const struct BookFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSSet* files;
+
+- (NSMutableSet*)filesSet;
+
+
+
+
+@property (nonatomic, strong) User* user;
+
+//- (BOOL)validateUser:(id*)value_ error:(NSError**)error_;
+
+
+
+
 
 @end
 
 @interface _Book (CoreDataGeneratedAccessors)
+
+- (void)addFiles:(NSSet*)value_;
+- (void)removeFiles:(NSSet*)value_;
+- (void)addFilesObject:(File*)value_;
+- (void)removeFilesObject:(File*)value_;
 
 @end
 
@@ -68,6 +91,16 @@ extern const struct BookFetchedProperties {
 - (void)setPrimitiveTitle:(NSString*)value;
 
 
+
+
+
+- (NSMutableSet*)primitiveFiles;
+- (void)setPrimitiveFiles:(NSMutableSet*)value;
+
+
+
+- (User*)primitiveUser;
+- (void)setPrimitiveUser:(User*)value;
 
 
 @end

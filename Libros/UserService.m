@@ -10,6 +10,7 @@
 #import "ObjectStore.h"
 #import "User.h"
 #import "NSObject+Reflection.h"
+#import "FileService.h"
 
 #import <RestKit.h>
 
@@ -57,7 +58,18 @@
 }
 
 -(void)addBook:(Book *)book {
-    [self.main addBooksObject:book];
+    FileService * fs = [FileService shared];
+    // download the book's files
+    [fs loadFilesForBook:book.bookId cb:^{
+        NSArray * files = [fs byBookId:book.bookId];
+        [fs downloadFiles:files cb:^{
+            // add the book to the user
+            [self.main addBooksObject:book];
+            
+            // now go read it or something!
+            NSLog(@"ADDED! %i", files.count);
+        }];
+    }];
 }
 
 @end

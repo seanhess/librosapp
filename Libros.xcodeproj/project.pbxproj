@@ -25,6 +25,9 @@
 		780FFF0516A0C2C9003AE067 /* _User.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FFF0416A0C2C9003AE067 /* _User.m */; };
 		780FFF0816A0C2D1003AE067 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FFF0716A0C2D1003AE067 /* User.m */; };
 		780FFF0B16A0C675003AE067 /* UserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FFF0A16A0C675003AE067 /* UserService.m */; };
+		781EF87C16A9BCAD000CB62E /* FileService.m in Sources */ = {isa = PBXBuildFile; fileRef = 781EF87B16A9BCAD000CB62E /* FileService.m */; };
+		781EF88016A9BE5B000CB62E /* File.m in Sources */ = {isa = PBXBuildFile; fileRef = 781EF87F16A9BE5B000CB62E /* File.m */; };
+		781EF88316A9BE65000CB62E /* _File.m in Sources */ = {isa = PBXBuildFile; fileRef = 781EF88216A9BE65000CB62E /* _File.m */; };
 		7827BD90169CE4A900053231 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7827BD8F169CE4A900053231 /* UIKit.framework */; };
 		7827BD92169CE4A900053231 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7827BD91169CE4A900053231 /* Foundation.framework */; };
 		7827BD94169CE4A900053231 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7827BD93169CE4A900053231 /* CoreGraphics.framework */; };
@@ -71,6 +74,12 @@
 		780FFF0716A0C2D1003AE067 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		780FFF0916A0C675003AE067 /* UserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserService.h; sourceTree = "<group>"; };
 		780FFF0A16A0C675003AE067 /* UserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserService.m; sourceTree = "<group>"; };
+		781EF87A16A9BCAD000CB62E /* FileService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileService.h; sourceTree = "<group>"; };
+		781EF87B16A9BCAD000CB62E /* FileService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileService.m; sourceTree = "<group>"; };
+		781EF87E16A9BE5B000CB62E /* File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = File.h; sourceTree = "<group>"; };
+		781EF87F16A9BE5B000CB62E /* File.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = File.m; sourceTree = "<group>"; };
+		781EF88116A9BE65000CB62E /* _File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _File.h; sourceTree = "<group>"; };
+		781EF88216A9BE65000CB62E /* _File.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _File.m; sourceTree = "<group>"; };
 		7827BD8B169CE4A900053231 /* Libros.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Libros.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7827BD8F169CE4A900053231 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7827BD91169CE4A900053231 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -220,6 +229,8 @@
 			children = (
 				7847A4AE16A0900800106764 /* Book.h */,
 				7847A4AF16A0900800106764 /* Book.m */,
+				781EF87E16A9BE5B000CB62E /* File.h */,
+				781EF87F16A9BE5B000CB62E /* File.m */,
 				780FFF0616A0C2D1003AE067 /* User.h */,
 				780FFF0716A0C2D1003AE067 /* User.m */,
 			);
@@ -232,6 +243,8 @@
 			children = (
 				7847A4B116A0900800106764 /* _Book.h */,
 				7847A4B216A0900800106764 /* _Book.m */,
+				781EF88116A9BE65000CB62E /* _File.h */,
+				781EF88216A9BE65000CB62E /* _File.m */,
 				780FFF0316A0C2C9003AE067 /* _User.h */,
 				780FFF0416A0C2C9003AE067 /* _User.m */,
 			);
@@ -270,6 +283,8 @@
 				784D21B1169F432D003AC6F2 /* BookService.m */,
 				780FFF0916A0C675003AE067 /* UserService.h */,
 				780FFF0A16A0C675003AE067 /* UserService.m */,
+				781EF87A16A9BCAD000CB62E /* FileService.h */,
+				781EF87B16A9BCAD000CB62E /* FileService.m */,
 				7849639B16A47D2300331C80 /* NSObject+Reflection.h */,
 				7849639C16A47D2300331C80 /* NSObject+Reflection.m */,
 			);
@@ -428,6 +443,9 @@
 				780FFF0816A0C2D1003AE067 /* User.m in Sources */,
 				780FFF0B16A0C675003AE067 /* UserService.m in Sources */,
 				7849639D16A47D2300331C80 /* NSObject+Reflection.m in Sources */,
+				781EF87C16A9BCAD000CB62E /* FileService.m in Sources */,
+				781EF88016A9BE5B000CB62E /* File.m in Sources */,
+				781EF88316A9BE65000CB62E /* _File.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

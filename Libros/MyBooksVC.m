@@ -8,6 +8,7 @@
 
 #import "MyBooksVC.h"
 #import "BookService.h"
+#import "FileService.h"
 #import "UserService.h"
 #import "Book.h"
 #import "ObjectStore.h"
@@ -84,8 +85,12 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
+    
+    
     Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = book.title;
+    NSArray * files = [[FileService shared] byBookId:book.bookId];
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ (%i)", book.title, files.count];
     
     return cell;
 }

@@ -9,6 +9,8 @@ const struct BookAttributes BookAttributes = {
 };
 
 const struct BookRelationships BookRelationships = {
+	.files = @"files",
+	.user = @"user",
 };
 
 const struct BookFetchedProperties BookFetchedProperties = {
@@ -60,6 +62,23 @@ const struct BookFetchedProperties BookFetchedProperties = {
 
 
 
+
+@dynamic files;
+
+	
+- (NSMutableSet*)filesSet {
+	[self willAccessValueForKey:@"files"];
+  
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"files"];
+  
+	[self didAccessValueForKey:@"files"];
+	return result;
+}
+	
+
+@dynamic user;
+
+	
 
 
 
