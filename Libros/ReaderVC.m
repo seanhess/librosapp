@@ -15,7 +15,6 @@
 @interface ReaderVC ()
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (strong, nonatomic) NSMutableArray * frames;
 @property (strong, nonatomic) NSAttributedString * text;
 
 @end
@@ -88,28 +87,20 @@
 - (void)buildFrames {
     CGFloat frameXOffset = 20;
     CGFloat frameYOffset = 20;
-    self.frames = [NSMutableArray array];
-    
-      // non-inset size of the column
-    
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)self.text);
-    int textPos = 0;
-    int columnIndex = 0;
-    
     CGFloat columnWidth = self.scrollView.bounds.size.width;
     CGFloat columnHeight = self.scrollView.bounds.size.height;
     
-//    CGSize columnSize = self.scrollView.bounds.size;
-//    CGRect insetFrame = CGRectInset(self.scrollView.bounds, frameXOffset, frameYOffset);
-
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)self.text);
+    
+    int textPos = 0;
+    int columnIndex = 0;
+    
     while (textPos < [self.text length]) {
-        NSLog(@"CREATING COLUMN %i", textPos);
-        CGPoint columnOffset = CGPointMake(columnIndex*columnWidth, frameYOffset );
+        CGPoint columnOffset = CGPointMake(columnIndex*columnWidth, 0);
         CGRect columnFrame = CGRectMake(columnOffset.x, columnOffset.y, columnWidth, columnHeight);
-        NSLog(@"COLUMN FRAME %@ %@", NSStringFromCGRect(columnFrame), NSStringFromCGRect(self.scrollView.bounds));
-        CTColumnView* content = [[CTColumnView alloc] initWithFrame: columnFrame];
+        CGRect insetFrame = CGRectInset(columnFrame, frameXOffset, frameYOffset);
+        CTColumnView* content = [[CTColumnView alloc] initWithFrame: insetFrame];
         [self.scrollView addSubview:content];
-//        [self.frames addObject:content];
         
         CGMutablePathRef path = CGPathCreateMutable();
         CGPathAddRect(path, NULL, content.bounds);
@@ -117,13 +108,6 @@
         CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(textPos, 0), path, NULL);
         content.ctFrame = (__bridge id)frame;
         
-        //create an empty column view. They need full run of the parent view, apparently
-//        CGPoint columnOffset = CGPointMake(columnIndex*columnSize.width, 0);
-//        content.backgroundColor = [UIColor clearColor];
-        
-		//set the column view contents and add it as subview
-        
-        //prepare for next frame
         textPos += CTFrameGetVisibleStringRange(frame).length;
         columnIndex++;
         
@@ -132,8 +116,8 @@
     }
     
     //set the total width of the scroll view
-    int totalPages = (columnIndex+1); //7
-    self.scrollView.contentSize = CGSizeMake(totalPages*self.scrollView.bounds.size.width, columnHeight);
+    int totalPages = (columnIndex+1);
+    self.scrollView.contentSize = CGSizeMake(totalPages*columnWidth, columnHeight);
 }
 
 
