@@ -2,6 +2,7 @@
 ///<reference path='../def/async.d.ts'/>
 ///<reference path='../def/node-uuid.d.ts'/>
 ///<reference path='../def/knox.d.ts'/>
+///<reference path='../types.ts'/>
 
 // FILES are stored in their own table, associated with book via bookId
 // the files are stored on the server, in a single folder, by fileId.ext
@@ -23,14 +24,6 @@ var s3client = knox.createClient({
 })
 
 var files = r.table('files')
-
-export interface IFile {
-  bookId: string;
-  fileId: string;
-  name: string;
-  ext: string; // "txt" or "mp3"
-  url: string;
-}
 
 export interface IUploadFile {
   size: number; // 1304,

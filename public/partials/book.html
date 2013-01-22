@@ -7,7 +7,19 @@
   <!--<div><input disabled ng-model="book.bookId"></div>-->
 
   <label>title</label>
-  <div><input ng-model="book.title"/></div>
+  <div><input ng-model="book.title" placeholder="A Tale of Two Cities"/></div>
+
+  <label>price (cents)</label>
+  <div><input ng-model="book.price" placeholder="199"/></div>
+
+  <label>author</label>
+  <div><input ng-model="book.author" placeholder="Charles Dickens"/></div>
+
+  <label>genre</label>
+  <div><input ng-model="book.genre"/ placeholder="Comedy"></div>
+
+  <label>description</label>
+  <div><textarea ng-model="book.description" placeholder="This book is awesome"></textarea></div>
 
   <label>files</label>
   <div class="files" dragupload="onDrop">

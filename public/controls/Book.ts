@@ -1,34 +1,19 @@
 ///<reference path="../def/angular.d.ts"/>
+///<reference path="../types.ts"/>
 
-module book {
+interface IHTMLFile {
+  lastModifiedDate: Date;
+  name: string;
+  type: string; // mime type
+  size: number; // bytes
+}
 
-  export interface Params extends ng.IRouteParamsService {
-    bookId: string;
-  }
-
-  export interface IBook {
-    bookId:string;
-    title:string;
-  }
-
-  export interface IFile {
-    bookId: string;
-    fileId: string;
-    name:string;
-    ext:string;
-    url:string;
-  }
-
-  export interface IHTMLFile {
-    lastModifiedDate: Date;
-    name: string;
-    type: string; // mime type
-    size: number; // bytes
-  }
+interface BookParams extends ng.IRouteParamsService {
+  bookId: string;
 }
 
 angular.module('controllers')
-.controller('BookCtrl', function($scope, $routeParams: book.Params, $location:ng.ILocationService, $http:ng.IHttpService) {
+.controller('BookCtrl', function($scope, $routeParams: BookParams, $location:ng.ILocationService, $http:ng.IHttpService) {
   $scope.bookId = $routeParams.bookId
 
   $scope.book = null
@@ -62,7 +47,7 @@ angular.module('controllers')
     })
   }
 
-  $scope.removeFile = function(file:book.IFile) {
+  $scope.removeFile = function(file:IFile) {
     $scope.files = _.without($scope.files, file)
     $http.delete('/files/' + file.fileId).success(function() {
       //loadFiles()
@@ -73,7 +58,7 @@ angular.module('controllers')
     return $scope.editing && $scope.editing.fileId == file.fileId
   }
 
-  $scope.editFile = function(file:book.IFile) {
+  $scope.editFile = function(file:IFile) {
     $scope.editing = _.clone(file)
   }
 
@@ -89,7 +74,7 @@ angular.module('controllers')
     })
   }
 
-  $scope.onDrop = function(files:book.IHTMLFile[]) {
+  $scope.onDrop = function(files:IHTMLFile[]) {
 
     console.log("ON DROP", files)
     // files.forEach($scope.addFile)
@@ -98,11 +83,11 @@ angular.module('controllers')
     files.forEach(addFile)
   }
 
-  $scope.isLoading = function(file:book.IFile) {
+  $scope.isLoading = function(file:IFile) {
     return !file.fileId
   }
 
-  function toPendingFile(htmlFile:book.IHTMLFile):book.IFile {
+  function toPendingFile(htmlFile:IHTMLFile):IFile {
     var ext = htmlFile.name.match(/\.(\w+)$/)[1]
     var name = htmlFile.name.replace("." + ext, "")
 
@@ -116,7 +101,7 @@ angular.module('controllers')
     }
   }
 
-  function addFile(file:book.IHTMLFile) {
+  function addFile(file:IHTMLFile) {
     var pendingFile = toPendingFile(file)
     $scope.files.push(pendingFile)
 
@@ -131,7 +116,7 @@ angular.module('controllers')
       transformRequest: angular.identity,
       headers: {'Content-Type': undefined},
     })
-    .success(function(files:book.IFile[]) {
+    .success(function(files:IFile[]) {
       var file = files[0]
        _.extend(pendingFile, file)
     })

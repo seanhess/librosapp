@@ -1,13 +1,9 @@
 ///<reference path='../def/rethinkdb.d.ts'/>
+///<reference path='../types.ts'/>
 
 import r = module('rethinkdb')
 
 var books = r.table('books')
-
-export interface IBook {
-  bookId: string;
-  title: string;
-}
 
 export function validate(book:IBook) {
   return true

@@ -3,12 +3,18 @@ html {
   font-family: "Helvetica";
   font-size: 14px;
 }
+.book_edit textarea {
+  width: 500px;
+  height: 200px;
+}
 .book_edit label {
-  margin-top: 8px;
-  margin-bottom: 2px;
+  clear: both;
   display: block;
+  float: left;
+  width: 100px;
 }
 .book_edit .files {
+  clear: both;
   min-height: 200px;
   border: dashed 2px #888;
   padding: 10px;
