@@ -21,6 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		7809F96316AF3CA30045C4D9 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7809F96216AF3CA30045C4D9 /* CoreText.framework */; };
+		7809F96816AF3E7C0045C4D9 /* CTColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7809F96716AF3E7C0045C4D9 /* CTColumnView.m */; };
 		780FFF0116A09A85003AE067 /* ObjectStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FFF0016A09A85003AE067 /* ObjectStore.m */; };
 		780FFF0516A0C2C9003AE067 /* _User.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FFF0416A0C2C9003AE067 /* _User.m */; };
 		780FFF0816A0C2D1003AE067 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FFF0716A0C2D1003AE067 /* User.m */; };
@@ -68,6 +70,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7809F96216AF3CA30045C4D9 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		7809F96616AF3E7C0045C4D9 /* CTColumnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTColumnView.h; sourceTree = "<group>"; };
+		7809F96716AF3E7C0045C4D9 /* CTColumnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTColumnView.m; sourceTree = "<group>"; };
 		780FFEFF16A09A85003AE067 /* ObjectStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectStore.h; sourceTree = "<group>"; };
 		780FFF0016A09A85003AE067 /* ObjectStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectStore.m; sourceTree = "<group>"; };
 		780FFF0316A0C2C9003AE067 /* _User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _User.h; sourceTree = "<group>"; };
@@ -128,6 +133,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7809F96316AF3CA30045C4D9 /* CoreText.framework in Frameworks */,
 				7827BD90169CE4A900053231 /* UIKit.framework in Frameworks */,
 				7827BD92169CE4A900053231 /* Foundation.framework in Frameworks */,
 				7827BD94169CE4A900053231 /* CoreGraphics.framework in Frameworks */,
@@ -150,6 +156,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7809F96516AF3CB70045C4D9 /* Reader */ = {
+			isa = PBXGroup;
+			children = (
+				781EF88616A9C69F000CB62E /* ReaderVC.h */,
+				781EF88716A9C69F000CB62E /* ReaderVC.m */,
+				781EF88816A9C69F000CB62E /* ReaderVC.xib */,
+				7809F96616AF3E7C0045C4D9 /* CTColumnView.h */,
+				7809F96716AF3E7C0045C4D9 /* CTColumnView.m */,
+			);
+			name = Reader;
+			sourceTree = "<group>";
+		};
 		781EF88416A9C673000CB62E /* Store */ = {
 			isa = PBXGroup;
 			children = (
@@ -164,9 +182,7 @@
 			children = (
 				784D20F3169F3756003AC6F2 /* MyBooksVC.h */,
 				784D20F4169F3756003AC6F2 /* MyBooksVC.m */,
-				781EF88616A9C69F000CB62E /* ReaderVC.h */,
-				781EF88716A9C69F000CB62E /* ReaderVC.m */,
-				781EF88816A9C69F000CB62E /* ReaderVC.xib */,
+				7809F96516AF3CB70045C4D9 /* Reader */,
 			);
 			name = MyBooks;
 			sourceTree = "<group>";
@@ -174,6 +190,7 @@
 		7827BD80169CE4A900053231 = {
 			isa = PBXGroup;
 			children = (
+				7809F96216AF3CA30045C4D9 /* CoreText.framework */,
 				7827BD97169CE4A900053231 /* Libros */,
 				7827BDB9169CE4A900053231 /* LibrosTests */,
 				7827BD8E169CE4A900053231 /* Frameworks */,
@@ -472,6 +489,7 @@
 				781EF88016A9BE5B000CB62E /* File.m in Sources */,
 				781EF88316A9BE65000CB62E /* _File.m in Sources */,
 				781EF88916A9C69F000CB62E /* ReaderVC.m in Sources */,
+				7809F96816AF3E7C0045C4D9 /* CTColumnView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

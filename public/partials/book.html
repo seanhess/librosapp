@@ -27,9 +27,10 @@
 
     <div class="file" ng-class="{loading: isLoading(file)}" ng-repeat="file in files | orderBy:'name'">
       <div ng-hide="isEditing(file)">
-        <a class="remove" ng-click="removeFile(file)">x</a> 
-        <a ng-click="editFile(file)">{{file.name}}.{{file.ext}}</a>
-        <a class="external_link" href="{{file.url}}"></a>
+        <small><button class="remove" ng-click="removeFile(file)">x</button> </small>
+        <small><button ng-click="editFile(file)">rename</button></small>
+        <a href="{{file.url}}" target="_blank">{{file.name}}.{{file.ext}}</a>
+        <!--<a class="external_link" href="{{file.url}}"></a>-->
       </div>
       <div ng-show="isEditing(file)">
         <input ng-model="editing.name">

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Book.h"
 
-@interface ReaderVC : UIViewController
+@interface ReaderVC : UIViewController <UIScrollViewDelegate>
 
 @property (nonatomic, strong) Book * book;
 
