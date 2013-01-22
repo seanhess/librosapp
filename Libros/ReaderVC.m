@@ -35,21 +35,20 @@
 {
     [super viewDidLoad];
     
-    // Assume book has been set by now
     self.title = self.book.title;
     
-    // Load chapter one!
     FileService * fs = [FileService shared];
     NSArray * files = [fs byBookId:self.book.bookId];
-//    NSLog(@"bookId=%@ files=%@", self.book.bookId, files);
-//    self.textView.text = [fs readAsText:files[0]];
-    
-    // INITIALIZE SCROLL VIEW
     self.scrollView.pagingEnabled = YES;
     
     NSString * bookPlainString = [fs readAsText:files[0]];
     NSAttributedString * bookAttributed = [[NSAttributedString alloc] initWithString:bookPlainString];
     [self setAttributedText:bookAttributed];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    NSLog(@"VIEW DID APPEAR %@", NSStringFromCGSize(self.view.bounds.size));
     [self buildFrames];
 }
 
@@ -58,7 +57,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 
 // READER
@@ -88,55 +86,54 @@
 }
 
 - (void)buildFrames {
-    CGFloat frameXOffset = 0; //1
-    CGFloat frameYOffset = 0;
+    CGFloat frameXOffset = 20;
+    CGFloat frameYOffset = 20;
     self.frames = [NSMutableArray array];
     
-    // Create a path and a frame for the view's bounds
-    // Just like before, but we inset it a bit
-    CGMutablePathRef path = CGPathCreateMutable(); //2
-    NSLog(@"TESTING %@ %@ %@", NSStringFromCGSize(self.scrollView.bounds.size), NSStringFromCGSize(self.view.bounds.size), NSStringFromCGSize([[UIScreen mainScreen] bounds].size));
-    CGRect textFrame = CGRectInset(self.scrollView.bounds, frameXOffset, frameYOffset);
-    CGPathAddRect(path, NULL, textFrame);
+      // non-inset size of the column
     
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)self.text);
-    
-    int textPos = 0; //3
+    int textPos = 0;
     int columnIndex = 0;
     
-    while (textPos < [self.text length]) { //4
-        CGPoint colOffset = CGPointMake( (columnIndex+1)*frameXOffset + columnIndex*(textFrame.size.width), 0 );
-        CGRect colRect = CGRectMake(0, 0 , textFrame.size.width, textFrame.size.height);
+    CGFloat columnWidth = self.scrollView.bounds.size.width;
+    CGFloat columnHeight = self.scrollView.bounds.size.height;
+    
+//    CGSize columnSize = self.scrollView.bounds.size;
+//    CGRect insetFrame = CGRectInset(self.scrollView.bounds, frameXOffset, frameYOffset);
+
+    while (textPos < [self.text length]) {
+        NSLog(@"CREATING COLUMN %i", textPos);
+        CGPoint columnOffset = CGPointMake(columnIndex*columnWidth, frameYOffset );
+        CGRect columnFrame = CGRectMake(columnOffset.x, columnOffset.y, columnWidth, columnHeight);
+        NSLog(@"COLUMN FRAME %@ %@", NSStringFromCGRect(columnFrame), NSStringFromCGRect(self.scrollView.bounds));
+        CTColumnView* content = [[CTColumnView alloc] initWithFrame: columnFrame];
+        [self.scrollView addSubview:content];
+//        [self.frames addObject:content];
         
         CGMutablePathRef path = CGPathCreateMutable();
-        CGPathAddRect(path, NULL, colRect);
+        CGPathAddRect(path, NULL, content.bounds);
         
-        //use the column path
         CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(textPos, 0), path, NULL);
-        CFRange frameRange = CTFrameGetVisibleStringRange(frame); //5
+        content.ctFrame = (__bridge id)frame;
         
         //create an empty column view. They need full run of the parent view, apparently
-        CTColumnView* content = [[CTColumnView alloc] initWithFrame: CGRectMake(0, 0, self.scrollView.contentSize.width, self.scrollView.contentSize.height)];
-        content.backgroundColor = [UIColor clearColor];
-        content.frame = CGRectMake(colOffset.x, colOffset.y, colRect.size.width, colRect.size.height) ;
+//        CGPoint columnOffset = CGPointMake(columnIndex*columnSize.width, 0);
+//        content.backgroundColor = [UIColor clearColor];
         
 		//set the column view contents and add it as subview
-        [content setCtFrame:(__bridge id)frame];  //6
-        [self.frames addObject:(__bridge id)frame];
-        [self.scrollView addSubview:content];
         
         //prepare for next frame
-        textPos += frameRange.length;
-        
-        //CFRelease(frame);
-        CFRelease(path);
-        
+        textPos += CTFrameGetVisibleStringRange(frame).length;
         columnIndex++;
+        
+        CFRelease(frame);
+        CFRelease(path);
     }
     
     //set the total width of the scroll view
     int totalPages = (columnIndex+1); //7
-    self.scrollView.contentSize = CGSizeMake(totalPages*self.scrollView.bounds.size.width, textFrame.size.height);
+    self.scrollView.contentSize = CGSizeMake(totalPages*self.scrollView.bounds.size.width, columnHeight);
 }
 
 
