@@ -51,6 +51,10 @@
     [self buildFrames];
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [self buildFrames];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -85,6 +89,9 @@
 }
 
 - (void)buildFrames {
+    
+    [self.scrollView.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
+    
     CGFloat frameXOffset = 20;
     CGFloat frameYOffset = 20;
     CGFloat columnWidth = self.scrollView.bounds.size.width;
