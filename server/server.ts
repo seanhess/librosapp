@@ -4,6 +4,7 @@
 
 var PORT = process.env.PORT || 3000
 import exp = module('express')
+import http = module('http')
 var stylus = require('stylus')
 var nib = require('nib')
 var connect = require('connect')
@@ -15,33 +16,45 @@ import Book = module('model/Book')
 import File = module('model/File')
 //import auth = module('auth/control')
 
-function handleError(err) {
-  if (err) throw err
+function dbError(err) {
+  throw new Error("RETHINKDB: " + err.message)
 }
 
 function ignoreError(err) {}
 
-// initialize the GLOBAL rethinkdb connection settings
-r.connect({host:'localhost', port: 28015}, function(conn) {
-    conn.run(r.dbCreate('libros'), function(err) {
-      // ignore error (It's probably an already created error)
-      var db = r.db('libros')
-      conn.use('libros')
-      conn.run(Book.init(db), ignoreError)
-      conn.run(File.init(db), ignoreError)
-    })
-}, handleError)
+function connectdb(dbname:string) {
+  console.log("rethinkdb://localhost:28015/" + dbname)
+  r.connect({host:'localhost', port: 28015}, function(conn) {
+      conn.run(r.dbCreate(dbname), function(err) {
+        // ignore error (It's probably an already created error)
+        var db = r.db(dbname)
+        conn.use(dbname)
+        conn.run(Book.init(db), ignoreError)
+        conn.run(File.init(db), ignoreError)
+      })
+  },dbError)
+}
 
-var app = exp()
+export var app:exp.ServerApplication = exp()
+
+app.configure("test", () => {
+  console.log("TEST")
+  connectdb('test')
+})
 
 app.configure("development", () => {
   console.log("DEVELOPMENT")
+  connectdb('libros')
   app.use(stylus.middleware({
     src: '../public',
     compile: (str, path) => {
       return stylus(str).use(nib()).import('nib').set('filename', path)
     }
   }))
+})
+
+app.configure(() => {
+  console.log("CONFIGURE")
 })
 
 app.use(connect.static(__dirname + '/../public'))
@@ -63,7 +76,8 @@ app.get('/books', function(req, res) {
 
 app.get('/books/:bookId', function(req, res) {
   Book.getBook(req.params.bookId).run(function(book) {
-    res.send(book)
+    if (book) res.json(book)
+    else res.send(404)
   })
 })
 
@@ -98,8 +112,6 @@ app.put('/books/:bookId', function(req, res) {
 
 
 
-
-
 app.get('/books/:bookId/files', function(req, res) {
   File.byBookId(req.params.bookId).run().collect(function(files) {
     res.send(files)
@@ -114,15 +126,15 @@ app.del('/files/:fileId', function(req, res) {
 })
 
 // downloads the file
-app.get('/files/:fileId', function(req, res) {
+//app.get('/files/:fileId', function(req, res) {
   //var path = File.filePath(req.params.fileId)
   //res.redirect(path)
   // or redirect to the url
-})
+//})
 
 // edit the file metadata. move the file if you change the name?
 app.put('/files/:fileId', function(req, res) {
-  File.update(req.body).run(function(err) {
+  File.update(req.params.fileId, req.body).run(function(err) {
     if (err instanceof Error) return res.send(500, err.message)
     res.send(200)
   })
@@ -132,6 +144,7 @@ app.put('/files/:fileId', function(req, res) {
 app.post('/books/:bookId/files', function(req, res) {
   var files = req.files.files
   files = (files instanceof Array) ? files : [files]
+  //console.log("UPLOADED", files)
   File.addFilesToBook(req.params.bookId, files, function(err, files) {
     if (err instanceof Error) return res.send(500, err.message)
     res.json(files)
@@ -146,6 +159,9 @@ app.get(/\/admin[\w\/\-]*$/, function(req, res) {
 })
 
 
-app.listen(PORT, () => {
-  console.log("RUNNING " + PORT)
-})
+if (module == (<any>require).main) {
+  var server = http.createServer(app)
+  server.listen(PORT, () => {
+    console.log("RUNNING " + PORT)
+  })
+}

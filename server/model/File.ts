@@ -49,8 +49,9 @@ export function insert(file:IFile) {
   return files.insert(file)
 }
 
-export function update(file:IFile) {
-  return files.replace(file)
+export function update(fileId:string, file:IFile) {
+  // this only thing you can change is the name
+  return files.update({fileId: fileId, name:file.name})
 }
 
 export function byBookId(bookId:string) {

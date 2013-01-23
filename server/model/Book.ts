@@ -24,7 +24,7 @@ export function create() {
 }
 
 export function allBooks() {
-  return r.db('libros').table('books').orderBy('title')
+  return r.table('books').orderBy('title')
 }
 
 export function getBook(bookId:string) {

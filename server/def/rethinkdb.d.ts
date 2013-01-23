@@ -31,6 +31,7 @@ declare module "rethinkdb" {
     nth(n:number):IQuery;
     pluck(...keys:string[]):IQuery;
     without(...keys:string[]):IQuery;
+    update(updates:Object):IQuery;
   }
 
   interface IConnection {

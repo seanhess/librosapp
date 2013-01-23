@@ -1,4 +1,4 @@
-///<reference path="../../public/components/DefinitelyTyped/async/async-0.1.d.ts"/>
+///<reference path="../../public/components/DefinitelyTyped/async/async.d.ts"/>
 
 
 declare module "async" {
