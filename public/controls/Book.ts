@@ -1,4 +1,5 @@
 ///<reference path="../def/angular.d.ts"/>
+///<reference path="../def/underscore.d.ts"/>
 ///<reference path="../types.ts"/>
 
 interface IHTMLFile {
@@ -75,16 +76,11 @@ angular.module('controllers')
   }
 
   $scope.onDrop = function(files:IHTMLFile[]) {
-
-    console.log("ON DROP", files)
-    // files.forEach($scope.addFile)
-    // fatzo
-    //addFile(files[0])
     files.forEach(addFile)
   }
 
   $scope.isLoading = function(file:IFile) {
-    return !file.fileId
+    return (file.fileId === undefined || file.fileId === null)
   }
 
   function toPendingFile(htmlFile:IHTMLFile):IFile {
@@ -106,7 +102,7 @@ angular.module('controllers')
     $scope.files.push(pendingFile)
 
     var formData = new FormData()
-    formData.append('files', file)
+    formData.append('file', file)
 
     $http({
       method: 'POST',
@@ -116,8 +112,8 @@ angular.module('controllers')
       transformRequest: angular.identity,
       headers: {'Content-Type': undefined},
     })
-    .success(function(files:IFile[]) {
-      var file = files[0]
+    .success(function(file:IFile) {
+      console.log("ADDED FILE", file)
        _.extend(pendingFile, file)
     })
   }

@@ -111,18 +111,13 @@ export function addFileToBook(bookId:string, uploadedFile:IUploadFile):q.IPromis
   var file = toFile(bookId, uploadedFile)
   return uploadToUrl(file, uploadedFile)
   .then(() => db.run(insert(file)))
-}
-
-export function addFilesToBook(bookId:string, uploadedFiles:IUploadFile[]):q.IPromise {
-  return q.all(uploadedFiles.map(function(uploadedFile:IUploadFile):q.IPromise {
-    return addFileToBook(bookId, uploadedFile)
-  }))
+  .then(() => file)
 }
 
 export function deleteFile(fileId:string) {
   return db.run(byFileId(fileId))
   .then(removeUrl)
-  .then(db.run(remove(fileId)))
+  .then(() => db.run(remove(fileId)))
 }
 
 // this returns a single promise

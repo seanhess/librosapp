@@ -105,13 +105,14 @@ describe("API", function() {
     })
 
     it('should upload a file for the book', function(done) {
-      var r = request.post({url: domain + '/books/' + this.bookId + '/files'}, function(err, rs) {
+      var r = request.post({url: domain + '/books/' + this.bookId + '/files', json:true}, function(err, rs, file:IFile) {
         assert.ifError(err)
         assert.equal(rs.statusCode, 200)
+        assert.ok(file.fileId)
         done()
       })
       var form = r.form()
-      form.append('files', fs.createReadStream(path.join(__dirname, 'data.txt')))
+      form.append('file', fs.createReadStream(path.join(__dirname, 'data.txt')))
     })
 
     it('should return the files for a book', function(done) {

@@ -136,11 +136,9 @@ app.put('/files/:fileId', function(req, res) {
   .then(ok(res), err(res))
 })
 
-// new files. form upload!
+// upload a single new file (doesn't do more than one)
 app.post('/books/:bookId/files', function(req, res) {
-  var files = req.files.files
-  files = (files instanceof Array) ? files : [files]
-  File.addFilesToBook(req.params.bookId, files)
+  File.addFileToBook(req.params.bookId, req.files.file)
   .then(send(res), err(res))
 })
 

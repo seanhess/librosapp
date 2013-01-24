@@ -47,7 +47,6 @@ declare module "q" {
 
   export interface IPromise extends IProxy {
     then(cb:ResolveBack, eb?:ErrBack):IPromise;
-    then(cb:IPromise, eb?:ErrBack):IPromise;
     fail(eb:ErrBack):IPromise;
     fin(cb:() => any):IPromise;
     done();
