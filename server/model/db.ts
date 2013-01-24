@@ -5,6 +5,9 @@
 import q = module('q')
 import r = module('rethinkdb')
 
+// wait, you're doing this wrong. 
+// it executes it immediately
+// we don't want to do it until we've hit the next step
 export function collect(query:r.IQuery) {
   var def = q.defer()
   query.run().collect(function(info:any) {
@@ -22,5 +25,3 @@ export function run(query:r.IQuery) {
   })
   return def.promise
 }
-
-

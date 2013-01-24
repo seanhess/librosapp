@@ -110,8 +110,7 @@ export function removeUrl(file:IFile):q.IPromise {
 export function addFileToBook(bookId:string, uploadedFile:IUploadFile):q.IPromise {
   var file = toFile(bookId, uploadedFile)
   return uploadToUrl(file, uploadedFile)
-  .then(db.run(insert(file)))
-  .then(function() {}) // why do I need this??
+  .then(() => db.run(insert(file)))
 }
 
 export function addFilesToBook(bookId:string, uploadedFiles:IUploadFile[]):q.IPromise {
@@ -131,5 +130,26 @@ export function deleteFilesForBook(bookId:string) {
   return db.collect(byBookId(bookId))
   .then(function(files:IFile[]) {
     return q.all(files.map(fileId).map(deleteFile))
+  })
+}
+
+export function doSomethingSlow(cb) {
+  setTimeout(function() {
+    cb(null)
+  }, 1000)
+}
+
+export function doSomethingSlowPromise() {
+  var deferred = q.defer() 
+  doSomethingSlow(deferred.makeNodeResolver())
+  return deferred.promise
+}
+
+export function test():q.IPromise {
+  return doSomethingSlowPromise()
+  .then(() => db.collect(files))
+  .then(function(value) {
+    console.log("COLLECTED", value)
+    return value
   })
 }

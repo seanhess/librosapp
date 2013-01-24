@@ -104,7 +104,7 @@ app.get('/books/:bookId', function(req, res) {
 app.del('/books/:bookId', function(req, res) {
   var bookId = req.params.bookId
   File.deleteFilesForBook(bookId)
-  .then(db.run(Book.removeBook(bookId)))
+  .then(() => db.run(Book.removeBook(bookId)))
   .then(send(res), err(res))
 })
 
@@ -142,6 +142,10 @@ app.post('/books/:bookId/files', function(req, res) {
   files = (files instanceof Array) ? files : [files]
   File.addFilesToBook(req.params.bookId, files)
   .then(send(res), err(res))
+})
+
+app.get('/test', function(req, res) {
+  File.test().then(send(res), err(res))
 })
 
 // Send the Angular app for everything under /admin
