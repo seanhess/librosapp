@@ -18,7 +18,6 @@
 
 @interface ReaderVC ()
 
-@property (strong, nonatomic) NSAttributedString * text;
 @property (strong, nonatomic) NSMutableArray * availablePages;
 @property (strong, nonatomic) ReaderPageView * currentPageView;
 
@@ -27,6 +26,8 @@
 @property (nonatomic) NSInteger currentPage;
 
 @property (strong, nonatomic) NSMutableArray * currentChapterFrames;
+
+@property (strong, nonatomic) NSArray * files;
 
 @end
 
@@ -47,22 +48,13 @@
     
     self.title = self.book.title;
     
-    FileService * fs = [FileService shared];
-    NSArray * files = [fs byBookId:self.book.bookId];
-    
-    NSString * bookPlainString = [fs readAsText:files[0]];
-    NSAttributedString * bookAttributed = [[NSAttributedString alloc] initWithString:bookPlainString];
-    [self setAttributedText:bookAttributed];
-    NSLog(@"VIEW DID LOAD %@", NSStringFromCGSize(self.view.bounds.size));
+    self.files = [[FileService shared] byBookId:self.book.bookId];
     
     // INITIALIZE
     [self createAvailablePages];
     self.currentChapterFrames = [NSMutableArray array];
     self.currentPage = 0;
     self.currentChapter = 0;
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)self.text);
-    self.framesetter = (__bridge id)framesetter;
-    CFRelease(framesetter);
     // TOO EARLY TO DRAW! Widths are wrong
 }
 
@@ -109,7 +101,7 @@
 
 // READER
 // cleans up the text, adds a font and justified alignment, etc
-- (void)setAttributedText:(NSAttributedString *)text {
+- (NSAttributedString*)formatText:(NSAttributedString *)text {
     
     // JUSTIFIED TEXT
     CTTextAlignment alignment = kCTJustifiedTextAlignment;
@@ -129,7 +121,7 @@
     [stringCopy addAttributes:attrDictionary range:NSMakeRange(0, [text length])];
     [stringCopy addAttribute:(NSString*)kCTFontAttributeName value:(__bridge id)font range:NSMakeRange(0, stringCopy.length)];
     
-    self.text = stringCopy;
+    return stringCopy;
 }
 
 // returns a CTFrame for that chapter, ready to go
@@ -151,13 +143,24 @@
     self.currentChapterFrames = [self generateFramesForChapter:chapter];
 }
 
+-(NSAttributedString*)textForChapter:(NSInteger)chapter {
+    NSString * bookPlainString = [[FileService shared] readAsText:self.files[chapter]];
+    NSAttributedString * bookAttributed = [[NSAttributedString alloc] initWithString:bookPlainString];
+    return [self formatText:bookAttributed];
+}
+
 -(NSMutableArray*)generateFramesForChapter:(NSInteger)chapter {
     NSInteger location = 0;
-    CTFramesetterRef framesetter = (__bridge CTFramesetterRef)self.framesetter;
+    
+    NSAttributedString * text = [self textForChapter:chapter];
+
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)text);
+    self.framesetter = (__bridge id)framesetter;
+    CFRelease(framesetter);
     
     NSMutableArray * frames = [NSMutableArray array];
     
-    while(location < self.text.length) {
+    while(location < text.length) {
         NSLog(@"GENERATING for chapter=%i location=%i", chapter, location);
         CGMutablePathRef path = CGPathCreateMutable();
         CGRect insetFrame = CGRectInset(self.view.bounds, FRAME_X_OFFSET, FRAME_Y_OFFSET);
