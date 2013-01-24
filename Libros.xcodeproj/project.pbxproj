@@ -56,6 +56,7 @@
 		784D21AA169F3AAE003AC6F2 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 784D21A9169F3AAE003AC6F2 /* MainStoryboard_iPhone.storyboard */; };
 		784D21AE169F3B79003AC6F2 /* StoreVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 784D21AC169F3B79003AC6F2 /* StoreVC.m */; };
 		784D21B2169F432D003AC6F2 /* BookService.m in Sources */ = {isa = PBXBuildFile; fileRef = 784D21B1169F432D003AC6F2 /* BookService.m */; };
+		78CA26E416B1AD81003EC00D /* ReaderPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CA26E316B1AD81003EC00D /* ReaderPageView.m */; };
 		7E8DDCC9AFCF41519ED19920 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE66A380EC74E55884892D6 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -124,6 +125,8 @@
 		784D21AC169F3B79003AC6F2 /* StoreVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreVC.m; sourceTree = "<group>"; };
 		784D21B0169F432D003AC6F2 /* BookService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookService.h; sourceTree = "<group>"; };
 		784D21B1169F432D003AC6F2 /* BookService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookService.m; sourceTree = "<group>"; };
+		78CA26E216B1AD81003EC00D /* ReaderPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderPageView.h; sourceTree = "<group>"; };
+		78CA26E316B1AD81003EC00D /* ReaderPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderPageView.m; sourceTree = "<group>"; };
 		85FD0834AAB242A7BA71588D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		DFE66A380EC74E55884892D6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -164,6 +167,8 @@
 				781EF88816A9C69F000CB62E /* ReaderVC.xib */,
 				7809F96616AF3E7C0045C4D9 /* CTColumnView.h */,
 				7809F96716AF3E7C0045C4D9 /* CTColumnView.m */,
+				78CA26E216B1AD81003EC00D /* ReaderPageView.h */,
+				78CA26E316B1AD81003EC00D /* ReaderPageView.m */,
 			);
 			name = Reader;
 			sourceTree = "<group>";
@@ -490,6 +495,7 @@
 				781EF88316A9BE65000CB62E /* _File.m in Sources */,
 				781EF88916A9C69F000CB62E /* ReaderVC.m in Sources */,
 				7809F96816AF3E7C0045C4D9 /* CTColumnView.m in Sources */,
+				78CA26E416B1AD81003EC00D /* ReaderPageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

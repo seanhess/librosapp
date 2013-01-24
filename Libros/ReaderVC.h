@@ -11,6 +11,7 @@
 
 @interface ReaderVC : UIViewController <UIScrollViewDelegate>
 
+
 @property (nonatomic, strong) Book * book;
 
 @end
