@@ -51,8 +51,8 @@ export function insert(file:IFile) {
   return files.insert(file)
 }
 
+// the only thing you can change is the name
 export function update(fileId:string, file:IFile) {
-  // this only thing you can change is the name
   return files.update({fileId: fileId, name:file.name})
 }
 

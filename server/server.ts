@@ -66,10 +66,6 @@ app.use(connect.bodyParser())
 app.use(connect.session({secret: 'funky monkey', key: 'blah', store:new connect.session.MemoryStore()}))
 
 // TODO validation
-// TODO error checking?
-// you're not going to get it right until they fix their error handling. Just move on.
-// Finish it!
-
 function send(res:exp.ServerResponse) {
   return function(value:any) {
     if (value) res.json(value)
