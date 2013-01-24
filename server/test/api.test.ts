@@ -34,6 +34,7 @@ describe("API", function() {
     it('should create a book', function(done) {
       request.post({url: domain + '/books', json:{}}, (err, rs, body:IBook) => {
         assert.ifError(err)
+        assert.equal(rs.statusCode, 200, body)
         assert.ok(body.bookId, "No bookId")
         this.bookId = body.bookId
         done()

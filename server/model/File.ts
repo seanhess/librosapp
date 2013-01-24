@@ -14,6 +14,8 @@ import async = module('async')
 import uuid = module('node-uuid')
 import knox = module('knox')
 
+import db = module('./db')
+import q = module('q')
 
 var BUCKET = "libros_pingplot"
 var BUCKET_URL = "http://" + BUCKET + ".s3.amazonaws.com"
@@ -93,49 +95,41 @@ export function toFile(bookId:string, source:IUploadFile):IFile {
   return file
 }
 
-export function uploadToUrl(file:IFile, source:IUploadFile, cb:(err:Error) => void) {
-  s3client.putFile(source.path, toUrlPath(file), {'Content-Type':source.mime}, cb)
+export function uploadToUrl(file:IFile, source:IUploadFile) {
+  var deferred = q.defer()
+  s3client.putFile(source.path, toUrlPath(file), {'Content-Type':source.mime}, <knox.IResponseCallback> deferred.makeNodeResolver())
+  return deferred.promise
 }
 
-export function removeUrl(file:IFile, cb:(err:Error) => void) {
-  s3client.deleteFile(toUrlPath(file), function(err, res) {
-    cb(err)
-  })
+export function removeUrl(file:IFile):q.IPromise {
+  var deferred = q.defer()
+  s3client.deleteFile(toUrlPath(file), <knox.IResponseCallback> deferred.makeNodeResolver())
+  return deferred.promise
 }
 
-export function addFileToBook(bookId:string, uploadedFile:IUploadFile, cb:(err:Error, file:IFile) => void) {
+export function addFileToBook(bookId:string, uploadedFile:IUploadFile):q.IPromise {
   var file = toFile(bookId, uploadedFile)
-  uploadToUrl(file, uploadedFile, function(err) {
-    if (err) return cb(err, null)
-    insert(file).run(function(err) {
-      // console.log("INSERTED", file, (info instanceof Error))
-      if (err instanceof Error) return cb(err, null)
-      cb(null, file)
-    })
-  })
+  return uploadToUrl(file, uploadedFile)
+  .then(db.run(insert(file)))
+  .then(function() {}) // why do I need this??
 }
 
-export function addFilesToBook(bookId:string, uploadedFiles:IUploadFile[], cb:(err:Error, files:IFile[]) => void) {
-  async.map(uploadedFiles, function(uploadedFile:IUploadFile, done) {
-    addFileToBook(bookId, uploadedFile, done)
-  }, <AsyncCallback> <any> cb)
+export function addFilesToBook(bookId:string, uploadedFiles:IUploadFile[]):q.IPromise {
+  return q.all(uploadedFiles.map(function(uploadedFile:IUploadFile):q.IPromise {
+    return addFileToBook(bookId, uploadedFile)
+  }))
 }
 
-
-export function deleteFile(fileId:string, cb:(err:Error) => void) {
-  byFileId(fileId).run(function(file:IFile) { 
-    removeUrl(file, function(err) {
-      if (err) return cb(err)
-      remove(fileId).run(cb)
-    })
-  })
+export function deleteFile(fileId:string) {
+  return db.run(byFileId(fileId))
+  .then(removeUrl)
+  .then(db.run(remove(fileId)))
 }
 
-export function deleteFilesForBook(bookId:string, cb:(err:Error) => void) {
-  byBookId(bookId).run().collect(function(files:IFile[]) {
-    //var fileIds = files.map(fileId)
-    async.forEach(files, function(file:IFile, done) {
-      deleteFile(file.fileId, done)
-    }, <AsyncCallback> <any> cb)
+// this returns a single promise
+export function deleteFilesForBook(bookId:string) {
+  return db.collect(byBookId(bookId))
+  .then(function(files:IFile[]) {
+    return q.all(files.map(fileId).map(deleteFile))
   })
 }

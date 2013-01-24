@@ -34,6 +34,10 @@ declare module "rethinkdb" {
     update(updates:Object):IQuery;
   }
 
+  interface InsertResult {
+    generated_keys:string[];
+  }
+
   interface IConnection {
     close();
     reconnect();

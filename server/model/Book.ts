@@ -5,6 +5,10 @@ import r = module('rethinkdb')
 
 var books = r.table('books')
 
+export interface IdentifiedBook {
+  bookId: string;
+}
+
 export function validate(book:IBook) {
   return true
 }
@@ -19,11 +23,11 @@ export function saveBook(book:IBook) {
   return books.insert(book, overwrite)
 }
 
-export function create() {
+export function create():r.IQuery {
   return books.insert({title:"New Book"})
 }
 
-export function allBooks() {
+export function allBooks():r.IQuery {
   return r.table('books').orderBy('title')
 }
 
@@ -35,3 +39,6 @@ export function removeBook(bookId:string) {
   return getBook(bookId).del()
 }
 
+export function insertedBook(info:r.InsertResult):IdentifiedBook {
+  return {bookId: info.generated_keys[0]}
+}
