@@ -113,7 +113,6 @@ angular.module('controllers')
       headers: {'Content-Type': undefined},
     })
     .success(function(file:IFile) {
-      console.log("ADDED FILE", file)
        _.extend(pendingFile, file)
     })
   }
