@@ -184,27 +184,22 @@
 }
 
 - (void)nextPage {
+    
+    if (![self setNextPage]) return;
+    
     ReaderPageView * nextPageView = [self getAvailablePage];
+    [nextPageView renderFrame:[self frameForPage:self.currentPage]];
+    
+    
+    
     CGRect frame = self.view.bounds;
     frame.origin.x = frame.size.width;
     nextPageView.frame = frame;
-    nextPageView.hidden = NO;
-
+    
     [UIView beginAnimations:@"nextPage" context:nil];
 
     frame.origin.x = 0;
     nextPageView.frame = frame;
-    
-    // advance the page
-    self.currentPage += 1;
-    if (self.currentPage >= [self currentChapterPages]) {
-        self.currentPage = 0;
-        self.currentChapter += 1;
-        self.currentChapterFrames = [self generateFramesForChapter:self.currentChapter];
-    }
-    
-    // render
-    [nextPageView renderFrame:[self frameForPage:self.currentPage]];
     
     frame.origin.x = -frame.size.width;
     self.currentPageView.frame = frame;
@@ -216,26 +211,22 @@
 }
 
 - (void)prevPage {
+    
+    if (![self setPrevPage]) return;
+    
     ReaderPageView * nextPageView = [self getAvailablePage];
+    [nextPageView renderFrame:[self frameForPage:self.currentPage]];
+    
+    
+    
     CGRect frame = self.view.bounds;
     frame.origin.x = -frame.size.width;
     nextPageView.frame = frame;
-    nextPageView.hidden = NO;
     
     [UIView beginAnimations:@"prevPage" context:nil];
     
     frame.origin.x = 0;
     nextPageView.frame = frame;
-    
-    // rewind the page
-    self.currentPage -= 1;
-    if (self.currentPage < 0) {
-        self.currentChapter -= 1;
-        self.currentChapterFrames = [self generateFramesForChapter:self.currentChapter];
-        self.currentPage = [self currentChapterPages] - 1;
-    }
-    
-    [nextPageView renderFrame:[self frameForPage:self.currentPage]];
     
     frame.origin.x = frame.size.width;
     self.currentPageView.frame = frame;
@@ -244,6 +235,44 @@
     
     [self doneAvailablePage:self.currentPageView];
     self.currentPageView = nextPageView;
+}
+
+// sets the next/previous page, then reverts and does nothing if they aren't valid?
+- (BOOL)setNextPage {
+    // advance the page
+    NSInteger nextPage = self.currentPage + 1;
+    if (nextPage >= [self currentChapterPages]) {
+        nextPage = 0;
+        // generate next page!?
+        NSInteger nextChapter = self.currentChapter + 1;
+        
+        if (nextChapter >= self.files.count)
+            return NO;
+        
+        self.currentChapter = nextChapter;
+        self.currentChapterFrames = [self generateFramesForChapter:nextChapter];
+    }
+    
+    self.currentPage = nextPage;
+    return YES;
+}
+
+- (BOOL)setPrevPage {
+    // rewind the page
+    NSInteger prevPage = self.currentPage - 1;
+    if (prevPage < 0) {
+        NSInteger prevChapter = self.currentChapter - 1;
+        
+        if (prevChapter < 0)
+            return NO;
+        
+        self.currentChapter = prevChapter;
+        self.currentChapterFrames = [self generateFramesForChapter:self.currentChapter];
+        prevPage = [self currentChapterPages] - 1;
+    }
+    
+    self.currentPage = prevPage;
+    return YES;
 }
 
 // A tap gesture on the right side = next page!
