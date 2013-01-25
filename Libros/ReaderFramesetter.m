@@ -55,6 +55,10 @@
     self.chapters = newChapters;
 }
 
+-(void)empty {
+    self.chapters = [NSMutableDictionary dictionary];
+}
+
 -(NSMutableArray*)generateFramesForChapter:(NSInteger)chapter {
     NSInteger location = 0;
     

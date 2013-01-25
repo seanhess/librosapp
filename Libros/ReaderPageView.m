@@ -50,6 +50,13 @@
     [self setNeedsDisplay];
 }
 
+-(void)clear {
+    self.ctFrame = nil;
+    self.chapter = -1;
+    self.page = -1;
+    [self setNeedsDisplay];
+}
+
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect

@@ -19,6 +19,7 @@
 -(NSInteger)pagesForChapter:(NSInteger)chapter;
 
 -(void)emptyExceptChapter:(NSInteger)chapter;
+-(void)empty;
 
 -(void)ensureFramesForChapter:(NSInteger)chapter;
 

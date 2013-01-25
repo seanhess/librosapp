@@ -95,6 +95,7 @@ ReaderLocation ReaderLocationInvalid() {
 - (void)viewWillAppear:(BOOL)animated {
     NSLog(@"VIEW WILL APPEAR %@", NSStringFromCGSize(self.view.bounds.size));
     
+    
     self.framesetter.bounds = self.view.bounds;
     
     self.leftPageView.frame = self.leftFrame;
@@ -106,9 +107,40 @@ ReaderLocation ReaderLocationInvalid() {
     [self.currentPageView setFrameFromCache:self.framesetter chapter:self.location.chapter page:self.location.page];
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    
+    // BOUNDS ARE WRONG HERE
+    [self.leftPageView clear];
+    [self.rightPageView clear];
+    [self.currentPageView clear];
+    
+    // But we can estimate them!
+    CGRect bounds = CGRectMake(0, 0, 0, 0);
+    CGFloat width = self.view.bounds.size.width;
+    CGFloat height = self.view.bounds.size.height;
+    
+    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+        bounds.size.width = MAX(width, height);
+        bounds.size.height = MIN(width, height);
+    }
+    else {
+        bounds.size.width = MIN(width, height);
+        bounds.size.height = MAX(width, height);
+    }
+    
+    self.framesetter.bounds = bounds;
+    [self.framesetter empty];
+    [self.framesetter ensureFramesForChapter:self.location.chapter];
+    [self.currentPageView setFrameFromCache:self.framesetter chapter:self.location.chapter page:self.location.page];
+}
+
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-//    [self buildFrames];
-    self.framesetter.bounds = self.view.bounds;
+//    [self.currentPageView clear];
+////    NSLog(@"DID ROTATE %@", NSStringFromCGRect(self.view.bounds));
+//    self.framesetter.bounds = self.view.bounds;
+//    [self.framesetter empty];
+//    [self.framesetter ensureFramesForChapter:self.location.chapter];
+//    [self.currentPageView setFrameFromCache:self.framesetter chapter:self.location.chapter page:self.location.page];
 }
 
 - (void)didReceiveMemoryWarning

@@ -19,5 +19,6 @@
 
 // will only render if it CHANGES
 -(void)setFrameFromCache:(ReaderFramesetter*)cache chapter:(NSInteger)chapter page:(NSInteger)page;
+-(void)clear;
 
 @end
