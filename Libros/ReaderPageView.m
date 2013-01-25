@@ -29,6 +29,16 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        self.backgroundColor = [UIColor clearColor];
+        self.chapter = -1;
+        self.page = -1;
+    }
+    return self;
+}
+
 -(void)setFrameFromCache:(ReaderFramesetter*)cache chapter:(NSInteger)chapter page:(NSInteger)page {
     if (self.chapter == chapter && self.page == page)
         return;

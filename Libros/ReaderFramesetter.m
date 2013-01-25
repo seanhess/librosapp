@@ -12,42 +12,46 @@
 #import <CoreText/CoreText.h>
 
 #define FRAME_X_OFFSET 25
-#define FRAME_Y_OFFSET 40
+#define FRAME_Y_OFFSET 25
 
 @interface ReaderFramesetter ()
-@property (strong, nonatomic) NSMutableArray * chapters;
+@property (strong, nonatomic) NSMutableDictionary * chapters;
 @end
 
 @implementation ReaderFramesetter
 
--(NSMutableArray*)chapters {
+-(NSMutableDictionary*)chapters {
     if (!_chapters) {
-        self.chapters = [NSMutableArray array];
+        self.chapters = [NSMutableDictionary dictionary];
     }
     
     return _chapters;
 }
 
+-(id<NSCopying>)key:(NSInteger)chapter {
+    return [NSNumber numberWithInteger:chapter];
+}
+
 -(void)setFrames:(NSArray *)frames forChapter:(NSInteger)chapter {
-    self.chapters[chapter] = frames;
+    self.chapters[[self key:chapter]] = frames;
 }
 
 -(BOOL)hasFramesForChapter:(NSInteger)chapter {
-    if (chapter < self.chapters.count && self.chapters[chapter]) return YES;
+    if (chapter < self.chapters.count && self.chapters[[self key:chapter]]) return YES;
     return NO;
 }
 
 -(id)frameForChapter:(NSInteger)chapter page:(NSInteger)page {
-    return self.chapters[chapter][page];
+    return self.chapters[[self key:chapter]][page];
 }
 
 -(NSInteger)pagesForChapter:(NSInteger)chapter {
-    return [self.chapters[chapter] count];
+    return [self.chapters[[self key:chapter]] count];
 }
 
 -(void)emptyExceptChapter:(NSInteger)chapter {
-    NSMutableArray * newChapters = [NSMutableArray array];
-    newChapters[chapter] = self.chapters[chapter];
+    NSMutableDictionary * newChapters = [NSMutableDictionary dictionary];
+    newChapters[[self key:chapter]] = self.chapters[[self key:chapter]];
     self.chapters = newChapters;
 }
 

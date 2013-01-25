@@ -39,12 +39,14 @@ ReaderLocation ReaderLocationInvalid() {
 
 @interface ReaderVC ()
 
-@property (strong, nonatomic) ReaderPageView * leftPageView;
-@property (strong, nonatomic) ReaderPageView * currentPageView;
-@property (strong, nonatomic) ReaderPageView * rightPageView;
+@property (weak, nonatomic) IBOutlet UIView *controlsView;
+
+@property (weak, nonatomic) IBOutlet ReaderPageView *leftPageView;
+@property (weak, nonatomic) IBOutlet ReaderPageView *currentPageView;
+@property (weak, nonatomic) IBOutlet ReaderPageView *rightPageView;
 
 // the one currently being dragged on / shown
-@property (strong, nonatomic) ReaderPageView * nextPageView;
+@property (weak, nonatomic) ReaderPageView * nextPageView;
 @property (nonatomic) CGRect nextPageStartFrame;
 
 @property (nonatomic) ReaderLocation location;
@@ -75,7 +77,10 @@ ReaderLocation ReaderLocationInvalid() {
     
     self.title = self.book.title;
     self.files = [[FileService shared] byBookId:self.book.bookId];
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    self.wantsFullScreenLayout = YES;
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(hideControls) userInfo:nil repeats:NO];
     
     // INITIALIZE
     self.formatter = [ReaderFormatter new];
@@ -83,7 +88,7 @@ ReaderLocation ReaderLocationInvalid() {
     self.framesetter = [ReaderFramesetter new];
     self.framesetter.formatter = self.formatter;
     self.location = ReaderLocationMake(0, 0);
-    [self initPages];
+    
     // TOO EARLY TO DRAW! Widths are wrong
 }
 
@@ -130,15 +135,14 @@ ReaderLocation ReaderLocationInvalid() {
     return frame;
 }
 
-- (void)initPages {
-    self.leftPageView = [[ReaderPageView alloc] initWithFrame:self.leftFrame];
-    self.currentPageView = [[ReaderPageView alloc] initWithFrame:self.mainFrame];
-    self.rightPageView = [[ReaderPageView alloc] initWithFrame:self.rightFrame];
-    
-    [self.view addSubview:self.leftPageView];
-    [self.view addSubview:self.currentPageView];
-    [self.view addSubview:self.rightPageView];
+- (IBAction)didTapLibrary:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
+
+- (IBAction)didTapFont:(id)sender {
+    
+}
+
 
 
 
@@ -188,6 +192,7 @@ ReaderLocation ReaderLocationInvalid() {
     
     // we don't wnat to reset things
     if (!self.dragging && abs(dx) > DRAG_GRAVITY) {
+        [self hideControls];
         ReaderLocation nextLocation;
         if (dx < 0) {
             nextLocation = [self next:self.location];
@@ -250,16 +255,47 @@ ReaderLocation ReaderLocationInvalid() {
             ReaderLocation nextLocation = [self next:self.location];
             if (![self isValidLocation:nextLocation]) return;
             [self.rightPageView setFrameFromCache:self.framesetter chapter:nextLocation.chapter page:nextLocation.page];
+            [self moveHome];
             [self animatePageTurn:^{ [self moveRight]; }];
+            [self hideControls];
         }
         
         else if (point.x < 0.2*self.view.bounds.size.width) {
             ReaderLocation nextLocation = [self prev:self.location];
             if (![self isValidLocation:nextLocation]) return;
             [self.leftPageView setFrameFromCache:self.framesetter chapter:nextLocation.chapter page:nextLocation.page];
+            [self moveHome];
             [self animatePageTurn:^{ [self moveLeft]; }];
+            [self hideControls];
+        }
+        
+        else {
+            [self toggleControls];
         }
     }
+}
+
+- (void)toggleControls {
+    if (self.navigationController.navigationBarHidden) {
+        [self showControls];
+    }
+    else {
+        [self hideControls];
+    }
+}
+
+- (void)hideControls {
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+    [UIView beginAnimations:@"controls" context:nil];
+    self.controlsView.alpha = 0.0;
+    [UIView commitAnimations];
+}
+- (void)showControls {
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [UIView beginAnimations:@"controls" context:nil];
+    self.controlsView.alpha = 1.0;
+    [UIView commitAnimations];
 }
 
 - (void)animatePageTurn:(void(^)(void))animations {
