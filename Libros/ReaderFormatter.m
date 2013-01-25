@@ -15,23 +15,24 @@
 // READER
 // cleans up the text, adds a font and justified alignment, etc
 - (NSMutableAttributedString*)formatText:(NSAttributedString *)text {
+    CTFontRef font = CTFontCreateWithName(CFSTR("Palatino"), 18, NULL);
     
-    // JUSTIFIED TEXT
+    CGFloat lineSpacing = 3.0;
     CTTextAlignment alignment = kCTJustifiedTextAlignment;
+    
     CTParagraphStyleSetting settings[] = {
         {kCTParagraphStyleSpecifierAlignment, sizeof(alignment), &alignment},
+        {kCTParagraphStyleSpecifierLineSpacing, sizeof(CGFloat), &lineSpacing},
     };
     CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(settings, sizeof(settings) / sizeof(settings[0]));
-    NSDictionary *attrDictionary = @{
-    (NSString*)kCTParagraphStyleAttributeName : (__bridge id)paragraphStyle
-    };
     
-    // FONT
-    CTFontRef font = CTFontCreateWithName(CFSTR("Verdana"), 16, NULL);
+    NSDictionary *attrDictionary = @{
+        (NSString*)kCTParagraphStyleAttributeName : (__bridge id)paragraphStyle,
+        (NSString*)kCTFontAttributeName : (__bridge id)font
+    };
     
     NSMutableAttributedString* stringCopy = [[NSMutableAttributedString alloc] initWithAttributedString:text];
     [stringCopy addAttributes:attrDictionary range:NSMakeRange(0, [text length])];
-    [stringCopy addAttribute:(NSString*)kCTFontAttributeName value:(__bridge id)font range:NSMakeRange(0, stringCopy.length)];
     
     return stringCopy;
 }
@@ -45,7 +46,7 @@
 
 -(NSAttributedString*)chapterHeading:(NSInteger)chapter {
     File* file = self.files[chapter];
-    CTFontRef font = CTFontCreateWithName(CFSTR("Verdana-Bold"), 24, NULL);
+    CTFontRef font = CTFontCreateWithName(CFSTR("Palatino-Bold"), 24, NULL);
     NSString * headerWithNewline = [NSString stringWithFormat:@"%@\n\n", file.name];
     
     
