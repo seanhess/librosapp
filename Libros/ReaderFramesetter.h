@@ -7,16 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ReaderFormatter.h"
 
-@interface ReaderFrameCache : NSObject
+@interface ReaderFramesetter : NSObject
 
--(void)setFrames:(NSArray*)frames forChapter:(NSInteger)chapter;
--(BOOL)hasFramesForChapter:(NSInteger)chapter;
-
+@property (nonatomic, strong) ReaderFormatter * formatter;
+// Keep this up to date when your view changes size!
+@property (nonatomic) CGRect bounds;
 
 -(id)frameForChapter:(NSInteger)chapter page:(NSInteger)page;
 -(NSInteger)pagesForChapter:(NSInteger)chapter;
 
 -(void)emptyExceptChapter:(NSInteger)chapter;
+
+-(void)ensureFramesForChapter:(NSInteger)chapter;
 
 @end

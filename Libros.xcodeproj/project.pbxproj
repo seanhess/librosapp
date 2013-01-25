@@ -56,7 +56,8 @@
 		784D21AE169F3B79003AC6F2 /* StoreVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 784D21AC169F3B79003AC6F2 /* StoreVC.m */; };
 		784D21B2169F432D003AC6F2 /* BookService.m in Sources */ = {isa = PBXBuildFile; fileRef = 784D21B1169F432D003AC6F2 /* BookService.m */; };
 		78CA26E416B1AD81003EC00D /* ReaderPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CA26E316B1AD81003EC00D /* ReaderPageView.m */; };
-		78CA26E816B1DF65003EC00D /* ReaderFrameCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CA26E716B1DF65003EC00D /* ReaderFrameCache.m */; };
+		78CA26E816B1DF65003EC00D /* ReaderFramesetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CA26E716B1DF65003EC00D /* ReaderFramesetter.m */; };
+		78CA26F416B2F6E2003EC00D /* ReaderFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CA26F316B2F6E2003EC00D /* ReaderFormatter.m */; };
 		7E8DDCC9AFCF41519ED19920 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE66A380EC74E55884892D6 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -125,8 +126,10 @@
 		784D21B1169F432D003AC6F2 /* BookService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookService.m; sourceTree = "<group>"; };
 		78CA26E216B1AD81003EC00D /* ReaderPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderPageView.h; sourceTree = "<group>"; };
 		78CA26E316B1AD81003EC00D /* ReaderPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderPageView.m; sourceTree = "<group>"; };
-		78CA26E616B1DF65003EC00D /* ReaderFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderFrameCache.h; sourceTree = "<group>"; };
-		78CA26E716B1DF65003EC00D /* ReaderFrameCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderFrameCache.m; sourceTree = "<group>"; };
+		78CA26E616B1DF65003EC00D /* ReaderFramesetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderFramesetter.h; sourceTree = "<group>"; };
+		78CA26E716B1DF65003EC00D /* ReaderFramesetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderFramesetter.m; sourceTree = "<group>"; };
+		78CA26F216B2F6E2003EC00D /* ReaderFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderFormatter.h; sourceTree = "<group>"; };
+		78CA26F316B2F6E2003EC00D /* ReaderFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderFormatter.m; sourceTree = "<group>"; };
 		85FD0834AAB242A7BA71588D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		DFE66A380EC74E55884892D6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -167,8 +170,10 @@
 				781EF88816A9C69F000CB62E /* ReaderVC.xib */,
 				78CA26E216B1AD81003EC00D /* ReaderPageView.h */,
 				78CA26E316B1AD81003EC00D /* ReaderPageView.m */,
-				78CA26E616B1DF65003EC00D /* ReaderFrameCache.h */,
-				78CA26E716B1DF65003EC00D /* ReaderFrameCache.m */,
+				78CA26E616B1DF65003EC00D /* ReaderFramesetter.h */,
+				78CA26E716B1DF65003EC00D /* ReaderFramesetter.m */,
+				78CA26F216B2F6E2003EC00D /* ReaderFormatter.h */,
+				78CA26F316B2F6E2003EC00D /* ReaderFormatter.m */,
 			);
 			name = Reader;
 			sourceTree = "<group>";
@@ -495,7 +500,8 @@
 				781EF88316A9BE65000CB62E /* _File.m in Sources */,
 				781EF88916A9C69F000CB62E /* ReaderVC.m in Sources */,
 				78CA26E416B1AD81003EC00D /* ReaderPageView.m in Sources */,
-				78CA26E816B1DF65003EC00D /* ReaderFrameCache.m in Sources */,
+				78CA26E816B1DF65003EC00D /* ReaderFramesetter.m in Sources */,
+				78CA26F416B2F6E2003EC00D /* ReaderFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

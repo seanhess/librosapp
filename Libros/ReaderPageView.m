@@ -29,7 +29,7 @@
     return self;
 }
 
--(void)setFrameFromCache:(ReaderFrameCache*)cache chapter:(NSInteger)chapter page:(NSInteger)page {
+-(void)setFrameFromCache:(ReaderFramesetter*)cache chapter:(NSInteger)chapter page:(NSInteger)page {
     if (self.chapter == chapter && self.page == page)
         return;
     

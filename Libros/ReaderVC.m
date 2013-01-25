@@ -10,11 +10,9 @@
 #import "BookService.h"
 #import "FileService.h"
 #import "ReaderPageView.h"
-#import "ReaderFrameCache.h"
+#import "ReaderFramesetter.h"
+#import "ReaderFormatter.h"
 #import <CoreText/CoreText.h>
-
-#define FRAME_X_OFFSET 20
-#define FRAME_Y_OFFSET 20
 
 #define DRAG_GRAVITY 15
 
@@ -49,10 +47,10 @@ ReaderLocation ReaderLocationInvalid() {
 @property (strong, nonatomic) ReaderPageView * nextPageView;
 @property (nonatomic) CGRect nextPageStartFrame;
 
-@property (strong, nonatomic) id framesetter;
 @property (nonatomic) ReaderLocation location;
 
-@property (strong, nonatomic) ReaderFrameCache * frameCache;
+@property (strong, nonatomic) ReaderFramesetter * framesetter;
+@property (strong, nonatomic) ReaderFormatter * formatter;
 @property (strong, nonatomic) NSArray * files;
 
 @property (nonatomic) CGPoint startTouchPoint;
@@ -77,9 +75,13 @@ ReaderLocation ReaderLocationInvalid() {
     
     self.title = self.book.title;
     self.files = [[FileService shared] byBookId:self.book.bookId];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
     
     // INITIALIZE
-    self.frameCache = [ReaderFrameCache new];
+    self.formatter = [ReaderFormatter new];
+    self.formatter.files = self.files;
+    self.framesetter = [ReaderFramesetter new];
+    self.framesetter.formatter = self.formatter;
     self.location = ReaderLocationMake(0, 0);
     [self initPages];
     // TOO EARLY TO DRAW! Widths are wrong
@@ -88,18 +90,20 @@ ReaderLocation ReaderLocationInvalid() {
 - (void)viewWillAppear:(BOOL)animated {
     NSLog(@"VIEW WILL APPEAR %@", NSStringFromCGSize(self.view.bounds.size));
     
+    self.framesetter.bounds = self.view.bounds;
+    
     self.leftPageView.frame = self.leftFrame;
     self.currentPageView.frame = self.mainFrame;
     self.rightPageView.frame = self.rightFrame;
     
     // load the current stuff!
-    NSArray * frames = [self generateFramesForChapter:self.location.chapter];
-    [self.frameCache setFrames:frames forChapter:self.location.chapter];
-    [self.currentPageView setFrameFromCache:self.frameCache chapter:self.location.chapter page:self.location.page];
+    [self.framesetter ensureFramesForChapter:self.location.chapter];
+    [self.currentPageView setFrameFromCache:self.framesetter chapter:self.location.chapter page:self.location.page];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 //    [self buildFrames];
+    self.framesetter.bounds = self.view.bounds;
 }
 
 - (void)didReceiveMemoryWarning
@@ -107,7 +111,7 @@ ReaderLocation ReaderLocationInvalid() {
     [super didReceiveMemoryWarning];
     
     // Dispose of any resources that can be recreated.
-    [self.frameCache emptyExceptChapter:self.location.chapter];
+    [self.framesetter emptyExceptChapter:self.location.chapter];
 }
 
 - (CGRect) leftFrame {
@@ -137,86 +141,10 @@ ReaderLocation ReaderLocationInvalid() {
 }
 
 
-// READER
-// cleans up the text, adds a font and justified alignment, etc
-- (NSMutableAttributedString*)formatText:(NSAttributedString *)text {
-    
-    // JUSTIFIED TEXT
-    CTTextAlignment alignment = kCTJustifiedTextAlignment;
-    CTParagraphStyleSetting settings[] = {
-        {kCTParagraphStyleSpecifierAlignment, sizeof(alignment), &alignment},
-    };
-    CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(settings, sizeof(settings) / sizeof(settings[0]));
-    NSDictionary *attrDictionary = @{
-        (NSString*)kCTParagraphStyleAttributeName : (__bridge id)paragraphStyle
-    };
-    
-    // FONT
-    CTFontRef font = CTFontCreateWithName(CFSTR("Verdana"), 16, NULL);
-    
-    NSMutableAttributedString* stringCopy = [[NSMutableAttributedString alloc] initWithAttributedString:text];
-    [stringCopy addAttributes:attrDictionary range:NSMakeRange(0, [text length])];
-    [stringCopy addAttribute:(NSString*)kCTFontAttributeName value:(__bridge id)font range:NSMakeRange(0, stringCopy.length)];
-    
-    return stringCopy;
-}
 
--(NSAttributedString*)textForChapter:(NSInteger)chapter {
-    NSString * bookPlainString = [[FileService shared] readAsText:self.files[chapter]];
-    NSMutableAttributedString * chapterText = [self formatText:[[NSAttributedString alloc] initWithString:bookPlainString]];
-    [chapterText insertAttributedString:[self chapterHeading:chapter] atIndex:0];
-    return chapterText;
-}
-
--(NSAttributedString*)chapterHeading:(NSInteger)chapter {
-    File* file = self.files[chapter];
-    CTFontRef font = CTFontCreateWithName(CFSTR("Verdana-Bold"), 24, NULL);
-    NSString * headerWithNewline = [NSString stringWithFormat:@"%@\n\n", file.name];
-    
-    
-    // Alignment
-    CTTextAlignment alignment = kCTCenterTextAlignment;
-    CTParagraphStyleSetting settings[] = {
-        {kCTParagraphStyleSpecifierAlignment, sizeof(alignment), &alignment},
-    };
-    CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(settings, sizeof(settings) / sizeof(settings[0]));
-    
-    NSMutableAttributedString * heading = [[NSMutableAttributedString alloc] initWithString:headerWithNewline];
-    NSRange fullRange = NSMakeRange(0, heading.length);
-    [heading addAttribute:(NSString*)kCTFontAttributeName value:(__bridge id)font range:fullRange];
-    [heading addAttribute:(NSString*)kCTParagraphStyleAttributeName value:(__bridge id)paragraphStyle range:fullRange];
-    return heading;
-}
-
--(NSMutableArray*)generateFramesForChapter:(NSInteger)chapter {
-    NSInteger location = 0;
-    
-    NSAttributedString * text = [self textForChapter:chapter];
-
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)text);
-    self.framesetter = (__bridge id)framesetter;
-    CFRelease(framesetter);
-    
-    NSMutableArray * frames = [NSMutableArray array];
-    
-    while(location < text.length) {
-        NSLog(@"GENERATING for chapter=%i location=%i", chapter, location);
-        CGMutablePathRef path = CGPathCreateMutable();
-        CGRect insetFrame = CGRectInset(self.view.bounds, FRAME_X_OFFSET, FRAME_Y_OFFSET);
-        CGPathAddRect(path, NULL, insetFrame);
-        
-        CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(location, 0), path, NULL);
-        [frames addObject:(__bridge id)frame];
-        location += CTFrameGetVisibleStringRange(frame).length;
-        CFRelease(frame);
-        CFRelease(path);
-    }
-    
-    return frames;
-}
 
 - (ReaderLocation)next:(ReaderLocation)location {
-    if (location.page+1 < [self.frameCache pagesForChapter:location.chapter]) {
+    if (location.page+1 < [self.framesetter pagesForChapter:location.chapter]) {
         location.page += 1;
         return location;
     }
@@ -225,9 +153,8 @@ ReaderLocation ReaderLocationInvalid() {
         if (nextChapter >= self.files.count)
             return ReaderLocationInvalid();
         else {
-            if (![self.frameCache hasFramesForChapter:nextChapter])
-                [self.frameCache setFrames:[self generateFramesForChapter:nextChapter] forChapter:nextChapter];
-            return ReaderLocationMake(location.chapter + 1, 0);
+            [self.framesetter ensureFramesForChapter:nextChapter];
+            return ReaderLocationMake(nextChapter, 0);
         }
     }
 }
@@ -240,11 +167,8 @@ ReaderLocation ReaderLocationInvalid() {
     else {
         NSInteger previousChapter = location.chapter - 1;
         if (previousChapter < 0) return ReaderLocationInvalid();
-        
-        if (![self.frameCache hasFramesForChapter:previousChapter])
-            [self.frameCache setFrames:[self generateFramesForChapter:previousChapter] forChapter:previousChapter];
-        
-        return ReaderLocationMake(previousChapter, [self.frameCache pagesForChapter:previousChapter]-1);
+        [self.framesetter ensureFramesForChapter:previousChapter];
+        return ReaderLocationMake(previousChapter, [self.framesetter pagesForChapter:previousChapter]-1);
     }
 }
 
@@ -279,19 +203,12 @@ ReaderLocation ReaderLocationInvalid() {
             self.nextPageStartFrame = self.leftFrame;
         }
         
-        NSLog(@"DRAGGING!");
         self.dragging = YES;
-        [self.nextPageView setFrameFromCache:self.frameCache chapter:nextLocation.chapter page:nextLocation.page];
+        [self.nextPageView setFrameFromCache:self.framesetter chapter:nextLocation.chapter page:nextLocation.page];
         
     }
     
     if (self.dragging) {
-        // Main + One other one (right or left)
-        // Save its state on it?
-        // yeah, set the chapter and page ON the view
-        
-        // just render them all right now, no matters whats
-//        self.nextPageView.backgroundColor = [UIColor redColor];
         CGRect nextFrame = self.nextPageView.frame;
         nextFrame.origin.x = self.nextPageStartFrame.origin.x + dx;
         self.nextPageView.frame = nextFrame;
@@ -332,14 +249,14 @@ ReaderLocation ReaderLocationInvalid() {
         if (point.x > 0.8*self.view.bounds.size.width) {
             ReaderLocation nextLocation = [self next:self.location];
             if (![self isValidLocation:nextLocation]) return;
-            [self.rightPageView setFrameFromCache:self.frameCache chapter:nextLocation.chapter page:nextLocation.page];
+            [self.rightPageView setFrameFromCache:self.framesetter chapter:nextLocation.chapter page:nextLocation.page];
             [self animatePageTurn:^{ [self moveRight]; }];
         }
         
         else if (point.x < 0.2*self.view.bounds.size.width) {
             ReaderLocation nextLocation = [self prev:self.location];
             if (![self isValidLocation:nextLocation]) return;
-            [self.leftPageView setFrameFromCache:self.frameCache chapter:nextLocation.chapter page:nextLocation.page];
+            [self.leftPageView setFrameFromCache:self.framesetter chapter:nextLocation.chapter page:nextLocation.page];
             [self animatePageTurn:^{ [self moveLeft]; }];
         }
     }
@@ -377,72 +294,5 @@ ReaderLocation ReaderLocationInvalid() {
     self.rightPageView.frame = self.rightFrame;
 }
 
-
-
-
-/*
-
-- (void)nextPage {
-    
-    if (![self setNextPage]) return;
-    
-    ReaderPageView * nextPageView = [self getAvailablePage];
-    [nextPageView renderFrame:[self frameForPage:self.currentPage]];
-    
-    
-    
-    CGRect frame = self.view.bounds;
-    frame.origin.x = frame.size.width;
-    nextPageView.frame = frame;
-    
-    [UIView beginAnimations:@"nextPage" context:nil];
-
-    frame.origin.x = 0;
-    nextPageView.frame = frame;
-    
-    frame.origin.x = -frame.size.width;
-    self.currentPageView.frame = frame;
-    
-    [UIView commitAnimations];
-    
-    [self doneAvailablePage:self.currentPageView];
-    self.currentPageView = nextPageView;
-}
-
-- (void)prevPage {
-    
-    if (![self setPrevPage]) return;
-    
-    ReaderPageView * nextPageView = [self getAvailablePage];
-    [nextPageView renderFrame:[self frameForPage:self.currentPage]];
-    
-    
-    
-    CGRect frame = self.view.bounds;
-    frame.origin.x = -frame.size.width;
-    nextPageView.frame = frame;
-    
-    [UIView beginAnimations:@"prevPage" context:nil];
-    
-    frame.origin.x = 0;
-    nextPageView.frame = frame;
-    
-    frame.origin.x = frame.size.width;
-    self.currentPageView.frame = frame;
-    
-    [UIView commitAnimations];
-    
-    [self doneAvailablePage:self.currentPageView];
-    self.currentPageView = nextPageView;
-}
-
-// A tap gesture on the right side = next page!
-- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    UITouch * touch = [touches anyObject];
-    CGPoint point = [touch locationInView:self.view];
-
-}
-
-*/
 
 @end
