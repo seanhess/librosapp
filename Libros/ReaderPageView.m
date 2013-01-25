@@ -23,33 +23,19 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
+        self.chapter = -1;
+        self.page = -1;
     }
     return self;
 }
 
--(NSInteger)makeFrame:(id)framesetter_ location:(NSInteger)location {
-    // create this once!
+-(void)setFrameFromCache:(ReaderFrameCache*)cache chapter:(NSInteger)chapter page:(NSInteger)page {
+    if (self.chapter == chapter && self.page == page)
+        return;
     
-    CTFramesetterRef framesetter = (__bridge CTFramesetterRef)framesetter_;
-    
-    // Draw the first page!
-    CGMutablePathRef path = CGPathCreateMutable();
-    CGRect insetFrame = CGRectInset(self.bounds, self.frameXOffset, self.frameYOffset);
-    CGPathAddRect(path, NULL, insetFrame);
-    
-    CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(location, 0), path, NULL);
-    self.ctFrame = (__bridge id)frame;
-    self.hidden = NO;
-    [self setNeedsDisplay];
-    
-    CFRelease(frame);
-    CFRelease(path);
-    
-    return CTFrameGetVisibleStringRange(frame).length;
-}
-
--(void)renderFrame:(id)frame {
-    self.ctFrame = frame;
+    self.chapter = chapter;
+    self.page = page;
+    self.ctFrame = [cache frameForChapter:chapter page:page];
     self.hidden = NO;
     [self setNeedsDisplay];
 }

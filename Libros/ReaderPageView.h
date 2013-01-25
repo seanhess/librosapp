@@ -10,13 +10,14 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreText/CoreText.h>
+#import "ReaderFrameCache.h"
 
 @interface ReaderPageView : UIView
 
-@property (nonatomic) CGFloat frameXOffset;
-@property (nonatomic) CGFloat frameYOffset;
+@property (nonatomic) NSInteger chapter;
+@property (nonatomic) NSInteger page;
 
--(NSInteger)makeFrame:(id)framesetter location:(NSInteger)location;
--(void)renderFrame:(id)frame;
+// will only render if it CHANGES
+-(void)setFrameFromCache:(ReaderFrameCache*)cache chapter:(NSInteger)chapter page:(NSInteger)page;
 
 @end

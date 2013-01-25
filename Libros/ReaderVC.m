@@ -9,25 +9,54 @@
 #import "ReaderVC.h"
 #import "BookService.h"
 #import "FileService.h"
-#import "CTColumnView.h"
 #import "ReaderPageView.h"
+#import "ReaderFrameCache.h"
 #import <CoreText/CoreText.h>
 
 #define FRAME_X_OFFSET 20
 #define FRAME_Y_OFFSET 20
 
+#define DRAG_GRAVITY 15
+
+typedef struct {
+    NSInteger chapter;
+    NSInteger page;
+} ReaderLocation;
+
+ReaderLocation ReaderLocationMake(NSInteger chapter, NSInteger page) {
+    ReaderLocation location;
+    location.chapter = chapter;
+    location.page = page;
+    return location;
+}
+
+ReaderLocation ReaderLocationInvalid() {
+    ReaderLocation location;
+    location.chapter = -1;
+    location.page = -1;
+    return location;
+}
+
+
+
 @interface ReaderVC ()
 
-@property (strong, nonatomic) NSMutableArray * availablePages;
+@property (strong, nonatomic) ReaderPageView * leftPageView;
 @property (strong, nonatomic) ReaderPageView * currentPageView;
+@property (strong, nonatomic) ReaderPageView * rightPageView;
+
+// the one currently being dragged on / shown
+@property (strong, nonatomic) ReaderPageView * nextPageView;
+@property (nonatomic) CGRect nextPageStartFrame;
 
 @property (strong, nonatomic) id framesetter;
-@property (nonatomic) NSInteger currentChapter;
-@property (nonatomic) NSInteger currentPage;
+@property (nonatomic) ReaderLocation location;
 
-@property (strong, nonatomic) NSMutableArray * currentChapterFrames;
-
+@property (strong, nonatomic) ReaderFrameCache * frameCache;
 @property (strong, nonatomic) NSArray * files;
+
+@property (nonatomic) CGPoint startTouchPoint;
+@property (nonatomic) BOOL dragging;
 
 @end
 
@@ -47,20 +76,26 @@
     [super viewDidLoad];
     
     self.title = self.book.title;
-    
     self.files = [[FileService shared] byBookId:self.book.bookId];
     
     // INITIALIZE
-    [self createAvailablePages];
-    self.currentChapterFrames = [NSMutableArray array];
-    self.currentPage = 0;
-    self.currentChapter = 0;
+    self.frameCache = [ReaderFrameCache new];
+    self.location = ReaderLocationMake(0, 0);
+    [self initPages];
     // TOO EARLY TO DRAW! Widths are wrong
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     NSLog(@"VIEW WILL APPEAR %@", NSStringFromCGSize(self.view.bounds.size));
-    [self drawPage:self.currentPageView chapter:self.currentChapter page:self.currentPage];
+    
+    self.leftPageView.frame = self.leftFrame;
+    self.currentPageView.frame = self.mainFrame;
+    self.rightPageView.frame = self.rightFrame;
+    
+    // load the current stuff!
+    NSArray * frames = [self generateFramesForChapter:self.location.chapter];
+    [self.frameCache setFrames:frames forChapter:self.location.chapter];
+    [self.currentPageView setFrameFromCache:self.frameCache chapter:self.location.chapter page:self.location.page];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -70,34 +105,37 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    
     // Dispose of any resources that can be recreated.
+    [self.frameCache emptyExceptChapter:self.location.chapter];
 }
 
-
-- (void)createAvailablePages {
-    self.availablePages = [NSMutableArray array];
-    [self createAvailablePage];
-    [self createAvailablePage];
-    self.currentPageView = [self getAvailablePage];
+- (CGRect) leftFrame {
+    CGRect frame = self.view.bounds;
+    frame.origin.x = -frame.size.width;
+    return frame;
 }
 
-- (void)createAvailablePage {
-    ReaderPageView * pageView = [ReaderPageView new];
-    pageView.frameXOffset = 20;
-    pageView.frameYOffset = 20;
-    [self.availablePages addObject:pageView];
-    [self.view addSubview:pageView];
+- (CGRect) mainFrame {
+    return self.view.bounds;
 }
 
-- (ReaderPageView*)getAvailablePage {
-    ReaderPageView * pageView = [self.availablePages lastObject];
-    [self.availablePages removeLastObject];
-    return pageView;
+- (CGRect) rightFrame {
+    CGRect frame = self.view.bounds;
+    frame.origin.x = frame.size.width;
+    return frame;
 }
 
-- (void)doneAvailablePage:(ReaderPageView*)pageView {
-    [self.availablePages addObject:pageView];
+- (void)initPages {
+    self.leftPageView = [[ReaderPageView alloc] initWithFrame:self.leftFrame];
+    self.currentPageView = [[ReaderPageView alloc] initWithFrame:self.mainFrame];
+    self.rightPageView = [[ReaderPageView alloc] initWithFrame:self.rightFrame];
+    
+    [self.view addSubview:self.leftPageView];
+    [self.view addSubview:self.currentPageView];
+    [self.view addSubview:self.rightPageView];
 }
+
 
 // READER
 // cleans up the text, adds a font and justified alignment, etc
@@ -122,25 +160,6 @@
     [stringCopy addAttribute:(NSString*)kCTFontAttributeName value:(__bridge id)font range:NSMakeRange(0, stringCopy.length)];
     
     return stringCopy;
-}
-
-// returns a CTFrame for that chapter, ready to go
-// should we just cache all the frames? I'm creating them anyway
-// no, just cache the locations
-// but then I'll be creating the frames TWICE. that's dumb.
-// alright, discard the whole cache then, each time you load a chapter, if you need to save memory
--(id)frameForPage:(NSInteger)page {
-    return self.currentChapterFrames[page];
-}
-
--(NSInteger)currentChapterPages {
-    return self.currentChapterFrames.count;
-}
-
-// sets the current chapter, wipes the frame cache, and creates new frames!
--(void)switchToChapter:(NSInteger)chapter {
-    self.currentChapter = chapter;
-    self.currentChapterFrames = [self generateFramesForChapter:chapter];
 }
 
 -(NSAttributedString*)textForChapter:(NSInteger)chapter {
@@ -176,12 +195,172 @@
     return frames;
 }
 
-- (void)drawPage:(ReaderPageView*)pageView chapter:(NSInteger)chapter page:(NSInteger)page {
-    pageView.frame = self.view.bounds;
-    [self switchToChapter:chapter];
-    self.currentPage = page;
-    [pageView renderFrame:[self frameForPage:page]];
+- (ReaderLocation)next:(ReaderLocation)location {
+    if (location.page+1 < [self.frameCache pagesForChapter:location.chapter]) {
+        location.page += 1;
+        return location;
+    }
+    else {
+        NSInteger nextChapter = location.chapter + 1;
+        if (nextChapter >= self.files.count)
+            return ReaderLocationInvalid();
+        else {
+            if (![self.frameCache hasFramesForChapter:nextChapter])
+                [self.frameCache setFrames:[self generateFramesForChapter:nextChapter] forChapter:nextChapter];
+            return ReaderLocationMake(location.chapter + 1, 0);
+        }
+    }
 }
+
+- (ReaderLocation)prev:(ReaderLocation)location {
+    if (location.page > 0) {
+        location.page -= 1;
+        return location;
+    }
+    else {
+        NSInteger previousChapter = location.chapter - 1;
+        if (previousChapter < 0) return ReaderLocationInvalid();
+        
+        if (![self.frameCache hasFramesForChapter:previousChapter])
+            [self.frameCache setFrames:[self generateFramesForChapter:previousChapter] forChapter:previousChapter];
+        
+        return ReaderLocationMake(previousChapter, [self.frameCache pagesForChapter:previousChapter]-1);
+    }
+}
+
+- (BOOL)isValidLocation:(ReaderLocation)location {
+    return location.chapter >= 0;
+}
+
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch * touch = [touches anyObject];
+    self.startTouchPoint = [touch locationInView:self.view];
+}
+
+- (void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch * touch = [touches anyObject];
+    CGPoint point = [touch locationInView:self.view];
+    CGFloat dx = point.x - self.startTouchPoint.x;
+    
+    // we don't wnat to reset things
+    if (!self.dragging && abs(dx) > DRAG_GRAVITY) {
+        ReaderLocation nextLocation;
+        if (dx < 0) {
+            nextLocation = [self next:self.location];
+            if (![self isValidLocation:nextLocation]) return;
+            self.nextPageView = self.rightPageView;
+            self.nextPageStartFrame = self.rightFrame;
+        }
+        
+        else {
+            nextLocation = [self prev:self.location];
+            if (![self isValidLocation:nextLocation]) return;
+            self.nextPageView = self.leftPageView;
+            self.nextPageStartFrame = self.leftFrame;
+        }
+        
+        NSLog(@"DRAGGING!");
+        self.dragging = YES;
+        [self.nextPageView setFrameFromCache:self.frameCache chapter:nextLocation.chapter page:nextLocation.page];
+        
+    }
+    
+    if (self.dragging) {
+        // Main + One other one (right or left)
+        // Save its state on it?
+        // yeah, set the chapter and page ON the view
+        
+        // just render them all right now, no matters whats
+//        self.nextPageView.backgroundColor = [UIColor redColor];
+        CGRect nextFrame = self.nextPageView.frame;
+        nextFrame.origin.x = self.nextPageStartFrame.origin.x + dx;
+        self.nextPageView.frame = nextFrame;
+        
+        CGRect mainFrame = self.mainFrame;
+        mainFrame.origin.x = mainFrame.origin.x + dx;
+        self.currentPageView.frame = mainFrame;
+    }
+}
+
+- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch * touch = [touches anyObject];
+    CGPoint point = [touch locationInView:self.view];
+    
+    if (self.dragging) {
+        self.dragging = NO;
+        self.nextPageView = nil;
+        
+        // current page is almost left
+        if (self.currentPageView.frame.origin.x > self.mainFrame.size.width/2) {
+            [self animatePageTurn:^{ [self moveLeft]; }];
+        }
+        
+        // center
+        else if (self.currentPageView.frame.origin.x > -self.mainFrame.size.width/2) {
+            [self animatePageTurn:^{ [self moveHome]; }];
+        }
+        
+        // right
+        else {
+            [self animatePageTurn:^{ [self moveRight]; }];
+        }
+    }
+    
+    else {
+        // check for taps
+        
+        if (point.x > 0.8*self.view.bounds.size.width) {
+            ReaderLocation nextLocation = [self next:self.location];
+            if (![self isValidLocation:nextLocation]) return;
+            [self.rightPageView setFrameFromCache:self.frameCache chapter:nextLocation.chapter page:nextLocation.page];
+            [self animatePageTurn:^{ [self moveRight]; }];
+        }
+        
+        else if (point.x < 0.2*self.view.bounds.size.width) {
+            ReaderLocation nextLocation = [self prev:self.location];
+            if (![self isValidLocation:nextLocation]) return;
+            [self.leftPageView setFrameFromCache:self.frameCache chapter:nextLocation.chapter page:nextLocation.page];
+            [self animatePageTurn:^{ [self moveLeft]; }];
+        }
+    }
+}
+
+- (void)animatePageTurn:(void(^)(void))animations {
+    [UIView animateWithDuration:0.2 animations:animations completion: ^(BOOL finished) {
+         [self moveHome];
+    }];
+}
+
+- (void)moveRight {
+    self.rightPageView.frame = self.mainFrame;
+    self.currentPageView.frame = self.leftFrame;
+    self.location = [self next:self.location];
+    
+    ReaderPageView * rightPageView = self.rightPageView;
+    self.rightPageView = self.currentPageView;
+    self.currentPageView = rightPageView;
+}
+
+- (void)moveLeft {
+    self.location = [self prev:self.location];
+    self.leftPageView.frame = self.mainFrame;
+    self.currentPageView.frame = self.rightFrame;
+    
+    ReaderPageView * leftPageView = self.leftPageView;
+    self.leftPageView = self.currentPageView;
+    self.currentPageView = leftPageView;
+}
+
+- (void)moveHome {
+    self.currentPageView.frame = self.mainFrame;
+    self.leftPageView.frame = self.leftFrame;
+    self.rightPageView.frame = self.rightFrame;
+}
+
+
+
+
+/*
 
 - (void)nextPage {
     
@@ -237,56 +416,13 @@
     self.currentPageView = nextPageView;
 }
 
-// sets the next/previous page, then reverts and does nothing if they aren't valid?
-- (BOOL)setNextPage {
-    // advance the page
-    NSInteger nextPage = self.currentPage + 1;
-    if (nextPage >= [self currentChapterPages]) {
-        nextPage = 0;
-        // generate next page!?
-        NSInteger nextChapter = self.currentChapter + 1;
-        
-        if (nextChapter >= self.files.count)
-            return NO;
-        
-        self.currentChapter = nextChapter;
-        self.currentChapterFrames = [self generateFramesForChapter:nextChapter];
-    }
-    
-    self.currentPage = nextPage;
-    return YES;
-}
-
-- (BOOL)setPrevPage {
-    // rewind the page
-    NSInteger prevPage = self.currentPage - 1;
-    if (prevPage < 0) {
-        NSInteger prevChapter = self.currentChapter - 1;
-        
-        if (prevChapter < 0)
-            return NO;
-        
-        self.currentChapter = prevChapter;
-        self.currentChapterFrames = [self generateFramesForChapter:self.currentChapter];
-        prevPage = [self currentChapterPages] - 1;
-    }
-    
-    self.currentPage = prevPage;
-    return YES;
-}
-
 // A tap gesture on the right side = next page!
 - (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch * touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.view];
-    
-    if (point.x > 0.8*self.view.bounds.size.width) {
-        [self nextPage];
-    }
-    
-    else if (point.x < 0.2*self.view.bounds.size.width) {
-        [self prevPage];
-    }
+
 }
+
+*/
 
 @end
