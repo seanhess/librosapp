@@ -139,11 +139,10 @@ ReaderLocation ReaderLocationInvalid() {
 
 // READER
 // cleans up the text, adds a font and justified alignment, etc
-- (NSAttributedString*)formatText:(NSAttributedString *)text {
+- (NSMutableAttributedString*)formatText:(NSAttributedString *)text {
     
     // JUSTIFIED TEXT
     CTTextAlignment alignment = kCTJustifiedTextAlignment;
-    
     CTParagraphStyleSetting settings[] = {
         {kCTParagraphStyleSpecifierAlignment, sizeof(alignment), &alignment},
     };
@@ -164,8 +163,29 @@ ReaderLocation ReaderLocationInvalid() {
 
 -(NSAttributedString*)textForChapter:(NSInteger)chapter {
     NSString * bookPlainString = [[FileService shared] readAsText:self.files[chapter]];
-    NSAttributedString * bookAttributed = [[NSAttributedString alloc] initWithString:bookPlainString];
-    return [self formatText:bookAttributed];
+    NSMutableAttributedString * chapterText = [self formatText:[[NSAttributedString alloc] initWithString:bookPlainString]];
+    [chapterText insertAttributedString:[self chapterHeading:chapter] atIndex:0];
+    return chapterText;
+}
+
+-(NSAttributedString*)chapterHeading:(NSInteger)chapter {
+    File* file = self.files[chapter];
+    CTFontRef font = CTFontCreateWithName(CFSTR("Verdana-Bold"), 24, NULL);
+    NSString * headerWithNewline = [NSString stringWithFormat:@"%@\n\n", file.name];
+    
+    
+    // Alignment
+    CTTextAlignment alignment = kCTCenterTextAlignment;
+    CTParagraphStyleSetting settings[] = {
+        {kCTParagraphStyleSpecifierAlignment, sizeof(alignment), &alignment},
+    };
+    CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(settings, sizeof(settings) / sizeof(settings[0]));
+    
+    NSMutableAttributedString * heading = [[NSMutableAttributedString alloc] initWithString:headerWithNewline];
+    NSRange fullRange = NSMakeRange(0, heading.length);
+    [heading addAttribute:(NSString*)kCTFontAttributeName value:(__bridge id)font range:fullRange];
+    [heading addAttribute:(NSString*)kCTParagraphStyleAttributeName value:(__bridge id)paragraphStyle range:fullRange];
+    return heading;
 }
 
 -(NSMutableArray*)generateFramesForChapter:(NSInteger)chapter {
