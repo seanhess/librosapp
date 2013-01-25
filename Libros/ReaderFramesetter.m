@@ -6,9 +6,13 @@
 //  Copyright (c) 2013 Sean Hess. All rights reserved.
 //
 
+// TODO needs to store text positions for each page too
+// locationForPage:(NSInteger)page
+// pageNearestLocation:(NSInteger)location
 
 #import "ReaderFramesetter.h"
 #import "ReaderFormatter.h"
+#import "ReaderPage.h"
 #import <CoreText/CoreText.h>
 
 #define FRAME_X_OFFSET 25
@@ -32,17 +36,14 @@
     return [NSNumber numberWithInteger:chapter];
 }
 
--(void)setFrames:(NSArray *)frames forChapter:(NSInteger)chapter {
-    self.chapters[[self key:chapter]] = frames;
-}
-
--(BOOL)hasFramesForChapter:(NSInteger)chapter {
+-(BOOL)hasPagesForChapter:(NSInteger)chapter {
     if (chapter < self.chapters.count && self.chapters[[self key:chapter]]) return YES;
     return NO;
 }
 
--(id)frameForChapter:(NSInteger)chapter page:(NSInteger)page {
-    return self.chapters[[self key:chapter]][page];
+-(id)pageForChapter:(NSInteger)c page:(NSInteger)p {
+    ReaderPage * page = self.chapters[[self key:c]][p];
+    return page.frame;
 }
 
 -(NSInteger)pagesForChapter:(NSInteger)chapter {
@@ -59,7 +60,7 @@
     self.chapters = [NSMutableDictionary dictionary];
 }
 
--(NSMutableArray*)generateFramesForChapter:(NSInteger)chapter {
+-(NSMutableArray*)generatePagesForChapter:(NSInteger)chapter {
     NSInteger location = 0;
     
     NSAttributedString * text = [self.formatter textForChapter:chapter];
@@ -67,7 +68,7 @@
     
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)text);
     
-    NSMutableArray * frames = [NSMutableArray array];
+    NSMutableArray * pages = [NSMutableArray array];
     
     while(location < text.length) {
         NSLog(@"GENERATING for chapter=%i location=%i", chapter, location);
@@ -76,21 +77,37 @@
         CGPathAddRect(path, NULL, insetFrame);
         
         CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(location, 0), path, NULL);
-        [frames addObject:(__bridge id)frame];
-        location += CTFrameGetVisibleStringRange(frame).length;
+        NSInteger length = CTFrameGetVisibleStringRange(frame).length;
+        ReaderPage * page = [ReaderPage new];
+        page.frame = (__bridge id)frame;
+        page.range = NSMakeRange(location, length);
+        [pages addObject:page];
+        
+        location += length;
         CFRelease(frame);
         CFRelease(path);
     }
     
     CFRelease(framesetter);
     
-    return frames;
+    return pages;
 }
 
 // if the frames don't exist, generate them!
--(void)ensureFramesForChapter:(NSInteger)chapter {
-    if (![self hasFramesForChapter:chapter])
-        [self setFrames:[self generateFramesForChapter:chapter] forChapter:chapter];
+-(void)ensurePagesForChapter:(NSInteger)chapter {
+    if (![self hasPagesForChapter:chapter])
+        self.chapters[[self key:chapter]] = [self generatePagesForChapter:chapter];
 }
+
+-(CGFloat)percentThroughChapter:(NSInteger)c page:(NSInteger)p {
+    NSArray * pages = self.chapters[[self key:c]];
+    return (CGFloat) p / pages.count;
+}
+
+-(NSInteger)pageForChapter:(NSInteger)c percent:(CGFloat)percent {
+    NSArray * pages = self.chapters[[self key:c]];
+    return roundf(percent * pages.count);
+}
+
 
 @end

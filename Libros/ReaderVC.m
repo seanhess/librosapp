@@ -103,7 +103,7 @@ ReaderLocation ReaderLocationInvalid() {
     self.rightPageView.frame = self.rightFrame;
     
     // load the current stuff!
-    [self.framesetter ensureFramesForChapter:self.location.chapter];
+    [self.framesetter ensurePagesForChapter:self.location.chapter];
     [self.currentPageView setFrameFromCache:self.framesetter chapter:self.location.chapter page:self.location.page];
 }
 
@@ -129,18 +129,18 @@ ReaderLocation ReaderLocationInvalid() {
     }
     
     self.framesetter.bounds = bounds;
+    
+    CGFloat percentProgress = [self.framesetter percentThroughChapter:self.location.chapter page:self.location.page];
+    NSLog(@"PERCENT %f page=%i pages=%i", percentProgress, self.location.page, [self.framesetter pagesForChapter:self.location.chapter]);
     [self.framesetter empty];
-    [self.framesetter ensureFramesForChapter:self.location.chapter];
+    [self.framesetter ensurePagesForChapter:self.location.chapter];
+    self.location = ReaderLocationMake(self.location.chapter, [self.framesetter pageForChapter:self.location.chapter percent:percentProgress]);
+    
     [self.currentPageView setFrameFromCache:self.framesetter chapter:self.location.chapter page:self.location.page];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-//    [self.currentPageView clear];
-////    NSLog(@"DID ROTATE %@", NSStringFromCGRect(self.view.bounds));
-//    self.framesetter.bounds = self.view.bounds;
-//    [self.framesetter empty];
-//    [self.framesetter ensureFramesForChapter:self.location.chapter];
-//    [self.currentPageView setFrameFromCache:self.framesetter chapter:self.location.chapter page:self.location.page];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -189,7 +189,7 @@ ReaderLocation ReaderLocationInvalid() {
         if (nextChapter >= self.files.count)
             return ReaderLocationInvalid();
         else {
-            [self.framesetter ensureFramesForChapter:nextChapter];
+            [self.framesetter ensurePagesForChapter:nextChapter];
             return ReaderLocationMake(nextChapter, 0);
         }
     }
@@ -203,7 +203,7 @@ ReaderLocation ReaderLocationInvalid() {
     else {
         NSInteger previousChapter = location.chapter - 1;
         if (previousChapter < 0) return ReaderLocationInvalid();
-        [self.framesetter ensureFramesForChapter:previousChapter];
+        [self.framesetter ensurePagesForChapter:previousChapter];
         return ReaderLocationMake(previousChapter, [self.framesetter pagesForChapter:previousChapter]-1);
     }
 }

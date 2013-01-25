@@ -58,6 +58,7 @@
 		78CA26E416B1AD81003EC00D /* ReaderPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CA26E316B1AD81003EC00D /* ReaderPageView.m */; };
 		78CA26E816B1DF65003EC00D /* ReaderFramesetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CA26E716B1DF65003EC00D /* ReaderFramesetter.m */; };
 		78CA26F416B2F6E2003EC00D /* ReaderFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CA26F316B2F6E2003EC00D /* ReaderFormatter.m */; };
+		78CA26F716B30E75003EC00D /* ReaderPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CA26F616B30E75003EC00D /* ReaderPage.m */; };
 		7E8DDCC9AFCF41519ED19920 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE66A380EC74E55884892D6 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -130,6 +131,8 @@
 		78CA26E716B1DF65003EC00D /* ReaderFramesetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderFramesetter.m; sourceTree = "<group>"; };
 		78CA26F216B2F6E2003EC00D /* ReaderFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderFormatter.h; sourceTree = "<group>"; };
 		78CA26F316B2F6E2003EC00D /* ReaderFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderFormatter.m; sourceTree = "<group>"; };
+		78CA26F516B30E75003EC00D /* ReaderPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderPage.h; sourceTree = "<group>"; };
+		78CA26F616B30E75003EC00D /* ReaderPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderPage.m; sourceTree = "<group>"; };
 		85FD0834AAB242A7BA71588D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		DFE66A380EC74E55884892D6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -174,6 +177,8 @@
 				78CA26E716B1DF65003EC00D /* ReaderFramesetter.m */,
 				78CA26F216B2F6E2003EC00D /* ReaderFormatter.h */,
 				78CA26F316B2F6E2003EC00D /* ReaderFormatter.m */,
+				78CA26F516B30E75003EC00D /* ReaderPage.h */,
+				78CA26F616B30E75003EC00D /* ReaderPage.m */,
 			);
 			name = Reader;
 			sourceTree = "<group>";
@@ -502,6 +507,7 @@
 				78CA26E416B1AD81003EC00D /* ReaderPageView.m in Sources */,
 				78CA26E816B1DF65003EC00D /* ReaderFramesetter.m in Sources */,
 				78CA26F416B2F6E2003EC00D /* ReaderFormatter.m in Sources */,
+				78CA26F716B30E75003EC00D /* ReaderPage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

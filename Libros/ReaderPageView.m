@@ -45,7 +45,7 @@
     
     self.chapter = chapter;
     self.page = page;
-    self.ctFrame = [cache frameForChapter:chapter page:page];
+    self.ctFrame = [cache pageForChapter:chapter page:page];
     self.hidden = NO;
     [self setNeedsDisplay];
 }
