@@ -3,6 +3,7 @@
     <entity name="Book" representedClassName="Book" syncable="YES">
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bookId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="descriptionText" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="hasAudio" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="hasText" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -23,7 +24,7 @@
         <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Book" inverseName="user" inverseEntity="Book" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Book" positionX="160" positionY="192" width="128" height="165"/>
+        <element name="Book" positionX="160" positionY="192" width="128" height="180"/>
         <element name="File" positionX="160" positionY="192" width="128" height="135"/>
         <element name="User" positionX="160" positionY="192" width="128" height="75"/>
     </elements>

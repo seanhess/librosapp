@@ -2,6 +2,8 @@
 ///<reference path='../types.ts'/>
 
 import r = module('rethinkdb')
+import db = module('./db')
+import q = module('q')
 
 var books = r.table('books')
 
@@ -39,6 +41,24 @@ export function removeBook(bookId:string) {
   return getBook(bookId).del()
 }
 
+export function distinctAuthors() {
+  return books.map(function(book) {
+    return book('author')
+  }).distinct()
+}
+
 export function insertedBook(info:r.InsertResult):IdentifiedBook {
   return {bookId: info.generated_keys[0]}
 }
+
+
+
+function sort(array:any[]) { 
+  return array.sort() 
+}
+
+
+export function getDistinctAuthors():q.IPromise {
+  return db.collect(distinctAuthors()).then(sort)
+}
+

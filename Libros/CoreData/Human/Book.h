@@ -5,4 +5,6 @@
 
 -(NSArray*)allFiles;
 
+-(NSString*)priceString;
+
 @end

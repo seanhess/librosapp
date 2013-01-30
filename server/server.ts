@@ -91,6 +91,13 @@ function err(res:exp.ServerResponse) {
   }
 }
 
+
+app.get('/authors', function(req, res) {
+  db.collect(Book.distinctAuthors())
+  .then(send(res), err(res))
+})
+
+
 app.get('/books', function(req, res) {
   db.collect(Book.allBooks())
   .then(send(res), err(res))

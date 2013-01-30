@@ -27,4 +27,10 @@
     }];
 }
 
+-(NSString*)priceString {
+    NSInteger dollars = floorf(self.priceValue / 100);
+    NSInteger pennies = self.priceValue % 100;
+    return [NSString stringWithFormat:@"%i.%02i", dollars, pennies];
+}
+
 @end

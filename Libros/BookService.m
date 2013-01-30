@@ -33,7 +33,15 @@
 - (void)addMappings {
     RKEntityMapping *bookMapping = [ObjectStore.shared mappingForEntityForName:@"Book"];
     [bookMapping setIdentificationAttributes:@[@"bookId"]];
-    [bookMapping addAttributeMappingsFromArray:[_Book propertyNames]];
+    
+    NSMutableArray * propertyNames = [NSMutableArray arrayWithArray:[_Book propertyNames]];
+    NSIndexSet * indices = [propertyNames indexesOfObjectsPassingTest:^(NSString * name, NSUInteger idx, BOOL * stop) {
+        return [name isEqualToString:@"descriptionText"];
+    }];
+    [propertyNames removeObjectsAtIndexes:indices];
+    
+    [bookMapping addAttributeMappingsFromArray:propertyNames];
+    [bookMapping addAttributeMappingsFromDictionary:@{@"description": @"descriptionText"}];
     
     RKResponseDescriptor * responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:bookMapping pathPattern:@"/books" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
 

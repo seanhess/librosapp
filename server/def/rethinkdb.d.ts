@@ -32,6 +32,8 @@ declare module "rethinkdb" {
     pluck(...keys:string[]):IQuery;
     without(...keys:string[]):IQuery;
     update(updates:Object):IQuery;
+    map(transformer:(obj:IObjectProxy) => any):IQuery;
+    distinct():IQuery;
   }
 
   interface InsertResult {
@@ -84,6 +86,11 @@ declare module "rethinkdb" {
   interface IRow {
     gt(value:any):IRql;
   }
+  
+  interface IObjectProxy {
+    (property:string):IObjectProxy;
+  }
+
 
   interface IRql {}
 

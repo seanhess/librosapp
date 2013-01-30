@@ -6,6 +6,7 @@
 const struct BookAttributes BookAttributes = {
 	.author = @"author",
 	.bookId = @"bookId",
+	.descriptionText = @"descriptionText",
 	.hasAudio = @"hasAudio",
 	.hasText = @"hasText",
 	.price = @"price",
@@ -73,6 +74,13 @@ const struct BookFetchedProperties BookFetchedProperties = {
 
 
 @dynamic bookId;
+
+
+
+
+
+
+@dynamic descriptionText;
 
 
 

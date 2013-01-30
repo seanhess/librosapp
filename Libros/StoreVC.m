@@ -12,6 +12,7 @@
 #import "ObjectStore.h"
 #import "UserService.h"
 #import "StoreBookCell.h"
+#import "StoreDetailsVC.h"
 
 @interface StoreVC ()
 
@@ -33,6 +34,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
 //    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     // Do any additional setup after loading the view from its nib.
     
@@ -70,6 +73,10 @@
 -(IBAction)refresh:(id)sender {
     // [self.tableView reloadData];
     [[BookService shared] loadStore];
+}
+
+-(BOOL)shouldAutorotate {
+    return NO;
 }
 
 
@@ -150,7 +157,13 @@
 {
     // render them differently if so
     Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [UserService.shared addBook:book];
+//    [UserService.shared addBook:book];
+    
+    StoreDetailsVC * details = [StoreDetailsVC new];
+    self.hidesBottomBarWhenPushed = NO;
+    details.hidesBottomBarWhenPushed = NO;
+    details.book = book;
+    [self.navigationController pushViewController:details animated:YES];
 }
 
 

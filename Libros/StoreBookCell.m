@@ -9,6 +9,7 @@
 #define HORIZONTAL_ICON_SPACE 8
 
 #import "StoreBookCell.h"
+#import "Icons.h"
 
 @interface StoreBookCell ()
 @property (nonatomic, strong) UIImageView * audioIconView;
@@ -25,8 +26,8 @@
 {
     self = [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.textIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"179-notepad.png"]];
-        self.audioIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"120-headphones.png"]];
+        self.textIconView = [[UIImageView alloc] initWithImage:Icons.text];
+        self.audioIconView = [[UIImageView alloc] initWithImage:Icons.audio];
         self.accessoryView = [UIView new];
         [self.accessoryView addSubview:self.textIconView];
         [self.accessoryView addSubview:self.audioIconView];
@@ -77,11 +78,6 @@
     
     return self.accessoryView;
 }
-
-//-(CGRect)leftIconFrame {
-//    return
-//}
-//                
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

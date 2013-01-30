@@ -84,6 +84,47 @@ describe("API", function() {
         })
       })
     })
+
+  })
+
+  describe("authors", function() {
+
+    it('should create a book', function(done) {
+      request.post({url: domain + '/books', json:{}}, (err, rs, body:IBook) => {
+        assert.ifError(err)
+        assert.equal(rs.statusCode, 200, body)
+        assert.ok(body.bookId, "No bookId")
+        this.bookId = body.bookId
+        done()
+      })
+    })
+
+    it('should save the author', function(done) {
+      var book:IBook = {
+        title: "title",
+        bookId: this.bookId,
+        author: "author",
+        genre: "genre",
+        price: 199,
+        description: "description",
+      }
+
+      request.put({url: domain + '/books/' + book.bookId, json:book}, (err, rs) => {
+        assert.ifError(err)
+        assert.equal(rs.statusCode, 200)
+        done()
+      })
+    })
+
+    it('should return unique authors', function(done) {
+      request.get({url: domain + '/authors/', json:true}, (err, rs, authors:string[]) => {
+        assert.ifError(err)
+        assert.equal(rs.statusCode, 200)
+        assert.equal(authors.length, 1)
+        assert.equal(authors[0], "author")
+        done()
+      })
+    })
   })
 
 
