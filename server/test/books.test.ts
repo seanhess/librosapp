@@ -103,11 +103,13 @@ describe("API", function() {
       var book:IBook = {
         title: "title",
         bookId: this.bookId,
-        author: "author",
+        author: "Charles Dickens",
         genre: "genre",
         price: 199,
         description: "description",
       }
+
+      this.book = book
 
       request.put({url: domain + '/books/' + book.bookId, json:book}, (err, rs) => {
         assert.ifError(err)
@@ -120,9 +122,30 @@ describe("API", function() {
       request.get({url: domain + '/authors/', json:true}, (err, rs, authors:string[]) => {
         assert.ifError(err)
         assert.equal(rs.statusCode, 200)
-        assert.equal(authors.length, 1)
-        assert.equal(authors[0], "author")
+        var matchingAuthors = authors.filter((author:string) => author == this.book.author)
+        assert.equal(matchingAuthors.length, 1)
         done()
+      })
+    })
+
+    it('should return books by author', function(done) {
+      request.get({url: domain + '/authors/'+this.book.author+'/books', json:true}, (err, rs, books:IBook[]) => {
+        assert.ifError(err)
+        assert.equal(rs.statusCode, 200)
+        assert.equal(books[0].author, this.book.author)
+        assert.ok(books.filter((book:IBook) => book.bookId == this.book.bookId).length)
+        done()
+      })
+    })
+
+    it('should delete the book', function(done) {
+      request.del({url: domain + '/books/' + this.bookId, json:true}, (err, rs) => {
+        assert.ifError(err)
+        request.get({url: domain + '/books/' + this.bookId, json:true}, (err, rs) => {
+          assert.ifError(err)
+          assert.equal(rs.statusCode, 404)
+          done()
+        })
       })
     })
   })

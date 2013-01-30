@@ -93,10 +93,15 @@ function err(res:exp.ServerResponse) {
 
 
 app.get('/authors', function(req, res) {
-  db.collect(Book.distinctAuthors())
+  //db.collect(Book.distinctAuthors())
+  Book.getDistinctAuthors()
   .then(send(res), err(res))
 })
 
+app.get('/authors/:authorName/books', function(req, res) {
+  Book.getByAuthor(req.params.authorName)
+  .then(send(res), err(res))
+})
 
 app.get('/books', function(req, res) {
   db.collect(Book.allBooks())

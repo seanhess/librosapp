@@ -41,6 +41,10 @@ export function removeBook(bookId:string) {
   return getBook(bookId).del()
 }
 
+export function byAuthor(authorName:string) {
+  return books.filter({author: authorName}).orderBy('title')
+}
+
 export function distinctAuthors() {
   return books.map(function(book) {
     return book('author')
@@ -52,13 +56,18 @@ export function insertedBook(info:r.InsertResult):IdentifiedBook {
 }
 
 
-
 function sort(array:any[]) { 
   return array.sort() 
 }
 
 
+
+
 export function getDistinctAuthors():q.IPromise {
   return db.collect(distinctAuthors()).then(sort)
+}
+
+export function getByAuthor(authorName:string) {
+  return db.collect(byAuthor(authorName))
 }
 
