@@ -6,8 +6,12 @@
   <!--<label>bookId</label>-->
   <!--<div><input disabled ng-model="book.bookId"></div>-->
 
+  <div><a href="/books/{{book.bookId}}" target="_blank">Data</a></div>
+  <br/>
+
   <label>title</label>
   <div><input ng-model="book.title" placeholder="A Tale of Two Cities"/></div>
+
 
   <label>price (cents)</label>
   <div><input ng-model="book.price" placeholder="199"/></div>
@@ -16,10 +20,15 @@
   <div><input ng-model="book.author" placeholder="Charles Dickens"/></div>
 
   <label>genre</label>
-  <div><input ng-model="book.genre"/ placeholder="Comedy"></div>
+  <div><input ng-model="book.genre" placeholder="Comedy"></div>
 
   <label>description</label>
   <div><textarea ng-model="book.description" placeholder="This book is awesome"></textarea></div>
+
+  <label class="type">type</label>
+  <div><input type="checkbox" ng-model="book.hasText"/> Has Text?</div>
+  <div><input type="checkbox" ng-model="book.hasAudio"/> Has Audio?</div>
+
 
   <label>files</label>
   <div class="files" dragupload="onDrop">

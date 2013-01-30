@@ -131,6 +131,7 @@ app.del('/files/:fileId', function(req, res) {
 })
 
 // edit the file metadata. move the file if you change the name?
+// ALSO update the file on s3?
 app.put('/files/:fileId', function(req, res) {
   db.run(File.update(req.params.fileId, req.body))
   .then(ok(res), err(res))

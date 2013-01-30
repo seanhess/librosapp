@@ -89,7 +89,9 @@
     
     
     Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    NSArray * files = [[FileService shared] byBookId:book.bookId];
+//    NSArray * files = [[FileService shared] byBookId:book.bookId];
+//    NSArray * files = [book.files allObjects];
+    NSArray * files = [book allFiles];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@ (%i)", book.title, files.count];
     

@@ -45,8 +45,6 @@
 }
 
 -(NSArray*)byBookId:(NSString *)bookId {
-    
-    // There's only one in the whole system!
     NSFetchRequest * fetch = [NSFetchRequest fetchRequestWithEntityName:@"File"];
     fetch.predicate = [NSPredicate predicateWithFormat:@"bookId == %@", bookId];
     fetch.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
@@ -55,7 +53,6 @@
     NSArray * files = [ObjectStore.shared.context executeFetchRequest:fetch error:&error];
     return files;
 }
-
 
 // Once you already HAVE the files
 -(void)downloadFiles:(NSArray*)files cb:(void(^)(void))cb {

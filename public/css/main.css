@@ -13,6 +13,9 @@ html {
   float: left;
   width: 100px;
 }
+.book_edit label.type {
+  height: 2em;
+}
 .book_edit .files {
   clear: both;
   min-height: 200px;

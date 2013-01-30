@@ -19,13 +19,14 @@ interface IBook {
   price: number; // in cents
   description: string;
 
+  // just make a check box for each one?
+  // angular can set it for me! woot
+  hasAudio: bool;
+  hasText: bool;
+
   //downloads: string; // ?? Or should I do a join?
   //isAudio: bool;
   //isText: bool;
-
-  // when you download a book with both audio and text, it is supposed to appear as TWO books in the system?
-  // need to finish the wireframes to figure this out
-  // also, isAudio and isText are CALCULATED properties
 }
 
 

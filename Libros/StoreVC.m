@@ -11,6 +11,7 @@
 #import "Book.h"
 #import "ObjectStore.h"
 #import "UserService.h"
+#import "StoreBookCell.h"
 
 @interface StoreVC ()
 
@@ -32,7 +33,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+//    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     // Do any additional setup after loading the view from its nib.
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
@@ -50,7 +51,7 @@
     [[BookService shared] loadStore];
     
     [self.fetchedResultsController performFetch:&error];
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,7 +64,7 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 }
 
 -(IBAction)refresh:(id)sender {
@@ -90,15 +91,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"StoreBookCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    StoreBookCell *cell = (StoreBookCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[StoreBookCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     // Configure the cell...
     
     Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = book.title;
+//    cell.textLabel.text = book.title;
+    cell.book = book;
     
     return cell;
 }

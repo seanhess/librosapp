@@ -13,5 +13,7 @@
 @property (strong, nonatomic) NSArray * files;
 
 -(NSAttributedString*)textForChapter:(NSInteger)chapter;
+
+-(NSAttributedString*)textForMarkup:(NSString*)html;
     
 @end

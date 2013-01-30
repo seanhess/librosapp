@@ -51,7 +51,7 @@ angular.module('controllers')
   $scope.removeFile = function(file:IFile) {
     $scope.files = _.without($scope.files, file)
     $http.delete('/files/' + file.fileId).success(function() {
-      //loadFiles()
+       $scope.calculateTypes()
     })
   }
 
@@ -81,6 +81,22 @@ angular.module('controllers')
 
   $scope.isLoading = function(file:IFile) {
     return (file.fileId === undefined || file.fileId === null)
+  }
+
+  $scope.calculateTypes = function() {
+    calculateTypes($scope.book, $scope.files)
+  }
+
+  function filesOfType(files:IFile[], ext:string):IFile[] {
+    return files.filter(function(file:IFile) {
+        return (file.ext == ext)
+    })
+  }
+
+  function calculateTypes(book:IBook, files:IFile[]) {
+    book.hasAudio = filesOfType(files, "mp3").length > 0
+    book.hasText = filesOfType(files, "html").length > 0
+    return book
   }
 
   function toPendingFile(htmlFile:IHTMLFile):IFile {
@@ -114,6 +130,7 @@ angular.module('controllers')
     })
     .success(function(file:IFile) {
        _.extend(pendingFile, file)
+       $scope.calculateTypes()
     })
   }
 })

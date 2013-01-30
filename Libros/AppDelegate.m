@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ObjectStore.h"
+#import "ReaderFormatter.h"
 
 @implementation AppDelegate
 

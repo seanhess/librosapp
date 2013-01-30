@@ -5,7 +5,11 @@
 
 
 extern const struct BookAttributes {
+	__unsafe_unretained NSString *author;
 	__unsafe_unretained NSString *bookId;
+	__unsafe_unretained NSString *hasAudio;
+	__unsafe_unretained NSString *hasText;
+	__unsafe_unretained NSString *price;
 	__unsafe_unretained NSString *title;
 } BookAttributes;
 
@@ -23,6 +27,10 @@ extern const struct BookFetchedProperties {
 
 
 
+
+
+
+
 @interface BookID : NSManagedObjectID {}
 @end
 
@@ -35,10 +43,54 @@ extern const struct BookFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSString* author;
+
+
+//- (BOOL)validateAuthor:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSString* bookId;
 
 
 //- (BOOL)validateBookId:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* hasAudio;
+
+
+@property BOOL hasAudioValue;
+- (BOOL)hasAudioValue;
+- (void)setHasAudioValue:(BOOL)value_;
+
+//- (BOOL)validateHasAudio:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* hasText;
+
+
+@property BOOL hasTextValue;
+- (BOOL)hasTextValue;
+- (void)setHasTextValue:(BOOL)value_;
+
+//- (BOOL)validateHasText:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* price;
+
+
+@property int16_t priceValue;
+- (int16_t)priceValue;
+- (void)setPriceValue:(int16_t)value_;
+
+//- (BOOL)validatePrice:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -81,8 +133,41 @@ extern const struct BookFetchedProperties {
 @interface _Book (CoreDataGeneratedPrimitiveAccessors)
 
 
+- (NSString*)primitiveAuthor;
+- (void)setPrimitiveAuthor:(NSString*)value;
+
+
+
+
 - (NSString*)primitiveBookId;
 - (void)setPrimitiveBookId:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveHasAudio;
+- (void)setPrimitiveHasAudio:(NSNumber*)value;
+
+- (BOOL)primitiveHasAudioValue;
+- (void)setPrimitiveHasAudioValue:(BOOL)value_;
+
+
+
+
+- (NSNumber*)primitiveHasText;
+- (void)setPrimitiveHasText:(NSNumber*)value;
+
+- (BOOL)primitiveHasTextValue;
+- (void)setPrimitiveHasTextValue:(BOOL)value_;
+
+
+
+
+- (NSNumber*)primitivePrice;
+- (void)setPrimitivePrice:(NSNumber*)value;
+
+- (int16_t)primitivePriceValue;
+- (void)setPrimitivePriceValue:(int16_t)value_;
 
 
 
