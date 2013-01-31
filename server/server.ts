@@ -16,7 +16,6 @@ import r = module('rethinkdb')
 
 import Book = module('model/Book')
 import File = module('model/File')
-//import auth = module('auth/control')
 
 function dbError(err) {
   throw new Error("RETHINKDB: " + err.message)
@@ -34,7 +33,7 @@ function connectdb(dbname:string) {
         conn.run(Book.init(db), ignoreError)
         conn.run(File.init(db), ignoreError)
       })
-  },dbError)
+  }, dbError)
 }
 
 export var app:exp.ServerApplication = exp()
@@ -90,6 +89,21 @@ function err(res:exp.ServerResponse) {
     res.send(500, err.message)
   }
 }
+
+
+app.get('/genres', function(req, res) {
+  db.collect(Book.distinctGenres())
+  .then(send(res), err(res))
+})
+
+app.get('/genres/:name/books', function(req, res) {
+  db.collect(Book.byGenre(req.params.name))
+  .then(send(res), err(res))
+})
+
+
+
+
 
 
 app.get('/authors', function(req, res) {

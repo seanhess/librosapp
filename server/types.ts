@@ -15,7 +15,7 @@ interface IBook {
   bookId: string;
   title: string;
   author: string;
-  genre: string;
+  genre: string; // just the name
   price: number; // in cents
   description: string;
 
@@ -29,4 +29,7 @@ interface IBook {
   //isText: bool;
 }
 
+interface IGenre {
+  name: string;
+}
 

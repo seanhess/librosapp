@@ -45,6 +45,20 @@ export function byAuthor(authorName:string) {
   return books.filter({author: authorName}).orderBy('title')
 }
 
+export function byGenre(name:string) {
+  return books.filter({genre: name}).orderBy('title')
+}
+
+export function distinctGenres() {
+  return books
+  .filter(function(book) {
+    return book.contains('genre')
+  })
+  .map(function(book) {
+    return book('genre')
+  }).distinct()
+}
+
 export function distinctAuthors() {
   return books.map(function(book) {
     return book('author')

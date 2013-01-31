@@ -2,17 +2,23 @@
 
 <!--<pre>{{books}}</pre>-->
 
-<table>
-  <!--<tr>-->
-    <!--<th></th>-->
-    <!--<th>Title</th>-->
-  <!--</tr>-->
-  <tr ng-repeat="book in books">
-    <!--<td><a ng-click="remove(book)">x</a></td>-->
-    <td><a href="/admin/books/{{book.bookId}}">{{book.title}}</a></td>
-  </tr>
-</table>
-<p><a ng-click="createBook()">Add Book</a></p>
+<div class="genres">
+  <h3>Genres</h3>
+  <div ng-repeat="genre in genres">
+    <a href="x">x</a><span>{{genre}}</span>
+  </div>
+
+  <p><input ng-model="newGenre"><button ng-click="createGenre()">Add Genre</button></p>
+</div>
+
+<div class="books">
+<h3>Books</h3>
+<div ng-repeat="book in books">
+  <a href="/admin/books/{{book.bookId}}">{{book.title}}</a>
+</div>
+<p><button ng-click="createBook()">Add Book</button></p>
+</div>
+
 
 <!-- 
 LIST

@@ -3,7 +3,10 @@
 interface AdminScope extends ng.IScope {
   message: string;
   books: any[];
+  genres: any[];
   createBook();
+  createGenre();
+  newGenre:string;
 }
 
 angular.module('controllers')
@@ -15,12 +18,20 @@ angular.module('controllers')
     $http.get('/books').success(function(books) {
       $scope.books = books
     })
+
+    $http.get('/genres').success(function(genres) {
+      $scope.genres = genres
+    })
   }
 
   $scope.createBook = function() {
-    $http.post("/books/", {}).
-      success(function(book) {
-        $location.path("/admin/books/" + book.bookId)
-      })
+    $http.post("/books/", {}).success(function(book) {
+      $location.path("/admin/books/" + book.bookId)
+    })
+  }
+
+  $scope.createGenre = function() {
+    // expects a json encoded string of genres?
+    $http.post("/genres/", JSON.stringify($scope.newGenre)).success(load)
   }
 })
