@@ -91,6 +91,9 @@ function err(res:exp.ServerResponse) {
 }
 
 
+// should I pretend that these are full objects?
+// definitely makes it easier for my other system eh?
+// don't have to store them that way!
 app.get('/genres', function(req, res) {
   Book.getDistinctGenres()
   .then(send(res), err(res))
@@ -100,9 +103,6 @@ app.get('/genres/:name/books', function(req, res) {
   db.collect(Book.byGenre(req.params.name))
   .then(send(res), err(res))
 })
-
-
-
 
 
 
@@ -116,6 +116,9 @@ app.get('/authors/:authorName/books', function(req, res) {
   Book.getByAuthor(req.params.authorName)
   .then(send(res), err(res))
 })
+
+
+
 
 app.get('/books', function(req, res) {
   db.collect(Book.allBooks())

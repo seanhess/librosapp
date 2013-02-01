@@ -119,10 +119,10 @@ describe("API", function() {
     })
 
     it('should return unique authors', function(done) {
-      request.get({url: domain + '/authors/', json:true}, (err, rs, authors:string[]) => {
+      request.get({url: domain + '/authors/', json:true}, (err, rs, authors:IAuthor[]) => {
         assert.ifError(err)
         assert.equal(rs.statusCode, 200)
-        var matchingAuthors = authors.filter((author:string) => author == this.book.author)
+        var matchingAuthors = authors.filter((author:IAuthor) => author.name == this.book.author)
         assert.equal(matchingAuthors.length, 1)
         done()
       })
@@ -187,10 +187,10 @@ describe("API", function() {
     })
 
     it('should return unique genres', function(done) {
-      request.get({url: domain + '/genres/', json:true}, (err, rs, genres:string[]) => {
+      request.get({url: domain + '/genres/', json:true}, (err, rs, genres:IGenre[]) => {
         assert.ifError(err)
         assert.equal(rs.statusCode, 200)
-        var matchingGenres = genres.filter((genre:string) => genre == this.book.genre)
+        var matchingGenres = genres.filter((genre:IGenre) => genre.name == this.book.genre)
         assert.equal(matchingGenres.length, 1)
         done()
       })

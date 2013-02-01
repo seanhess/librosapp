@@ -4,6 +4,7 @@
 import r = module('rethinkdb')
 import db = module('./db')
 import q = module('q')
+import f = module('../service/functional')
 
 var books = r.table('books')
 
@@ -69,20 +70,20 @@ export function insertedBook(info:r.InsertResult):IdentifiedBook {
   return {bookId: info.generated_keys[0]}
 }
 
-
-function sort(array:any[]) { 
-  return array.sort() 
+function toNamedObject(name:string):INamedObject {
+  return {name: name}
 }
 
-
-
-
 export function getDistinctAuthors():q.IPromise {
-  return db.collect(distinctAuthors()).then(sort)
+  return db.collect(distinctAuthors())
+  .then(f.sort)
+  .then(f.map(toNamedObject))
 }
 
 export function getDistinctGenres() {
-  return db.collect(distinctGenres()).then(sort)
+  return db.collect(distinctGenres())
+  .then(f.sort)
+  .then(f.map(toNamedObject))
 }
 
 export function getByAuthor(authorName:string) {

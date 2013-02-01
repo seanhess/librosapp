@@ -29,7 +29,10 @@ interface IBook {
   //isText: bool;
 }
 
-interface IGenre {
+// a string masquerading as an object. Name is considered the primary key
+interface INamedObject {
   name: string;
 }
 
+interface IAuthor extends INamedObject {}
+interface IGenre extends INamedObject {}
