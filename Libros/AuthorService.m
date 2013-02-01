@@ -60,7 +60,7 @@
 }
 
 -(NSPredicate*)searchForText:(NSString*)text {
-    return [NSPredicate predicateWithFormat:@"name == %@", text];
+    return [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", [text lowercaseString]];
 }
 
 @end

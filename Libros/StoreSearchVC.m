@@ -38,7 +38,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self.searchBar becomeFirstResponder];
     
     self.authorResults = [[NSFetchedResultsController alloc] initWithFetchRequest:AuthorService.shared.allAuthors managedObjectContext:ObjectStore.shared.context sectionNameKeyPath:nil cacheName:nil];
@@ -47,12 +46,9 @@
 
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)performSearch:(NSString*)searchText {
-    NSLog(@"SEARCH! %@", searchText);
     NSError * error = nil;
     self.authorResults.fetchRequest.predicate = [AuthorService.shared searchForText:searchText];
     self.bookResults.fetchRequest.predicate = [BookService.shared searchForText:searchText];
@@ -128,7 +124,6 @@
     NSIndexPath * innerIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
     
     if (fetchedResults == self.authorResults) {
-        NSLog(@"AUTHOR %i", [self tableView:tableView numberOfRowsInSection:0]);
         Author * author = [fetchedResults objectAtIndexPath:innerIndexPath];
         StoreBookResultsVC * results = [StoreBookResultsVC new];
         results.fetchRequest = [[AuthorService shared] booksByAuthor:author.name];
@@ -148,19 +143,15 @@
 #pragma UISearchBarDelegate
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    NSLog(@"CHANGED %@", searchBar.text);
-    [self performSearch:searchBar.text];
+    // if the search has at least 3 letters!
+    if (searchText.length >= 3)
+        [self performSearch:searchBar.text];
+    else [self performSearch:@""];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    NSLog(@"BUTTON CLICKED %@", searchBar.text);
     [searchBar resignFirstResponder];
     [self performSearch:searchBar.text];
-}
-
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
-    NSLog(@"DID END EDITING");
-//    [searchBar resignFirstResponder];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar {

@@ -4,14 +4,14 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Book" representedClassName="Book" syncable="YES">
-        <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="author" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="bookId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="descriptionText" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="genre" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="genre" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="hasAudio" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="hasText" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="files" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="File" inverseName="book" inverseEntity="File" syncable="YES"/>
         <relationship name="user" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="books" inverseEntity="User" syncable="YES"/>
     </entity>
@@ -31,10 +31,10 @@
         <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Book" inverseName="user" inverseEntity="Book" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Author" positionX="160" positionY="192" width="128" height="60"/>
         <element name="Book" positionX="160" positionY="192" width="128" height="195"/>
         <element name="File" positionX="160" positionY="192" width="128" height="135"/>
-        <element name="User" positionX="160" positionY="192" width="128" height="75"/>
-        <element name="Author" positionX="160" positionY="192" width="128" height="60"/>
         <element name="Genre" positionX="160" positionY="192" width="128" height="60"/>
+        <element name="User" positionX="160" positionY="192" width="128" height="75"/>
     </elements>
 </model>

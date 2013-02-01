@@ -76,7 +76,7 @@
 }
 
 -(NSPredicate*)searchForText:(NSString*)text {
-    return [NSPredicate predicateWithFormat:@"title == %@", text];
+    return [NSPredicate predicateWithFormat:@"title BEGINSWITH[c] %@", [text lowercaseString]];
 }
 
 @end
