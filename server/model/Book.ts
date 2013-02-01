@@ -81,7 +81,12 @@ export function getDistinctAuthors():q.IPromise {
   return db.collect(distinctAuthors()).then(sort)
 }
 
+export function getDistinctGenres() {
+  return db.collect(distinctGenres()).then(sort)
+}
+
 export function getByAuthor(authorName:string) {
   return db.collect(byAuthor(authorName))
 }
+
 

@@ -92,7 +92,7 @@ function err(res:exp.ServerResponse) {
 
 
 app.get('/genres', function(req, res) {
-  db.collect(Book.distinctGenres())
+  Book.getDistinctGenres()
   .then(send(res), err(res))
 })
 
