@@ -48,7 +48,6 @@
     [ObjectStore.shared addResponseDescriptor:responseDescriptor];
 }
 
-
 // So you can compose with compoundPredicates. Wahoo.
 // Or just let the dumb view controllers do whatever they want. it's not THAT bad
 // not that great either
@@ -63,22 +62,12 @@
     }];
 }
 
-//+(void)installInitialBooks:(void(^)(void)) {
-//    [self initialBooks:(NSArray*books) {
-//        
-//    }];
-//}
 
--(void)myBooks:(void (^)(NSArray *))cb {
-    
-//    [self initialBooks:cb];
-    cb(@[]);
-    
-//    return;
-//    NSError * error = nil;
-//    NSFetchRequest * request = [self request];
-//    NSArray * books = [context executeFetchRequest:request error:&error];
-//    cb(books);
+-(NSFetchRequest*)popular {
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
+    fetchRequest.sortDescriptors = @[descriptor];
+    return fetchRequest;
 }
 
 @end

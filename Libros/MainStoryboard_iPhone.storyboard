@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2844" systemVersion="12C3006" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="gmo-jD-UXA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C3006" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="gmo-jD-UXA">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
-        <!--StoreVC - Popular-->
+        <!--Store PopularVC - Popular-->
         <scene sceneID="kwl-Wx-tJz">
             <objects>
-                <tableViewController id="Vys-tt-iT2" customClass="StoreVC" sceneMemberID="viewController">
+                <tableViewController id="Vys-tt-iT2" customClass="StorePopularVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="4nN-P5-eku">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -52,10 +52,10 @@
             </objects>
             <point key="canvasLocation" x="-500" y="-1138"/>
         </scene>
-        <!--Table View Controller - Genres-->
+        <!--Store GenresVC - Genres-->
         <scene sceneID="l87-dG-Df4">
             <objects>
-                <tableViewController id="Bsc-WL-kTn" sceneMemberID="viewController">
+                <tableViewController id="Bsc-WL-kTn" customClass="StoreGenresVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="mJH-2G-kfJ">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -149,7 +149,7 @@
         <scene sceneID="f3L-Or-5Ze">
             <objects>
                 <tabBarController definesPresentationContext="YES" id="OOc-pY-1yz" sceneMemberID="viewController">
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="UVV-Sz-rk5">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -265,11 +265,14 @@
         <class className="MyBooksVC" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MyBooksVC.h"/>
         </class>
-        <class className="StoreVC" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreVC.h"/>
-            <relationships>
-                <relationship kind="action" name="refresh:"/>
-            </relationships>
+        <class className="StoreBookResultsVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreBookResultsVC.h"/>
+        </class>
+        <class className="StoreGenresVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreGenresVC.h"/>
+        </class>
+        <class className="StorePopularVC" superclassName="StoreBookResultsVC">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/StorePopularVC.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

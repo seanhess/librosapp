@@ -47,9 +47,8 @@
     [self.objectStore createPersistentStoreCoordinator];
     
     NSString *storePath = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"Libros.sqlite"];
-    NSString *seedPath = [[NSBundle mainBundle] pathForResource:@"RKSeedDatabase" ofType:@"sqlite"];
     NSError *error;
-    NSPersistentStore *persistentStore = [self.objectStore addSQLitePersistentStoreAtPath:storePath fromSeedDatabaseAtPath:seedPath withConfiguration:nil options:nil error:&error];
+    NSPersistentStore *persistentStore = [self.objectStore addSQLitePersistentStoreAtPath:storePath fromSeedDatabaseAtPath:nil withConfiguration:nil options:nil error:&error];
     NSAssert(persistentStore, @"Failed to add persistent store with error: %@", error);
     
     [self.objectStore createManagedObjectContexts];

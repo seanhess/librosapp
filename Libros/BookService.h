@@ -11,7 +11,7 @@
 @interface BookService : NSObject
 
 +(BookService*)shared;
--(void)myBooks:(void(^)(NSArray*))cb;
 -(void)loadStore;
+-(NSFetchRequest*)popular;
 
 @end

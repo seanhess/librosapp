@@ -23,7 +23,7 @@
   <div ng-hide="editingNewGenre" class="genre">
     <select 
       ng-model="book.genre"
-      ng-options="genre for genre in genres">
+      ng-options="genre.name as genre.name for genre in genres">
     </select>
     <a ng-click="toggleEditNewGenre()">New Genre</a>
   </div>

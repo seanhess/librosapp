@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface StoreVC : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface StoreBookResultsVC : UITableViewController <NSFetchedResultsControllerDelegate>
 
--(IBAction)refresh:(id)sender;
+@property (strong, nonatomic) NSFetchRequest * fetchRequest;
 
 @end
