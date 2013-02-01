@@ -12,6 +12,9 @@
 
 +(BookService*)shared;
 -(void)loadStore;
+
+-(NSFetchRequest*)allBooks;
 -(NSFetchRequest*)popular;
+-(NSPredicate*)searchForText:(NSString*)text;
 
 @end

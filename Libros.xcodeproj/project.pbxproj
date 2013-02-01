@@ -120,6 +120,7 @@
 		78DAEFA316BC471000A7A840 /* _Genre.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DAEFA116BC471000A7A840 /* _Genre.m */; };
 		78DAEFA816BC471900A7A840 /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DAEFA516BC471900A7A840 /* Author.m */; };
 		78DAEFA916BC471900A7A840 /* Genre.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DAEFA716BC471900A7A840 /* Genre.m */; };
+		78EC890116BC64F500CD0093 /* StoreSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EC890016BC64F500CD0093 /* StoreSearchVC.m */; };
 		7E8DDCC9AFCF41519ED19920 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE66A380EC74E55884892D6 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -270,6 +271,8 @@
 		78DAEFA516BC471900A7A840 /* Author.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Author.m; sourceTree = "<group>"; };
 		78DAEFA616BC471900A7A840 /* Genre.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Genre.h; sourceTree = "<group>"; };
 		78DAEFA716BC471900A7A840 /* Genre.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Genre.m; sourceTree = "<group>"; };
+		78EC88FF16BC64F500CD0093 /* StoreSearchVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreSearchVC.h; sourceTree = "<group>"; };
+		78EC890016BC64F500CD0093 /* StoreSearchVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreSearchVC.m; sourceTree = "<group>"; };
 		85FD0834AAB242A7BA71588D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		DFE66A380EC74E55884892D6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -331,6 +334,8 @@
 				78DAEF9316BC408600A7A840 /* StoreGenresVC.m */,
 				78DAEF9516BC409400A7A840 /* StoreAuthorsVC.h */,
 				78DAEF9616BC409400A7A840 /* StoreAuthorsVC.m */,
+				78EC88FF16BC64F500CD0093 /* StoreSearchVC.h */,
+				78EC890016BC64F500CD0093 /* StoreSearchVC.m */,
 				785DD97816B88B7500C6925A /* StoreBookCell.h */,
 				785DD97916B88B7500C6925A /* StoreBookCell.m */,
 				789C981716B9829500EA9B06 /* StoreDetailsVC.h */,
@@ -817,6 +822,7 @@
 				78DAEFA316BC471000A7A840 /* _Genre.m in Sources */,
 				78DAEFA816BC471900A7A840 /* Author.m in Sources */,
 				78DAEFA916BC471900A7A840 /* Genre.m in Sources */,
+				78EC890116BC64F500CD0093 /* StoreSearchVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

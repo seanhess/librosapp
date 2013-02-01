@@ -15,5 +15,6 @@
 
 -(NSFetchRequest*)allAuthors;
 -(NSFetchRequest*)booksByAuthor:(NSString*)genre;
+-(NSPredicate*)searchForText:(NSString*)text;
 
 @end

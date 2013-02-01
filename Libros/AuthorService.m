@@ -48,6 +48,7 @@
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Author"];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
     fetchRequest.sortDescriptors = @[descriptor];
+//    fetchRequest.predicate = [self searchForText:@"Harper Lee"];
     return fetchRequest;
 }
 
@@ -56,6 +57,10 @@
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"author == %@", author];
     fetchRequest.predicate = predicate;
     return fetchRequest;
+}
+
+-(NSPredicate*)searchForText:(NSString*)text {
+    return [NSPredicate predicateWithFormat:@"name == %@", text];
 }
 
 @end

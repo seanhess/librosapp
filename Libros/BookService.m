@@ -62,12 +62,21 @@
     }];
 }
 
-
--(NSFetchRequest*)popular {
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
+// has the sort descriptor built in
+-(NSFetchRequest*)allBooks {
+    NSFetchRequest * fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
     fetchRequest.sortDescriptors = @[descriptor];
     return fetchRequest;
+}
+
+-(NSFetchRequest*)popular {
+    NSFetchRequest * fetchRequest = [self allBooks];
+    return fetchRequest;
+}
+
+-(NSPredicate*)searchForText:(NSString*)text {
+    return [NSPredicate predicateWithFormat:@"title == %@", text];
 }
 
 @end
