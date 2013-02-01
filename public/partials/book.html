@@ -20,7 +20,17 @@
   <div><input ng-model="book.author" placeholder="Charles Dickens"/></div>
 
   <label>genre</label>
-  <div><input ng-model="book.genre" placeholder="Comedy"></div>
+  <div ng-hide="editingNewGenre" class="genre">
+    <select 
+      ng-model="book.genre"
+      ng-options="genre for genre in genres">
+    </select>
+    <a ng-click="toggleEditNewGenre()">New Genre</a>
+  </div>
+  <div ng-show="editingNewGenre" class="genre">
+    <input ng-model="book.genre" placeholder="Comedy">
+    <a ng-click="toggleEditNewGenre()">Cancel</a>
+  </div>
 
   <label>description</label>
   <div><textarea ng-model="book.description" placeholder="This book is awesome"></textarea></div>

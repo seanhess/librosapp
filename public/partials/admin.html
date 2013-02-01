@@ -5,10 +5,8 @@
 <div class="genres">
   <h3>Genres</h3>
   <div ng-repeat="genre in genres">
-    <a href="x">x</a><span>{{genre}}</span>
+    <a href="/admin/genres/{{genre}}/books">{{genre}}</a>
   </div>
-
-  <p><input ng-model="newGenre"><button ng-click="createGenre()">Add Genre</button></p>
 </div>
 
 <div class="books">

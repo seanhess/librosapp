@@ -23,6 +23,10 @@ angular.module('controllers')
   loadBook()
   loadFiles()
 
+  $http.get("/genres/").success(function(genres) {
+    $scope.genres = genres
+  })
+
   function loadBook() {
     $http.get("/books/" + $scope.bookId).success(function(book) {
       $scope.book = book
@@ -33,6 +37,10 @@ angular.module('controllers')
     $http.get("/books/" + $scope.bookId + "/files").success(function(files) {
       $scope.files = files
     })
+  }
+
+  $scope.toggleEditNewGenre = function() {
+    $scope.editingNewGenre = !$scope.editingNewGenre
   }
 
   $scope.save = function(book) {

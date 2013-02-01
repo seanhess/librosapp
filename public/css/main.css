@@ -16,6 +16,9 @@ html {
 .book_edit label.type {
   height: 2em;
 }
+.book_edit .genre a {
+  font-size: 0.8em;
+}
 .book_edit .files {
   clear: both;
   min-height: 200px;
