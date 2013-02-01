@@ -10,4 +10,10 @@
 
 @interface AuthorService : NSObject
 
++(AuthorService*)shared;
+-(void)load;
+
+-(NSFetchRequest*)allAuthors;
+-(NSFetchRequest*)booksByAuthor:(NSString*)genre;
+
 @end

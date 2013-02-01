@@ -166,10 +166,10 @@
             </objects>
             <point key="canvasLocation" x="-1013" y="-777"/>
         </scene>
-        <!--Table View Controller - Authors-->
+        <!--Store AuthorsVC - Authors-->
         <scene sceneID="PP5-fS-1yy">
             <objects>
-                <tableViewController id="wgK-8K-r1Q" sceneMemberID="viewController">
+                <tableViewController id="wgK-8K-r1Q" customClass="StoreAuthorsVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="W1K-uo-W6G">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -264,6 +264,9 @@
     <classes>
         <class className="MyBooksVC" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MyBooksVC.h"/>
+        </class>
+        <class className="StoreAuthorsVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreAuthorsVC.h"/>
         </class>
         <class className="StoreBookResultsVC" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreBookResultsVC.h"/>

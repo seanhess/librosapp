@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface StoreAuthorsVC : UIViewController
+@interface StoreAuthorsVC : UITableViewController <NSFetchedResultsControllerDelegate>
 
 @end
