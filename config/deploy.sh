@@ -12,7 +12,7 @@ echo "===================="
 #you don't need to build, it's already compiled locally
 #make build
 make install
-chown www-data:www-data -R .
+#chown www-data:www-data -R .
 
 # set up rethinkdb
 cp config/rethinkdb.upstart.conf /etc/init/rethinkdb.conf
