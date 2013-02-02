@@ -1,0 +1,9 @@
+.git
+node_modules
+Pods/
+Libros/
+Libros.xcodeproj/
+Libros.xcworkspace/
+LibrosTests/
+images/
+Podfile.lock
