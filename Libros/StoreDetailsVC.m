@@ -30,6 +30,7 @@
 - (void)viewWillAppear:(BOOL)animated {
 //    self.title = self.book.title;
     self.buyButton.style = ColoredButtonStyleGreen;
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)viewDidLoad
