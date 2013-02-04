@@ -156,6 +156,7 @@ app.get('/books/:bookId/files', function(req, res) {
 
 app.del('/files/:fileId', function(req, res) {
   File.deleteFile(req.params.fileId)
+  .then(Book.countFileDel)
   .then(ok(res), err(res))
 })
 
@@ -169,7 +170,7 @@ app.put('/files/:fileId', function(req, res) {
 // upload a single new file (doesn't do more than one)
 app.post('/books/:bookId/files', function(req, res) {
   File.addFileForBook(req.params.bookId, req.files.file)
-  .then(Book.countFile)
+  .then(Book.countFileAdd)
   .then(send(res), err(res))
 })
 

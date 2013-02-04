@@ -9,6 +9,13 @@
   </div>
 </div>
 
+<div class="authors">
+  <h3>Authors</h3>
+  <div ng-repeat="author in authors">
+    <a href="/admin/authors/{{author.name}}/books">{{author.name}}</a>
+  </div>
+</div>
+
 <div class="books">
 <h3>Books</h3>
 <div ng-repeat="book in books">

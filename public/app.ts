@@ -7,6 +7,7 @@
 ///<reference path="controls/Admin.ts"/>
 ///<reference path="controls/Book.ts"/>
 ///<reference path="controls/Genre.ts"/>
+///<reference path="controls/Author.ts"/>
 
 ///<reference path="directives/dragupload.ts"/>
 ///<reference path="directives/blur.ts"/>
@@ -28,7 +29,8 @@ var app = angular.module('app', ['controllers'], function ($routeProvider: ng.IR
   $routeProvider.when('/admin/404', {templateUrl: '/partials/404.html'})
   $routeProvider.when('/admin', {templateUrl: '/partials/admin.html', controller: "AdminCtrl"})
   $routeProvider.when('/admin/books/:bookId', {templateUrl: '/partials/book.html', controller: "BookCtrl"})
-  $routeProvider.when('/admin/genres/:name/books', {templateUrl: '/partials/genre.html', controller: "GenreCtrl"})
+  $routeProvider.when('/admin/genres/:name/books', {templateUrl: '/partials/category.html', controller: "GenreCtrl"})
+  $routeProvider.when('/admin/authors/:name/books', {templateUrl: '/partials/category.html', controller: "AuthorCtrl"})
   $routeProvider.otherwise({redirectTo: '/admin'})
 })
 

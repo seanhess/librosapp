@@ -39,6 +39,11 @@ export interface IUploadFile {
   mime: string; // ??
 }
 
+// fake file object with just the id
+export interface IdentifiedFile {
+
+}
+
 function fileId(file:IFile) {
   return file.fileId
 }
@@ -116,8 +121,11 @@ export function addFileForBook(bookId:string, uploadedFile:IUploadFile):q.IPromi
 
 export function deleteFile(fileId:string) {
   return db.run(byFileId(fileId))
-  .then(removeUrl)
-  .then(() => db.run(remove(fileId)))
+  .then(function(file:IFile) {
+    return removeUrl(file)
+    .then(() => db.run(remove(fileId)))
+    .then(() => file)
+  })
 }
 
 // this returns a single promise

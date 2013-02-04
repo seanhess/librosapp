@@ -101,15 +101,25 @@ describe("API", function() {
     })
 
     it('should delete the file', function(done) {
-      request.del(domain + '/files/' + this.file.fileId, (err, rs) => {
+      request.del(domain + '/files/' + this.file.fileId, (err, rs, body) => {
         assert.ifError(err)
-        assert.equal(rs.statusCode, 200)
+        assert.equal(rs.statusCode, 200, "Status(" + rs.statusCode + "): " + body)
         request.get({url: domain + '/books/' + this.bookId + '/files', json:true}, (err, rs, files:IFile[]) => {
           assert.ifError(err)
-          assert.equal(rs.statusCode, 200)
+          assert.equal(rs.statusCode, 200, "Status(" + rs.statusCode + "): " + files)
           assert.equal(files.length, 0)
           done()
         })
+      })
+    })
+
+    it('should have decremented the file info', function(done) {
+      request.get({url: domain + '/books/' + this.bookId, json:true}, (err, rs, book:IBook) => {
+        assert.ifError(err)
+        assert.equal(rs.statusCode, 200)
+        assert.equal(book.textFiles, 0)
+        assert.equal(book.audioFiles, 0)
+        done()
       })
     })
 

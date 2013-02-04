@@ -35,12 +35,9 @@
   <label>description</label>
   <div><textarea ng-model="book.description" placeholder="This book is awesome"></textarea></div>
 
-  <label class="type">type</label>
-  <div><input type="checkbox" ng-model="book.hasText"/> Has Text?</div>
-  <div><input type="checkbox" ng-model="book.hasAudio"/> Has Audio?</div>
+  <label>{{book.textFiles}} text files</label>
+  <label>{{book.audioFiles}} audio files</label>
 
-
-  <label>files</label>
   <div class="files" dragupload="onDrop">
     <div class="instructions">Drop files here (.mp3 or .txt)</div>
 

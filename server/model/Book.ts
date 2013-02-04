@@ -78,10 +78,10 @@ function fileCountField(file:IFile) {
     return 'textFiles'
 }
 
-function fileCountUpdate(file:IFile) {
+function fileCountUpdate(file:IFile, amount:number = 1) {
   var field = fileCountField(file)
   var update = {}
-  update[field] = r.row(field).add(1)
+  update[field] = r.row(field).add(amount)
   return getBook(file.bookId)
   .update(update)
 }
@@ -135,9 +135,16 @@ export function getByAuthor(authorName:string) {
   return db.collect(byAuthor(authorName))
 }
 
-export function countFile(file:IFile) {
+export function countFileAdd(file:IFile) {
   return db.run(fileCountUpdate(file))
   .then(() => file)
 }
+
+export function countFileDel(file:IFile) {
+  return db.run(fileCountUpdate(file, -1))
+  .then(() => file)
+}
+
+
 
 
