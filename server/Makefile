@@ -4,7 +4,7 @@ build:
 	node_modules/.bin/tsc server.ts test/*.test.ts
 
 test: build
-	NODE_ENV=test node_modules/.bin/mocha --reporter dot test/*.test.js
+	NODE_ENV=test node_modules/.bin/mocha --reporter spec test/*.test.js
 
 test-w: build
 	NODE_ENV=test node_modules/.bin/mocha --reporter dot --growl --watch test/*.test.js

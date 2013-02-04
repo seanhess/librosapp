@@ -107,7 +107,7 @@ export function removeUrl(file:IFile):q.IPromise {
   return deferred.promise
 }
 
-export function addFileToBook(bookId:string, uploadedFile:IUploadFile):q.IPromise {
+export function addFileForBook(bookId:string, uploadedFile:IUploadFile):q.IPromise {
   var file = toFile(bookId, uploadedFile)
   return uploadToUrl(file, uploadedFile)
   .then(() => db.run(insert(file)))
@@ -128,23 +128,6 @@ export function deleteFilesForBook(bookId:string) {
   })
 }
 
-export function doSomethingSlow(cb) {
-  setTimeout(function() {
-    cb(null)
-  }, 1000)
-}
-
-export function doSomethingSlowPromise() {
-  var deferred = q.defer() 
-  doSomethingSlow(deferred.makeNodeResolver())
-  return deferred.promise
-}
-
-export function test():q.IPromise {
-  return doSomethingSlowPromise()
-  .then(() => db.collect(files))
-  .then(function(value) {
-    console.log("COLLECTED", value)
-    return value
-  })
+export function isAudio(file:IFile) {
+  return (file.ext == "mp3")
 }

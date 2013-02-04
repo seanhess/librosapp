@@ -19,14 +19,8 @@ interface IBook {
   price: number; // in cents
   description: string;
 
-  // just make a check box for each one?
-  // angular can set it for me! woot
-  hasAudio: bool;
-  hasText: bool;
-
-  //downloads: string; // ?? Or should I do a join?
-  //isAudio: bool;
-  //isText: bool;
+  audioFiles: number;
+  textFiles: number;
 }
 
 // a string masquerading as an object. Name is considered the primary key

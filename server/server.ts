@@ -168,12 +168,9 @@ app.put('/files/:fileId', function(req, res) {
 
 // upload a single new file (doesn't do more than one)
 app.post('/books/:bookId/files', function(req, res) {
-  File.addFileToBook(req.params.bookId, req.files.file)
+  File.addFileForBook(req.params.bookId, req.files.file)
+  .then(Book.countFile)
   .then(send(res), err(res))
-})
-
-app.get('/test', function(req, res) {
-  File.test().then(send(res), err(res))
 })
 
 // Send the Angular app for everything under /admin

@@ -38,7 +38,7 @@ describe("API", function() {
     it('should upload a file for the book', function(done) {
       var r = request.post({url: domain + '/books/' + this.bookId + '/files', json:true}, function(err, rs, file:IFile) {
         assert.ifError(err)
-        assert.equal(rs.statusCode, 200)
+        assert.equal(rs.statusCode, 200, "Status("+rs.statusCode+"): " + file)
         assert.ok(file.fileId)
         done()
       })
@@ -53,6 +53,16 @@ describe("API", function() {
         this.file = files[0]
         assert.equal(this.file.name, "data") // data.txt
         assert.equal(this.file.ext, "txt")
+        done()
+      })
+    })
+
+    it('should have incremented the file info', function(done) {
+      request.get({url: domain + '/books/' + this.bookId, json:true}, (err, rs, book:IBook) => {
+        assert.ifError(err)
+        assert.equal(rs.statusCode, 200)
+        assert.equal(book.textFiles, 1)
+        assert.equal(book.audioFiles, 0)
         done()
       })
     })

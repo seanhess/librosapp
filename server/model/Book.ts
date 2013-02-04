@@ -5,11 +5,32 @@ import r = module('rethinkdb')
 import db = module('./db')
 import q = module('q')
 import f = module('../service/functional')
+import File = module('./File')
 
 var books = r.table('books')
 
 export interface IdentifiedBook {
   bookId: string;
+}
+
+function emptyBook():IBook {
+  var book = {
+    bookId: null,
+    title: "New Book",
+    author: null,
+    genre: null,
+    price: 0,
+    description: "",
+
+    audioFiles: 0,
+    textFiles: 0,
+  }
+
+  delete book.bookId
+  delete book.author
+  delete book.genre
+
+  return book
 }
 
 export function validate(book:IBook) {
@@ -27,7 +48,7 @@ export function saveBook(book:IBook) {
 }
 
 export function create():r.IQuery {
-  return books.insert({title:"New Book"})
+  return books.insert(emptyBook())
 }
 
 export function allBooks():r.IQuery {
@@ -50,6 +71,37 @@ export function byGenre(name:string) {
   return books.filter({genre: name}).orderBy('title')
 }
 
+function fileCountField(file:IFile) {
+  if (File.isAudio(file))
+    return 'audioFiles'
+  else
+    return 'textFiles'
+}
+
+function fileCountUpdate(file:IFile) {
+  var field = fileCountField(file)
+  var update = {}
+  update[field] = r.row(field).add(1)
+  return getBook(file.bookId)
+  .update(update)
+}
+
+function toNamedObject(name:string):INamedObject {
+  return {name: name}
+}
+
+
+export function insertedBook(info:r.InsertResult):IdentifiedBook {
+  return {bookId: info.generated_keys[0]}
+}
+
+
+
+
+
+// ACTIONS
+
+
 export function distinctGenres() {
   return books
   .filter(function(book) {
@@ -66,13 +118,6 @@ export function distinctAuthors() {
   }).distinct()
 }
 
-export function insertedBook(info:r.InsertResult):IdentifiedBook {
-  return {bookId: info.generated_keys[0]}
-}
-
-function toNamedObject(name:string):INamedObject {
-  return {name: name}
-}
 
 export function getDistinctAuthors():q.IPromise {
   return db.collect(distinctAuthors())
@@ -88,6 +133,11 @@ export function getDistinctGenres() {
 
 export function getByAuthor(authorName:string) {
   return db.collect(byAuthor(authorName))
+}
+
+export function countFile(file:IFile) {
+  return db.run(fileCountUpdate(file))
+  .then(() => file)
 }
 
 

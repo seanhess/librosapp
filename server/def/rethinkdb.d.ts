@@ -85,12 +85,15 @@ declare module "rethinkdb" {
 
   interface IRow {
     gt(value:any):IRql;
+    add(num:number):IRow;
+    sub(num:number):IRow;
+    mul(num:number):IRow;
+    div(num:number):IRow;
   }
   
   interface IObjectProxy {
     (property:string):IObjectProxy;
   }
-
 
   interface IRql {}
 
