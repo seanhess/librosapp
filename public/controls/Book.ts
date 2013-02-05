@@ -33,6 +33,13 @@ angular.module('controllers')
     })
   }
 
+  function loadNumFiles() {
+    $http.get("/books/" + $scope.bookId).success(function(book) {
+      $scope.book.textFiles = book.textFiles
+      $scope.book.audioFiles = book.audioFiles
+    })
+  }
+
   function loadFiles() {
     $http.get("/books/" + $scope.bookId + "/files").success(function(files) {
       $scope.files = files
@@ -59,7 +66,7 @@ angular.module('controllers')
   $scope.removeFile = function(file:IFile) {
     $scope.files = _.without($scope.files, file)
     $http.delete('/files/' + file.fileId).success(function() {
-      loadBook()
+        loadNumFiles()
     })
   }
 
@@ -128,7 +135,7 @@ angular.module('controllers')
     })
     .success(function(file:IFile) {
        _.extend(pendingFile, file)
-       loadBook()
+       loadNumFiles()
     })
   }
 })

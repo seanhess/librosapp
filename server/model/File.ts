@@ -17,11 +17,11 @@ import knox = module('knox')
 import db = module('./db')
 import q = module('q')
 
-var BUCKET = "libros_pingplot"
+var BUCKET = "librosapp"
 var BUCKET_URL = "http://" + BUCKET + ".s3.amazonaws.com"
 var s3client = knox.createClient({
-  key:"AKIAICSJOXTYHJ3Z6TOQ",                         // DELETE ME (belongs to scott)
-  secret:"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",
+  key:"AKIAIMGQVHF2DZ7UN32Q",                         // DELETE ME (belongs to scott)
+  secret:"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",
   bucket:BUCKET,
 })
 
