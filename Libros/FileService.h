@@ -14,7 +14,7 @@
 +(FileService*)shared;
 
 -(void)loadFilesForBook:(NSString*)bookId cb:(void(^)(void))cb;
--(void)downloadFiles:(NSArray*)files cb:(void(^)(void))cb;
+-(void)downloadFiles:(NSArray*)files progress:(void(^)(float))cb complete:(void(^)(void))cb;
 
 -(NSArray*)byBookId:(NSString*)bookId;
 

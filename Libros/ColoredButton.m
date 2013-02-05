@@ -45,7 +45,7 @@
 - (NSString*)nameForStyle:(ColoredButtonStyle)style {
     if (style == ColoredButtonStyleBlack) return @"black";
     if (style == ColoredButtonStyleBlue) return @"blue";
-    if (style == ColoredButtonStyleGray) return @"gray";
+    if (style == ColoredButtonStyleGray) return @"grey";
     if (style == ColoredButtonStyleGreen) return @"green";
     if (style == ColoredButtonStyleOrange) return @"orange";
     if (style == ColoredButtonStyleWhite) return @"white";

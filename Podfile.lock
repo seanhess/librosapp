@@ -2,6 +2,7 @@
 PODS:
 - AFNetworking (1.1.0)
 - JSONKit (1.5pre)
+- MBProgressHUD (0.5)
 - RestKit (0.20.0pre6):
   - RestKit/Core (= 0.20.0pre6)
 - RestKit/Core (0.20.0pre6):
@@ -20,11 +21,13 @@ PODS:
 
 DEPENDENCIES:
 - JSONKit (~> 1.4)
+- MBProgressHUD (~> 0.5)
 - RestKit (~> 0.20.0pre6)
 
 SPEC CHECKSUMS:
   AFNetworking: 761a418233d280c1e0580bcb76ff9cb4c3073d17
   JSONKit: 3d4708953ea7ae399a49777372d8b060a43ddd27
+  MBProgressHUD: b23ee11c42253d6d804e8e0bfabdc334e8b2571f
   RestKit: ccca19640fcc3031f82ad4250c44061e2e2ddce7
   RestKit/Core: ccca19640fcc3031f82ad4250c44061e2e2ddce7
   RestKit/CoreData: ccca19640fcc3031f82ad4250c44061e2e2ddce7

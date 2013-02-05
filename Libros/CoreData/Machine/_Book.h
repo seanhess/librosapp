@@ -5,13 +5,15 @@
 
 
 extern const struct BookAttributes {
+	__unsafe_unretained NSString *audioFiles;
 	__unsafe_unretained NSString *author;
 	__unsafe_unretained NSString *bookId;
 	__unsafe_unretained NSString *descriptionText;
+	__unsafe_unretained NSString *downloaded;
 	__unsafe_unretained NSString *genre;
-	__unsafe_unretained NSString *hasAudio;
-	__unsafe_unretained NSString *hasText;
 	__unsafe_unretained NSString *price;
+	__unsafe_unretained NSString *purchased;
+	__unsafe_unretained NSString *textFiles;
 	__unsafe_unretained NSString *title;
 } BookAttributes;
 
@@ -35,6 +37,8 @@ extern const struct BookFetchedProperties {
 
 
 
+
+
 @interface BookID : NSManagedObjectID {}
 @end
 
@@ -43,6 +47,18 @@ extern const struct BookFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (BookID*)objectID;
+
+
+
+
+@property (nonatomic, strong) NSNumber* audioFiles;
+
+
+@property int16_t audioFilesValue;
+- (int16_t)audioFilesValue;
+- (void)setAudioFilesValue:(int16_t)value_;
+
+//- (BOOL)validateAudioFiles:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -71,34 +87,22 @@ extern const struct BookFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber* downloaded;
+
+
+@property float downloadedValue;
+- (float)downloadedValue;
+- (void)setDownloadedValue:(float)value_;
+
+//- (BOOL)validateDownloaded:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSString* genre;
 
 
 //- (BOOL)validateGenre:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) NSNumber* hasAudio;
-
-
-@property BOOL hasAudioValue;
-- (BOOL)hasAudioValue;
-- (void)setHasAudioValue:(BOOL)value_;
-
-//- (BOOL)validateHasAudio:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) NSNumber* hasText;
-
-
-@property BOOL hasTextValue;
-- (BOOL)hasTextValue;
-- (void)setHasTextValue:(BOOL)value_;
-
-//- (BOOL)validateHasText:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -111,6 +115,30 @@ extern const struct BookFetchedProperties {
 - (void)setPriceValue:(int16_t)value_;
 
 //- (BOOL)validatePrice:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* purchased;
+
+
+@property BOOL purchasedValue;
+- (BOOL)purchasedValue;
+- (void)setPurchasedValue:(BOOL)value_;
+
+//- (BOOL)validatePurchased:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* textFiles;
+
+
+@property int16_t textFilesValue;
+- (int16_t)textFilesValue;
+- (void)setTextFilesValue:(int16_t)value_;
+
+//- (BOOL)validateTextFiles:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -153,6 +181,15 @@ extern const struct BookFetchedProperties {
 @interface _Book (CoreDataGeneratedPrimitiveAccessors)
 
 
+- (NSNumber*)primitiveAudioFiles;
+- (void)setPrimitiveAudioFiles:(NSNumber*)value;
+
+- (int16_t)primitiveAudioFilesValue;
+- (void)setPrimitiveAudioFilesValue:(int16_t)value_;
+
+
+
+
 - (NSString*)primitiveAuthor;
 - (void)setPrimitiveAuthor:(NSString*)value;
 
@@ -171,26 +208,17 @@ extern const struct BookFetchedProperties {
 
 
 
+- (NSNumber*)primitiveDownloaded;
+- (void)setPrimitiveDownloaded:(NSNumber*)value;
+
+- (float)primitiveDownloadedValue;
+- (void)setPrimitiveDownloadedValue:(float)value_;
+
+
+
+
 - (NSString*)primitiveGenre;
 - (void)setPrimitiveGenre:(NSString*)value;
-
-
-
-
-- (NSNumber*)primitiveHasAudio;
-- (void)setPrimitiveHasAudio:(NSNumber*)value;
-
-- (BOOL)primitiveHasAudioValue;
-- (void)setPrimitiveHasAudioValue:(BOOL)value_;
-
-
-
-
-- (NSNumber*)primitiveHasText;
-- (void)setPrimitiveHasText:(NSNumber*)value;
-
-- (BOOL)primitiveHasTextValue;
-- (void)setPrimitiveHasTextValue:(BOOL)value_;
 
 
 
@@ -200,6 +228,24 @@ extern const struct BookFetchedProperties {
 
 - (int16_t)primitivePriceValue;
 - (void)setPrimitivePriceValue:(int16_t)value_;
+
+
+
+
+- (NSNumber*)primitivePurchased;
+- (void)setPrimitivePurchased:(NSNumber*)value;
+
+- (BOOL)primitivePurchasedValue;
+- (void)setPrimitivePurchasedValue:(BOOL)value_;
+
+
+
+
+- (NSNumber*)primitiveTextFiles;
+- (void)setPrimitiveTextFiles:(NSNumber*)value;
+
+- (int16_t)primitiveTextFilesValue;
+- (void)setPrimitiveTextFilesValue:(int16_t)value_;
 
 
 

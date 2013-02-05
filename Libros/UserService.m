@@ -9,10 +9,16 @@
 #import "UserService.h"
 #import "ObjectStore.h"
 #import "User.h"
+#import "Book.h"
 #import "NSObject+Reflection.h"
 #import "FileService.h"
 
 #import <RestKit.h>
+
+@interface UserService ()
+@property (strong, nonatomic) Book * book;
+
+@end
 
 @implementation UserService
 
@@ -57,19 +63,29 @@
     }
 }
 
+// use key-value observing instead of 
 -(void)addBook:(Book *)book {
-    FileService * fs = [FileService shared];
-    // download the book's files
-    [fs loadFilesForBook:book.bookId cb:^{
-        NSArray * files = [fs byBookId:book.bookId];
-        [fs downloadFiles:files cb:^{
-            // add the book to the user
-            [self.main addBooksObject:book];
-            
-            // now go read it or something!
-            NSLog(@"ADDED! %i", files.count);
-        }];
-    }];
+    book.purchasedValue = YES;
+    book.downloadedValue = 0.0;
+    
+    [FileService.shared
+        downloadFiles:[FileService.shared byBookId:book.bookId]
+        progress:^(float percent) {
+            book.downloadedValue = percent;
+        }
+        complete:^() {
+            book.downloadedValue = 1.0;
+        }
+    ];
+}
+
+-(NSFetchRequest*)libraryBooks {
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"purchased == YES"];
+    fetchRequest.predicate = predicate;
+    fetchRequest.sortDescriptors = @[descriptor];
+    return fetchRequest;
 }
 
 @end

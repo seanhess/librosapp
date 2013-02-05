@@ -15,18 +15,6 @@
     return [self.files allObjects];
 }
 
--(NSArray*)audioFiles {
-    return [self.allFiles filteredArrayUsingBlock:^(File * file) {
-        return [file.ext isEqualToString:@"mp3"];
-    }];
-}
-
--(NSArray*)textFiles {
-    return [self.allFiles filteredArrayUsingBlock:^(File * file) {
-        return [file.ext isEqualToString:@"html"];
-    }];
-}
-
 -(NSString*)priceString {
     NSInteger dollars = floorf(self.priceValue / 100);
     NSInteger pennies = self.priceValue % 100;

@@ -10,6 +10,8 @@
 
 @interface NSArray (Functional)
 
--(NSArray*)filteredArrayUsingBlock:(BOOL(^)(id))block;
+-(NSArray*)filter:(BOOL(^)(id))block;
+-(NSArray*)map:(id(^)(id))block;
+-(void)forEach:(void(^)(id))block;
 
 @end

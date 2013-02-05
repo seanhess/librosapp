@@ -36,17 +36,11 @@
 {
     [super viewDidLoad];
     
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"user == %@", UserService.shared.main];
-    fetchRequest.predicate = predicate;
-    fetchRequest.sortDescriptors = @[descriptor];
-    
-    NSError *error = nil;
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:ObjectStore.shared.context sectionNameKeyPath:nil cacheName:nil];
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:UserService.shared.libraryBooks managedObjectContext:ObjectStore.shared.context sectionNameKeyPath:nil cacheName:nil];
     
     [self.fetchedResultsController setDelegate:self];
    
+    NSError *error = nil;
     [self.fetchedResultsController performFetch:&error];
     [self.tableView reloadData];
 }

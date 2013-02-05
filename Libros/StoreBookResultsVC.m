@@ -83,7 +83,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
     StoreDetailsVC * details = [StoreDetailsVC new];
     details.book = book;
     [self.navigationController pushViewController:details animated:YES];

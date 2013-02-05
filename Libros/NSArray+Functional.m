@@ -10,12 +10,29 @@
 
 @implementation NSArray (Functional)
 
--(NSArray *)filteredArrayUsingBlock:(BOOL(^)(id))match {
+-(NSArray *)filter:(BOOL(^)(id))match {
     NSPredicate * predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary * bindings) {
         return match(evaluatedObject);
     }];
     
     return [self filteredArrayUsingPredicate:predicate];
+}
+
+-(NSArray *)map:(id(^)(id))tranform {
+    NSMutableArray * array = [NSMutableArray array];
+    for (id obj in self) {
+        [array addObject:tranform(obj)];
+    }
+    return array;
+}
+
+-(void)forEach:(void(^)(id))block {
+    id(^ignore)(id) = ^(id obj) {
+        block(obj);
+        return obj;
+    };
+    
+    [self map:ignore];
 }
 
 @end

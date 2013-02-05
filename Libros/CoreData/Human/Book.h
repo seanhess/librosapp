@@ -4,7 +4,6 @@
 // Custom logic goes here.
 
 -(NSArray*)allFiles;
-
 -(NSString*)priceString;
 
 @end

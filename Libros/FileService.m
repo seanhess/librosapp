@@ -11,6 +11,11 @@
 #import "ObjectStore.h"
 #import "File.h"
 #import "NSObject+Reflection.h"
+#import "FileDownloadOperation.h"
+#import "NSArray+Functional.h"
+
+@interface FileService ()
+@end
 
 @implementation FileService
 
@@ -54,16 +59,34 @@
     return files;
 }
 
-// Once you already HAVE the files
--(void)downloadFiles:(NSArray*)files cb:(void(^)(void))cb {
-    NSLog(@"DOWNLOADING FILES %i", files.count);
-    // TODO move to background thread
-    for (File * file in files) {
-        [self downloadFileSync:file];
-    }
+// you already have the files
+// download them one at a time
+-(void)downloadFiles:(NSArray *)files progress:(void (^)(float))progressCb complete:(void (^)(void))cb {
+    NSOperationQueue * operations = [NSOperationQueue new];
+    operations.maxConcurrentOperationCount = 1;
+    __block NSInteger completedFiles = 0;
     
-    NSLog(@"DONE");
-    cb();
+    [files forEach:^(File* file) {
+        FileDownloadOperation * download = [FileDownloadOperation new];
+        download.file = file;
+        download.localPath = [self localPath:file];
+        
+        download.progressCb = ^(NSInteger complete, NSInteger total) {
+            float progress = (completedFiles+((float)complete/total))/files.count;
+            progressCb(progress);
+        };
+        
+        download.completionBlock = ^{
+            completedFiles++;
+        };
+        
+        [operations addOperation:download];
+    }];
+    
+    // will be called when we are done, since operations are "concurrent" (async)
+    [operations addOperationWithBlock:^{
+        cb();
+    }];
 }
 
 

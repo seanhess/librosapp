@@ -47,7 +47,7 @@
 }
 
 - (UIView*)addTypeIcons:(Book*)book {
-    if (book.hasAudioValue && book.hasTextValue) {
+    if (book.audioFilesValue && book.textFilesValue) {
         self.textIconView.hidden = NO;
         self.audioIconView.hidden = NO;
         
@@ -62,7 +62,7 @@
         self.accessoryView.frame = CGRectMake(0, 0, textFrame.origin.x + textFrame.size.width, MAX(textFrame.size.height, audioFrame.size.height));
     }
     
-    else if (book.hasAudioValue) {
+    else if (book.audioFilesValue) {
         self.audioIconView.frame = self.audioFrame;
         self.accessoryView.frame = self.audioFrame;
         self.textIconView.hidden = YES;

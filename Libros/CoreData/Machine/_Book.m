@@ -4,13 +4,15 @@
 #import "_Book.h"
 
 const struct BookAttributes BookAttributes = {
+	.audioFiles = @"audioFiles",
 	.author = @"author",
 	.bookId = @"bookId",
 	.descriptionText = @"descriptionText",
+	.downloaded = @"downloaded",
 	.genre = @"genre",
-	.hasAudio = @"hasAudio",
-	.hasText = @"hasText",
 	.price = @"price",
+	.purchased = @"purchased",
+	.textFiles = @"textFiles",
 	.title = @"title",
 };
 
@@ -48,21 +50,55 @@ const struct BookFetchedProperties BookFetchedProperties = {
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"hasAudioValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"hasAudio"];
+	if ([key isEqualToString:@"audioFilesValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"audioFiles"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
-	if ([key isEqualToString:@"hasTextValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"hasText"];
+	if ([key isEqualToString:@"downloadedValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"downloaded"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"priceValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"price"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
+	if ([key isEqualToString:@"purchasedValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"purchased"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"textFilesValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"textFiles"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic audioFiles;
+
+
+
+- (int16_t)audioFilesValue {
+	NSNumber *result = [self audioFiles];
+	return [result shortValue];
+}
+
+- (void)setAudioFilesValue:(int16_t)value_ {
+	[self setAudioFiles:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitiveAudioFilesValue {
+	NSNumber *result = [self primitiveAudioFiles];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveAudioFilesValue:(int16_t)value_ {
+	[self setPrimitiveAudioFiles:[NSNumber numberWithShort:value_]];
+}
+
 
 
 
@@ -88,60 +124,34 @@ const struct BookFetchedProperties BookFetchedProperties = {
 
 
 
+@dynamic downloaded;
+
+
+
+- (float)downloadedValue {
+	NSNumber *result = [self downloaded];
+	return [result floatValue];
+}
+
+- (void)setDownloadedValue:(float)value_ {
+	[self setDownloaded:[NSNumber numberWithFloat:value_]];
+}
+
+- (float)primitiveDownloadedValue {
+	NSNumber *result = [self primitiveDownloaded];
+	return [result floatValue];
+}
+
+- (void)setPrimitiveDownloadedValue:(float)value_ {
+	[self setPrimitiveDownloaded:[NSNumber numberWithFloat:value_]];
+}
+
+
+
+
+
 @dynamic genre;
 
-
-
-
-
-
-@dynamic hasAudio;
-
-
-
-- (BOOL)hasAudioValue {
-	NSNumber *result = [self hasAudio];
-	return [result boolValue];
-}
-
-- (void)setHasAudioValue:(BOOL)value_ {
-	[self setHasAudio:[NSNumber numberWithBool:value_]];
-}
-
-- (BOOL)primitiveHasAudioValue {
-	NSNumber *result = [self primitiveHasAudio];
-	return [result boolValue];
-}
-
-- (void)setPrimitiveHasAudioValue:(BOOL)value_ {
-	[self setPrimitiveHasAudio:[NSNumber numberWithBool:value_]];
-}
-
-
-
-
-
-@dynamic hasText;
-
-
-
-- (BOOL)hasTextValue {
-	NSNumber *result = [self hasText];
-	return [result boolValue];
-}
-
-- (void)setHasTextValue:(BOOL)value_ {
-	[self setHasText:[NSNumber numberWithBool:value_]];
-}
-
-- (BOOL)primitiveHasTextValue {
-	NSNumber *result = [self primitiveHasText];
-	return [result boolValue];
-}
-
-- (void)setPrimitiveHasTextValue:(BOOL)value_ {
-	[self setPrimitiveHasText:[NSNumber numberWithBool:value_]];
-}
 
 
 
@@ -167,6 +177,58 @@ const struct BookFetchedProperties BookFetchedProperties = {
 
 - (void)setPrimitivePriceValue:(int16_t)value_ {
 	[self setPrimitivePrice:[NSNumber numberWithShort:value_]];
+}
+
+
+
+
+
+@dynamic purchased;
+
+
+
+- (BOOL)purchasedValue {
+	NSNumber *result = [self purchased];
+	return [result boolValue];
+}
+
+- (void)setPurchasedValue:(BOOL)value_ {
+	[self setPurchased:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitivePurchasedValue {
+	NSNumber *result = [self primitivePurchased];
+	return [result boolValue];
+}
+
+- (void)setPrimitivePurchasedValue:(BOOL)value_ {
+	[self setPrimitivePurchased:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+@dynamic textFiles;
+
+
+
+- (int16_t)textFilesValue {
+	NSNumber *result = [self textFiles];
+	return [result shortValue];
+}
+
+- (void)setTextFilesValue:(int16_t)value_ {
+	[self setTextFiles:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitiveTextFilesValue {
+	NSNumber *result = [self primitiveTextFiles];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveTextFilesValue:(int16_t)value_ {
+	[self setPrimitiveTextFiles:[NSNumber numberWithShort:value_]];
 }
 
 

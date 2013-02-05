@@ -16,6 +16,9 @@
 
 +(UserService*)shared;
 -(User*)main;
+
 -(void)addBook:(Book*)book;
+
+-(NSFetchRequest*)libraryBooks;
 
 @end
