@@ -34,6 +34,9 @@
     RKResponseDescriptor * responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:bookMapping pathPattern:@"/genres" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     
     [ObjectStore.shared addResponseDescriptor:responseDescriptor];
+    
+    [ObjectStore.shared syncWithFetchRequest:self.allGenres forPath:@"/genres"];
+    
 }
 
 -(void)load {

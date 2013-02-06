@@ -66,6 +66,18 @@
     [self.objectManager addResponseDescriptor:descriptor];
 }
 
+- (void)syncWithFetchRequest:(NSFetchRequest *)request forPath:(NSString *)path {
+    [self.objectManager addFetchRequestBlock:^(NSURL* url) {
+        RKPathMatcher * matcher = [RKPathMatcher pathMatcherWithPattern:@"/books"];
+        NSFetchRequest * matchingRequest = nil;
+        BOOL match = [matcher matchesPath:[url relativePath] tokenizeQueryStrings:NO parsedArguments:nil];
+        if (match) {
+            matchingRequest = request;
+        }
+        return matchingRequest;
+    }];
+}
+
 // Returns the managed object model for the application.
 // If the model doesn't already exist, it is created from the application's model.
 - (NSManagedObjectModel *)managedObjectModel

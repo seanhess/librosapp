@@ -25,4 +25,8 @@
 - (RKEntityMapping*)mappingForEntityForName:(NSString*)entityName;
 - (void)addResponseDescriptor:(RKResponseDescriptor*)descriptor;
 
+// Simple way to sync objects whose urls have no parameters
+// Will delete anything not matched
+- (void)syncWithFetchRequest:(NSFetchRequest*)request forPath:(NSString*)path;
+
 @end

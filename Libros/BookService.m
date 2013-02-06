@@ -46,6 +46,8 @@
     RKResponseDescriptor * responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:bookMapping pathPattern:@"/books" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
 
     [ObjectStore.shared addResponseDescriptor:responseDescriptor];
+    
+    [ObjectStore.shared syncWithFetchRequest:self.allBooks forPath:@"/books"];
 }
 
 // So you can compose with compoundPredicates. Wahoo.
