@@ -90,6 +90,22 @@ function toNamedObject(name:string):INamedObject {
   return {name: name}
 }
 
+function toFullAuthor(no:INamedObject):IAuthor {
+  var parts = no.name.split(/\s/)
+  var lastName = parts.pop()
+  var firstName = parts.join(" ")
+    
+  return {
+    name: no.name,
+    firstName: firstName,
+    lastName: lastName,
+  }
+}
+
+function authorLastFirst(author:IAuthor):string {
+  return author.lastName + ", " + author.firstName
+}
+
 
 export function insertedBook(info:r.InsertResult):IdentifiedBook {
   return {bookId: info.generated_keys[0]}
@@ -121,8 +137,9 @@ export function distinctAuthors() {
 
 export function getDistinctAuthors():q.IPromise {
   return db.collect(distinctAuthors())
-  .then(f.sort)
   .then(f.map(toNamedObject))
+  .then(f.map(toFullAuthor))
+  .then(f.sortBy(authorLastFirst))
 }
 
 export function getDistinctGenres() {

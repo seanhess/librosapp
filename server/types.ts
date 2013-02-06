@@ -28,5 +28,9 @@ interface INamedObject {
   name: string;
 }
 
-interface IAuthor extends INamedObject {}
+interface IAuthor extends INamedObject {
+  firstName: string;
+  lastName: string;
+}
+
 interface IGenre extends INamedObject {}

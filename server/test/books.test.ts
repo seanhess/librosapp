@@ -124,6 +124,8 @@ describe("API", function() {
         assert.equal(rs.statusCode, 200)
         var matchingAuthors = authors.filter((author:IAuthor) => author.name == this.book.author)
         assert.equal(matchingAuthors.length, 1)
+        assert.ok(authors.filter((author:IAuthor) => author.firstName == "Charles").length)
+        assert.ok(authors.filter((author:IAuthor) => author.lastName == "Dickens").length)
         done()
       })
     })

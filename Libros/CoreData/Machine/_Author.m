@@ -4,6 +4,8 @@
 #import "_Author.h"
 
 const struct AuthorAttributes AuthorAttributes = {
+	.firstName = @"firstName",
+	.lastName = @"lastName",
 	.name = @"name",
 };
 
@@ -42,6 +44,20 @@ const struct AuthorFetchedProperties AuthorFetchedProperties = {
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic firstName;
+
+
+
+
+
+
+@dynamic lastName;
+
+
 
 
 

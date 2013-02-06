@@ -22,6 +22,7 @@
 
 /* Begin PBXBuildFile section */
 		7809F96316AF3CA30045C4D9 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7809F96216AF3CA30045C4D9 /* CoreText.framework */; };
+		780B8F4516C2D2FC00A04EFC /* NSString+FetchedGroupByString.m in Sources */ = {isa = PBXBuildFile; fileRef = 780B8F4416C2D2FC00A04EFC /* NSString+FetchedGroupByString.m */; };
 		780FFF0116A09A85003AE067 /* ObjectStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FFF0016A09A85003AE067 /* ObjectStore.m */; };
 		780FFF0516A0C2C9003AE067 /* _User.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FFF0416A0C2C9003AE067 /* _User.m */; };
 		780FFF0816A0C2D1003AE067 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FFF0716A0C2D1003AE067 /* User.m */; };
@@ -137,6 +138,8 @@
 
 /* Begin PBXFileReference section */
 		7809F96216AF3CA30045C4D9 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		780B8F4316C2D2FC00A04EFC /* NSString+FetchedGroupByString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FetchedGroupByString.h"; sourceTree = "<group>"; };
+		780B8F4416C2D2FC00A04EFC /* NSString+FetchedGroupByString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FetchedGroupByString.m"; sourceTree = "<group>"; };
 		780FFEFF16A09A85003AE067 /* ObjectStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectStore.h; sourceTree = "<group>"; };
 		780FFF0016A09A85003AE067 /* ObjectStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectStore.m; sourceTree = "<group>"; };
 		780FFF0316A0C2C9003AE067 /* _User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _User.h; sourceTree = "<group>"; };
@@ -527,6 +530,8 @@
 				7849639C16A47D2300331C80 /* NSObject+Reflection.m */,
 				785DD98316B894DD00C6925A /* NSArray+Functional.h */,
 				785DD98416B894DD00C6925A /* NSArray+Functional.m */,
+				780B8F4316C2D2FC00A04EFC /* NSString+FetchedGroupByString.h */,
+				780B8F4416C2D2FC00A04EFC /* NSString+FetchedGroupByString.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -829,6 +834,7 @@
 				78DAEFA916BC471900A7A840 /* Genre.m in Sources */,
 				78EC890116BC64F500CD0093 /* StoreSearchVC.m in Sources */,
 				78E2FD9516C03A3900AEFE81 /* FileDownloadOperation.m in Sources */,
+				780B8F4516C2D2FC00A04EFC /* NSString+FetchedGroupByString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

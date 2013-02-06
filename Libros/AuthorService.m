@@ -46,9 +46,10 @@
 
 -(NSFetchRequest*)allAuthors {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Author"];
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
-    fetchRequest.sortDescriptors = @[descriptor];
-//    fetchRequest.predicate = [self searchForText:@"Harper Lee"];
+    fetchRequest.sortDescriptors = @[
+        [NSSortDescriptor sortDescriptorWithKey:@"lastName" ascending:YES],
+        [NSSortDescriptor sortDescriptorWithKey:@"firstName" ascending:YES]
+    ];
     return fetchRequest;
 }
 

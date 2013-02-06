@@ -5,6 +5,8 @@
 
 
 extern const struct AuthorAttributes {
+	__unsafe_unretained NSString *firstName;
+	__unsafe_unretained NSString *lastName;
 	__unsafe_unretained NSString *name;
 } AuthorAttributes;
 
@@ -17,6 +19,8 @@ extern const struct AuthorFetchedProperties {
 
 
 
+
+
 @interface AuthorID : NSManagedObjectID {}
 @end
 
@@ -25,6 +29,22 @@ extern const struct AuthorFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (AuthorID*)objectID;
+
+
+
+
+@property (nonatomic, strong) NSString* firstName;
+
+
+//- (BOOL)validateFirstName:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSString* lastName;
+
+
+//- (BOOL)validateLastName:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -46,6 +66,18 @@ extern const struct AuthorFetchedProperties {
 @end
 
 @interface _Author (CoreDataGeneratedPrimitiveAccessors)
+
+
+- (NSString*)primitiveFirstName;
+- (void)setPrimitiveFirstName:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveLastName;
+- (void)setPrimitiveLastName:(NSString*)value;
+
+
 
 
 - (NSString*)primitiveName;

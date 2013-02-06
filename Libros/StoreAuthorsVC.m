@@ -11,6 +11,7 @@
 #import "ObjectStore.h"
 #import "Author.h"
 #import "StoreBookResultsVC.h"
+#import "NSString+FetchedGroupByString.h"
 
 @interface StoreAuthorsVC ()
 @property (nonatomic, strong) NSFetchedResultsController * fetchedResultsController;
@@ -23,7 +24,13 @@
     [super viewDidLoad];
     [[AuthorService shared] load];
     NSFetchRequest * request = [[AuthorService shared] allAuthors];
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:ObjectStore.shared.context sectionNameKeyPath:nil cacheName:nil];
+    
+    self.fetchedResultsController = [[NSFetchedResultsController alloc]
+                                     initWithFetchRequest:request
+                                     managedObjectContext:ObjectStore.shared.context
+                                     sectionNameKeyPath:@"lastName.stringGroupByFirstInitial"
+                                     cacheName:nil];
+    
     [self.fetchedResultsController setDelegate:self];
     NSError *error = nil;
     [self.fetchedResultsController performFetch:&error];
@@ -42,13 +49,21 @@
     [self.tableView reloadData];
 }
 
-
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return [self.fetchedResultsController.sections count];
 }
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    return self.fetchedResultsController.sectionIndexTitles;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
+    return [sectionInfo.name uppercaseString];
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
