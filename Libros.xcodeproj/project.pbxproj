@@ -23,6 +23,8 @@
 /* Begin PBXBuildFile section */
 		7809F96316AF3CA30045C4D9 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7809F96216AF3CA30045C4D9 /* CoreText.framework */; };
 		780B8F4516C2D2FC00A04EFC /* NSString+FetchedGroupByString.m in Sources */ = {isa = PBXBuildFile; fileRef = 780B8F4416C2D2FC00A04EFC /* NSString+FetchedGroupByString.m */; };
+		780B8F4816C2E2D300A04EFC /* StoreFilterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 780B8F4716C2E2D300A04EFC /* StoreFilterVC.m */; };
+		780B8F4A16C2E4B700A04EFC /* StoreFilterVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 780B8F4916C2E4B700A04EFC /* StoreFilterVC.xib */; };
 		780FFF0116A09A85003AE067 /* ObjectStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FFF0016A09A85003AE067 /* ObjectStore.m */; };
 		780FFF0516A0C2C9003AE067 /* _User.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FFF0416A0C2C9003AE067 /* _User.m */; };
 		780FFF0816A0C2D1003AE067 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FFF0716A0C2D1003AE067 /* User.m */; };
@@ -140,6 +142,9 @@
 		7809F96216AF3CA30045C4D9 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		780B8F4316C2D2FC00A04EFC /* NSString+FetchedGroupByString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FetchedGroupByString.h"; sourceTree = "<group>"; };
 		780B8F4416C2D2FC00A04EFC /* NSString+FetchedGroupByString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FetchedGroupByString.m"; sourceTree = "<group>"; };
+		780B8F4616C2E2D300A04EFC /* StoreFilterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreFilterVC.h; sourceTree = "<group>"; };
+		780B8F4716C2E2D300A04EFC /* StoreFilterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreFilterVC.m; sourceTree = "<group>"; };
+		780B8F4916C2E4B700A04EFC /* StoreFilterVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreFilterVC.xib; sourceTree = "<group>"; };
 		780FFEFF16A09A85003AE067 /* ObjectStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectStore.h; sourceTree = "<group>"; };
 		780FFF0016A09A85003AE067 /* ObjectStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectStore.m; sourceTree = "<group>"; };
 		780FFF0316A0C2C9003AE067 /* _User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _User.h; sourceTree = "<group>"; };
@@ -334,6 +339,9 @@
 			children = (
 				784D21AB169F3B78003AC6F2 /* StoreBookResultsVC.h */,
 				784D21AC169F3B79003AC6F2 /* StoreBookResultsVC.m */,
+				780B8F4616C2E2D300A04EFC /* StoreFilterVC.h */,
+				780B8F4716C2E2D300A04EFC /* StoreFilterVC.m */,
+				780B8F4916C2E4B700A04EFC /* StoreFilterVC.xib */,
 				78DAEF8F16BC3E0600A7A840 /* StorePopularVC.h */,
 				78DAEF9016BC3E0600A7A840 /* StorePopularVC.m */,
 				78DAEF9216BC408600A7A840 /* StoreGenresVC.h */,
@@ -735,6 +743,7 @@
 				789C987816B985C000EA9B06 /* 44-shoebox@2x.png in Resources */,
 				789C987916B985C000EA9B06 /* star.png in Resources */,
 				789C987A16B985C000EA9B06 /* star@2x.png in Resources */,
+				780B8F4A16C2E4B700A04EFC /* StoreFilterVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -835,6 +844,7 @@
 				78EC890116BC64F500CD0093 /* StoreSearchVC.m in Sources */,
 				78E2FD9516C03A3900AEFE81 /* FileDownloadOperation.m in Sources */,
 				780B8F4516C2D2FC00A04EFC /* NSString+FetchedGroupByString.m in Sources */,
+				780B8F4816C2E2D300A04EFC /* StoreFilterVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

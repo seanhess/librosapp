@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "StoreFilterVC.h"
 
-@interface StoreBookResultsVC : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface StoreBookResultsVC : UITableViewController <NSFetchedResultsControllerDelegate, StoreFilterDelegate>
 
 @property (strong, nonatomic) NSFetchRequest * fetchRequest;
 

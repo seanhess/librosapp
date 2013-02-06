@@ -79,4 +79,10 @@
     return [NSPredicate predicateWithFormat:@"title BEGINSWITH[c] %@", [text lowercaseString]];
 }
 
+-(NSPredicate*)filterByType:(BookFilter)filter {
+    if (filter == BookFilterHasAudio) return [NSPredicate predicateWithFormat:@"audioFiles > 0"];
+    else if (filter == BookFilterHasText) return [NSPredicate predicateWithFormat:@"textFiles > 0"];
+    else return nil;
+}
+
 @end

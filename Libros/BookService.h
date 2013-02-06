@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Book.h"
 
 @interface BookService : NSObject
 
@@ -16,5 +17,7 @@
 -(NSFetchRequest*)allBooks;
 -(NSFetchRequest*)popular;
 -(NSPredicate*)searchForText:(NSString*)text;
+
+-(NSPredicate*)filterByType:(BookFilter)filter;
 
 @end
