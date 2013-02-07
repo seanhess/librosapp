@@ -27,7 +27,7 @@
                     <navigationItem key="navigationItem" title="Popular" id="QKn-VI-YlY">
                         <barButtonItem key="rightBarButtonItem" title="Library" id="nGq-h9-HQe">
                             <connections>
-                                <segue destination="gmo-jD-UXA" kind="modal" modalTransitionStyle="flipHorizontal" id="q0Y-x6-fmq"/>
+                                <segue destination="gmo-jD-UXA" kind="modal" modalTransitionStyle="flipHorizontal" id="zc2-fq-hvg"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -73,11 +73,7 @@
                         </prototypes>
                     </tableView>
                     <navigationItem key="navigationItem" title="Genres" id="kUf-0P-Q4g">
-                        <barButtonItem key="rightBarButtonItem" title="Library" id="JvE-4Y-kAE">
-                            <connections>
-                                <segue destination="gmo-jD-UXA" kind="modal" modalTransitionStyle="flipHorizontal" id="VMK-Hx-RH2"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Library" id="JvE-4Y-kAE"/>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="28W-5V-u27" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -135,7 +131,7 @@
         <!--LibraryNav-->
         <scene sceneID="hqv-vS-eSI">
             <objects>
-                <navigationController storyboardIdentifier="LibraryNav" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gmo-jD-UXA" userLabel="LibraryNav" sceneMemberID="viewController">
+                <navigationController restorationIdentifier="LibraryNav" storyboardIdentifier="LibraryNav" definesPresentationContext="YES" id="gmo-jD-UXA" userLabel="LibraryNav" sceneMemberID="viewController">
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackOpaque" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="blackOpaque" id="HdW-Zj-Qx3">
                         <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
@@ -147,12 +143,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nKX-5p-WBG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-495" y="-1869"/>
+            <point key="canvasLocation" x="-467" y="-1869"/>
         </scene>
-        <!--Store TabsVC-->
+        <!--Tab Bar Controller-->
         <scene sceneID="f3L-Or-5Ze">
             <objects>
-                <tabBarController definesPresentationContext="YES" id="OOc-pY-1yz" customClass="StoreTabsVC" sceneMemberID="viewController">
+                <tabBarController definesPresentationContext="YES" id="OOc-pY-1yz" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="UVV-Sz-rk5">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
@@ -164,7 +160,6 @@
                         <segue destination="CgY-eX-fsP" kind="relationship" relationship="viewControllers" id="nUE-Io-8oD"/>
                         <segue destination="rzt-2R-2Zk" kind="relationship" relationship="viewControllers" id="0ZK-8O-GuQ"/>
                         <segue destination="pFT-ke-1EX" kind="relationship" relationship="viewControllers" id="ZcI-Wb-NXA"/>
-                        <segue destination="gmo-jD-UXA" kind="modal" identifier="FlipLibrary" modalTransitionStyle="flipHorizontal" id="vFc-is-ItB"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zkI-3B-sBa" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -192,11 +187,7 @@
                         </prototypes>
                     </tableView>
                     <navigationItem key="navigationItem" title="Authors" id="6bt-Jr-Emp">
-                        <barButtonItem key="rightBarButtonItem" title="Library" id="CBr-iq-1ih">
-                            <connections>
-                                <segue destination="gmo-jD-UXA" kind="modal" modalTransitionStyle="flipHorizontal" id="ILK-by-wS8"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Library" id="CBr-iq-1ih"/>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t4n-0R-7Q9" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -302,9 +293,6 @@
         </class>
         <class className="StoreBookResultsVC" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreBookResultsVC.h"/>
-            <relationships>
-                <relationship kind="action" name="flip:"/>
-            </relationships>
         </class>
         <class className="StoreGenresVC" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreGenresVC.h"/>
@@ -318,16 +306,10 @@
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
             </relationships>
         </class>
-        <class className="StoreTabsVC" superclassName="UITabBarController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreTabsVC.h"/>
-        </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="ILK-by-wS8"/>
-    </inferredMetricsTieBreakers>
 </document>
