@@ -61,6 +61,8 @@
 		785DD97A16B88B7500C6925A /* StoreBookCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 785DD97916B88B7500C6925A /* StoreBookCell.m */; };
 		785DD98516B894DD00C6925A /* NSArray+Functional.m in Sources */ = {isa = PBXBuildFile; fileRef = 785DD98416B894DD00C6925A /* NSArray+Functional.m */; };
 		787D363816C42BD000A102ED /* StoreTabsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 787D363716C42BCF00A102ED /* StoreTabsVC.m */; };
+		787D363C16C4370700A102ED /* StoreBookResultsFilterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 787D363B16C4370700A102ED /* StoreBookResultsFilterView.xib */; };
+		787D363F16C437DE00A102ED /* StoreBookResultsFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 787D363E16C437DD00A102ED /* StoreBookResultsFilterView.m */; };
 		789C981A16B9829500EA9B06 /* StoreDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 789C981816B9829500EA9B06 /* StoreDetailsVC.m */; };
 		789C981B16B9829500EA9B06 /* StoreDetailsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 789C981916B9829500EA9B06 /* StoreDetailsVC.xib */; };
 		789C984E16B985C000EA9B06 /* blackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 789C982016B985C000EA9B06 /* blackButton.png */; };
@@ -203,6 +205,9 @@
 		785DD98416B894DD00C6925A /* NSArray+Functional.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Functional.m"; sourceTree = "<group>"; };
 		787D363616C42BCF00A102ED /* StoreTabsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreTabsVC.h; sourceTree = "<group>"; };
 		787D363716C42BCF00A102ED /* StoreTabsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreTabsVC.m; sourceTree = "<group>"; };
+		787D363B16C4370700A102ED /* StoreBookResultsFilterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreBookResultsFilterView.xib; sourceTree = "<group>"; };
+		787D363D16C437DD00A102ED /* StoreBookResultsFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreBookResultsFilterView.h; sourceTree = "<group>"; };
+		787D363E16C437DD00A102ED /* StoreBookResultsFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreBookResultsFilterView.m; sourceTree = "<group>"; };
 		789C981716B9829500EA9B06 /* StoreDetailsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreDetailsVC.h; sourceTree = "<group>"; };
 		789C981816B9829500EA9B06 /* StoreDetailsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreDetailsVC.m; sourceTree = "<group>"; };
 		789C981916B9829500EA9B06 /* StoreDetailsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreDetailsVC.xib; sourceTree = "<group>"; };
@@ -345,6 +350,9 @@
 				787D363716C42BCF00A102ED /* StoreTabsVC.m */,
 				784D21AB169F3B78003AC6F2 /* StoreBookResultsVC.h */,
 				784D21AC169F3B79003AC6F2 /* StoreBookResultsVC.m */,
+				787D363D16C437DD00A102ED /* StoreBookResultsFilterView.h */,
+				787D363E16C437DD00A102ED /* StoreBookResultsFilterView.m */,
+				787D363B16C4370700A102ED /* StoreBookResultsFilterView.xib */,
 				780B8F4616C2E2D300A04EFC /* StoreFilterVC.h */,
 				780B8F4716C2E2D300A04EFC /* StoreFilterVC.m */,
 				780B8F4916C2E4B700A04EFC /* StoreFilterVC.xib */,
@@ -751,6 +759,7 @@
 				789C987916B985C000EA9B06 /* star.png in Resources */,
 				789C987A16B985C000EA9B06 /* star@2x.png in Resources */,
 				780B8F4A16C2E4B700A04EFC /* StoreFilterVC.xib in Resources */,
+				787D363C16C4370700A102ED /* StoreBookResultsFilterView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -853,6 +862,7 @@
 				780B8F4516C2D2FC00A04EFC /* NSString+FetchedGroupByString.m in Sources */,
 				780B8F4816C2E2D300A04EFC /* StoreFilterVC.m in Sources */,
 				787D363816C42BD000A102ED /* StoreTabsVC.m in Sources */,
+				787D363F16C437DE00A102ED /* StoreBookResultsFilterView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

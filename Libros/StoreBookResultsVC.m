@@ -13,12 +13,14 @@
 #import "UserService.h"
 #import "StoreBookCell.h"
 #import "StoreDetailsVC.h"
+#import "StoreBookResultsFilterView.h"
 
 @interface StoreBookResultsVC ()
 
 @property (nonatomic, strong) NSFetchedResultsController * fetchedResultsController;
 @property (nonatomic) BookFilter currentFilter;
 @property (nonatomic, strong) NSPredicate * originalPredicate;
+@property (nonatomic, strong) StoreBookResultsFilterView * filterView;
 
 @end
 
@@ -31,6 +33,17 @@
     self.currentFilter = BookFilterEverything;
     self.originalPredicate = self.fetchRequest.predicate;
     [self generateFetchedResults];
+    
+    // needs to be ANY details view controller has this
+    // not just the popular one :(
+    
+    // meh, just do it like this, or load it from its own nib
+    
+    self.filterView = [StoreBookResultsFilterView filterView];
+    [self.filterView setDelegate:self];
+    self.tableView.tableHeaderView = self.filterView;
+    [self.tableView setContentOffset:CGPointMake(0, self.filterView.frame.size.height)];
+    [self renderFilterTitle];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -75,75 +88,65 @@
 #pragma mark - Table view data source
 
 - (NSIndexPath*)localIndexPath:(NSIndexPath*)indexPath {
-    return [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section-1];
+    return [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) return 1;
-    
-    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section-1];
+    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
     return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        static NSString *CellIdentifier = @"Cell";
-        UITableViewCell *cell = (UITableViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        }
-        
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        if (self.currentFilter == BookFilterEverything) cell.textLabel.text = @"Everything";
-        else if (self.currentFilter == BookFilterHasText) cell.textLabel.text = @"Has Text";
-        else if (self.currentFilter == BookFilterHasAudio) cell.textLabel.text = @"Has Audio";
-        return cell;
+    static NSString *CellIdentifier = @"StoreBookCell";
+    StoreBookCell *cell = (StoreBookCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[StoreBookCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    else {
-        static NSString *CellIdentifier = @"StoreBookCell";
-        StoreBookCell *cell = (StoreBookCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell == nil) {
-            cell = [[StoreBookCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        }
-        
-        Book * book = [self.fetchedResultsController objectAtIndexPath:[self localIndexPath:indexPath]];
-        cell.book = book;
-        
-        return cell;
-    }
+    Book * book = [self.fetchedResultsController objectAtIndexPath:[self localIndexPath:indexPath]];
+    cell.book = book;
+    
+    return cell;
+}
+
+#pragma mark - Filtering
+
+- (void)renderFilterTitle {
+    if (self.currentFilter == BookFilterEverything) self.filterView.buttonTitle = @"Filter: Everything";
+    else if (self.currentFilter == BookFilterHasText) self.filterView.buttonTitle = @"Filter: Has Text";
+    else if (self.currentFilter == BookFilterHasAudio) self.filterView.buttonTitle = @"Filter: Has Audio";
+}
+
+- (void)didTapFilterButton {
+    StoreFilterVC * filters = [StoreFilterVC new];
+    filters.delegate = self;
+    filters.filter = self.currentFilter;
+    [self.navigationController presentViewController:filters animated:YES completion:nil];
 }
 
 - (void)didSelectFilter:(BookFilter)filter {
     self.currentFilter = filter;
     [self generateFetchedResults];
     [self.tableView reloadData];
+    [self renderFilterTitle];
 }
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        StoreFilterVC * filters = [StoreFilterVC new];
-        filters.delegate = self;
-        filters.filter = self.currentFilter;
-        [self.navigationController presentViewController:filters animated:YES completion:nil];
-    }
     
-    else {
-        Book * book = [self.fetchedResultsController objectAtIndexPath:[self localIndexPath:indexPath]];
-        StoreDetailsVC * details = [StoreDetailsVC new];
-        details.book = book;
-        [self.navigationController pushViewController:details animated:YES];
-    }
+    Book * book = [self.fetchedResultsController objectAtIndexPath:[self localIndexPath:indexPath]];
+    StoreDetailsVC * details = [StoreDetailsVC new];
+    details.book = book;
+    [self.navigationController pushViewController:details animated:YES];
 }
 
 
