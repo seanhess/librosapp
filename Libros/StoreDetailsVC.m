@@ -13,6 +13,7 @@
 #import "UserService.h"
 #import "FileService.h"
 #import "MBProgressHUD.h"
+#import "LibraryVC.h"
 
 @interface StoreDetailsVC ()
 
@@ -143,17 +144,21 @@
     self.formatsLabel.frame = formatsLabelFrame;
 }
 
-// is there any way to reattach to it?
-// not really. I need to data bind instead of attaching here
+
 - (IBAction)didTapBuy:(id)sender {
     
-    if (self.book.purchased) {
-        // TODO, view in library
-        return;
+    if (self.book.purchased && self.book.downloadedValue == 1.0) {
+        UINavigationController * nav = [self.navigationController.storyboard instantiateViewControllerWithIdentifier:@"LibraryNav"];
+        LibraryVC * library = (LibraryVC*)nav.topViewController;
+        library.loadBook = self.book;
+        nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        [self presentViewController:nav animated:YES completion:nil];
     }
     
-    [UserService.shared addBook:self.book];
-    [self renderButtonAndDownload];
+    else {
+        [UserService.shared addBook:self.book];
+        [self renderButtonAndDownload];
+    }
 }
 
 - (void)didReceiveMemoryWarning

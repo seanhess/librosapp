@@ -5,7 +5,7 @@ build:
 	cd public && make && cd ..
 
 install:
-	cd server && npm install server && cd ..
+	cd server && npm install && cd ..
 	# bower components will get synched with rsync
 
 upload:

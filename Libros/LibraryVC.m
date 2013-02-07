@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Sean Hess. All rights reserved.
 //
 
-#import "MyBooksVC.h"
+#import "LibraryVC.h"
 #import "BookService.h"
 #import "FileService.h"
 #import "UserService.h"
@@ -14,14 +14,14 @@
 #import "ObjectStore.h"
 #import "ReaderVC.h"
 
-@interface MyBooksVC ()
+@interface LibraryVC ()
 
 @property (nonatomic, strong) NSFetchedResultsController * fetchedResultsController;
 @end
 
 
 
-@implementation MyBooksVC
+@implementation LibraryVC
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -37,12 +37,18 @@
     [super viewDidLoad];
     
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:UserService.shared.libraryBooks managedObjectContext:ObjectStore.shared.context sectionNameKeyPath:nil cacheName:nil];
-    
     [self.fetchedResultsController setDelegate:self];
    
     NSError *error = nil;
     [self.fetchedResultsController performFetch:&error];
     [self.tableView reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    if (self.loadBook) {
+        NSIndexPath * indexPath = [self.fetchedResultsController indexPathForObject:self.loadBook];
+        [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    }
 }
 
 - (void)didReceiveMemoryWarning

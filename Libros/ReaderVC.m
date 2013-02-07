@@ -95,7 +95,6 @@ ReaderLocation ReaderLocationInvalid() {
 - (void)viewWillAppear:(BOOL)animated {
     NSLog(@"VIEW WILL APPEAR %@", NSStringFromCGSize(self.view.bounds.size));
     
-    
     self.framesetter.bounds = self.view.bounds;
     
     self.leftPageView.frame = self.leftFrame;

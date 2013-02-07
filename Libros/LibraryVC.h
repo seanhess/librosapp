@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Book.h"
 
-@interface MyBooksVC : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface LibraryVC : UITableViewController <NSFetchedResultsControllerDelegate>
+
+@property (strong, nonatomic) Book * loadBook;
 
 @end

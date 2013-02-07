@@ -10,7 +10,7 @@
 // so a singleton with some initialization
 
 #import "ObjectStore.h"
-
+#import "Settings.h"
 
 @interface ObjectStore()
 
@@ -37,9 +37,12 @@
 }
 
 - (void)initObjectManager {
+    
+    NSLog(@"ENDPOINT = %@", API_ENDPOINT);
+    
     // Core Data Example
     // Initialize RestKIT
-    self.objectManager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:@"http://localhost:3000"]];
+    self.objectManager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:API_ENDPOINT]];
     self.objectStore = [[RKManagedObjectStore alloc] initWithManagedObjectModel:self.managedObjectModel];
     self.objectManager.managedObjectStore = self.objectStore;
     
