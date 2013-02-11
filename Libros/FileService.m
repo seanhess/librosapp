@@ -126,4 +126,11 @@
     }];
 }
 
+-(void)removeFiles:(NSArray*)files {
+    [files forEach:^(File*file) {
+        NSString * localPath = [self localPath:file];
+        [[NSFileManager defaultManager] removeItemAtPath:localPath error:nil];
+    }];
+}
+
 @end

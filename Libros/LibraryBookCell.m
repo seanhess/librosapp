@@ -11,10 +11,14 @@
 #import "LibraryBookCell.h"
 #import "Icons.h"
 #import "ColoredButton.h"
+#import "UIView+Nibs.h"
 
 @interface LibraryBookCell ()
 @property (nonatomic, strong) ColoredButton * audioButton;
 @property (nonatomic, strong) ColoredButton * textButton;
+@property (nonatomic, strong) UIView * buttonsView;
+@property (nonatomic, strong) UIView * overlayView;
+@property (nonatomic, strong) UILabel * overlayLabel;
 
 @property (nonatomic) CGRect audioFrame;
 @property (nonatomic) CGRect textFrame;
@@ -43,10 +47,15 @@
         self.audioFrame = CGRectMake(0, 0, audioIcon.size.width + BUTTON_ICON_PADDING, audioIcon.size.height + BUTTON_ICON_PADDING);
         self.textFrame = CGRectMake(0, 0, textIcon.size.width + BUTTON_ICON_PADDING, textIcon.size.height-1 + BUTTON_ICON_PADDING);
         
-        self.accessoryView = [UIView new];
-        [self.accessoryView addSubview:self.textButton];
-        [self.accessoryView addSubview:self.audioButton];
+        self.buttonsView = [UIView new];
+        [self.buttonsView addSubview:self.textButton];
+        [self.buttonsView addSubview:self.audioButton];
+        self.accessoryView = self.buttonsView;
         
+        self.overlayView = [UIView loadFromNibNamed:@"LibraryBookCellOverlay"];
+        self.overlayView.frame = self.bounds;
+        self.overlayView.hidden = YES;
+        [self addSubview:self.overlayView];
     }
     return self;
 }
@@ -64,6 +73,16 @@
     self.textLabel.text = book.title;
     self.detailTextLabel.text = book.author;
     self.accessoryView = [self addTypeIcons:book];
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    self.overlayView.hidden = !editing;
+    
+    if (editing)
+        self.accessoryView = nil;
+    else
+        self.accessoryView = self.buttonsView;
 }
 
 - (UIView*)addTypeIcons:(Book*)book {

@@ -27,4 +27,6 @@
 
 -(NSArray*)filterFiles:(NSArray*)array byFormat:(NSString*)format;
 
+-(void)removeFiles:(NSArray*)files;
+
 @end

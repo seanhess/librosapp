@@ -106,12 +106,27 @@
     return cell;
 }
 
-- (void)didTapText:(Book *)book {
-    [self showReader:book];
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
 }
 
-- (void)didTapAudio:(Book *)book {
-    [self showPlayer:book];
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [UserService.shared archiveBook:book];
+    
+    // Need to delete local files, otherwise, what is the point?
+    
+    [self.fetchedResultsController performFetch:nil];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    // need to confirm
+    // change to "Archive"
+    // add text to cell
+    // could be editing that cell
+}
+
+-(NSString*)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return @"Archive";
 }
 
 /*
@@ -216,6 +231,14 @@
 - (void)setBook:(Book*)book preferredFormat:(NSInteger)format {
     book.preferredFormatValue = format;
     [self.tableView reloadData];
+}
+
+- (void)didTapText:(Book *)book {
+    [self showReader:book];
+}
+
+- (void)didTapAudio:(Book *)book {
+    [self showPlayer:book];
 }
 
 //-(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {}

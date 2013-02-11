@@ -18,6 +18,7 @@
 -(User*)main;
 
 -(void)addBook:(Book*)book;
+-(void)archiveBook:(Book*)book;
 
 -(NSFetchRequest*)libraryBooks;
 

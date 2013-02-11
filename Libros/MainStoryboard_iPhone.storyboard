@@ -292,6 +292,29 @@
         <image name="256-box2.png" width="22" height="20"/>
         <image name="star.png" width="26" height="26"/>
     </resources>
+    <classes>
+        <class className="LibraryVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LibraryVC.h"/>
+        </class>
+        <class className="StoreAuthorsVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreAuthorsVC.h"/>
+        </class>
+        <class className="StoreBookResultsVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreBookResultsVC.h"/>
+        </class>
+        <class className="StoreGenresVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreGenresVC.h"/>
+        </class>
+        <class className="StorePopularVC" superclassName="StoreBookResultsVC">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/StorePopularVC.h"/>
+        </class>
+        <class className="StoreSearchVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreSearchVC.h"/>
+            <relationships>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

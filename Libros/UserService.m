@@ -79,6 +79,14 @@
     ];
 }
 
+-(void)archiveBook:(Book *)book {
+    book.purchasedValue = NO;
+    book.downloadedValue = 0.0;
+    FileService * fs = [FileService shared];
+    [fs removeFiles:[fs byBookId:book.bookId]];
+}
+
+
 -(NSFetchRequest*)libraryBooks {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
@@ -87,5 +95,6 @@
     fetchRequest.sortDescriptors = @[descriptor];
     return fetchRequest;
 }
+
 
 @end
