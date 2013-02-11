@@ -75,8 +75,11 @@ ReaderLocation ReaderLocationInvalid() {
 {
     [super viewDidLoad];
     
+    FileService * fs = [FileService shared];
+    
     self.title = self.book.title;
-    self.files = [[FileService shared] byBookId:self.book.bookId];
+    NSArray * allFiles = [fs byBookId:self.book.bookId];
+    self.files = [fs filterFiles:allFiles byFormat:FileFormatText];
     self.wantsFullScreenLayout = YES;
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     

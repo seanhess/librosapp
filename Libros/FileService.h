@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "File.h"
 
+#define FileFormatText @"html"
+#define FileFormatAudio @"mp3"
+
 @interface FileService : NSObject
 
 +(FileService*)shared;
@@ -21,5 +24,7 @@
 -(NSURL*)url:(File*)file;
 -(NSString*)localPath:(File*)file;
 -(NSString*)readAsText:(File*)file;
+
+-(NSArray*)filterFiles:(NSArray*)array byFormat:(NSString*)format;
 
 @end

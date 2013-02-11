@@ -120,4 +120,10 @@
     }
 }
 
+-(NSArray*)filterFiles:(NSArray*)files byFormat:(NSString*)format {
+    return [files filter:^(File*file) {
+        return [file.ext isEqualToString:format];
+    }];
+}
+
 @end

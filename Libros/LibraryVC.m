@@ -18,6 +18,7 @@
 @interface LibraryVC ()
 
 @property (nonatomic, strong) NSFetchedResultsController * fetchedResultsController;
+@property (nonatomic, strong) Book * selectedBook;
 @end
 
 
@@ -43,6 +44,10 @@
     NSError *error = nil;
     [self.fetchedResultsController performFetch:&error];
     [self.tableView reloadData];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -102,13 +107,11 @@
 }
 
 - (void)didTapText:(Book *)book {
-    ReaderVC * readervc = [ReaderVC new];
-    readervc.book = book;
-    [self.navigationController pushViewController:readervc animated:YES];
+    [self showReader:book];
 }
 
 - (void)didTapAudio:(Book *)book {
-    NSLog(@"TAP AUDIO");
+    [self showPlayer:book];
 }
 
 /*
@@ -154,6 +157,67 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    if (book.audioFilesValue && book.textFilesValue) {
+        if (book.preferredFormatValue) {
+            if (book.preferredFormatValue == BookFormatAudio)
+                [self showPlayer:book];
+            else
+                [self showReader:book];
+        }
+        else {
+            [self promptForFormat:book];
+        }
+    }
+    
+    else if (book.audioFilesValue) {
+        [self showPlayer:book];
+    }
+    
+    else {
+        [self showReader:book];
+    }
 }
+
+- (void)promptForFormat:(Book*)book {
+    self.selectedBook = book;
+    UIActionSheet * actionSheet = [UIActionSheet new];
+    actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+    actionSheet.delegate = self;
+    [actionSheet setTitle:@"Which format?"];
+    [actionSheet addButtonWithTitle:@"Texto"];
+    [actionSheet addButtonWithTitle:@"Audio"];
+    [actionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        [self showReader:self.selectedBook];
+    }
+    else {
+        [self showPlayer:self.selectedBook];
+    }
+}
+
+- (void)showReader:(Book*)book {
+    [self setBook:book preferredFormat:BookFormatText];
+    ReaderVC * readervc = [ReaderVC new];
+    readervc.book = book;
+    [self.navigationController pushViewController:readervc animated:YES];
+}
+
+- (void)showPlayer:(Book*)book {
+    NSLog(@"AUDIO PLAYER");
+    [self setBook:book preferredFormat:BookFormatAudio];
+    book.preferredFormatValue = BookFormatAudio;
+}
+
+- (void)setBook:(Book*)book preferredFormat:(NSInteger)format {
+    book.preferredFormatValue = format;
+    [self.tableView reloadData];
+}
+
+//-(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {}
 
 @end

@@ -10,6 +10,7 @@ const struct BookAttributes BookAttributes = {
 	.descriptionText = @"descriptionText",
 	.downloaded = @"downloaded",
 	.genre = @"genre",
+	.preferredFormat = @"preferredFormat",
 	.price = @"price",
 	.purchased = @"purchased",
 	.textFiles = @"textFiles",
@@ -56,6 +57,10 @@ const struct BookFetchedProperties BookFetchedProperties = {
 	}
 	if ([key isEqualToString:@"downloadedValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"downloaded"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"preferredFormatValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"preferredFormat"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"priceValue"]) {
@@ -152,6 +157,32 @@ const struct BookFetchedProperties BookFetchedProperties = {
 
 @dynamic genre;
 
+
+
+
+
+
+@dynamic preferredFormat;
+
+
+
+- (int16_t)preferredFormatValue {
+	NSNumber *result = [self preferredFormat];
+	return [result shortValue];
+}
+
+- (void)setPreferredFormatValue:(int16_t)value_ {
+	[self setPreferredFormat:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitivePreferredFormatValue {
+	NSNumber *result = [self primitivePreferredFormat];
+	return [result shortValue];
+}
+
+- (void)setPrimitivePreferredFormatValue:(int16_t)value_ {
+	[self setPrimitivePreferredFormat:[NSNumber numberWithShort:value_]];
+}
 
 
 
