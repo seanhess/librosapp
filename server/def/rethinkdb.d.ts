@@ -80,7 +80,7 @@ declare module "rethinkdb" {
     between(lower:any, upper:any, primaryKey?:string):IQuery;
     filter(obj:Object):IQuery;
     filter(rql:IRql):IQuery;
-    filter(predicate:(obj:Object) => bool):IQuery;
+    filter(predicate:(obj:IObjectProxy) => bool):IQuery;
   }
 
   interface IRow {
@@ -93,6 +93,7 @@ declare module "rethinkdb" {
   
   interface IObjectProxy {
     (property:string):IObjectProxy;
+    contains(property:string):bool;
   }
 
   interface IRql {}

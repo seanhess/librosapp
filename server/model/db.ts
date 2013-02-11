@@ -25,3 +25,16 @@ export function run(query:r.IQuery) {
   })
   return def.promise
 }
+
+export function contains(propertyName:string) {
+  return function(item:r.IObjectProxy) {
+    return item.contains(propertyName)
+  }
+}
+
+export function property(propertyName:string) {
+  return function(item:r.IObjectProxy) {
+    return item(propertyName)
+  }
+}
+

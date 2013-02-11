@@ -112,26 +112,18 @@ export function insertedBook(info:r.InsertResult):IdentifiedBook {
 }
 
 
-
-
-
-// ACTIONS
-
-
 export function distinctGenres() {
   return books
-  .filter(function(book) {
-    return book.contains('genre')
-  })
-  .map(function(book) {
-    return book('genre')
-  }).distinct()
+  .filter(db.contains('genre'))
+  .map(db.property('genre'))
+  .distinct()
 }
 
 export function distinctAuthors() {
-  return books.map(function(book) {
-    return book('author')
-  }).distinct()
+  return books
+  .filter(db.contains('author'))
+  .map(db.property('author'))
+  .distinct()
 }
 
 
