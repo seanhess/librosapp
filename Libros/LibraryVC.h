@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "Book.h"
+#import "LibraryBookCell.h"
 
-@interface LibraryVC : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface LibraryVC : UITableViewController <NSFetchedResultsControllerDelegate, LibraryBookCellDelegate>
 
 @property (strong, nonatomic) Book * loadBook;
 

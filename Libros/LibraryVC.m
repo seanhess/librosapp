@@ -88,6 +88,7 @@
     }
     
     Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.delegate = self;
     cell.book = book;
 //    ColoredButton * button = [ColoredButton new];
 //    button.style = ColoredButtonStyleGray;
@@ -98,6 +99,16 @@
 //    cell.accessoryView = button;
     
     return cell;
+}
+
+- (void)didTapText:(Book *)book {
+    ReaderVC * readervc = [ReaderVC new];
+    readervc.book = book;
+    [self.navigationController pushViewController:readervc animated:YES];
+}
+
+- (void)didTapAudio:(Book *)book {
+    NSLog(@"TAP AUDIO");
 }
 
 /*
@@ -143,9 +154,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ReaderVC * readervc = [ReaderVC new];
-    readervc.book = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [self.navigationController pushViewController:readervc animated:YES];
 }
 
 @end

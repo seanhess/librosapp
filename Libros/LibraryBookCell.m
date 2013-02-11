@@ -31,11 +31,13 @@
         UIImage * textIcon = Icons.text;
         self.textButton = [ColoredButton new];
         self.textButton.style = ColoredButtonStyleGray;
+        [self.textButton addTarget:self action:@selector(tapButton:) forControlEvents:UIControlEventTouchUpInside];
         [self.textButton setImage:textIcon forState:UIControlStateNormal];
         
         UIImage * audioIcon = Icons.audio;
         self.audioButton = [ColoredButton new];
         self.audioButton.style = ColoredButtonStyleGray;
+        [self.audioButton addTarget:self action:@selector(tapButton:) forControlEvents:UIControlEventTouchUpInside];
         [self.audioButton setImage:audioIcon forState:UIControlStateNormal];
         
         self.audioFrame = CGRectMake(0, 0, audioIcon.size.width + BUTTON_ICON_PADDING, audioIcon.size.height + BUTTON_ICON_PADDING);
@@ -47,6 +49,13 @@
         
     }
     return self;
+}
+
+- (void)tapButton:(id)button {
+    if (button == self.audioButton)
+        [self.delegate didTapAudio:self.book];
+    else
+        [self.delegate didTapText:self.book];
 }
 
 - (void)setBook:(Book *)book {
