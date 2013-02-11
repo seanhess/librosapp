@@ -48,6 +48,7 @@
     if (style == ColoredButtonStyleGray) return @"grey";
     if (style == ColoredButtonStyleGreen) return @"green";
     if (style == ColoredButtonStyleOrange) return @"orange";
+    if (style == ColoredButtonStyleTan) return @"tan";
     if (style == ColoredButtonStyleWhite) return @"white";
     else return @"gray";
 }
@@ -61,6 +62,7 @@
     if (style == ColoredButtonStyleGray) return dark;
     if (style == ColoredButtonStyleGreen) return light;
     if (style == ColoredButtonStyleOrange) return light;
+    if (style == ColoredButtonStyleTan) return dark;
     if (style == ColoredButtonStyleWhite) return dark;
     else return dark;
 }

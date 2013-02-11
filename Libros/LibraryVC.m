@@ -13,6 +13,7 @@
 #import "Book.h"
 #import "ObjectStore.h"
 #import "ReaderVC.h"
+#import "LibraryBookCell.h"
 
 @interface LibraryVC ()
 
@@ -80,20 +81,21 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"MyBookCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"LibraryBookCell";
+    LibraryBookCell *cell = (LibraryBookCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[LibraryBookCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    
-    
     Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//    NSArray * files = [[FileService shared] byBookId:book.bookId];
-//    NSArray * files = [book.files allObjects];
-    NSArray * files = [book allFiles];
-    
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ (%i)", book.title, files.count];
+    cell.book = book;
+//    ColoredButton * button = [ColoredButton new];
+//    button.style = ColoredButtonStyleGray;
+//    UIImage * image = [UIImage imageNamed:@"120-headphones.png"];
+//    button.frame = CGRectMake(0, 0, image.size.width + 12, image.size.height + 12);
+//    [button setImage:image forState:UIControlStateNormal];
+//    
+//    cell.accessoryView = button;
     
     return cell;
 }

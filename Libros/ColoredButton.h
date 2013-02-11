@@ -15,6 +15,7 @@ typedef enum {
     ColoredButtonStyleBlue,
     ColoredButtonStyleGray,
     ColoredButtonStyleWhite,
+    ColoredButtonStyleTan,
 } ColoredButtonStyle;
 
 @interface ColoredButton : UIButton

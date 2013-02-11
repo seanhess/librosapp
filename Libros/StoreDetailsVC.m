@@ -42,7 +42,7 @@
     [super viewDidLoad];
     
     // any initialization of nib things needs to happen in here, not in initWithNibName! might not be there.
-    self.iconsView.padding = 5;
+    self.iconsView.padding = 7;
     
     // We need to load the files for the book
     [[FileService shared] loadFilesForBook:self.book.bookId cb:^{}];
@@ -140,7 +140,7 @@
     [self.iconsView flow];
     
     CGRect formatsLabelFrame = self.formatsLabel.frame;
-    formatsLabelFrame.origin.x = self.iconsView.frame.origin.x + self.iconsView.frame.size.width + 5;
+    formatsLabelFrame.origin.x = self.iconsView.frame.origin.x + self.iconsView.frame.size.width + 8;
     self.formatsLabel.frame = formatsLabelFrame;
 }
 
