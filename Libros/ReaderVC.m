@@ -42,19 +42,12 @@ ReaderLocation ReaderLocationInvalid() {
 
 @property (weak, nonatomic) IBOutlet UIView *controlsView;
 
-@property (weak, nonatomic) IBOutlet ReaderPageView *leftPageView;
-@property (weak, nonatomic) IBOutlet ReaderPageView *currentPageView;
-@property (weak, nonatomic) IBOutlet ReaderPageView *rightPageView;
-
-// the one currently being dragged on / shown
-@property (weak, nonatomic) ReaderPageView * nextPageView;
-@property (nonatomic) CGRect nextPageStartFrame;
-
 @property (nonatomic) ReaderLocation location;
 
 @property (strong, nonatomic) ReaderFramesetter * framesetter;
 @property (strong, nonatomic) ReaderFormatter * formatter;
 @property (strong, nonatomic) NSArray * files;
+@property (nonatomic) NSInteger numChapters;
 
 @property (nonatomic) CGPoint startTouchPoint;
 @property (nonatomic) BOOL dragging;
@@ -85,6 +78,7 @@ ReaderLocation ReaderLocationInvalid() {
     self.title = self.book.title;
     NSArray * allFiles = [fs byBookId:self.book.bookId];
     self.files = [fs filterFiles:allFiles byFormat:FileFormatText];
+    self.numChapters = self.files.count;
     self.wantsFullScreenLayout = YES;
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     
@@ -123,8 +117,23 @@ ReaderLocation ReaderLocationInvalid() {
 }
 
 - (IBAction)didTapText:(UITapGestureRecognizer*)tap {
-    CGPoint location = [tap locationInView:tap];
-    [self showControls];
+    CGPoint point = [tap locationInView:self.view];
+    
+    CGPoint offset = self.collectionView.contentOffset;
+    
+    if (point.x > 0.8*self.view.bounds.size.width) {
+        offset.x += self.view.bounds.size.width;
+    }
+    
+    else if (point.x < 0.2*self.view.bounds.size.width) {
+        offset.x -= self.view.bounds.size.width;
+    }
+    
+    else {
+        [self showControls];
+    }
+    
+    [self.collectionView setContentOffset:offset animated:YES];
 }
 
 - (IBAction)didTapControls:(id)sender {
@@ -189,24 +198,67 @@ ReaderLocation ReaderLocationInvalid() {
 
 #pragma mark UICollectionViewDelegate
 
-// wait, each section could be each chapter
-// that's a nice easy way to do it!
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return self.files.count;
+    return self.numChapters;
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 10;
+    // generate the pages for the very first one!
+    if (self.location.chapter == section) {
+        self.framesetter.bounds = self.view.bounds;
+        [self.framesetter ensurePagesForChapter:section];
+    }
+    
+    if ([self.framesetter hasPagesForChapter:section]) {
+        NSLog(@"REAL chapter %i :: %i", section, [self.framesetter pagesForChapter:section]);
+        return [self.framesetter pagesForChapter:section];
+    }
+    
+    else
+        return 1;
+}
+
+-(BOOL)isChapterNext:(NSInteger)chapter page:(NSInteger)page {
+    return (page == [self.framesetter pagesForChapter:chapter]-1 && chapter < self.numChapters-1);
+}
+
+-(BOOL)isChapterPrev:(NSInteger)chapter page:(NSInteger)page {
+    return (page == 0 && chapter > 0);
 }
 
 // sizes correct at this point
+// this is the current page and chapter, easy to calculate!
+
+// if it is the LAST page in the chapter, then generate the pages for the next one
+
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"CELL %@", NSStringFromCGRect(self.view.bounds));
     static NSString * cellId = @"BookPage";
+    NSInteger chapter = indexPath.section;
+    NSInteger page = indexPath.item;
+    NSLog(@"CELL chapter=%i page=%i", chapter, page);
     UICollectionViewCell * cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
     self.framesetter.bounds = cell.bounds;
+    self.location = ReaderLocationMake(chapter, page);
     
-    [self.framesetter ensurePagesForChapter:indexPath.section];
+    if ([self isChapterNext:chapter page:page] && ![self.framesetter hasPagesForChapter:chapter+1]) {
+        NSLog(@" - next %i", chapter+1);
+        [self.framesetter ensurePagesForChapter:chapter+1];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+        });
+    }
+    
+    else if ([self isChapterPrev:chapter page:page] && ![self.framesetter hasPagesForChapter:chapter-1]) {
+        NSLog(@" - prev %i", chapter-1);
+        [self.framesetter ensurePagesForChapter:chapter-1];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+        });
+    }
+    
+    NSLog(@" - set frame %i %i", indexPath.section, indexPath.item);
     [(ReaderPageView*)cell setFrameFromCache:self.framesetter chapter:indexPath.section page:indexPath.item];
     
     return cell;

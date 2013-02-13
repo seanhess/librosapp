@@ -15,12 +15,15 @@
 // Keep this up to date when your view changes size!
 @property (nonatomic) CGRect bounds;
 
+
 -(id)pageForChapter:(NSInteger)chapter page:(NSInteger)page;
 -(NSInteger)pagesForChapter:(NSInteger)chapter;
+
 
 -(void)emptyExceptChapter:(NSInteger)chapter;
 -(void)empty;
 
+-(BOOL)hasPagesForChapter:(NSInteger)chapter;
 -(void)ensurePagesForChapter:(NSInteger)chapter;
 
 

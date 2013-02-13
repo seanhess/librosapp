@@ -40,7 +40,7 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="IBUICollectionView" id="695598214">
+					<object class="IBUICollectionView" id="175763529">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">1298</int>
 						<array class="NSMutableArray" key="NSSubviews"/>
@@ -60,12 +60,11 @@
 						<array key="IBUIGestureRecognizers" id="0"/>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<bool key="IBUIPagingEnabled">YES</bool>
-						<bool key="IBUIShowsHorizontalScrollIndicator">NO</bool>
 						<bool key="IBUIShowsVerticalScrollIndicator">NO</bool>
 						<float key="IBUIMinimumZoomScale">0.0</float>
 						<float key="IBUIMaximumZoomScale">0.0</float>
-						<object class="IBUICollectionViewFlowLayout" key="IBUICollectionViewLayout" id="602236598">
-							<reference key="IBUICollectionView" ref="695598214"/>
+						<object class="IBUICollectionViewFlowLayout" key="IBUICollectionViewLayout" id="360618461">
+							<reference key="IBUICollectionView" ref="175763529"/>
 							<int key="IBUIScrollDirection">1</int>
 							<string key="IBUIItemSize">{50, 50}</string>
 						</object>
@@ -75,7 +74,7 @@
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">274</int>
 						<array class="NSMutableArray" key="NSSubviews">
-							<object class="IBUIView" id="626829524">
+							<object class="IBUIView" id="977779170">
 								<reference key="NSNextResponder" ref="817384402"/>
 								<int key="NSvFlags">274</int>
 								<string key="NSFrameSize">{320, 504}</string>
@@ -130,7 +129,7 @@
 						<string key="NSFrameSize">{320, 548}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="626829524"/>
+						<reference key="NSNextKeyView" ref="977779170"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="519683320"/>
 						<reference key="IBUIGestureRecognizers" ref="0"/>
@@ -140,7 +139,7 @@
 				<string key="NSFrame">{{0, 20}, {320, 548}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="695598214"/>
+				<reference key="NSNextKeyView" ref="175763529"/>
 				<string key="NSHuggingPriority">{250, 250}</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
@@ -169,8 +168,8 @@
 				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
-			<object class="IBUITapGestureRecognizer" id="433149925"/>
-			<object class="IBUITapGestureRecognizer" id="638630333"/>
+			<object class="IBUITapGestureRecognizer" id="767817456"/>
+			<object class="IBUITapGestureRecognizer" id="1015252063"/>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
@@ -194,14 +193,14 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">collectionView</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="695598214"/>
+						<reference key="destination" ref="175763529"/>
 					</object>
 					<int key="connectionID">272</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">dataSource</string>
-						<reference key="source" ref="695598214"/>
+						<reference key="source" ref="175763529"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">273</int>
@@ -209,7 +208,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
-						<reference key="source" ref="695598214"/>
+						<reference key="source" ref="175763529"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">274</int>
@@ -217,8 +216,8 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
 						<string key="label">gestureRecognizers</string>
-						<reference key="source" ref="695598214"/>
-						<reference key="destination" ref="433149925"/>
+						<reference key="source" ref="175763529"/>
+						<reference key="destination" ref="767817456"/>
 						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
 						<bool key="addsContentToExistingCollection">YES</bool>
 					</object>
@@ -227,7 +226,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">didTapText:</string>
-						<reference key="source" ref="433149925"/>
+						<reference key="source" ref="767817456"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">288</int>
@@ -235,7 +234,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">didTapControls:</string>
-						<reference key="source" ref="638630333"/>
+						<reference key="source" ref="1015252063"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">291</int>
@@ -243,8 +242,8 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
 						<string key="label">gestureRecognizers</string>
-						<reference key="source" ref="626829524"/>
-						<reference key="destination" ref="638630333"/>
+						<reference key="source" ref="977779170"/>
+						<reference key="destination" ref="1015252063"/>
 						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
 						<bool key="addsContentToExistingCollection">YES</bool>
 					</object>
@@ -264,7 +263,7 @@
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="817384402"/>
-							<reference ref="695598214"/>
+							<reference ref="175763529"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -281,9 +280,9 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">258</int>
-						<reference key="object" ref="695598214"/>
+						<reference key="object" ref="175763529"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="602236598"/>
+							<reference ref="360618461"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -292,7 +291,7 @@
 						<reference key="object" ref="817384402"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="908049432"/>
-							<reference ref="626829524"/>
+							<reference ref="977779170"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">controlsView</string>
@@ -320,25 +319,25 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">277</int>
-						<reference key="object" ref="602236598"/>
-						<reference key="parent" ref="695598214"/>
+						<reference key="object" ref="360618461"/>
+						<reference key="parent" ref="175763529"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">286</int>
-						<reference key="object" ref="433149925"/>
+						<reference key="object" ref="767817456"/>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Tap Text</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">292</int>
-						<reference key="object" ref="626829524"/>
+						<reference key="object" ref="977779170"/>
 						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="817384402"/>
 						<string key="objectName">Tap honeypot</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">289</int>
-						<reference key="object" ref="638630333"/>
+						<reference key="object" ref="1015252063"/>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Tap Controls</string>
 					</object>
@@ -369,21 +368,13 @@
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
-					<string key="className">ReaderPageView</string>
-					<string key="superclassName">UICollectionViewCell</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/ReaderPageView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">ReaderVC</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="didTapControls:">id</string>
 						<string key="didTapFont:">id</string>
 						<string key="didTapLibrary:">id</string>
-						<string key="didTapText:">id</string>
+						<string key="didTapText:">UITapGestureRecognizer</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="didTapControls:">
@@ -400,15 +391,12 @@
 						</object>
 						<object class="IBActionInfo" key="didTapText:">
 							<string key="name">didTapText:</string>
-							<string key="candidateClassName">id</string>
+							<string key="candidateClassName">UITapGestureRecognizer</string>
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="collectionView">UICollectionView</string>
 						<string key="controlsView">UIView</string>
-						<string key="currentPageView">ReaderPageView</string>
-						<string key="leftPageView">ReaderPageView</string>
-						<string key="rightPageView">ReaderPageView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="collectionView">
@@ -419,38 +407,10 @@
 							<string key="name">controlsView</string>
 							<string key="candidateClassName">UIView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="currentPageView">
-							<string key="name">currentPageView</string>
-							<string key="candidateClassName">ReaderPageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="leftPageView">
-							<string key="name">leftPageView</string>
-							<string key="candidateClassName">ReaderPageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="rightPageView">
-							<string key="name">rightPageView</string>
-							<string key="candidateClassName">ReaderPageView</string>
-						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/ReaderVC.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">UICollectionReusableView</string>
-					<string key="superclassName">UIView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/UICollectionReusableView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">UICollectionViewCell</string>
-					<string key="superclassName">UICollectionReusableView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/UICollectionViewCell.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
