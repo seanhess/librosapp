@@ -12,7 +12,7 @@
 #import <CoreText/CoreText.h>
 #import "ReaderFramesetter.h"
 
-@interface ReaderPageView : UIView
+@interface ReaderPageView : UICollectionViewCell
 
 @property (nonatomic) NSInteger chapter;
 @property (nonatomic) NSInteger page;
