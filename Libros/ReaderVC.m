@@ -23,6 +23,7 @@
 
 @property (nonatomic) NSInteger currentChapter;
 @property (nonatomic) NSInteger currentPage;
+@property (nonatomic) CGFloat currentPercent;
 
 @property (strong, nonatomic) ReaderFramesetter * framesetter;
 @property (strong, nonatomic) ReaderFormatter * formatter;
@@ -81,18 +82,27 @@
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    
+    self.currentPercent = [self.framesetter percentThroughChapter:self.currentChapter page:self.currentPage];
+    
     [self.collectionView.collectionViewLayout invalidateLayout];
     CGRect bounds = self.view.bounds;
     bounds.size = CGSizeMake(bounds.size.height, bounds.size.width);
+    
     self.framesetter.bounds = bounds;
     [self.framesetter empty];
+    
     [self.collectionView reloadData];
     
-    // Scroll to nearest page!
+    
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     NSLog(@"DID ROTATE %@", NSStringFromCGRect(self.collectionView.bounds));
+    
+    NSInteger newPage = [self.framesetter pageForChapter:self.currentChapter percent:self.currentPercent];
+    NSIndexPath * newLocation = [NSIndexPath indexPathForItem:newPage inSection:self.currentChapter];
+    [self.collectionView scrollToItemAtIndexPath:newLocation atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -142,8 +152,12 @@
     }
     
     if (newLocation) {
-        [self.collectionView scrollToItemAtIndexPath:newLocation atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
+        [self scrollToLocation:newLocation];
     }
+}
+
+- (void)scrollToLocation:(NSIndexPath*)location {
+    [self.collectionView scrollToItemAtIndexPath:location atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
 }
 
 - (BOOL)scrollViewIsAtRest {
