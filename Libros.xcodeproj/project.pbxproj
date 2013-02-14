@@ -22,6 +22,7 @@
 
 /* Begin PBXBuildFile section */
 		7809F96316AF3CA30045C4D9 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7809F96216AF3CA30045C4D9 /* CoreText.framework */; };
+		780A2E6816CC645000ABCB4E /* LBParsedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 780A2E6716CC645000ABCB4E /* LBParsedString.m */; };
 		780B8F4516C2D2FC00A04EFC /* NSString+FetchedGroupByString.m in Sources */ = {isa = PBXBuildFile; fileRef = 780B8F4416C2D2FC00A04EFC /* NSString+FetchedGroupByString.m */; };
 		780B8F4816C2E2D300A04EFC /* StoreFilterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 780B8F4716C2E2D300A04EFC /* StoreFilterVC.m */; };
 		780B8F4A16C2E4B700A04EFC /* StoreFilterVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 780B8F4916C2E4B700A04EFC /* StoreFilterVC.xib */; };
@@ -146,6 +147,8 @@
 
 /* Begin PBXFileReference section */
 		7809F96216AF3CA30045C4D9 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		780A2E6616CC645000ABCB4E /* LBParsedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBParsedString.h; sourceTree = "<group>"; };
+		780A2E6716CC645000ABCB4E /* LBParsedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBParsedString.m; sourceTree = "<group>"; };
 		780B8F4316C2D2FC00A04EFC /* NSString+FetchedGroupByString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FetchedGroupByString.h"; sourceTree = "<group>"; };
 		780B8F4416C2D2FC00A04EFC /* NSString+FetchedGroupByString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FetchedGroupByString.m"; sourceTree = "<group>"; };
 		780B8F4616C2E2D300A04EFC /* StoreFilterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreFilterVC.h; sourceTree = "<group>"; };
@@ -541,6 +544,8 @@
 				780FFF0016A09A85003AE067 /* ObjectStore.m */,
 				7847A4AD16A0900800106764 /* Human */,
 				7847A4B016A0900800106764 /* Machine */,
+				780A2E6616CC645000ABCB4E /* LBParsedString.h */,
+				780A2E6716CC645000ABCB4E /* LBParsedString.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -879,6 +884,7 @@
 				787D363F16C437DE00A102ED /* StoreBookResultsFilterView.m in Sources */,
 				78D0542016C95B6D0037311C /* LibraryBookCell.m in Sources */,
 				78D0542716C988130037311C /* UIView+Nibs.m in Sources */,
+				780A2E6816CC645000ABCB4E /* LBParsedString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

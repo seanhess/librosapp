@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LBParsedString.h"
+#import "File.h"
 
 @interface ReaderFormatter : NSObject
 
-@property (strong, nonatomic) NSArray * files;
+-(NSAttributedString*)textForFile:(File*)file;
+-(LBParsedString*)parsedStringForMarkup:(NSString*)html;
+-(NSAttributedString*)attributedStringForParsed:(LBParsedString *)parsed;
 
--(NSAttributedString*)textForChapter:(NSInteger)chapter;
-
--(NSAttributedString*)textForMarkup:(NSString*)html;
-    
 @end

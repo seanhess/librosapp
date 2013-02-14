@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "File.h"
+#import "LBParsedString.h"
 
 #define FileFormatText @"html"
 #define FileFormatAudio @"mp3"
@@ -23,7 +24,7 @@
 
 -(NSURL*)url:(File*)file;
 -(NSString*)localPath:(File*)file;
--(NSString*)readAsText:(File*)file;
+-(LBParsedString*)readAsText:(File*)file;
 
 -(NSArray*)filterFiles:(NSArray*)array byFormat:(NSString*)format;
 

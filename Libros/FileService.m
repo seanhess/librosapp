@@ -99,9 +99,10 @@
     return [NSString stringWithFormat:@"%@/%@.%@", self.documentsDirectory, file.fileId, file.ext];
 }
 
--(NSString*)readAsText:(File *)file {
-    NSError * error = nil;
-    return [NSString stringWithContentsOfFile:[self localPath:file] encoding:NSUTF8StringEncoding error:&error];
+-(LBParsedString*)readAsText:(File *)file {
+    NSData * data = [NSData dataWithContentsOfFile:[self localPath:file] options:NSDataReadingMapped error:nil];
+    LBParsedString * string = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    return string;
 }
 
 

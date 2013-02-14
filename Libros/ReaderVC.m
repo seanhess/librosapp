@@ -16,41 +16,20 @@
 
 #define DRAG_GRAVITY 15
 
-typedef struct {
-    NSInteger chapter;
-    NSInteger page;
-} ReaderLocation;
-
-ReaderLocation ReaderLocationMake(NSInteger chapter, NSInteger page) {
-    ReaderLocation location;
-    location.chapter = chapter;
-    location.page = page;
-    return location;
-}
-
-ReaderLocation ReaderLocationInvalid() {
-    ReaderLocation location;
-    location.chapter = -1;
-    location.page = -1;
-    return location;
-}
-
-
-
-@interface ReaderVC () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface ReaderVC () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (weak, nonatomic) IBOutlet UIView *controlsView;
 
-@property (nonatomic) ReaderLocation location;
+@property (nonatomic) NSInteger currentChapter;
+@property (nonatomic) NSInteger currentPage;
 
 @property (strong, nonatomic) ReaderFramesetter * framesetter;
 @property (strong, nonatomic) ReaderFormatter * formatter;
 @property (strong, nonatomic) NSArray * files;
 @property (nonatomic) NSInteger numChapters;
 
-@property (nonatomic) CGPoint startTouchPoint;
-@property (nonatomic) BOOL dragging;
+@property (nonatomic) BOOL scrolling;
 
 @end
 
@@ -86,11 +65,12 @@ ReaderLocation ReaderLocationInvalid() {
     
     // INITIALIZE
     self.formatter = [ReaderFormatter new];
-    self.formatter.files = self.files;
     
     self.framesetter = [ReaderFramesetter new];
-    self.framesetter.formatter = self.formatter;
-    self.location = ReaderLocationMake(0, 0);
+    self.framesetter.formatter = self.formatter; // change to use a delegate so you don't have to pass these in
+    self.framesetter.files = self.files;
+    self.currentChapter = 0;
+    self.currentPage = 0;
     
     // TOO EARLY TO DRAW! View Size is wrong
     NSLog(@"VIEW DID LOAD %@", NSStringFromCGRect(self.view.bounds));
@@ -100,77 +80,176 @@ ReaderLocation ReaderLocationInvalid() {
     NSLog(@"VIEW DID APPEAR %@", NSStringFromCGRect(self.view.bounds));
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    NSLog(@"WILL ROTATE %@", NSStringFromCGRect(self.collectionView.bounds));
+    [self.collectionView.collectionViewLayout invalidateLayout];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    NSLog(@"DID ROTATE %@", NSStringFromCGRect(self.collectionView.bounds));
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     
     // Dispose of any resources that can be recreated.
-    [self.framesetter emptyExceptChapter:self.location.chapter];
+    [self.framesetter emptyExceptChapter:self.currentChapter];
+    
+    // Do NOT reload the table at this time?
+    // It will remember all your previously created cells
 }
 
 - (IBAction)didTapLibrary:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+
 - (IBAction)didTapFont:(id)sender {
     
-}
-
-- (IBAction)didTapText:(UITapGestureRecognizer*)tap {
-    CGPoint point = [tap locationInView:self.view];
-    
-    CGPoint offset = self.collectionView.contentOffset;
-    
-    if (point.x > 0.8*self.view.bounds.size.width) {
-        offset.x += self.view.bounds.size.width;
-    }
-    
-    else if (point.x < 0.2*self.view.bounds.size.width) {
-        offset.x -= self.view.bounds.size.width;
-    }
-    
-    else {
-        [self showControls];
-    }
-    
-    [self.collectionView setContentOffset:offset animated:YES];
 }
 
 - (IBAction)didTapControls:(id)sender {
     [self hideControls];
 }
 
-- (ReaderLocation)next:(ReaderLocation)location {
-    if (location.page+1 < [self.framesetter pagesForChapter:location.chapter]) {
-        location.page += 1;
-        return location;
+- (IBAction)didTapText:(UITapGestureRecognizer*)tap {
+    
+    NSLog(@"TESTING %i %i", self.collectionView.dragging, self.collectionView.decelerating);
+    
+    if (!self.scrollViewIsAtRest) return;
+    
+    CGPoint point = [tap locationInView:self.view];
+    
+    NSIndexPath * newLocation = nil;
+    
+    if (point.x > 0.8*self.view.bounds.size.width) {
+        newLocation = [self next:self.currentChapter page:self.currentPage];
+    }
+    
+    else if (point.x < 0.2*self.view.bounds.size.width) {
+        newLocation = [self prev:self.currentChapter page:self.currentPage];
+    }
+    
+    else {
+        [self showControls];
+    }
+    
+    if (newLocation) {
+        [self.collectionView scrollToItemAtIndexPath:newLocation atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
+    }
+}
+
+- (BOOL)scrollViewIsAtRest {
+    CGPoint offset = self.collectionView.contentOffset;
+    return (((int)offset.x % (int)self.view.frame.size.width) == 0);
+}
+
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    [self updateCurrentPage];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [self updateCurrentPage];
+}
+
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {}
+//- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {}
+//- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {}
+
+// only call this when at rest
+- (void)updateCurrentPage {
+    // which page is in the MIDDLE of the window?
+    NSIndexPath * cellIndexPath = [self.collectionView indexPathForItemAtPoint:CGPointMake(self.collectionView.contentOffset.x + self.view.frame.size.width/2, 0)];
+    NSInteger chapter = cellIndexPath.section;
+    NSInteger page = cellIndexPath.item;
+    self.currentChapter = chapter;
+    self.currentPage = page;
+        
+    if ([self isChapterNext:chapter page:page] && ![self.framesetter hasPagesForChapter:chapter+1]) {
+        [self.framesetter ensurePagesForChapter:chapter+1];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+        });
+    }
+    
+    else if ([self isChapterPrev:chapter page:page] && ![self.framesetter hasPagesForChapter:chapter-1]) {
+        [self.framesetter ensurePagesForChapter:chapter-1];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+        });
+    }
+}
+
+
+// you ALWAYS have to call this guy
+// also updates the currents
+- (void)moveToChapter:(NSInteger)chapter page:(NSInteger)page animated:(BOOL)animated {
+    
+}
+
+- (void)scrollToChapter:(NSInteger)chapter page:(NSInteger)page {
+    NSInteger startIndex = [self cellOffsetForChapter:self.currentChapter page:self.currentPage];
+    NSInteger endIndex = [self cellOffsetForChapter:chapter page:page];
+    CGPoint offset = self.collectionView.contentOffset;
+    offset.x = startIndex * self.view.bounds.size.width;
+    [self.collectionView setContentOffset:offset animated:NO];
+    offset.x = endIndex * self.view.bounds.size.width;
+    [self.collectionView setContentOffset:offset animated:YES];
+}
+
+- (NSInteger)cellOffsetForChapter:(NSInteger)chapter page:(NSInteger)page {
+    NSInteger pages = 0;
+    
+    for (int c = 0; c < chapter; c++) {
+        pages += [self cellsDisplayedInChapter:chapter];
+    }
+    
+    pages += page;
+    return pages;
+}
+
+- (NSInteger)cellsDisplayedInChapter:(NSInteger)chapter {
+    if ([self.framesetter hasPagesForChapter:chapter]) {
+        return [self.framesetter pagesForChapter:chapter];
+    }
+    else return 1;
+}
+
+- (void)ensurePagesForChapter:(NSInteger)chapter {
+    self.framesetter.bounds = self.view.bounds;
+    [self.framesetter ensurePagesForChapter:chapter];
+}
+
+- (NSIndexPath*)next:(NSInteger)chapter page:(NSInteger)page {
+    if (page+1 < [self.framesetter pagesForChapter:chapter]) {
+        return [NSIndexPath indexPathForItem:page+1 inSection:chapter];
     }
     else {
-        NSInteger nextChapter = location.chapter + 1;
+        NSInteger nextChapter = chapter + 1;
         if (nextChapter >= self.files.count)
-            return ReaderLocationInvalid();
+            return nil;
         else {
-            [self.framesetter ensurePagesForChapter:nextChapter];
-            return ReaderLocationMake(nextChapter, 0);
+            [self ensurePagesForChapter:nextChapter];
+            return [NSIndexPath indexPathForItem:0 inSection:nextChapter];
         }
     }
 }
 
-- (ReaderLocation)prev:(ReaderLocation)location {
-    if (location.page > 0) {
-        location.page -= 1;
-        return location;
+// you have to ensure the previous chapter, because
+- (NSIndexPath*)prev:(NSInteger)chapter page:(NSInteger)page {
+    if (page > 0) {
+        return [NSIndexPath indexPathForItem:page-1 inSection:chapter];
     }
     else {
-        NSInteger previousChapter = location.chapter - 1;
-        if (previousChapter < 0) return ReaderLocationInvalid();
-        [self.framesetter ensurePagesForChapter:previousChapter];
-        return ReaderLocationMake(previousChapter, [self.framesetter pagesForChapter:previousChapter]-1);
+        NSInteger previousChapter = chapter - 1;
+        if (previousChapter < 0) return nil;
+        [self ensurePagesForChapter:previousChapter];
+        return [NSIndexPath indexPathForItem:([self.framesetter pagesForChapter:previousChapter]-1) inSection:previousChapter];
     }
-}
-
-- (BOOL)isValidLocation:(ReaderLocation)location {
-    return location.chapter >= 0;
 }
 
 - (void)toggleControls {
@@ -204,18 +283,12 @@ ReaderLocation ReaderLocationInvalid() {
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     // generate the pages for the very first one!
-    if (self.location.chapter == section) {
+    if (self.currentChapter == section) {
         self.framesetter.bounds = self.view.bounds;
         [self.framesetter ensurePagesForChapter:section];
     }
     
-    if ([self.framesetter hasPagesForChapter:section]) {
-        NSLog(@"REAL chapter %i :: %i", section, [self.framesetter pagesForChapter:section]);
-        return [self.framesetter pagesForChapter:section];
-    }
-    
-    else
-        return 1;
+    return [self cellsDisplayedInChapter:section];
 }
 
 -(BOOL)isChapterNext:(NSInteger)chapter page:(NSInteger)page {
@@ -235,30 +308,16 @@ ReaderLocation ReaderLocationInvalid() {
     static NSString * cellId = @"BookPage";
     NSInteger chapter = indexPath.section;
     NSInteger page = indexPath.item;
-    NSLog(@"CELL chapter=%i page=%i", chapter, page);
+//    NSLog(@"CELL chapter=%i page=%i", chapter, page);
     UICollectionViewCell * cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
     self.framesetter.bounds = cell.bounds;
-    self.location = ReaderLocationMake(chapter, page);
     
-    if ([self isChapterNext:chapter page:page] && ![self.framesetter hasPagesForChapter:chapter+1]) {
-        NSLog(@" - next %i", chapter+1);
-        [self.framesetter ensurePagesForChapter:chapter+1];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.collectionView reloadData];
-        });
-    }
-    
-    else if ([self isChapterPrev:chapter page:page] && ![self.framesetter hasPagesForChapter:chapter-1]) {
-        NSLog(@" - prev %i", chapter-1);
-        [self.framesetter ensurePagesForChapter:chapter-1];
+// I DO need some way to update them if you scroll, but not this
+//    self.currentChapter = chapter;
+//    self.currentPage = page; // is this true? not nececssarily
 
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.collectionView reloadData];
-        });
-    }
     
-    NSLog(@" - set frame %i %i", indexPath.section, indexPath.item);
+//    NSLog(@" - set frame %i %i", indexPath.section, indexPath.item);
     [(ReaderPageView*)cell setFrameFromCache:self.framesetter chapter:indexPath.section page:indexPath.item];
     
     return cell;

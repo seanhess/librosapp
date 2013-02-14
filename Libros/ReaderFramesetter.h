@@ -15,6 +15,8 @@
 // Keep this up to date when your view changes size!
 @property (nonatomic) CGRect bounds;
 
+@property (nonatomic, strong) NSArray * files;
+
 
 -(id)pageForChapter:(NSInteger)chapter page:(NSInteger)page;
 -(NSInteger)pagesForChapter:(NSInteger)chapter;

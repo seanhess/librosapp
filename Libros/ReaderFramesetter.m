@@ -63,15 +63,15 @@
 -(NSMutableArray*)generatePagesForChapter:(NSInteger)chapter {
     NSInteger location = 0;
     
-    NSAttributedString * text = [self.formatter textForChapter:chapter];
-    NSLog(@"TEXT %i", text.length);
+    NSAttributedString * text = [self.formatter textForFile:self.files[chapter]];
+    NSLog(@"GENERATING for chapter=%i textLength=%i", chapter, text.length);
     
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)text);
     
     NSMutableArray * pages = [NSMutableArray array];
     
     while(location < text.length) {
-        NSLog(@"GENERATING for chapter=%i location=%i", chapter, location);
+//        NSLog(@"GENERATING for chapter=%i location=%i", chapter, location);
         CGMutablePathRef path = CGPathCreateMutable();
         CGRect insetFrame = CGRectInset(self.bounds, FRAME_X_OFFSET, FRAME_Y_OFFSET);
         CGPathAddRect(path, NULL, insetFrame);
@@ -89,6 +89,8 @@
     }
     
     CFRelease(framesetter);
+    
+    NSLog(@"- done");
     
     return pages;
 }

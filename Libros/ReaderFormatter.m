@@ -12,21 +12,66 @@
 
 @implementation ReaderFormatter
 
--(NSAttributedString*)textForChapter:(NSInteger)chapter {
-    NSString * bookPlainString = [[FileService shared] readAsText:self.files[chapter]];
-    NSAttributedString * chapterText = [self textForMarkup:bookPlainString];
+-(NSAttributedString*)textForFile:(File*)file {
+    NSLog(@"READ FILE");
+    LBParsedString * parsedString = [[FileService shared] readAsText:file];
+    NSLog(@"CONVERT");
+    NSAttributedString * chapterText = [self attributedStringForParsed:parsedString];
+    NSLog(@" - done");
     return chapterText;
 }
 
-// Parses simple, TextEdit-generated 
--(NSAttributedString*)textForMarkup:(NSString *)html {
+-(LBParsedString*)parsedStringForMarkup:(NSString*)html {
     NSString * bodyHtml = [self htmlInsideBodyTag:html];
     
-    // FONTS and FORMATTING
-    CTFontRef mainFont = CTFontCreateWithName(CFSTR("Palatino"), 18, NULL);
-    CTFontRef boldFont = CTFontCreateWithName(CFSTR("Palatino-bold"), 18, NULL);
-    CTFontRef italicFont = CTFontCreateWithName(CFSTR("Palatino-italic"), 18, NULL);
-    CTFontRef currentFont = mainFont;
+    NSMutableString * text = [NSMutableString string];
+    LBParsedString * parsedString = [LBParsedString new];
+    
+    NSRegularExpression* regex = [[NSRegularExpression alloc] initWithPattern:@"(.*?)(<[^>]+>|\\Z)" options:NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators error:nil];
+    NSArray* chunks = [regex matchesInString:bodyHtml options:0 range:NSMakeRange(0, [bodyHtml length])];
+    
+    LBParsedStringAttribute currentAttribute = LBParsedStringAttributeNone;
+    
+    for (NSTextCheckingResult* b in chunks) {
+        NSArray * parts = [[bodyHtml substringWithRange:b.range] componentsSeparatedByString:@"<"];
+        NSString * previousText = parts[0];
+        
+        [text appendString:previousText];
+        
+        if (currentAttribute) {
+            // if we are IN a bold tag, etc, add that attribute
+            [parsedString setAttribute:currentAttribute range:NSMakeRange(text.length - previousText.length, previousText.length)];
+        }
+        
+        // for the NEXT iteration
+        if (parts.count > 1) {
+            NSString * nextTag = parts[1];
+            if ([nextTag hasPrefix:@"b>"]) {
+                currentAttribute = LBParsedStringAttributeBold;
+            }
+            else if ([nextTag hasPrefix:@"i>"]) {
+                currentAttribute = LBParsedStringAttributeItalic;
+            }
+            else {
+                currentAttribute = LBParsedStringAttributeNone;
+            }
+        }
+    }
+    
+    parsedString.text = text;
+    
+    return parsedString;
+}
+
+// Parses simple, TextEdit-generated
+-(NSAttributedString*)attributedStringForParsed:(LBParsedString *)parsed {
+    
+    // TODO: create fonts is slow! Create them on initialization, or lazily
+    // make sure you get the font names right or it is REALLY slow
+    
+    CTFontRef mainFont = CTFontCreateWithName((CFStringRef)@"Palatino-Roman", 18, NULL);
+    CTFontRef boldFont = CTFontCreateWithName((CFStringRef)@"Palatino-Bold", 18, NULL);
+    CTFontRef italicFont = CTFontCreateWithName((CFStringRef)@"Palatino-Italic", 18, NULL);
     
     CGFloat lineSpacing = 3.0;
     CTTextAlignment alignment = kCTJustifiedTextAlignment;
@@ -37,39 +82,38 @@
     };
     CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(settings, sizeof(settings) / sizeof(settings[0]));
     
-    NSMutableAttributedString* text = [[NSMutableAttributedString alloc] initWithString:@""];
-    NSRegularExpression* regex = [[NSRegularExpression alloc] initWithPattern:@"(.*?)(<[^>]+>|\\Z)" options:NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators error:nil];
-    NSArray* chunks = [regex matchesInString:bodyHtml options:0 range:NSMakeRange(0, [bodyHtml length])];
+    NSMutableAttributedString* text = [[NSMutableAttributedString alloc] initWithString:parsed.text];
     
-    for (NSTextCheckingResult* b in chunks) {
-        NSArray * parts = [[bodyHtml substringWithRange:b.range] componentsSeparatedByString:@"<"];
-        NSString * previousText = parts[0];
+    
+    NSDictionary* mainAttributes = @{
+        (NSString*)kCTParagraphStyleAttributeName : (__bridge id)paragraphStyle,
+        (NSString*)kCTFontAttributeName: (__bridge id)mainFont
+    };
+    
+    [text addAttributes:mainAttributes range:NSMakeRange(0, text.length)];
+    
+    [parsed forEachAttribute:^(LBParsedStringAttribute attribute, NSRange range) {
+        CTFontRef font;
+        if (attribute == LBParsedStringAttributeBold) {
+            font = boldFont;
+        }
+        else if (attribute == LBParsedStringAttributeItalic) {
+            font = italicFont;
+        }
+        else {
+            font = mainFont;
+        }
         
         NSDictionary* attributes = @{
-            (NSString*)kCTParagraphStyleAttributeName : (__bridge id)paragraphStyle,
-            (NSString*)kCTFontAttributeName: (__bridge id)currentFont
+            (NSString*)kCTFontAttributeName: (__bridge id)font
         };
         
-        NSAttributedString * run = [[NSAttributedString alloc] initWithString:previousText attributes:attributes];
-        [text appendAttributedString:run];
-        
-        if (parts.count > 1) {
-            NSString * nextTag = parts[1];
-            if ([nextTag hasPrefix:@"b"]) {
-                currentFont = boldFont;
-            }
-            else if ([nextTag hasPrefix:@"i"]) {
-                currentFont = italicFont;
-            }
-            else {
-                currentFont = mainFont;
-            }
-        }
-    }
+        [text addAttributes:attributes range:range];
+    }];
     
     CFRelease(mainFont);
     CFRelease(boldFont);
-    CFRelease(italicFont);
+//    CFRelease(italicFont);
     CFRelease(paragraphStyle);
     
     return text;
