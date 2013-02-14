@@ -39,13 +39,13 @@
     return self;
 }
 
--(void)setFrameFromCache:(ReaderFramesetter*)cache chapter:(NSInteger)chapter page:(NSInteger)page {
-    if (self.chapter == chapter && self.page == page)
-        return;
-    
+-(void)setFrame:(id)ctFrame chapter:(NSInteger)chapter page:(NSInteger)page {
+//    if (self.chapter == chapter && self.page == page)
+//        return;
+//    
     self.chapter = chapter;
     self.page = page;
-    self.ctFrame = [cache pageForChapter:chapter page:page];
+    self.ctFrame = ctFrame;
     self.hidden = NO;
     [self setNeedsDisplay];
 }

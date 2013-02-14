@@ -81,8 +81,14 @@
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    NSLog(@"WILL ROTATE %@", NSStringFromCGRect(self.collectionView.bounds));
     [self.collectionView.collectionViewLayout invalidateLayout];
+    CGRect bounds = self.view.bounds;
+    bounds.size = CGSizeMake(bounds.size.height, bounds.size.width);
+    self.framesetter.bounds = bounds;
+    [self.framesetter empty];
+    [self.collectionView reloadData];
+    
+    // Scroll to nearest page!
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -308,18 +314,9 @@
     static NSString * cellId = @"BookPage";
     NSInteger chapter = indexPath.section;
     NSInteger page = indexPath.item;
-//    NSLog(@"CELL chapter=%i page=%i", chapter, page);
     UICollectionViewCell * cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
-    self.framesetter.bounds = cell.bounds;
-    
-// I DO need some way to update them if you scroll, but not this
-//    self.currentChapter = chapter;
-//    self.currentPage = page; // is this true? not nececssarily
-
-    
-//    NSLog(@" - set frame %i %i", indexPath.section, indexPath.item);
-    [(ReaderPageView*)cell setFrameFromCache:self.framesetter chapter:indexPath.section page:indexPath.item];
-    
+    id ctFrame = [self.framesetter pageForChapter:chapter page:page];
+    [(ReaderPageView*)cell setFrame:ctFrame chapter:chapter page:page];
     return cell;
 }
 
