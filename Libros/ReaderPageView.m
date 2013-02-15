@@ -42,7 +42,11 @@
 -(void)setFrame:(id)ctFrame chapter:(NSInteger)chapter page:(NSInteger)page {
 //    if (self.chapter == chapter && self.page == page)
 //        return;
-//    
+//
+    
+    if (!ctFrame) self.backgroundColor = [UIColor redColor];
+    else self.backgroundColor = [UIColor clearColor];
+    
     self.chapter = chapter;
     self.page = page;
     self.ctFrame = ctFrame;

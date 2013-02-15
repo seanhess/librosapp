@@ -9,14 +9,18 @@
 #import <Foundation/Foundation.h>
 #import "ReaderFormatter.h"
 
+@protocol ReaderFramesetterDelegate <NSObject>
+
+-(NSAttributedString*)textForChapter:(NSInteger)chapter;
+
+@end
+
+
 @interface ReaderFramesetter : NSObject
 
-@property (nonatomic, strong) ReaderFormatter * formatter;
-// Keep this up to date when your view changes size!
-@property (nonatomic) CGRect bounds;
+@property (nonatomic, weak) id<ReaderFramesetterDelegate> delegate;
 
-@property (nonatomic, strong) NSArray * files;
-
+-(id)initWithSize:(CGSize)size;
 
 -(id)pageForChapter:(NSInteger)chapter page:(NSInteger)page;
 -(NSInteger)pagesForChapter:(NSInteger)chapter;

@@ -20,9 +20,18 @@
 
 @interface ReaderFramesetter ()
 @property (strong, nonatomic) NSMutableDictionary * chapters;
+@property (nonatomic) CGSize size;
 @end
 
 @implementation ReaderFramesetter
+
+-(id)initWithSize:(CGSize)size {
+    self = [super init];
+    if (self) {
+        self.size = size;
+    }
+    return self;
+}
 
 -(NSMutableDictionary*)chapters {
     if (!_chapters) {
@@ -37,7 +46,7 @@
 }
 
 -(BOOL)hasPagesForChapter:(NSInteger)chapter {
-    if (chapter < self.chapters.count && self.chapters[[self key:chapter]]) return YES;
+    if (self.chapters[[self key:chapter]]) return YES;
     return NO;
 }
 
@@ -63,17 +72,18 @@
 -(NSMutableArray*)generatePagesForChapter:(NSInteger)chapter {
     NSInteger location = 0;
     
-    NSAttributedString * text = [self.formatter textForFile:self.files[chapter]];
+    NSAttributedString * text = [self.delegate textForChapter:chapter];
+    NSAssert(text, @"Delegate did not return text");
     NSLog(@"GENERATING for chapter=%i textLength=%i", chapter, text.length);
     
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)text);
     
     NSMutableArray * pages = [NSMutableArray array];
+    CGRect bounds = CGRectMake(0, 0, self.size.width, self.size.height);
     
     while(location < text.length) {
-//        NSLog(@"GENERATING for chapter=%i location=%i", chapter, location);
         CGMutablePathRef path = CGPathCreateMutable();
-        CGRect insetFrame = CGRectInset(self.bounds, FRAME_X_OFFSET, FRAME_Y_OFFSET);
+        CGRect insetFrame = CGRectInset(bounds, FRAME_X_OFFSET, FRAME_Y_OFFSET);
         CGPathAddRect(path, NULL, insetFrame);
         
         CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(location, 0), path, NULL);
