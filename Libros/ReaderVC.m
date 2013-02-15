@@ -75,7 +75,10 @@
 - (void)viewWillAppear:(BOOL)animated {
 //    NSLog(@"VIEW WILL APPEAR %@", NSStringFromCGRect(self.view.bounds));
     // OK TO DRAW :D has correct size
-    [self initReaderWithSize:self.collectionView.bounds.size chapter:0 page:0];
+    self.currentPage = 0;
+    self.currentChapter = 0;
+    [self initReaderWithSize:self.collectionView.bounds.size chapter:self.currentChapter];
+    [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -88,14 +91,16 @@
     NSInteger currentChapter = self.currentChapter;
     
     CGSize newSize = CGSizeMake(self.collectionView.frame.size.height, self.collectionView.frame.size.width); // well, depends on the orientation
-    NSInteger currentPage = [self.framesetter pageForChapter:currentChapter percent:currentPercent];
-    [self initReaderWithSize:newSize chapter:currentChapter page:currentPage];
+    [self initReaderWithSize:newSize chapter:currentChapter];
+    self.currentChapter = currentChapter;
+    self.currentPage = [self.framesetter pageForChapter:currentChapter percent:currentPercent];
     [self.collectionView.collectionViewLayout invalidateLayout];
-    
+//    [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 //    NSLog(@"DID ROTATE %@", NSStringFromCGRect(self.collectionView.bounds));
+    NSLog(@"DID ROTATE, moving to %i %i", self.currentChapter, self.currentPage);
     [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
 }
 
@@ -180,7 +185,6 @@
     NSInteger pageOffset = [self cellOffsetForChapter:chapter page:page];
     CGFloat totalOffsetX = cellWidth * pageOffset;
     [self.collectionView setContentOffset:CGPointMake(totalOffsetX, 0) animated:animated];
-//    NSLog(@"SCROLLED %@", NSStringFromCGPoint(self.collectionView.contentOffset));
 }
 
 - (NSInteger)cellOffsetForChapter:(NSInteger)chapter page:(NSInteger)page {
@@ -209,11 +213,13 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSIndexPath * cellIndexPath = [self.collectionView indexPathForItemAtPoint:CGPointMake(self.collectionView.contentOffset.x + self.view.frame.size.width/2, 0)];
-    NSInteger chapter = cellIndexPath.section;
-    NSInteger page = cellIndexPath.item;
-    self.currentChapter = chapter;
-    self.currentPage = page;
+    // NOT SAFE EITHER!!!!
+//    NSIndexPath * cellIndexPath = [self.collectionView indexPathForItemAtPoint:CGPointMake(self.collectionView.contentOffset.x + self.view.frame.size.width/2, 0)];
+//    NSInteger chapter = cellIndexPath.section;
+//    NSInteger page = cellIndexPath.item;
+//    self.currentChapter = chapter;
+//    self.currentPage = page;
+//    NSLog(@"JUST SET %i %i", self.currentChapter, self.currentPage);
 }
 
 //- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {}
@@ -221,22 +227,13 @@
 
 // you MUST know the size at this point
 // do not call too early!
-- (void)initReaderWithSize:(CGSize)size chapter:(NSInteger)chapter page:(NSInteger)page {
-    NSLog(@"INIT READER chapter=%i page=%i", chapter, page);
-    self.currentChapter = chapter;
-    self.currentPage = page;
-    
+- (void)initReaderWithSize:(CGSize)size chapter:(NSInteger)chapter {
+    NSLog(@"INIT READER chapter=%i", chapter);
     self.framesetter = [[ReaderFramesetter alloc] initWithSize:size];
     self.framesetter.delegate = self;
     [self.framesetter ensurePagesForChapter:chapter];
-    
-//    NSLog(@" - (INIT) has pages? %i", [self.framesetter hasPagesForChapter:chapter]);
-    
-    // you MUST call reloadData after empty, right?
-    // well, if you assume things are wrong
-//    NSLog(@" - (INIT) reload");
     [self.collectionView reloadData];
-    [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
+//    [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
 }
 
 - (NSAttributedString*)textForChapter:(NSInteger)chapter {
@@ -244,32 +241,14 @@
 }
 
 // only call this when at rest
+// update this... umm... more correctly
 - (void)updateCurrentPage {
-    return;
     // which page is in the MIDDLE of the window?
     NSIndexPath * cellIndexPath = [self.collectionView indexPathForItemAtPoint:CGPointMake(self.collectionView.contentOffset.x + self.view.frame.size.width/2, 0)];
     NSInteger chapter = cellIndexPath.section;
     NSInteger page = cellIndexPath.item;
     self.currentChapter = chapter;
     self.currentPage = page;
-        
-    if ([self isChapterNext:chapter page:page] && ![self.framesetter hasPagesForChapter:chapter+1]) {
-        [self.framesetter ensurePagesForChapter:chapter+1];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.collectionView reloadData];
-            [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
-        });
-    }
-    
-    else if ([self isChapterPrev:chapter page:page] && ![self.framesetter hasPagesForChapter:chapter-1]) {
-        [self.framesetter ensurePagesForChapter:chapter-1];
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.collectionView reloadData];
-            [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
-        });
-    }
 }
 
 
@@ -367,10 +346,6 @@
     static NSString * cellId = @"BookPage";
     NSInteger chapter = indexPath.section;
     NSInteger page = indexPath.item;
-    
-    // NOT SAFE! when rotating
-//    self.currentChapter = chapter;
-//    self.currentPage = page;
     
     UICollectionViewCell * cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
     
