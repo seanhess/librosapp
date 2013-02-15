@@ -132,6 +132,8 @@
 		78DAEFA916BC471900A7A840 /* Genre.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DAEFA716BC471900A7A840 /* Genre.m */; };
 		78E2FD9516C03A3900AEFE81 /* FileDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E2FD9416C03A3900AEFE81 /* FileDownloadOperation.m */; };
 		78EC890116BC64F500CD0093 /* StoreSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EC890016BC64F500CD0093 /* StoreSearchVC.m */; };
+		78FD1BB316CEBADC003BB3E5 /* ReaderTableOfContentsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78FD1BB116CEBADC003BB3E5 /* ReaderTableOfContentsVC.m */; };
+		78FD1BB416CEBADC003BB3E5 /* ReaderTableOfContentsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78FD1BB216CEBADC003BB3E5 /* ReaderTableOfContentsVC.xib */; };
 		7E8DDCC9AFCF41519ED19920 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE66A380EC74E55884892D6 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -304,6 +306,9 @@
 		78E2FD9416C03A3900AEFE81 /* FileDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileDownloadOperation.m; sourceTree = "<group>"; };
 		78EC88FF16BC64F500CD0093 /* StoreSearchVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreSearchVC.h; sourceTree = "<group>"; };
 		78EC890016BC64F500CD0093 /* StoreSearchVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreSearchVC.m; sourceTree = "<group>"; };
+		78FD1BB016CEBADC003BB3E5 /* ReaderTableOfContentsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderTableOfContentsVC.h; sourceTree = "<group>"; };
+		78FD1BB116CEBADC003BB3E5 /* ReaderTableOfContentsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderTableOfContentsVC.m; sourceTree = "<group>"; };
+		78FD1BB216CEBADC003BB3E5 /* ReaderTableOfContentsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReaderTableOfContentsVC.xib; sourceTree = "<group>"; };
 		85FD0834AAB242A7BA71588D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		DFE66A380EC74E55884892D6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -342,6 +347,9 @@
 				781EF88616A9C69F000CB62E /* ReaderVC.h */,
 				781EF88716A9C69F000CB62E /* ReaderVC.m */,
 				781EF88816A9C69F000CB62E /* ReaderVC.xib */,
+				78FD1BB016CEBADC003BB3E5 /* ReaderTableOfContentsVC.h */,
+				78FD1BB116CEBADC003BB3E5 /* ReaderTableOfContentsVC.m */,
+				78FD1BB216CEBADC003BB3E5 /* ReaderTableOfContentsVC.xib */,
 				78CA26E216B1AD81003EC00D /* ReaderPageView.h */,
 				78CA26E316B1AD81003EC00D /* ReaderPageView.m */,
 				78CA26E616B1DF65003EC00D /* ReaderFramesetter.h */,
@@ -779,6 +787,7 @@
 				780B8F4A16C2E4B700A04EFC /* StoreFilterVC.xib in Resources */,
 				787D363C16C4370700A102ED /* StoreBookResultsFilterView.xib in Resources */,
 				78D0542416C987250037311C /* LibraryBookCellOverlay.xib in Resources */,
+				78FD1BB416CEBADC003BB3E5 /* ReaderTableOfContentsVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -885,6 +894,7 @@
 				78D0542016C95B6D0037311C /* LibraryBookCell.m in Sources */,
 				78D0542716C988130037311C /* UIView+Nibs.m in Sources */,
 				780A2E6816CC645000ABCB4E /* LBParsedString.m in Sources */,
+				78FD1BB316CEBADC003BB3E5 /* ReaderTableOfContentsVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,10 +13,11 @@
 #import "ReaderFramesetter.h"
 #import "ReaderFormatter.h"
 #import <CoreText/CoreText.h>
+#import "ReaderTableOfContentsVC.h"
 
 #define DRAG_GRAVITY 15
 
-@interface ReaderVC () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, ReaderFramesetterDelegate>
+@interface ReaderVC () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, ReaderFramesetterDelegate, ReaderTableOfContentsDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (weak, nonatomic) IBOutlet UIView *controlsView;
@@ -49,8 +50,6 @@
 {
     [super viewDidLoad];
     
-//    UICollectionViewLayout * layout = [[UICollectionViewLayout alloc] init];
-//    self.collectionView
     [self.collectionView registerClass:[ReaderPageView class] forCellWithReuseIdentifier:@"BookPage"];
     
     FileService * fs = [FileService shared];
@@ -61,27 +60,27 @@
     self.numChapters = self.files.count;
     self.wantsFullScreenLayout = YES;
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    UIBarButtonItem * barButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(toc:)];
+    self.navigationItem.rightBarButtonItem = barButton;
     
-    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(hideControls) userInfo:nil repeats:NO];
+    [self hideControlsInABit];
     
     // INITIALIZE
     self.formatter = [ReaderFormatter new];
     
     // TOO EARLY TO DRAW! View Size is wrong
     // you can call reloadData early and it doesn't fire twice
-    NSLog(@"VIEW DID LOAD %@", NSStringFromCGRect(self.view.bounds));
-    
+//    NSLog(@"VIEW DID LOAD %@", NSStringFromCGRect(self.view.bounds));
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    NSLog(@"VIEW WILL APPEAR %@", NSStringFromCGRect(self.view.bounds));
-    // OK TO DRAW :D
-    // Has correct size
-    [self initReaderWithSize:self.collectionView.bounds.size chapter:1 page:1];
+//    NSLog(@"VIEW WILL APPEAR %@", NSStringFromCGRect(self.view.bounds));
+    // OK TO DRAW :D has correct size
+    [self initReaderWithSize:self.collectionView.bounds.size chapter:0 page:0];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    NSLog(@"VIEW DID APPEAR %@", NSStringFromCGRect(self.view.bounds));
+//    NSLog(@"VIEW DID APPEAR %@", NSStringFromCGRect(self.view.bounds));
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -96,8 +95,9 @@
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    NSLog(@"DID ROTATE %@", NSStringFromCGRect(self.collectionView.bounds));
+//    NSLog(@"DID ROTATE %@", NSStringFromCGRect(self.collectionView.bounds));
     [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
+    [self updateCurrentPage];
 }
 
 - (void)didReceiveMemoryWarning
@@ -109,6 +109,29 @@
     
     // Do NOT reload the table at this time?
     // It will remember all your previously created cells
+}
+
+- (void)toc:(id)sender {
+    NSLog(@"TOC");
+    ReaderTableOfContentsVC * toc = [ReaderTableOfContentsVC new];
+    toc.files = self.files;
+    toc.delegate = self;
+    [self.navigationController presentViewController:toc animated:YES completion:nil];
+}
+
+-(void)didCloseToc {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)didSelectChapter:(NSInteger)chapter {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    self.currentChapter = chapter;
+    self.currentPage = 0;
+    [self.framesetter ensurePagesForChapter:chapter];
+    [self.collectionView reloadData];
+    [self moveToChapter:chapter page:self.currentPage animated:NO];
+    [self updateCurrentPage];
+    [self hideControlsInABit];
 }
 
 - (IBAction)didTapLibrary:(id)sender {
@@ -193,7 +216,7 @@
 // you MUST know the size at this point
 // do not call too early!
 - (void)initReaderWithSize:(CGSize)size chapter:(NSInteger)chapter page:(NSInteger)page {
-    NSLog(@"INIT READER chapter=%i page=%i", chapter, page);
+//    NSLog(@"INIT READER chapter=%i page=%i", chapter, page);
     self.currentChapter = chapter;
     self.currentPage = page;
     
@@ -201,11 +224,11 @@
     self.framesetter.delegate = self;
     [self.framesetter ensurePagesForChapter:chapter];
     
-    NSLog(@" - (INIT) has pages? %i", [self.framesetter hasPagesForChapter:chapter]);
+//    NSLog(@" - (INIT) has pages? %i", [self.framesetter hasPagesForChapter:chapter]);
     
     // you MUST call reloadData after empty, right?
     // well, if you assume things are wrong
-    NSLog(@" - (INIT) reload");
+//    NSLog(@" - (INIT) reload");
     [self.collectionView reloadData];
     [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
 }
@@ -288,6 +311,10 @@
     }
 }
 
+- (void)hideControlsInABit {
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(hideControls) userInfo:nil repeats:NO];
+}
+
 - (void)hideControls {
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     
@@ -305,13 +332,13 @@
 #pragma mark UICollectionViewDelegate
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    NSLog(@"TABLE RELOADING %i", self.numChapters);
+//    NSLog(@"TABLE RELOADING %i", self.numChapters);
     return self.numChapters;
 }
 
 // this gets called DURING first initialization
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSLog(@"CELLS IN CHAPTER %i = %i", section, [self cellsDisplayedInChapter:section]);
+//    NSLog(@"CELLS IN CHAPTER %i = %i", section, [self cellsDisplayedInChapter:section]);
     return [self cellsDisplayedInChapter:section];
 }
 
@@ -329,7 +356,7 @@
 // if it is the LAST page in the chapter, then generate the pages for the next one
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"CELL %i %i %@", indexPath.section, indexPath.item, self.framesetter);
+//    NSLog(@"CELL %i %i %@", indexPath.section, indexPath.item, self.framesetter);
     static NSString * cellId = @"BookPage";
     NSInteger chapter = indexPath.section;
     NSInteger page = indexPath.item;

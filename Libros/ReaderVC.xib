@@ -77,10 +77,11 @@
 							<object class="IBUIView" id="977779170">
 								<reference key="NSNextResponder" ref="817384402"/>
 								<int key="NSvFlags">274</int>
+								<array class="NSMutableArray" key="NSSubviews"/>
 								<string key="NSFrameSize">{320, 504}</string>
 								<reference key="NSSuperview" ref="817384402"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="908049432"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor" id="519683320">
 									<int key="NSColorSpace">3</int>
@@ -99,6 +100,7 @@
 										<string key="NSFrame">{{12, 10}, {300, 24}}</string>
 										<reference key="NSSuperview" ref="908049432"/>
 										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -362,37 +364,13 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">293</int>
+			<int key="maxID">296</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">ReaderVC</string>
 					<string key="superclassName">UIViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="didTapControls:">id</string>
-						<string key="didTapFont:">id</string>
-						<string key="didTapLibrary:">id</string>
-						<string key="didTapText:">UITapGestureRecognizer</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="didTapControls:">
-							<string key="name">didTapControls:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didTapFont:">
-							<string key="name">didTapFont:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didTapLibrary:">
-							<string key="name">didTapLibrary:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didTapText:">
-							<string key="name">didTapText:</string>
-							<string key="candidateClassName">UITapGestureRecognizer</string>
-						</object>
-					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="collectionView">UICollectionView</string>
 						<string key="controlsView">UIView</string>
