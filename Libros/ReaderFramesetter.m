@@ -74,7 +74,6 @@
     
     NSAttributedString * text = [self.delegate textForChapter:chapter];
     NSAssert(text, @"Delegate did not return text");
-    NSLog(@"GENERATING for chapter=%i textLength=%i", chapter, text.length);
     
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)text);
     
@@ -99,9 +98,6 @@
     }
     
     CFRelease(framesetter);
-    
-    NSLog(@"- done");
-    
     return pages;
 }
 

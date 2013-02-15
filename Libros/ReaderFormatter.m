@@ -13,11 +13,8 @@
 @implementation ReaderFormatter
 
 -(NSAttributedString*)textForFile:(File*)file {
-    NSLog(@"READ FILE");
     LBParsedString * parsedString = [[FileService shared] readAsText:file];
-    NSLog(@"CONVERT");
     NSAttributedString * chapterText = [self attributedStringForParsed:parsedString];
-    NSLog(@" - done");
     return chapterText;
 }
 
