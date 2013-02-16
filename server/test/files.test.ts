@@ -68,6 +68,20 @@ describe("API", function() {
     })
 
     it('should have uploaded the file to url', function(done) {
+       
+      var localFileMatch = this.file.url.match(/^file:\/\/localhost/)
+
+      if (localFileMatch) {
+        fs.readFile(this.file.url.replace(localFileMatch[0], ""), function(err, body) {
+          assert.ifError(err)
+          var asdf = body.toString()
+          assert.ok(asdf.match('data'))
+          done()
+          
+          })
+        return;
+      }
+
       request.get(this.file.url, (err, rs, body:string) => {
         assert.ifError(err)
         assert.equal(rs.statusCode, 200)

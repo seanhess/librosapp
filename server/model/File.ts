@@ -12,37 +12,15 @@ import fs = module('fs')
 import path = module('path')
 import async = module('async')
 import uuid = module('node-uuid')
-import knox = module('knox')
+import s3 = module('../service/s3')
+import local = module('../service/local')
+
+var store:s3.Store = local
 
 import db = module('./db')
 import q = module('q')
 
-var BUCKET = "librosapp"
-var BUCKET_URL = "http://" + BUCKET + ".s3.amazonaws.com"
-var s3client = knox.createClient({
-  key:"AKIAIMGQVHF2DZ7UN32Q",                         // DELETE ME (belongs to scott)
-  secret:"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",
-  bucket:BUCKET,
-})
-
 var files = r.table('files')
-
-export interface IUploadFile {
-  size: number; // 1304,
-  path: string; // '/tmp/3a81a42308f94d3aac5bcf7b227aabfc',
-  name: string; // 'BrantCooper.txt',
-  type: string; // 'text/plain',
-  hash: bool;   // false,
-  lastModifiedDate: Date; // Thu Jan 17 2013 06:52:53 GMT-0700 (MST),
-  length: number; // ??
-  filename: string; // ??
-  mime: string; // ??
-}
-
-// fake file object with just the id
-export interface IdentifiedFile {
-
-}
 
 function fileId(file:IFile) {
   return file.fileId
@@ -77,15 +55,6 @@ export function filePath(fileId:string) {
   return path.join(__dirname, '..', 'files', fileId)
 }
 
-function toUrl(file:IFile):string {
-  return BUCKET_URL + toUrlPath(file)
-}
-
-// need more info that that! need the extention, etc
-function toUrlPath(file:IFile):string {
-  return "/" + file.fileId + "." + file.ext
-}
-
 export function toFile(bookId:string, source:IUploadFile):IFile {
   var ext = source.name.split('.').pop() // txt
   var fileId = uuid.v1()
@@ -96,33 +65,21 @@ export function toFile(bookId:string, source:IUploadFile):IFile {
     fileId: fileId,
     url: undefined,
   }
-  file.url = toUrl(file)
+  //file.url = toUrl(file)
   return file
-}
-
-export function uploadToUrl(file:IFile, source:IUploadFile) {
-  var deferred = q.defer()
-  s3client.putFile(source.path, toUrlPath(file), {'Content-Type':source.mime}, <knox.IResponseCallback> deferred.makeNodeResolver())
-  return deferred.promise
-}
-
-export function removeUrl(file:IFile):q.IPromise {
-  var deferred = q.defer()
-  s3client.deleteFile(toUrlPath(file), <knox.IResponseCallback> deferred.makeNodeResolver())
-  return deferred.promise
 }
 
 export function addFileForBook(bookId:string, uploadedFile:IUploadFile):q.IPromise {
   var file = toFile(bookId, uploadedFile)
-  return uploadToUrl(file, uploadedFile)
-  .then(() => db.run(insert(file)))
+  return store.uploadAndSetUrl(file, uploadedFile)
+  .then((file) => db.run(insert(file)))
   .then(() => file)
 }
 
 export function deleteFile(fileId:string) {
   return db.run(byFileId(fileId))
   .then(function(file:IFile) {
-    return removeUrl(file)
+    return store.removeUrl(file)
     .then(() => db.run(remove(fileId)))
     .then(() => file)
   })
