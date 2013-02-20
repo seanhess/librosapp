@@ -12,6 +12,12 @@
   <label>title</label>
   <div><input ng-model="book.title" placeholder="A Tale of Two Cities"/></div>
 
+  <label class="cover">cover</label>
+  <div>
+    <div class="cover" dragupload="onDropCoverImage">
+      <img ng-src="{{book.imageUrl}}">
+    </div>
+  </div>
 
   <label>price (cents)</label>
   <div><input ng-model="book.price" placeholder="199"/></div>

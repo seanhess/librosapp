@@ -76,6 +76,7 @@ angular.module('controllers')
 
   $scope.editFile = function(file:IFile) {
     $scope.editing = _.clone(file)
+    
   }
 
   $scope.cancelEdit = function() {
@@ -92,6 +93,22 @@ angular.module('controllers')
 
   $scope.onDrop = function(files:IHTMLFile[]) {
     files.forEach(addFile)
+  }
+
+  $scope.onDropCoverImage = function(files:IHTMLFile[]) {
+    var formData = new FormData()
+    formData.append('file', files[0])
+    $http({
+      method: 'PUT',
+      url: '/books/' + $scope.book.bookId + "/image",
+      data: formData,
+      // no idea why you need both of these, but you do
+      transformRequest: angular.identity,
+      headers: {'Content-Type': undefined},
+    })
+    .success(function(book:IBook) {
+      $scope.book.imageUrl = book.imageUrl
+    })
   }
 
   $scope.isLoading = function(file:IFile) {

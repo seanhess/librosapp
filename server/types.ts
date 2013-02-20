@@ -18,6 +18,7 @@ interface IBook {
   genre: string; // just the name
   price: number; // in cents
   description: string;
+  imageUrl?: string;
 
   audioFiles: number;
   textFiles: number;

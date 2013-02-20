@@ -154,6 +154,11 @@ app.get('/books/:bookId/files', function(req, res) {
   .then(send(res), err(res))
 })
 
+app.put('/books/:bookId/image', function(req, res) {
+  Book.setImage(req.params.bookId, req.files.file)
+  .then(send(res), err(res))
+})
+
 app.del('/files/:fileId', function(req, res) {
   File.deleteFile(req.params.fileId)
   .then(Book.countFileDel)

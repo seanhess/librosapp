@@ -30,7 +30,7 @@ function toLocalPath(file:IFile):string {
   return "/tmp/" + file.fileId + "." + file.ext
 }
 
-export function uploadAndSetUrl(file:IFile, source:IUploadFile) {
+export function fileUploadAndSetUrl(file:IFile, source:IUploadFile) {
   return fsp.readFile(source.path)
   .then((data) => fsp.writeFile(toLocalPath(file), data))
   .then(function() {

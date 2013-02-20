@@ -74,6 +74,31 @@ describe("API", function() {
       })
     })
 
+    it('should upload an image', function(done) {
+      var r = request.put({url: domain + '/books/' + this.bookId + '/image', json:true}, (err, rs, url:string) => {
+        assert.ifError(err)
+        assert.equal(rs.statusCode, 200, "Status("+rs.statusCode+"): " + this.bookId)
+        assert.ok(url)
+        done()
+      })
+      var form = r.form()
+      form.append('file', fs.createReadStream(path.join(__dirname, 'data.jpg')))
+    })
+
+    it('should have updated book url', function(done) {
+      request.get({url: domain + '/books/' + this.bookId, json:true}, (err, rs, book:IBook) => {
+        assert.ifError(err)
+        assert.equal(rs.statusCode, 200, "Status("+rs.statusCode+"): " + this.bookId)
+        assert.ok(book.imageUrl)
+        assert.ok(book)
+        request.get(book.imageUrl, function(err, rs, body) {
+          assert.ifError(err)
+          assert.equal(rs.statusCode, 200)
+          done()
+        })
+      })
+    })
+
     it('should delete the book', function(done) {
       request.del({url: domain + '/books/' + this.bookId, json:true}, (err, rs) => {
         assert.ifError(err)

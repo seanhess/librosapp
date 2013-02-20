@@ -15,7 +15,8 @@ import uuid = module('node-uuid')
 import s3 = module('../service/s3')
 import local = module('../service/local')
 
-var store:s3.Store = local
+var store:s3.Store = s3
+// var store:s3.Store = local
 
 import db = module('./db')
 import q = module('q')
@@ -71,7 +72,7 @@ export function toFile(bookId:string, source:IUploadFile):IFile {
 
 export function addFileForBook(bookId:string, uploadedFile:IUploadFile):q.IPromise {
   var file = toFile(bookId, uploadedFile)
-  return store.uploadAndSetUrl(file, uploadedFile)
+  return store.fileUploadAndSetUrl(file, uploadedFile)
   .then((file) => db.run(insert(file)))
   .then(() => file)
 }
@@ -79,7 +80,7 @@ export function addFileForBook(bookId:string, uploadedFile:IUploadFile):q.IPromi
 export function deleteFile(fileId:string) {
   return db.run(byFileId(fileId))
   .then(function(file:IFile) {
-    return store.removeUrl(file)
+    return store.fileRemove(file)
     .then(() => db.run(remove(fileId)))
     .then(() => file)
   })

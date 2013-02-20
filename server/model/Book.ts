@@ -7,6 +7,9 @@ import q = module('q')
 import f = module('../service/functional')
 import File = module('./File')
 
+import s3 = module('../service/s3')
+var store:s3.Store = s3
+
 var books = r.table('books')
 
 export interface IdentifiedBook {
@@ -45,6 +48,10 @@ export function init(db) {
 export function saveBook(book:IBook) {
   var overwrite = !!book.bookId
   return books.insert(book, overwrite)
+}
+
+export function setImageUrl(bookId:string, imageUrl:string) {
+  return getBook(bookId).update({imageUrl: imageUrl})
 }
 
 export function create():r.IQuery {
@@ -111,7 +118,6 @@ export function insertedBook(info:r.InsertResult):IdentifiedBook {
   return {bookId: info.generated_keys[0]}
 }
 
-
 export function distinctGenres() {
   return books
   .filter(db.contains('genre'))
@@ -125,7 +131,6 @@ export function distinctAuthors() {
   .map(db.property('author'))
   .distinct()
 }
-
 
 export function getDistinctAuthors():q.IPromise {
   return db.collect(distinctAuthors())
@@ -152,6 +157,19 @@ export function countFileAdd(file:IFile) {
 export function countFileDel(file:IFile) {
   return db.run(fileCountUpdate(file, -1))
   .then(() => file)
+}
+
+// returns imageUrl at the end...
+export function setImage(bookId:string, file:IUploadFile) {
+  var remotePath = bookToImageUrlPath(bookId, file)
+  var imageUrl = store.fullUrl(remotePath)
+  return store.upload(remotePath, file)
+  .then(() => db.run(setImageUrl(bookId, imageUrl)))
+  .then(function() { return {imageUrl:imageUrl} })
+}
+
+function bookToImageUrlPath(bookId:string, file:IUploadFile):string {
+  return "/" + bookId + "." + store.ext(file)
 }
 
 
