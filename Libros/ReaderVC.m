@@ -11,11 +11,13 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
  [x] tap
  [x] swipe
  [x] drag
- [ ] jump to chapter
+ [x] jump to chapter
  [ ] interface orientation
  
  [x] swipe or drag, then tap
- [ ] tap through to chapter 2. Does it load?
+ [x] tap through to chapter 2. Does it load?
+ [x] jump to chapter, swipe backwards
+ [x] jump to chapter, swipe forwards to next chapter
 */
 
 
@@ -145,8 +147,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.currentChapter = chapter;
     self.currentPage = 0;
     [self ensurePagesForChapter:chapter];
-    [self moveToChapter:chapter page:self.currentPage animated:NO];
-//    [self updateCurrentPage];
+    [self moveToChapter:chapter page:0 animated:NO];
     [self hideControlsInABit];
 }
 
@@ -189,7 +190,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (void)moveToChapter:(NSInteger)chapter page:(NSInteger)page animated:(BOOL)animated {
-//    NSLog(@"MOVE TO %i %i", chapter, page);
+    NSLog(@"MOVE TO %i %i", chapter, page);
     
     // This doesn't always left-align the cells, calculate your own, below
     // [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:chapter] atScrollPosition:UICollectionViewScrollPositionLeft animated:animated];
@@ -360,11 +361,10 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 // You MUST reload the table view when generating pages, because the data (framesetter)
 // is the only way we can know if they are loaded
 -(void)ensurePagesForChapter:(NSInteger)chapter {
-    // leave main queue in here because if called in the cell function reload doesn't work right
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.framesetter ensurePagesForChapter:chapter];
-        [self.collectionView reloadData];
-    });
+    // don't put the main_queue in here, because some functions require this to
+    // happen in order!
+    [self.framesetter ensurePagesForChapter:chapter];
+    [self.collectionView reloadData];
 }
 
 // I need a way to calculate the current page
@@ -382,8 +382,10 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     
     // If we don't have any pages for this chapter, stop what we are doing, load the chapter, and reload
     if (![self.framesetter hasPagesForChapter:chapter]) {
-        NSLog(@"RELOAD CHAPTER %i", chapter);
-        [self ensurePagesForChapter:chapter];
+        // freaks out if reloadData is called in this function
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self ensurePagesForChapter:chapter];
+        });
         return cell;
     }
     
