@@ -6,6 +6,19 @@
 //  Copyright (c) 2013 Sean Hess. All rights reserved.
 //
 
+/*
+ALL POSSIBLE SCENARIOS - THE CHECKLIST
+ [x] tap
+ [x] swipe
+ [x] drag
+ [ ] jump to chapter
+ [ ] interface orientation
+ 
+ [x] swipe or drag, then tap
+ [ ] tap through to chapter 2. Does it load?
+*/
+
+
 #import "ReaderVC.h"
 #import "BookService.h"
 #import "FileService.h"
@@ -131,8 +144,7 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     self.currentChapter = chapter;
     self.currentPage = 0;
-    [self.framesetter ensurePagesForChapter:chapter];
-    [self.collectionView reloadData];
+    [self ensurePagesForChapter:chapter];
     [self moveToChapter:chapter page:self.currentPage animated:NO];
 //    [self updateCurrentPage];
     [self hideControlsInABit];
@@ -178,13 +190,18 @@
 
 - (void)moveToChapter:(NSInteger)chapter page:(NSInteger)page animated:(BOOL)animated {
 //    NSLog(@"MOVE TO %i %i", chapter, page);
-//    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:chapter] atScrollPosition:UICollectionViewScrollPositionLeft animated:animated];
     
-    // Calculate my own. That didn't always left-alignt the cells
+    // This doesn't always left-align the cells, calculate your own, below
+    // [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:chapter] atScrollPosition:UICollectionViewScrollPositionLeft animated:animated];
+    
     CGFloat cellWidth = self.collectionView.frame.size.width;
     NSInteger pageOffset = [self cellOffsetForChapter:chapter page:page];
     CGFloat totalOffsetX = cellWidth * pageOffset;
     [self.collectionView setContentOffset:CGPointMake(totalOffsetX, 0) animated:animated];
+    
+    // Update the variables as well
+    self.currentChapter = chapter;
+    self.currentPage = page;
 }
 
 - (NSInteger)cellOffsetForChapter:(NSInteger)chapter page:(NSInteger)page {
@@ -204,16 +221,20 @@
 }
 
 
+// We need to figure out what the current page is after dragging or swiping
+// based on which view is most visible
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-//    [self updateCurrentPage];
+    [self updateCurrentPage];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-//    [self updateCurrentPage];
+    [self updateCurrentPage];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     // NOT SAFE EITHER!!!!
+    // ???? when did it fail?
+    
 //    NSIndexPath * cellIndexPath = [self.collectionView indexPathForItemAtPoint:CGPointMake(self.collectionView.contentOffset.x + self.view.frame.size.width/2, 0)];
 //    NSInteger chapter = cellIndexPath.section;
 //    NSInteger page = cellIndexPath.item;
@@ -231,8 +252,7 @@
     NSLog(@"INIT READER chapter=%i", chapter);
     self.framesetter = [[ReaderFramesetter alloc] initWithSize:size];
     self.framesetter.delegate = self;
-    [self.framesetter ensurePagesForChapter:chapter];
-    [self.collectionView reloadData];
+    [self ensurePagesForChapter:chapter];
 //    [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
 }
 
@@ -240,9 +260,8 @@
     return [self.formatter textForFile:self.files[chapter]];
 }
 
-// only call this when at rest
-// update this... umm... more correctly
 - (void)updateCurrentPage {
+    // only call this when at rest, or it gets confused
     // which page is in the MIDDLE of the window?
     NSIndexPath * cellIndexPath = [self.collectionView indexPathForItemAtPoint:CGPointMake(self.collectionView.contentOffset.x + self.view.frame.size.width/2, 0)];
     NSInteger chapter = cellIndexPath.section;
@@ -253,6 +272,8 @@
 
 
 - (NSInteger)cellsDisplayedInChapter:(NSInteger)chapter {
+    // Each chapter has 1 page to start
+    // then when they are loaded they return everything
     if ([self.framesetter hasPagesForChapter:chapter]) {
         return [self.framesetter pagesForChapter:chapter];
     }
@@ -268,7 +289,7 @@
         if (nextChapter >= self.files.count)
             return nil;
         else {
-            [self.framesetter ensurePagesForChapter:nextChapter];
+            [self ensurePagesForChapter:nextChapter];
             return [NSIndexPath indexPathForItem:0 inSection:nextChapter];
         }
     }
@@ -283,7 +304,7 @@
         NSInteger previousChapter = chapter - 1;
         if (previousChapter < 0) return nil;
 
-        [self.framesetter ensurePagesForChapter:previousChapter];
+        [self ensurePagesForChapter:previousChapter];
         return [NSIndexPath indexPathForItem:([self.framesetter pagesForChapter:previousChapter]-1) inSection:previousChapter];
     }
 }
@@ -336,12 +357,22 @@
     return (page == 0 && chapter > 0);
 }
 
-// sizes correct at this point
-// this is the current page and chapter, easy to calculate!
+// You MUST reload the table view when generating pages, because the data (framesetter)
+// is the only way we can know if they are loaded
+-(void)ensurePagesForChapter:(NSInteger)chapter {
+    // leave main queue in here because if called in the cell function reload doesn't work right
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.framesetter ensurePagesForChapter:chapter];
+        [self.collectionView reloadData];
+    });
+}
 
-// if it is the LAST page in the chapter, then generate the pages for the next one
+// I need a way to calculate the current page
+// Calculate BY HAND at each change, once you know what it is
+
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    // sizes correct at this point
     NSLog(@"CELL %i %i %@", indexPath.section, indexPath.item, self.framesetter);
     static NSString * cellId = @"BookPage";
     NSInteger chapter = indexPath.section;
@@ -349,11 +380,10 @@
     
     UICollectionViewCell * cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
     
+    // If we don't have any pages for this chapter, stop what we are doing, load the chapter, and reload
     if (![self.framesetter hasPagesForChapter:chapter]) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.framesetter ensurePagesForChapter:chapter];
-            [self.collectionView reloadData];
-        });
+        NSLog(@"RELOAD CHAPTER %i", chapter);
+        [self ensurePagesForChapter:chapter];
         return cell;
     }
     

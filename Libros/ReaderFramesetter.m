@@ -103,8 +103,10 @@
 
 // if the frames don't exist, generate them!
 -(void)ensurePagesForChapter:(NSInteger)chapter {
-    if (![self hasPagesForChapter:chapter])
+    if (![self hasPagesForChapter:chapter]) {
+        NSLog(@"GENERATING PAGES %i", chapter);
         self.chapters[[self key:chapter]] = [self generatePagesForChapter:chapter];
+    }
 }
 
 -(CGFloat)percentThroughChapter:(NSInteger)c page:(NSInteger)p {
