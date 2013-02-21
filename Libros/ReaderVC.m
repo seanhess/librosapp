@@ -7,14 +7,16 @@
 //
 
 /*
+[ ] Bug: looks funny during orientation changes
+ 
 ALL POSSIBLE SCENARIOS - THE CHECKLIST
  [x] tap
  [x] swipe
  [x] drag
  [x] jump to chapter
  [x] interface orientation
- [ ] memory warning
- [ ] start at chapter / page (later)
+ [x] memory warning
+ [x] start at chapter / page (later)
  
  [x] swipe or drag, then tap
  [x] tap through to chapter 2. Does it load?
@@ -28,8 +30,10 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
  [x] jump to chapter 2, multiple interface changes, swipe back and forth
  
  [x] very last page in book, multiple interface orientation changes
- [ ] jump to chapter 2, memory warning, swipe back
- [ ] jump to chapter 2, move 1 page forward, memory warning, swipe back
+ [x] jump to chapter 2, memory warning, swipe back
+ [x] jump to chapter 2, move 1 page forward, memory warning, swipe back
+ 
+ [ ] start at chapter 2, page 1, swipe back
 */
 
 
@@ -51,6 +55,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 @property (nonatomic) NSInteger currentChapter;
 @property (nonatomic) NSInteger currentPage;
+@property (nonatomic) CGFloat currentPercent;
 
 @property (strong, nonatomic) ReaderFramesetter * framesetter;
 @property (strong, nonatomic) ReaderFormatter * formatter;
@@ -104,7 +109,10 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     // OK TO DRAW - has correct size
     self.currentPage = 0;
     self.currentChapter = 0;
-    [self initReaderWithSize:self.collectionView.bounds.size chapter:self.currentChapter];
+    
+    [self newFramesetterWithSize:self.collectionView.bounds.size];
+
+    [self ensurePagesForChapter:self.currentChapter];
     [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
 }
 
@@ -128,19 +136,31 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
         newSize.height = MAX(oldSize.width, oldSize.height);
     }
     
-    CGSizeMake(self.collectionView.frame.size.height, self.collectionView.frame.size.width);
-    // creates a new framesetter, loads the chapter, AND the table
-    [self initReaderWithSize:newSize chapter:currentChapter];
+    // creates a new framesetter, does NOT currently load the table or chapter
+    [self newFramesetterWithSize:newSize];
+    
+    self.currentPercent = currentPercent;
+    
+    [self.collectionView.collectionViewLayout invalidateLayout];
+    [UIView beginAnimations:@"fade" context:nil];
+    self.collectionView.alpha = 0.0;
+    [UIView commitAnimations];
+    
+    [self ensurePagesForChapter:currentChapter];
+
     self.currentChapter = currentChapter;
     self.currentPage = [self.framesetter pageForChapter:currentChapter percent:currentPercent];
-    [self.collectionView.collectionViewLayout invalidateLayout];
-//    [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 //    NSLog(@"DID ROTATE %@", NSStringFromCGRect(self.collectionView.bounds));
     NSLog(@"DID ROTATE, moving to %i %i", self.currentChapter, self.currentPage);
+    
     [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
+    
+    [UIView beginAnimations:@"fade" context:nil];
+    self.collectionView.alpha = 1.0;
+    [UIView commitAnimations];
 }
 
 - (void)didReceiveMemoryWarning
@@ -153,6 +173,11 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     // not sure if these are actually necessary
     [self ensurePagesForChapter:self.currentChapter];
     [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
+}
+
+- (void)newFramesetterWithSize:(CGSize)size {
+    self.framesetter = [[ReaderFramesetter alloc] initWithSize:size];
+    self.framesetter.delegate = self;
 }
 
 - (void)toc:(id)sender {
@@ -267,9 +292,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 // do not call too early!
 - (void)initReaderWithSize:(CGSize)size chapter:(NSInteger)chapter {
     NSLog(@"INIT READER chapter=%i", chapter);
-    self.framesetter = [[ReaderFramesetter alloc] initWithSize:size];
-    self.framesetter.delegate = self;
-    [self ensurePagesForChapter:chapter];
     
     // TODO - add support for initializing with chapter
     // but be careful, interface change calls this too!
@@ -402,10 +424,12 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     
     // If we don't have any pages for this chapter, stop what we are doing, load the chapter, and reload
     if (![self.framesetter hasPagesForChapter:chapter]) {
-        NSLog(@"GOGOGO CELL %i", chapter);
         // freaks out if reloadData is called in this function, so delay it until done
         dispatch_async(dispatch_get_main_queue(), ^{
             [self ensurePagesForChapter:chapter];
+            // without scrolling it remembers its scroll offset, not the current cell and jumps back
+            // when travelling backwards (loading chapter 1 after a memory warning)
+            [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
         });
         return cell;
     }
