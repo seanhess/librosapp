@@ -12,12 +12,24 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
  [x] swipe
  [x] drag
  [x] jump to chapter
- [ ] interface orientation
+ [x] interface orientation
+ [ ] memory warning
+ [ ] start at chapter / page (later)
  
  [x] swipe or drag, then tap
  [x] tap through to chapter 2. Does it load?
  [x] jump to chapter, swipe backwards
  [x] jump to chapter, swipe forwards to next chapter
+ [x] interface change back and forth on page 1
+ [x] interface change back and forth on page 2 (should preserve word when back to same orientation)
+ [x] interface change full circle on page 1
+ 
+ [x] swipe, interface change, tap, swipe, interface change, etc. Make sure it still works
+ [x] jump to chapter 2, multiple interface changes, swipe back and forth
+ 
+ [x] very last page in book, multiple interface orientation changes
+ [ ] jump to chapter 2, memory warning, swipe back
+ [ ] jump to chapter 2, move 1 page forward, memory warning, swipe back
 */
 
 
@@ -89,7 +101,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 - (void)viewWillAppear:(BOOL)animated {
 //    NSLog(@"VIEW WILL APPEAR %@", NSStringFromCGRect(self.view.bounds));
-    // OK TO DRAW :D has correct size
+    // OK TO DRAW - has correct size
     self.currentPage = 0;
     self.currentChapter = 0;
     [self initReaderWithSize:self.collectionView.bounds.size chapter:self.currentChapter];
@@ -105,7 +117,19 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     NSLog(@"WILL ROTATE %i %i %f", self.currentChapter, self.currentPage, currentPercent);
     NSInteger currentChapter = self.currentChapter;
     
-    CGSize newSize = CGSizeMake(self.collectionView.frame.size.height, self.collectionView.frame.size.width); // well, depends on the orientation
+    CGSize newSize;
+    CGSize oldSize = self.collectionView.frame.size;
+    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+        newSize.width = MAX(oldSize.width, oldSize.height);
+        newSize.height = MIN(oldSize.width, oldSize.height);
+    }
+    else {
+        newSize.width = MIN(oldSize.width, oldSize.height);
+        newSize.height = MAX(oldSize.width, oldSize.height);
+    }
+    
+    CGSizeMake(self.collectionView.frame.size.height, self.collectionView.frame.size.width);
+    // creates a new framesetter, loads the chapter, AND the table
     [self initReaderWithSize:newSize chapter:currentChapter];
     self.currentChapter = currentChapter;
     self.currentPage = [self.framesetter pageForChapter:currentChapter percent:currentPercent];
@@ -126,8 +150,9 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     // Dispose of any resources that can be recreated.
     [self.framesetter emptyExceptChapter:self.currentChapter];
     
-    // Do NOT reload the table at this time?
-    // It will remember all your previously created cells
+    // not sure if these are actually necessary
+    [self ensurePagesForChapter:self.currentChapter];
+    [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
 }
 
 - (void)toc:(id)sender {
@@ -232,17 +257,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     [self updateCurrentPage];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    // NOT SAFE EITHER!!!!
-    // ???? when did it fail?
-    
-//    NSIndexPath * cellIndexPath = [self.collectionView indexPathForItemAtPoint:CGPointMake(self.collectionView.contentOffset.x + self.view.frame.size.width/2, 0)];
-//    NSInteger chapter = cellIndexPath.section;
-//    NSInteger page = cellIndexPath.item;
-//    self.currentChapter = chapter;
-//    self.currentPage = page;
-//    NSLog(@"JUST SET %i %i", self.currentChapter, self.currentPage);
-}
+// NOT SAFE to calculate current page when changing interface orientations
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {}
 
 //- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {}
 //- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {}
@@ -254,6 +270,9 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.framesetter = [[ReaderFramesetter alloc] initWithSize:size];
     self.framesetter.delegate = self;
     [self ensurePagesForChapter:chapter];
+    
+    // TODO - add support for initializing with chapter
+    // but be careful, interface change calls this too!
 //    [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
 }
 
@@ -281,6 +300,14 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     else return 1;
 }
 
+
+// these have to ensure the next chapter (well, at least prev), because otherwise
+// it wouldn't know how many pages are in the previous chapter, and wouldn't know
+// which one to set it to
+
+// TODO Unless I switched it to use -1 for the page? that would be kind of cool
+// then when it initializes it can know about those after its loaded
+
 - (NSIndexPath*)next:(NSInteger)chapter page:(NSInteger)page {
     if (page+1 < [self.framesetter pagesForChapter:chapter]) {
         return [NSIndexPath indexPathForItem:page+1 inSection:chapter];
@@ -296,7 +323,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     }
 }
 
-// you have to ensure the previous chapter, because
 - (NSIndexPath*)prev:(NSInteger)chapter page:(NSInteger)page {
     if (page > 0) {
         return [NSIndexPath indexPathForItem:page-1 inSection:chapter];
@@ -340,13 +366,11 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 #pragma mark UICollectionViewDelegate
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-//    NSLog(@"TABLE RELOADING %i", self.numChapters);
     return self.numChapters;
 }
 
 // this gets called DURING first initialization
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-//    NSLog(@"CELLS IN CHAPTER %i = %i", section, [self cellsDisplayedInChapter:section]);
     return [self cellsDisplayedInChapter:section];
 }
 
@@ -367,10 +391,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     [self.collectionView reloadData];
 }
 
-// I need a way to calculate the current page
-// Calculate BY HAND at each change, once you know what it is
-
-
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     // sizes correct at this point
     NSLog(@"CELL %i %i %@", indexPath.section, indexPath.item, self.framesetter);
@@ -382,7 +402,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     
     // If we don't have any pages for this chapter, stop what we are doing, load the chapter, and reload
     if (![self.framesetter hasPagesForChapter:chapter]) {
-        // freaks out if reloadData is called in this function
+        NSLog(@"GOGOGO CELL %i", chapter);
+        // freaks out if reloadData is called in this function, so delay it until done
         dispatch_async(dispatch_get_main_queue(), ^{
             [self ensurePagesForChapter:chapter];
         });
