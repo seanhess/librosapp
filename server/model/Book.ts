@@ -15,29 +15,8 @@ export interface IdentifiedBook {
   bookId: string;
 }
 
-function emptyBook():IBook {
-  var book = {
-    bookId: null,
-    title: "New Book",
-    author: null,
-    genre: null,
-    price: 0,
-    description: "",
 
-    audioFiles: 0,
-    textFiles: 0,
-  }
-
-  delete book.bookId
-  delete book.author
-  delete book.genre
-
-  return book
-}
-
-export function validate(book:IBook) {
-  return true
-}
+/// QUERIES //////////////////////////////////////////
 
 export function init(db) {
   return db.tableCreate({tableName:'books', primaryKey:'bookId'})
@@ -49,16 +28,12 @@ export function saveBook(book:IBook) {
   return books.insert(book, overwrite)
 }
 
-export function setImageUrl(bookId:string, imageUrl:string) {
-  return getBook(bookId).update({imageUrl: imageUrl})
-}
-
 export function create():r.IQuery {
   return books.insert(emptyBook())
 }
 
 export function allBooks():r.IQuery {
-  return r.table('books').orderBy('title')
+  return r.table('books').without('files').orderBy('title')
 }
 
 export function getBook(bookId:string) {
@@ -70,11 +45,17 @@ export function removeBook(bookId:string) {
 }
 
 export function byAuthor(authorName:string) {
-  return books.filter({author: authorName}).orderBy('title')
+  return books
+  .filter((item) => item.contains("author").and(item("author").eq(authorName)))
+  .orderBy('title')
 }
 
 export function byGenre(name:string) {
-  return books.filter({genre: name}).orderBy('title')
+  return books
+  .filter(function(item:r.IObjectProxy) {
+    return item.contains("genre").and(item("genre").eq(name))
+  })
+  .orderBy('title')
 }
 
 function fileCountField(file:IFile) {
@@ -84,37 +65,20 @@ function fileCountField(file:IFile) {
     return 'textFiles'
 }
 
-function fileCountUpdate(file:IFile, amount:number = 1) {
-  var field = fileCountField(file)
-  var update = {}
-  update[field] = r.row(field).add(amount)
-  return getBook(file.bookId)
-  .update(update)
-}
-
-function toNamedObject(name:string):INamedObject {
-  return {name: name}
-}
-
-function toFullAuthor(no:INamedObject):IAuthor {
-  var parts = no.name.split(/\s/)
-  var lastName = parts.pop()
-  var firstName = parts.join(" ")
-    
-  return {
-    name: no.name,
-    firstName: firstName,
-    lastName: lastName,
-  }
-}
-
-function authorLastFirst(author:IAuthor):string {
-  return author.lastName + ", " + author.firstName
-}
+// function fileCountUpdate(file:IFile, amount:number = 1) {
+//   var field = fileCountField(file)
+//   var update = {}
+//   update[field] = r.row(field).add(amount)
+//   return getBook(file.bookId)
+//   .update(update)
+// }
 
 
-export function insertedBook(info:r.InsertResult):IdentifiedBook {
-  return {bookId: info.generated_keys[0]}
+/// ACTIONS //////////////////////////////////////////
+
+export function files(bookId:string) {
+  return db.run(getBook(bookId))
+  .then((book) => book.files)
 }
 
 export function distinctGenres() {
@@ -148,30 +112,68 @@ export function getByAuthor(authorName:string) {
   return db.collect(byAuthor(authorName))
 }
 
-export function countFileAdd(file:IFile) {
-  return db.run(fileCountUpdate(file))
-  .then(() => file)
+// export function countFileAdd(file:IFile) {
+//   return db.run(fileCountUpdate(file))
+//   .then(() => file)
+// }
+
+// export function countFileDel(file:IFile) {
+//   if (!file.bookId) return q.fcall(() => file)
+//   return db.run(fileCountUpdate(file, -1))
+//   .then(() => file)
+// }
+
+
+
+/// DATA /////////////////////////////////////////
+
+function emptyBook():IBook {
+  var book = {
+    bookId: null,
+    title: "New Book",
+    author: null,
+    genre: null,
+    price: 0,
+    description: "",
+
+    audioFiles: 0,
+    textFiles: 0,
+    files: [],
+  }
+
+  delete book.bookId
+  delete book.author
+  delete book.genre
+
+  return book
 }
 
-export function countFileDel(file:IFile) {
-  if (!file.bookId) return q.fcall(() => file)
-  return db.run(fileCountUpdate(file, -1))
-  .then(() => file)
-}
-
-// returns imageUrl at the end...
-export function setImage(bookId:string, file:IUploadFile) {
-  var remotePath = bookToImageUrlPath(bookId, file)
-  var imageUrl = store.fullUrl(remotePath)
-  return store.upload(remotePath, file)
-  .then(() => db.run(setImageUrl(bookId, imageUrl)))
-  .then(function() { return {imageUrl:imageUrl} })
-}
-
-function bookToImageUrlPath(bookId:string, file:IUploadFile):string {
-  return "/" + bookId + "." + store.ext(file)
+export function validate(book:IBook) {
+  return true
 }
 
 
+function toNamedObject(name:string):INamedObject {
+  return {name: name}
+}
+
+function toFullAuthor(no:INamedObject):IAuthor {
+  var parts = no.name.split(/\s/)
+  var lastName = parts.pop()
+  var firstName = parts.join(" ")
+    
+  return {
+    name: no.name,
+    firstName: firstName,
+    lastName: lastName,
+  }
+}
+
+function authorLastFirst(author:IAuthor):string {
+  return author.lastName + ", " + author.firstName
+}
 
 
+export function insertedBook(info:r.InsertResult):IdentifiedBook {
+  return {bookId: info.generated_keys[0]}
+}

@@ -90,10 +90,8 @@ function err(res:exp.ServerResponse) {
   }
 }
 
+/// GENRES ////////////////////////////
 
-// should I pretend that these are full objects?
-// definitely makes it easier for my other system eh?
-// don't have to store them that way!
 app.get('/genres', function(req, res) {
   Book.getDistinctGenres()
   .then(send(res), err(res))
@@ -105,6 +103,8 @@ app.get('/genres/:name/books', function(req, res) {
 })
 
 
+
+/// AUTHORS ////////////////////////////
 
 app.get('/authors', function(req, res) {
   //db.collect(Book.distinctAuthors())
@@ -120,6 +120,11 @@ app.get('/authors/:authorName/books', function(req, res) {
 
 
 
+
+
+/// BOOKS ////////////////////////////
+
+// does NOT include files!
 app.get('/books', function(req, res) {
   db.collect(Book.allBooks())
   .then(send(res), err(res))
@@ -132,8 +137,9 @@ app.get('/books/:bookId', function(req, res) {
 
 app.del('/books/:bookId', function(req, res) {
   var bookId = req.params.bookId
-  File.deleteFilesForBook(bookId)
-  .then(() => db.run(Book.removeBook(bookId)))
+  // don't worry about deleting files. since they overwrite each other
+  // File.deleteFilesForBook(bookId)
+  db.run(Book.removeBook(bookId))
   .then(send(res), err(res))
 })
 
@@ -146,18 +152,21 @@ app.post('/books', function(req, res) {
 
 app.put('/books/:bookId', function(req, res) {
   db.run(Book.saveBook(req.body))
+  // don't have to update the files, because they are already there
   .then(ok(res), err(res))
 })
 
 app.get('/books/:bookId/files', function(req, res) {
-  db.collect(File.byBookId(req.params.bookId))
+  Book.files(req.params.bookId)
   .then(send(res), err(res))
 })
 
-app.put('/books/:bookId/image', function(req, res) {
-  Book.setImage(req.params.bookId, req.files.file)
-  .then(send(res), err(res))
-})
+
+
+
+
+/// FILES //////////////////////////////////////
+
 
 // lets you multipart upload a file, and get back a valid File object
 // expects a single multipart file
@@ -166,11 +175,11 @@ app.post('/files', function(req, res) {
   .then(send(res), err(res))
 })
 
-app.del('/files/:fileId', function(req, res) {
-  File.deleteFile(req.params.fileId)
-  .then(Book.countFileDel)
-  .then(ok(res), err(res))
-})
+// app.del('/files/:fileId', function(req, res) {
+//   File.deleteFile(req.params.fileId)
+//   .then(Book.countFileDel)
+//   .then(ok(res), err(res))
+// })
 
 app.get('/files/:fileId', function(req, res) {
   db.run(File.byFileId(req.params.fileId))
@@ -184,13 +193,8 @@ app.put('/files/:fileId', function(req, res) {
   .then(ok(res), err(res))
 })
 
-// upload a single new file (doesn't do more than one)
-app.post('/books/:bookId/files', function(req, res) {
-  File.addFileForBook(req.params.bookId, req.files.file)
-  .then(Book.countFileAdd)
-  .then(send(res), err(res))
-})
 
+/// APP ///////////////////////////////////////////
 
 // Send the Angular app for everything under /admin
 // Be careful not to accidentally send it for 404 javascript files, or data routes

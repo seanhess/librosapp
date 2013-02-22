@@ -19,7 +19,6 @@ app.controller('BookCtrl', function($scope, Files:IFileService, $routeParams: Bo
   $scope.bookId = $routeParams.bookId
 
   $scope.book = null
-  $scope.files = []
 
   loadBook()
   loadFiles()
@@ -31,20 +30,19 @@ app.controller('BookCtrl', function($scope, Files:IFileService, $routeParams: Bo
   function loadBook() {
     $http.get("/books/" + $scope.bookId).success(function(book) {
       $scope.book = book
+      
+      $http.get("/books/" + $scope.bookId + "/files").success(function(files) {
+        $scope.book.files = files
+      })
     })
   }
 
-  function loadNumFiles() {
-    $http.get("/books/" + $scope.bookId).success(function(book) {
-      $scope.book.textFiles = book.textFiles
-      $scope.book.audioFiles = book.audioFiles
-    })
+  function calculateNumFiles() {
+    $scope.book.audioFiles = Files.audioFiles($scope.book.files).length
+    $scope.book.textFiles = Files.textFiles($scope.book.files).length
   }
 
   function loadFiles() {
-    $http.get("/books/" + $scope.bookId + "/files").success(function(files) {
-      $scope.files = files
-    })
   }
 
   $scope.toggleEditNewGenre = function() {
@@ -65,9 +63,9 @@ app.controller('BookCtrl', function($scope, Files:IFileService, $routeParams: Bo
   }
 
   $scope.removeFile = function(file:IFile) {
-    $scope.files = _.without($scope.files, file)
+    $scope.book.files = _.without($scope.book.files, file)
     $http.delete('/files/' + file.fileId).success(function() {
-        loadNumFiles()
+        // calculate()
     })
   }
 
@@ -130,27 +128,13 @@ app.controller('BookCtrl', function($scope, Files:IFileService, $routeParams: Bo
   function addFile(file:IHTMLFile) {
 
     var pendingFile = toPendingFile(file)
-    $scope.files.push(pendingFile)
+    $scope.book.files.push(pendingFile)
 
     Files.upload(file)
     .then(function(file:IFile) {
        _.extend(pendingFile, file)
-       // loadNumFiles()
+       calculateNumFiles()
     })
-
-//    var formData = new FormData()
-//    formData.append('file', file)
-//
-//    $http({
-//      method: 'POST',
-//      url: '/books/' + $scope.book.bookId + "/files",
-//      data: formData,
-//      // no idea why you need both of these, but you do
-//      transformRequest: angular.identity,
-//      headers: {'Content-Type': undefined},
-//    })
-//    .success(function(file:IFile) {
-//    })
   }
 })
 

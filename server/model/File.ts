@@ -21,6 +21,9 @@ import q = module('q')
 
 var files = r.table('files')
 
+
+/// QUERIES //////////////////////////////////////////
+
 function fileId(file:IFile) {
   return file.fileId
 }
@@ -58,12 +61,9 @@ export function filePath(fileId:string) {
   return path.join(__dirname, '..', 'files', fileId)
 }
 
-export function addFileForBook(bookId:string, uploadedFile:IUploadFile):q.IPromise {
-  var file = toBookFile(bookId, uploadedFile)
-  return store.fileUploadAndSetUrl(file, uploadedFile)
-  .then((file) => db.run(insert(file)))
-  .then(() => file)
-}
+
+
+/// ACTIONS //////////////////////////////////////////
 
 export function deleteFile(fileId:string) {
   return db.run(byFileId(fileId))
@@ -72,14 +72,6 @@ export function deleteFile(fileId:string) {
     return store.fileRemove(file)
     .then(() => db.run(remove(fileId)))
     .then(() => file)
-  })
-}
-
-// this returns a single promise
-export function deleteFilesForBook(bookId:string) {
-  return db.collect(byBookId(bookId))
-  .then(function(files:IFile[]) {
-    return q.all(files.map(fileId).map(deleteFile))
   })
 }
 
@@ -92,12 +84,6 @@ export function createFileFromUpload(uploadedFile:IUploadFile):q.IPromise {
 
 export function isAudio(file:IFile) {
   return (file.ext == "mp3")
-}
-
-function toBookFile(bookId:string, source:IUploadFile):IFile {
-  var file = toFile(source)
-  file.bookId = bookId
-  return file
 }
 
 function toFile(source:IUploadFile):IFile {

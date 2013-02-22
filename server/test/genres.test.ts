@@ -23,7 +23,13 @@ describe("API", function() {
     })
   })
 
-  describe("books", function() {
+  describe("genres", function() {
+
+    // Or, should I have it simply return all the genres that exist on the books? The distinct genres?
+    // Then I could use an autocomplete in the field instead
+    // And to remove a genre, you have to remove all books that HAVE that genre
+    // makes more sense and it's cool
+
     it('should create a book', function(done) {
       request.post({url: domain + '/books', json:{}}, (err, rs, body:IBook) => {
         assert.ifError(err)
@@ -34,44 +40,42 @@ describe("API", function() {
       })
     })
 
-    it('should return the book in books', function(done) {
-      request.get({url: domain + '/books', json:true}, (err, rs, body:IBook[]) => {
-        assert.ifError(err)
-        assert.ok(body.length)
-        var book = body.filter((book:IBook) => book.bookId == this.bookId)[0]
-        assert.ok(book)
-        assert.ok(!book.files, "should not have .files on large book list")
-        done()
-      })
-    })
-
-    it('should return the book details with a title', function(done) {
-      request.get({url: domain + '/books/' + this.bookId, json:true}, (err, rs, book:IBook) => {
-        assert.ifError(err)
-        assert.ok(book)
-        assert.ok(book.title, "Missing title")
-        done()
-      })
-    })
-
-    it('should save an update', function(done) {
+    it('should save the genre', function(done) {
       var book:IBook = {
         title: "title",
         bookId: this.bookId,
-        author: "author",
-        genre: "genre",
+        author: "Charles Dickens",
+        genre: "Comedy",
         price: 199,
         description: "description",
       }
 
+      this.book = book
+
       request.put({url: domain + '/books/' + book.bookId, json:book}, (err, rs) => {
         assert.ifError(err)
-        request.get({url: domain + '/books/' + book.bookId, json:true}, (err, rs, updated:IBook) => {
-          assert.ok(updated)
-          assert.equal(book.title, updated.title)
-          assert.equal(book.author, updated.author)
-          done()
-        })
+        assert.equal(rs.statusCode, 200)
+        done()
+      })
+    })
+
+    it('should return unique genres', function(done) {
+      request.get({url: domain + '/genres/', json:true}, (err, rs, genres:IGenre[]) => {
+        assert.ifError(err)
+        assert.equal(rs.statusCode, 200)
+        var matchingGenres = genres.filter((genre:IGenre) => genre.name == this.book.genre)
+        assert.equal(matchingGenres.length, 1)
+        done()
+      })
+    })
+
+    it('should return books by genre', function(done) {
+      request.get({url: domain + '/genres/'+this.book.genre+'/books', json:true}, (err, rs, books:IBook[]) => {
+        assert.ifError(err)
+        assert.equal(rs.statusCode, 200)
+        assert.equal(books[0].genre, this.book.genre)
+        assert.ok(books.filter((book:IBook) => book.bookId == this.book.bookId).length)
+        done()
       })
     })
 
@@ -85,6 +89,5 @@ describe("API", function() {
         })
       })
     })
-
   })
 })

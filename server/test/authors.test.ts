@@ -23,7 +23,8 @@ describe("API", function() {
     })
   })
 
-  describe("books", function() {
+  describe("authors", function() {
+
     it('should create a book', function(done) {
       request.post({url: domain + '/books', json:{}}, (err, rs, body:IBook) => {
         assert.ifError(err)
@@ -34,44 +35,44 @@ describe("API", function() {
       })
     })
 
-    it('should return the book in books', function(done) {
-      request.get({url: domain + '/books', json:true}, (err, rs, body:IBook[]) => {
-        assert.ifError(err)
-        assert.ok(body.length)
-        var book = body.filter((book:IBook) => book.bookId == this.bookId)[0]
-        assert.ok(book)
-        assert.ok(!book.files, "should not have .files on large book list")
-        done()
-      })
-    })
-
-    it('should return the book details with a title', function(done) {
-      request.get({url: domain + '/books/' + this.bookId, json:true}, (err, rs, book:IBook) => {
-        assert.ifError(err)
-        assert.ok(book)
-        assert.ok(book.title, "Missing title")
-        done()
-      })
-    })
-
-    it('should save an update', function(done) {
+    it('should save the author', function(done) {
       var book:IBook = {
         title: "title",
         bookId: this.bookId,
-        author: "author",
+        author: "Charles Dickens",
         genre: "genre",
         price: 199,
         description: "description",
       }
 
+      this.book = book
+
       request.put({url: domain + '/books/' + book.bookId, json:book}, (err, rs) => {
         assert.ifError(err)
-        request.get({url: domain + '/books/' + book.bookId, json:true}, (err, rs, updated:IBook) => {
-          assert.ok(updated)
-          assert.equal(book.title, updated.title)
-          assert.equal(book.author, updated.author)
-          done()
-        })
+        assert.equal(rs.statusCode, 200)
+        done()
+      })
+    })
+
+    it('should return unique authors', function(done) {
+      request.get({url: domain + '/authors/', json:true}, (err, rs, authors:IAuthor[]) => {
+        assert.ifError(err)
+        assert.equal(rs.statusCode, 200)
+        var matchingAuthors = authors.filter((author:IAuthor) => author.name == this.book.author)
+        assert.equal(matchingAuthors.length, 1)
+        assert.ok(authors.filter((author:IAuthor) => author.firstName == "Charles").length)
+        assert.ok(authors.filter((author:IAuthor) => author.lastName == "Dickens").length)
+        done()
+      })
+    })
+
+    it('should return books by author', function(done) {
+      request.get({url: domain + '/authors/'+this.book.author+'/books', json:true}, (err, rs, books:IBook[]) => {
+        assert.ifError(err)
+        assert.equal(rs.statusCode, 200)
+        assert.equal(books[0].author, this.book.author)
+        assert.ok(books.filter((book:IBook) => book.bookId == this.book.bookId).length)
+        done()
       })
     })
 
@@ -85,6 +86,5 @@ describe("API", function() {
         })
       })
     })
-
   })
 })

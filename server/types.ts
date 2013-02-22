@@ -4,7 +4,6 @@
 // use <reference path="types.ts"> to load
 
 interface IFile {
-  bookId?: string;
   fileId: string;
   name: string;
   ext: string; // "txt" or "mp3"
@@ -22,6 +21,9 @@ interface IBook {
 
   audioFiles: number;
   textFiles: number;
+
+  // store all the file objects in here? why not? can calculate EVERYTHING. wahoo
+  files: IFile[];
 }
 
 // a string masquerading as an object. Name is considered the primary key
