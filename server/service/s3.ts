@@ -3,15 +3,6 @@
 import knox = module('knox')
 import q = module('q')
 
-export interface Store {
-  fileUploadAndSetUrl(file:IFile, source:IUploadFile):q.IPromise;
-  fileRemove(file:IFile):q.IPromise;
-  remove(remotePath:string):q.IPromise;
-  upload(remotePath:string, source:IUploadFile):q.IPromise;
-  fullUrl(remotePath:string):string;
-  ext(source:IUploadFile):string;
-}
-
 var BUCKET = "librosapp"
 var BUCKET_URL = "http://" + BUCKET + ".s3.amazonaws.com"
 var s3client = knox.createClient({
@@ -26,6 +17,10 @@ export function fileUploadAndSetUrl(file:IFile, source:IUploadFile) {
     file.url = fileToUrl(file)
     return file
   })
+}
+
+export function fileUpload(file:IFile, source:IUploadFile) {
+  return upload(fileToUrlPath(file), source)
 }
 
 export function fileRemove(file:IFile):q.IPromise {
@@ -48,13 +43,14 @@ export function fullUrl(remotePath:string) {
   return BUCKET_URL + remotePath
 }
 
-function fileToUrl(file:IFile):string {
+export function fileToUrl(file:IFile):string {
   return fullUrl(fileToUrlPath(file))
 }
 
 // need more info that that! need the extention, etc
 function fileToUrlPath(file:IFile):string {
-  return "/" + file.fileId + "." + file.ext
+  // fileId has the extension in it now
+  return "/" + file.fileId
 }
 
 export function ext(source:IUploadFile):string {

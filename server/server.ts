@@ -159,10 +159,22 @@ app.put('/books/:bookId/image', function(req, res) {
   .then(send(res), err(res))
 })
 
+// lets you multipart upload a file, and get back a valid File object
+// expects a single multipart file
+app.post('/files', function(req, res) {
+  File.createFileFromUpload(req.files.file)
+  .then(send(res), err(res))
+})
+
 app.del('/files/:fileId', function(req, res) {
   File.deleteFile(req.params.fileId)
   .then(Book.countFileDel)
   .then(ok(res), err(res))
+})
+
+app.get('/files/:fileId', function(req, res) {
+  db.run(File.byFileId(req.params.fileId))
+  .then(send(res), err(res))
 })
 
 // edit the file metadata. move the file if you change the name?
@@ -178,6 +190,7 @@ app.post('/books/:bookId/files', function(req, res) {
   .then(Book.countFileAdd)
   .then(send(res), err(res))
 })
+
 
 // Send the Angular app for everything under /admin
 // Be careful not to accidentally send it for 404 javascript files, or data routes

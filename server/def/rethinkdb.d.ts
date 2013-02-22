@@ -90,10 +90,15 @@ declare module "rethinkdb" {
     mul(num:number):IRow;
     div(num:number):IRow;
   }
+
+  interface IExpression {
+    contains(property:string):IExpression;
+    eq(value:any):IExpression;
+    and(expression:IExpression):IExpression;
+  }
   
-  interface IObjectProxy {
-    (property:string):IObjectProxy;
-    contains(property:string):bool;
+  interface IObjectProxy extends IExpression {
+    (property:string):IExpression;
   }
 
   interface IRql {}

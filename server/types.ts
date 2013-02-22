@@ -4,11 +4,11 @@
 // use <reference path="types.ts"> to load
 
 interface IFile {
-  bookId: string;
+  bookId?: string;
   fileId: string;
   name: string;
   ext: string; // "txt" or "mp3"
-  url: string;
+  url?: string;
 }
 
 interface IBook {

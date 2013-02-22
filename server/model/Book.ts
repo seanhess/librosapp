@@ -7,8 +7,7 @@ import q = module('q')
 import f = module('../service/functional')
 import File = module('./File')
 
-import s3 = module('../service/s3')
-var store:s3.Store = s3
+import store = module('../service/s3')
 
 var books = r.table('books')
 
@@ -155,6 +154,7 @@ export function countFileAdd(file:IFile) {
 }
 
 export function countFileDel(file:IFile) {
+  if (!file.bookId) return q.fcall(() => file)
   return db.run(fileCountUpdate(file, -1))
   .then(() => file)
 }

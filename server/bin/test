@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "TESTING $@"
+make build
+NODE_ENV=test node_modules/.bin/mocha --reporter spec $@

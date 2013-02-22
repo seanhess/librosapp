@@ -12,10 +12,8 @@ import fs = module('fs')
 import path = module('path')
 import async = module('async')
 import uuid = module('node-uuid')
-import s3 = module('../service/s3')
-import local = module('../service/local')
+import store = module('../service/s3')
 
-var store:s3.Store = s3
 // var store:s3.Store = local
 
 import db = module('./db')
@@ -41,7 +39,11 @@ export function update(fileId:string, file:IFile) {
 }
 
 export function byBookId(bookId:string) {
-  return files.filter({bookId: bookId}).orderBy('name')
+  return files
+  .filter(function(item:r.IObjectProxy) {
+    return item.contains("bookId").and(item("bookId").eq(bookId))
+  })
+  .orderBy('name')
 }
 
 export function byFileId(fileId:string) {
@@ -56,22 +58,8 @@ export function filePath(fileId:string) {
   return path.join(__dirname, '..', 'files', fileId)
 }
 
-export function toFile(bookId:string, source:IUploadFile):IFile {
-  var ext = source.name.split('.').pop() // txt
-  var fileId = uuid.v1()
-  var file:IFile = {
-    bookId: bookId,
-    name: path.basename(source.name, "."+ext),
-    ext: ext,
-    fileId: fileId,
-    url: undefined,
-  }
-  //file.url = toUrl(file)
-  return file
-}
-
 export function addFileForBook(bookId:string, uploadedFile:IUploadFile):q.IPromise {
-  var file = toFile(bookId, uploadedFile)
+  var file = toBookFile(bookId, uploadedFile)
   return store.fileUploadAndSetUrl(file, uploadedFile)
   .then((file) => db.run(insert(file)))
   .then(() => file)
@@ -80,6 +68,7 @@ export function addFileForBook(bookId:string, uploadedFile:IUploadFile):q.IPromi
 export function deleteFile(fileId:string) {
   return db.run(byFileId(fileId))
   .then(function(file:IFile) {
+    if (!file) throw new Error("can not find fileId: " + fileId)
     return store.fileRemove(file)
     .then(() => db.run(remove(fileId)))
     .then(() => file)
@@ -94,6 +83,37 @@ export function deleteFilesForBook(bookId:string) {
   })
 }
 
+export function createFileFromUpload(uploadedFile:IUploadFile):q.IPromise {
+  var file = toFile(uploadedFile)
+  return store.fileUpload(file, uploadedFile)
+  .then(() => db.run(insert(file)))
+  .then(() => file)
+}
+
 export function isAudio(file:IFile) {
   return (file.ext == "mp3")
 }
+
+function toBookFile(bookId:string, source:IUploadFile):IFile {
+  var file = toFile(source)
+  file.bookId = bookId
+  return file
+}
+
+function toFile(source:IUploadFile):IFile {
+  var ext = source.name.split('.').pop() // txt
+  var name = path.basename(source.name, "."+ext)
+  var file:IFile = {
+   fileId: generateFileId(source), // fileId has the ext in it
+   name: name,
+   ext: ext,
+  }
+  file.url = store.fileToUrl(file)
+  return file
+}
+
+function generateFileId(source:IUploadFile):string {
+  var fileId = source.size + "_" + source.name.replace(/\W+/, "")
+  return fileId
+}
+

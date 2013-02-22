@@ -2,6 +2,8 @@
 ///<reference path="../def/underscore.d.ts"/>
 ///<reference path="../types.ts"/>
 
+///<reference path="../services/Files.ts"/>
+
 interface IHTMLFile {
   lastModifiedDate: Date;
   name: string;
@@ -13,8 +15,7 @@ interface BookParams extends ng.IRouteParamsService {
   bookId: string;
 }
 
-angular.module('controllers')
-.controller('BookCtrl', function($scope, $routeParams: BookParams, $location:ng.ILocationService, $http:ng.IHttpService) {
+app.controller('BookCtrl', function($scope, Files:IFileService, $routeParams: BookParams, $location:ng.ILocationService, $http:ng.IHttpService) {
   $scope.bookId = $routeParams.bookId
 
   $scope.book = null
@@ -96,18 +97,9 @@ angular.module('controllers')
   }
 
   $scope.onDropCoverImage = function(files:IHTMLFile[]) {
-    var formData = new FormData()
-    formData.append('file', files[0])
-    $http({
-      method: 'PUT',
-      url: '/books/' + $scope.book.bookId + "/image",
-      data: formData,
-      // no idea why you need both of these, but you do
-      transformRequest: angular.identity,
-      headers: {'Content-Type': undefined},
-    })
-    .success(function(book:IBook) {
-      $scope.book.imageUrl = book.imageUrl
+    Files.upload(files[0])
+    .then(function(file:IFile) {
+      $scope.book.imageUrl = file.url
     })
   }
 
@@ -136,24 +128,29 @@ angular.module('controllers')
   }
 
   function addFile(file:IHTMLFile) {
+
     var pendingFile = toPendingFile(file)
     $scope.files.push(pendingFile)
 
-    var formData = new FormData()
-    formData.append('file', file)
-
-    $http({
-      method: 'POST',
-      url: '/books/' + $scope.book.bookId + "/files",
-      data: formData,
-      // no idea why you need both of these, but you do
-      transformRequest: angular.identity,
-      headers: {'Content-Type': undefined},
-    })
-    .success(function(file:IFile) {
+    Files.upload(file)
+    .then(function(file:IFile) {
        _.extend(pendingFile, file)
-       loadNumFiles()
+       // loadNumFiles()
     })
+
+//    var formData = new FormData()
+//    formData.append('file', file)
+//
+//    $http({
+//      method: 'POST',
+//      url: '/books/' + $scope.book.bookId + "/files",
+//      data: formData,
+//      // no idea why you need both of these, but you do
+//      transformRequest: angular.identity,
+//      headers: {'Content-Type': undefined},
+//    })
+//    .success(function(file:IFile) {
+//    })
   }
 })
 

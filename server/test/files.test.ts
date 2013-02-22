@@ -23,7 +23,7 @@ describe("API", function() {
       done()
     })
   })
-  
+
   describe("files", function() {
 
     it('should create a book', function(done) {
@@ -147,23 +147,6 @@ describe("API", function() {
         })
       })
     })
-  })
-
-  describe("angular app", function() {
-    it('should return the app for an arbitrary url', function(done) {
-      request.get(domain + "/admin/asdfjl", function(err, rs, body) {
-        assert.equal(rs.statusCode, 200)
-        done()
-      })
-    })
-
-    it('should not return the app for missing files', function(done) {
-      request.get(domain + "/fat.js", function(err, rs, body) {
-        assert.equal(rs.statusCode, 404)
-        done()
-      })
-    })
-
   })
 
   //it('should delete a book')

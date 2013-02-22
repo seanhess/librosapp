@@ -1,10 +1,9 @@
 ///<reference path="../def/angular.d.ts"/>
 ///<reference path="../def/jquery.d.ts"/>
 
-angular.module('directives')
 
 // prevents drops from changing the page
-.directive('dragignore', function($parse:ng.IParseService) {
+app.directive('dragignore', function($parse:ng.IParseService) {
   return function(scope:ng.IScope, element:JQuery, attrs) {
     var target = document
 

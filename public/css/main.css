@@ -20,6 +20,7 @@ html {
   display: inline-block;
   border: dashed 2px #777;
   width: 100px;
+  min-height: 80px;
 }
 .book_edit div.cover img {
   width: 100px;

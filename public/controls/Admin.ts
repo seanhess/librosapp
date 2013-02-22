@@ -10,8 +10,7 @@ interface AdminScope extends ng.IScope {
   newGenre:string;
 }
 
-angular.module('controllers')
-.controller('AdminCtrl', function($scope: AdminScope, $http: ng.IHttpService, $location:ng.ILocationService) {
+app.controller('AdminCtrl', function($scope: AdminScope, $http: ng.IHttpService, $location:ng.ILocationService) {
   $scope.message = "hello3"
   load()
 

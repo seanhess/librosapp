@@ -1,0 +1,9 @@
+{
+	"folders":
+	[
+		{
+			"path": "/Users/seanhess/projects/Libros/server",
+      "file_exclude_patterns": ["*.css", "*.js", ".vimrc"],  
+		}
+	]
+}

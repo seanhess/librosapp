@@ -1,12 +1,11 @@
 ///<reference path="../def/angular.d.ts"/>
 
-angular.module('directives')
 
 // simple directive that updates the background-y given a direction
 // shouldn't some of this be in the css instead? Should this have the knowledge
 // of the background size?
 
-.directive('spriteDirection', function(Board:IBoard) {
+app.directive('spriteDirection', function(Board:IBoard) {
   return {
     restrict:'A',
     link:function(scope:ng.IScope, element:JQuery, attrs) {
