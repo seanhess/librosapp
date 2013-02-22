@@ -151,8 +151,7 @@ app.post('/books', function(req, res) {
 })
 
 app.put('/books/:bookId', function(req, res) {
-  db.run(Book.saveBook(req.body))
-  // don't have to update the files, because they are already there
+  Book.updateBook(req.body)
   .then(ok(res), err(res))
 })
 
@@ -175,11 +174,10 @@ app.post('/files', function(req, res) {
   .then(send(res), err(res))
 })
 
-// app.del('/files/:fileId', function(req, res) {
-//   File.deleteFile(req.params.fileId)
-//   .then(Book.countFileDel)
-//   .then(ok(res), err(res))
-// })
+app.del('/files/:fileId', function(req, res) {
+   File.deleteFile(req.params.fileId)
+   .then(ok(res), err(res))
+})
 
 app.get('/files/:fileId', function(req, res) {
   db.run(File.byFileId(req.params.fileId))

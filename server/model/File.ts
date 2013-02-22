@@ -38,7 +38,7 @@ export function insert(file:IFile) {
 
 // the only thing you can change is the name
 export function update(fileId:string, file:IFile) {
-  return files.update({fileId: fileId, name:file.name})
+  return byFileId(fileId).update({name:file.name})
 }
 
 export function byBookId(bookId:string) {
@@ -85,6 +85,9 @@ export function createFileFromUpload(uploadedFile:IUploadFile):q.IPromise {
 export function isAudio(file:IFile) {
   return (file.ext == "mp3")
 }
+export function isText(file:IFile) {
+  return !isAudio(file)
+}
 
 function toFile(source:IUploadFile):IFile {
   var ext = source.name.split('.').pop() // txt
@@ -99,7 +102,7 @@ function toFile(source:IUploadFile):IFile {
 }
 
 function generateFileId(source:IUploadFile):string {
-  var fileId = source.size + "_" + source.name.replace(/\W+/, "")
+  var fileId = source.size + "_" + source.name.replace(/[^\w\.]+/, "")
   return fileId
 }
 

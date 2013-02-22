@@ -35,15 +35,33 @@ describe("API", function() {
       })
     })
 
-    it('should upload a file for the book', function(done) {
-      var r = request.post({url: domain + '/books/' + this.bookId + '/files', json:true}, function(err, rs, file:IFile) {
+    it('should upload a file', function(done) {
+      var r = request.post({url: domain + '/files/', json:true}, (err, rs, file:IFile) => {
         assert.ifError(err)
         assert.equal(rs.statusCode, 200, "Status("+rs.statusCode+"): " + file)
         assert.ok(file.fileId)
+        this.file = file
         done()
       })
       var form = r.form()
       form.append('file', fs.createReadStream(path.join(__dirname, 'data.txt')))
+    })
+
+    it('should save the file to the book', function(done) {
+      request.get({url: domain + '/books/' + this.bookId, json:true}, (err, rs, book:IBook) => {
+        assert.ifError(err)
+        assert.equal(rs.statusCode, 200, "Status("+rs.statusCode+"): " + book)
+        this.book = book
+        var file:IFile = this.file
+        assert.ok(book)
+        assert.ok(file)
+        book.files = [file]
+        request.put({url:domain+"/books/"+this.bookId, json:book}, (err, rs, body) => {
+          assert.ifError(err)
+          assert.equal(rs.statusCode, 200, "Status("+rs.statusCode+"): " + body)
+          done()
+        })
+      })
     })
 
     it('should return the files for a book', function(done) {
@@ -57,6 +75,7 @@ describe("API", function() {
       })
     })
 
+    // doesn't automatically increment the file stuff for you any more?
     it('should have incremented the file info', function(done) {
       request.get({url: domain + '/books/' + this.bookId, json:true}, (err, rs, book:IBook) => {
         assert.ifError(err)
@@ -102,42 +121,39 @@ describe("API", function() {
         assert.ifError(err)
         assert.equal(rs.statusCode, 200)
 
-        request.get({url:domain+'/books/'+this.bookId+'/files', json:true}, (err, rs, files:IFile[]) => {
+        request.get({url:domain+'/files/'+this.file.fileId, json:true}, (err, rs, updated:IFile) => {
           assert.ifError(err)
-          assert.equal(files.length, 1)
-          var updated = files[0]
+          assert.equal(rs.statusCode, 200, "Status("+rs.statusCode+"): " + updated)
           assert.equal(updated.name, "asdf", "didn't update. maybe it updated the fileId") // data.txt
           assert.equal(updated.ext, "txt", "changed extension!")
           assert.equal(updated.url, this.file.url)
-          done()
+
+          this.book.files = [updated]
+
+          // your responsibility to update the book's version
+          request.put({url:domain+"/books/"+this.bookId, json:this.book}, (err, rs, body) => {
+            assert.ifError(err)
+            assert.equal(rs.statusCode, 200, "Status("+rs.statusCode+"): " + body)
+
+            request.get({url:domain+'/books/'+this.bookId+'/files', json:true}, (err, rs, files:IFile[]) => {
+              assert.ifError(err)
+              assert.equal(rs.statusCode, 200, "Status("+rs.statusCode+"): " + files)
+              assert.equal(files.length, 1)
+              var updated = files[0]
+              assert.equal(updated.name, "asdf", "didn't update. maybe it updated the fileId") // data.txt
+              assert.equal(updated.ext, "txt", "changed extension!")
+              assert.equal(updated.url, this.file.url)
+              done()
+            })
+
+          })
+
         })
+
       })
     })
 
-    it('should delete the file', function(done) {
-      request.del(domain + '/files/' + this.file.fileId, (err, rs, body) => {
-        assert.ifError(err)
-        assert.equal(rs.statusCode, 200, "Status(" + rs.statusCode + "): " + body)
-        request.get({url: domain + '/books/' + this.bookId + '/files', json:true}, (err, rs, files:IFile[]) => {
-          assert.ifError(err)
-          assert.equal(rs.statusCode, 200, "Status(" + rs.statusCode + "): " + files)
-          assert.equal(files.length, 0)
-          done()
-        })
-      })
-    })
-
-    it('should have decremented the file info', function(done) {
-      request.get({url: domain + '/books/' + this.bookId, json:true}, (err, rs, book:IBook) => {
-        assert.ifError(err)
-        assert.equal(rs.statusCode, 200)
-        assert.equal(book.textFiles, 0)
-        assert.equal(book.audioFiles, 0)
-        done()
-      })
-    })
-
-    it('should delete the book', function(done) {
+   it('should delete the book', function(done) {
       request.del({url: domain + '/books/' + this.bookId, json:true}, (err, rs) => {
         assert.ifError(err)
         request.get({url: domain + '/books/' + this.bookId, json:true}, (err, rs) => {

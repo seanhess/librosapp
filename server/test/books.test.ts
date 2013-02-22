@@ -38,6 +38,7 @@ describe("API", function() {
       request.get({url: domain + '/books', json:true}, (err, rs, body:IBook[]) => {
         assert.ifError(err)
         assert.ok(body.length)
+        assert.equal(rs.statusCode, 200, "ERROR ("+rs.statusCode+") "+body)
         var book = body.filter((book:IBook) => book.bookId == this.bookId)[0]
         assert.ok(book)
         assert.ok(!book.files, "should not have .files on large book list")

@@ -52,9 +52,9 @@ describe("API", function() {
 
       this.book = book
 
-      request.put({url: domain + '/books/' + book.bookId, json:book}, (err, rs) => {
+      request.put({url: domain + '/books/' + book.bookId, json:book}, (err, rs, body) => {
         assert.ifError(err)
-        assert.equal(rs.statusCode, 200)
+        assert.equal(rs.statusCode, 200, "ERROR ("+rs.statusCode+") "+body)
         done()
       })
     })

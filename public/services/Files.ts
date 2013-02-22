@@ -7,8 +7,6 @@ interface IFileService extends ng.resource.IResourceClass {
 }
 
 app.factory('Files', function($http: ng.IHttpService):IFileService {
-
-
     function not(f:Function) {
       return function(...args:any[]) {
         return !f.apply(null, args)

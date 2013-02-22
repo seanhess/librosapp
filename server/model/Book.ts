@@ -33,7 +33,10 @@ export function create():r.IQuery {
 }
 
 export function allBooks():r.IQuery {
-  return r.table('books').without('files').orderBy('title')
+  return books
+  .filter(db.contains('title'))
+  .orderBy('title')
+  .without('files')
 }
 
 export function getBook(bookId:string) {
@@ -58,23 +61,13 @@ export function byGenre(name:string) {
   .orderBy('title')
 }
 
-function fileCountField(file:IFile) {
-  if (File.isAudio(file))
-    return 'audioFiles'
-  else
-    return 'textFiles'
-}
-
-// function fileCountUpdate(file:IFile, amount:number = 1) {
-//   var field = fileCountField(file)
-//   var update = {}
-//   update[field] = r.row(field).add(amount)
-//   return getBook(file.bookId)
-//   .update(update)
-// }
-
 
 /// ACTIONS //////////////////////////////////////////
+
+export function updateBook(book:IBook) {
+  book = calculateNumFiles(book)
+  return db.run(saveBook(book))
+}
 
 export function files(bookId:string) {
   return db.run(getBook(bookId))
@@ -112,20 +105,15 @@ export function getByAuthor(authorName:string) {
   return db.collect(byAuthor(authorName))
 }
 
-// export function countFileAdd(file:IFile) {
-//   return db.run(fileCountUpdate(file))
-//   .then(() => file)
-// }
-
-// export function countFileDel(file:IFile) {
-//   if (!file.bookId) return q.fcall(() => file)
-//   return db.run(fileCountUpdate(file, -1))
-//   .then(() => file)
-// }
-
-
 
 /// DATA /////////////////////////////////////////
+
+function calculateNumFiles(book:IBook) {
+  book.files = book.files || []
+  book.audioFiles = book.files.filter(File.isAudio).length
+  book.textFiles = book.files.filter(File.isText).length
+  return book
+}
 
 function emptyBook():IBook {
   var book = {
