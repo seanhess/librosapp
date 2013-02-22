@@ -31,11 +31,11 @@
 }
 
 - (void)addMappings {
-    RKEntityMapping *bookMapping = [ObjectStore.shared mappingForEntityForName:@"File"];
-    [bookMapping setIdentificationAttributes:@[@"fileId"]];
-    [bookMapping addAttributeMappingsFromArray:[_File propertyNames]];
+    self.fileMapping = [ObjectStore.shared mappingForEntityForName:@"File"];
+    [self.fileMapping setIdentificationAttributes:@[@"fileId"]];
+    [self.fileMapping addAttributeMappingsFromArray:[_File propertyNames]];
     
-    RKResponseDescriptor * responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:bookMapping pathPattern:@"/books/:bookId/files" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    RKResponseDescriptor * responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:self.fileMapping pathPattern:@"/books/:bookId/files" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
 
     [ObjectStore.shared addResponseDescriptor:responseDescriptor];
 }

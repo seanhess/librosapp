@@ -71,6 +71,7 @@ describe("API", function() {
         this.file = files[0]
         assert.equal(this.file.name, "data") // data.txt
         assert.equal(this.file.ext, "txt")
+        assert.equal(this.file.bookId, this.bookId, "did not set bookId for book files")
         done()
       })
     })

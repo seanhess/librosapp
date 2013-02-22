@@ -11,6 +11,7 @@
 #import <RestKit/RestKit.h>
 #import "ObjectStore.h"
 #import "NSObject+Reflection.h"
+#import "FileService.h"
 
 @interface BookService ()
 @end
@@ -44,9 +45,8 @@
     [bookMapping addAttributeMappingsFromDictionary:@{@"description": @"descriptionText"}];
     
     RKResponseDescriptor * responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:bookMapping pathPattern:@"/books" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
-
-    [ObjectStore.shared addResponseDescriptor:responseDescriptor];
     
+    [ObjectStore.shared addResponseDescriptor:responseDescriptor];
     [ObjectStore.shared syncWithFetchRequest:self.allBooks forPath:@"/books"];
 }
 

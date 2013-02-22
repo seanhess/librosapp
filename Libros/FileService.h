@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <RestKit/RestKit.h>
 #import "File.h"
 #import "LBParsedString.h"
 
@@ -16,6 +17,8 @@
 @interface FileService : NSObject
 
 +(FileService*)shared;
+
+@property (nonatomic, strong) RKEntityMapping * fileMapping;
 
 -(void)loadFilesForBook:(NSString*)bookId cb:(void(^)(void))cb;
 -(void)downloadFiles:(NSArray*)files progress:(void(^)(float))cb complete:(void(^)(void))cb;

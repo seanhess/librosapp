@@ -64,6 +64,13 @@ export function byGenre(name:string) {
 
 /// ACTIONS //////////////////////////////////////////
 
+function setFileBookId(bookId:string) {
+  return function(file:IFile) {
+    file.bookId = bookId
+    return file
+  }
+}
+
 export function updateBook(book:IBook) {
   book = calculateNumFiles(book)
   return db.run(saveBook(book))
@@ -71,7 +78,7 @@ export function updateBook(book:IBook) {
 
 export function files(bookId:string) {
   return db.run(getBook(bookId))
-  .then((book) => book.files)
+  .then((book) => book.files.map(setFileBookId(bookId)))
 }
 
 export function distinctGenres() {

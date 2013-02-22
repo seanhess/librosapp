@@ -4,6 +4,7 @@
 // use <reference path="types.ts"> to load
 
 interface IFile {
+  bookId?: string; // pretend they belong to a book
   fileId: string;
   name: string;
   ext: string; // "txt" or "mp3"
