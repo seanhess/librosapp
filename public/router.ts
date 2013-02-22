@@ -1,6 +1,6 @@
 console.log("Register: App")
 
-var app = angular.module('app', [], function ($routeProvider: ng.IRouteProviderProvider, $locationProvider: ng.ILocationProvider) {
+var app = angular.module('app', ['ngResource'], function ($routeProvider: ng.IRouteProviderProvider, $locationProvider: ng.ILocationProvider) {
   console.log("INSIDE ROUTER")
   $locationProvider.html5Mode(true)
   $routeProvider.when('/admin/404', {templateUrl: '/partials/404.html'})

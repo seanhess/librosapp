@@ -11,6 +11,7 @@
 ///<reference path="controls/Author.ts"/>
 
 ///<reference path="services/Files.ts"/>
+///<reference path="services/Books.ts"/>
 
 ///<reference path="directives/dragupload.ts"/>
 ///<reference path="directives/blur.ts"/>

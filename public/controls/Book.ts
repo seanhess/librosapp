@@ -15,34 +15,22 @@ interface BookParams extends ng.IRouteParamsService {
   bookId: string;
 }
 
-app.controller('BookCtrl', function($scope, Files:IFileService, $routeParams: BookParams, $location:ng.ILocationService, $http:ng.IHttpService) {
-  $scope.bookId = $routeParams.bookId
+app.controller('BookCtrl', function($scope, Books:IBookService, Files:IFileService, $routeParams: BookParams, $location:ng.ILocationService, $http:ng.IHttpService) {
+  var bookId = $scope.bookId = $routeParams.bookId
 
-  $scope.book = null
-
-  loadBook()
-  loadFiles()
+  $scope.book = Books.get({bookId:bookId})
 
   $http.get("/genres/").success(function(genres) {
     $scope.genres = genres
   })
-
-  function loadBook() {
-    $http.get("/books/" + $scope.bookId).success(function(book) {
-      $scope.book = book
-      
-      $http.get("/books/" + $scope.bookId + "/files").success(function(files) {
-        $scope.book.files = files
-      })
-    })
-  }
 
   function calculateNumFiles() {
     $scope.book.audioFiles = Files.audioFiles($scope.book.files).length
     $scope.book.textFiles = Files.textFiles($scope.book.files).length
   }
 
-  function loadFiles() {
+  function back() {
+    $location.path("/admin")
   }
 
   $scope.toggleEditNewGenre = function() {
@@ -50,23 +38,16 @@ app.controller('BookCtrl', function($scope, Files:IFileService, $routeParams: Bo
   }
 
   $scope.save = function(book) {
-    $http.put("/books/" + $scope.bookId, $scope.book).
-      success(function() {
-        $location.path("/admin")
-      })
+    Books.update($scope.book).then(back)
   }
 
   $scope.remove = function() {
-    $http.delete('/books/' + $scope.book.bookId).success(function() {
-      $location.path("/admin")
-    })
-  }
+    Books.remove({bookId: bookId}, back)
+ }
 
   $scope.removeFile = function(file:IFile) {
     $scope.book.files = _.without($scope.book.files, file)
-    $http.delete('/files/' + file.fileId).success(function() {
-        // calculate()
-    })
+    calculateNumFiles()
   }
 
   $scope.isEditing = function(file) {
