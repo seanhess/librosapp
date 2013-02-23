@@ -114,6 +114,7 @@
 		789C987D16B987D600EA9B06 /* ColoredButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 789C987C16B987D600EA9B06 /* ColoredButton.m */; };
 		789C988116B9999B00EA9B06 /* HorizontalFlowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 789C988016B9999B00EA9B06 /* HorizontalFlowView.m */; };
 		789C988416B9AA0200EA9B06 /* Icons.m in Sources */ = {isa = PBXBuildFile; fileRef = 789C988316B9AA0200EA9B06 /* Icons.m */; };
+		78C0E2C716D83C670033F509 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 78C0E2C616D83C670033F509 /* Podfile */; };
 		78CA26E416B1AD81003EC00D /* ReaderPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CA26E316B1AD81003EC00D /* ReaderPageView.m */; };
 		78CA26E816B1DF65003EC00D /* ReaderFramesetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CA26E716B1DF65003EC00D /* ReaderFramesetter.m */; };
 		78CA26F416B2F6E2003EC00D /* ReaderFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CA26F316B2F6E2003EC00D /* ReaderFormatter.m */; };
@@ -271,6 +272,7 @@
 		789C988216B9AA0200EA9B06 /* Icons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Icons.h; sourceTree = "<group>"; };
 		789C988316B9AA0200EA9B06 /* Icons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Icons.m; sourceTree = "<group>"; };
 		789FEFCE16C41A2700A5EFD5 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
+		78C0E2C616D83C670033F509 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		78CA26E216B1AD81003EC00D /* ReaderPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderPageView.h; sourceTree = "<group>"; };
 		78CA26E316B1AD81003EC00D /* ReaderPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderPageView.m; sourceTree = "<group>"; };
 		78CA26E616B1DF65003EC00D /* ReaderFramesetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderFramesetter.h; sourceTree = "<group>"; };
@@ -408,6 +410,7 @@
 		7827BD80169CE4A900053231 = {
 			isa = PBXGroup;
 			children = (
+				78C0E2C616D83C670033F509 /* Podfile */,
 				7809F96216AF3CA30045C4D9 /* CoreText.framework */,
 				7827BD97169CE4A900053231 /* Libros */,
 				7827BDB9169CE4A900053231 /* LibrosTests */,
@@ -788,6 +791,7 @@
 				787D363C16C4370700A102ED /* StoreBookResultsFilterView.xib in Resources */,
 				78D0542416C987250037311C /* LibraryBookCellOverlay.xib in Resources */,
 				78FD1BB416CEBADC003BB3E5 /* ReaderTableOfContentsVC.xib in Resources */,
+				78C0E2C716D83C670033F509 /* Podfile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

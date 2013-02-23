@@ -11,6 +11,7 @@ extern const struct BookAttributes {
 	__unsafe_unretained NSString *descriptionText;
 	__unsafe_unretained NSString *downloaded;
 	__unsafe_unretained NSString *genre;
+	__unsafe_unretained NSString *imageUrl;
 	__unsafe_unretained NSString *preferredFormat;
 	__unsafe_unretained NSString *price;
 	__unsafe_unretained NSString *purchased;
@@ -28,6 +29,7 @@ extern const struct BookFetchedProperties {
 
 @class File;
 @class User;
+
 
 
 
@@ -105,6 +107,14 @@ extern const struct BookFetchedProperties {
 
 
 //- (BOOL)validateGenre:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSString* imageUrl;
+
+
+//- (BOOL)validateImageUrl:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -233,6 +243,12 @@ extern const struct BookFetchedProperties {
 
 - (NSString*)primitiveGenre;
 - (void)setPrimitiveGenre:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveImageUrl;
+- (void)setPrimitiveImageUrl:(NSString*)value;
 
 
 

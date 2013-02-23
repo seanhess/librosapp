@@ -10,6 +10,7 @@
 
 #import "StoreBookCell.h"
 #import "Icons.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface StoreBookCell ()
 @property (nonatomic, strong) UIImageView * audioIconView;
@@ -44,6 +45,12 @@
     self.textLabel.text = book.title;
     self.detailTextLabel.text = book.author;
     self.accessoryView = [self addTypeIcons:book];
+    
+    __weak StoreBookCell * cell = self;
+    
+    [self.imageView setImageWithURL:[NSURL URLWithString:self.book.imageUrl] placeholderImage:nil completed:^(UIImage * image, NSError*error, SDImageCacheType cacheType) {
+        [cell setNeedsLayout];
+    }];
 }
 
 - (UIView*)addTypeIcons:(Book*)book {

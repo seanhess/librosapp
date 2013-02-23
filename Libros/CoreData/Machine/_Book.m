@@ -10,6 +10,7 @@ const struct BookAttributes BookAttributes = {
 	.descriptionText = @"descriptionText",
 	.downloaded = @"downloaded",
 	.genre = @"genre",
+	.imageUrl = @"imageUrl",
 	.preferredFormat = @"preferredFormat",
 	.price = @"price",
 	.purchased = @"purchased",
@@ -156,6 +157,13 @@ const struct BookFetchedProperties BookFetchedProperties = {
 
 
 @dynamic genre;
+
+
+
+
+
+
+@dynamic imageUrl;
 
 
 

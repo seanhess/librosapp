@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *audioIcon;
 @property (weak, nonatomic) IBOutlet UIImageView *textIcon;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIImageView *coverImage;
 
 @property (strong, nonatomic) MBProgressHUD * hud;
 
@@ -50,6 +51,9 @@
     self.titleLabel.text = self.book.title;
     self.authorLabel.text = [NSString stringWithFormat:@"%@", self.book.author];
     self.descriptionTextView.text = self.book.descriptionText;
+    
+    [self.coverImage setImageWithURL:[NSURL URLWithString:self.book.imageUrl] placeholderImage:nil];
+    
     [self resizeContent];
     [self renderButtonAndDownload];
     
