@@ -82,6 +82,10 @@ app.controller('BookCtrl', function($scope, Books:IBookService, Files:IFileServi
     })
   }
 
+  $scope.clearImage = function() {
+    delete $scope.book.imageUrl
+  }
+
   $scope.isLoading = function(file:IFile) {
     return (file.fileId === undefined || file.fileId === null)
   }

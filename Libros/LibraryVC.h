@@ -10,7 +10,7 @@
 #import "Book.h"
 #import "LibraryBookCell.h"
 
-@interface LibraryVC : UITableViewController <NSFetchedResultsControllerDelegate, LibraryBookCellDelegate, UIActionSheetDelegate>
+@interface LibraryVC : UIViewController 
 
 @property (strong, nonatomic) Book * loadBook;
 

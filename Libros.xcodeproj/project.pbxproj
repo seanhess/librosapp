@@ -115,6 +115,7 @@
 		789C988116B9999B00EA9B06 /* HorizontalFlowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 789C988016B9999B00EA9B06 /* HorizontalFlowView.m */; };
 		789C988416B9AA0200EA9B06 /* Icons.m in Sources */ = {isa = PBXBuildFile; fileRef = 789C988316B9AA0200EA9B06 /* Icons.m */; };
 		78C0E2C716D83C670033F509 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 78C0E2C616D83C670033F509 /* Podfile */; };
+		78C0E2CA16D844AE0033F509 /* LibraryBookCoverCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C0E2C916D844AE0033F509 /* LibraryBookCoverCell.m */; };
 		78CA26E416B1AD81003EC00D /* ReaderPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CA26E316B1AD81003EC00D /* ReaderPageView.m */; };
 		78CA26E816B1DF65003EC00D /* ReaderFramesetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CA26E716B1DF65003EC00D /* ReaderFramesetter.m */; };
 		78CA26F416B2F6E2003EC00D /* ReaderFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CA26F316B2F6E2003EC00D /* ReaderFormatter.m */; };
@@ -273,6 +274,8 @@
 		789C988316B9AA0200EA9B06 /* Icons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Icons.m; sourceTree = "<group>"; };
 		789FEFCE16C41A2700A5EFD5 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
 		78C0E2C616D83C670033F509 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		78C0E2C816D844AE0033F509 /* LibraryBookCoverCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryBookCoverCell.h; sourceTree = "<group>"; };
+		78C0E2C916D844AE0033F509 /* LibraryBookCoverCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryBookCoverCell.m; sourceTree = "<group>"; };
 		78CA26E216B1AD81003EC00D /* ReaderPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderPageView.h; sourceTree = "<group>"; };
 		78CA26E316B1AD81003EC00D /* ReaderPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderPageView.m; sourceTree = "<group>"; };
 		78CA26E616B1DF65003EC00D /* ReaderFramesetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderFramesetter.h; sourceTree = "<group>"; };
@@ -399,6 +402,8 @@
 			children = (
 				784D20F3169F3756003AC6F2 /* LibraryVC.h */,
 				784D20F4169F3756003AC6F2 /* LibraryVC.m */,
+				78C0E2C816D844AE0033F509 /* LibraryBookCoverCell.h */,
+				78C0E2C916D844AE0033F509 /* LibraryBookCoverCell.m */,
 				78D0541E16C95B6D0037311C /* LibraryBookCell.h */,
 				78D0541F16C95B6D0037311C /* LibraryBookCell.m */,
 				78D0542316C987240037311C /* LibraryBookCellOverlay.xib */,
@@ -899,6 +904,7 @@
 				78D0542716C988130037311C /* UIView+Nibs.m in Sources */,
 				780A2E6816CC645000ABCB4E /* LBParsedString.m in Sources */,
 				78FD1BB316CEBADC003BB3E5 /* ReaderTableOfContentsVC.m in Sources */,
+				78C0E2CA16D844AE0033F509 /* LibraryBookCoverCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

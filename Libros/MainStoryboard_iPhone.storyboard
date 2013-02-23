@@ -100,38 +100,6 @@
             </objects>
             <point key="canvasLocation" x="-495" y="-450"/>
         </scene>
-        <!--LibraryVC - Library-->
-        <scene sceneID="tOu-VW-L5d">
-            <objects>
-                <tableViewController id="f3a-A6-Ndl" customClass="LibraryVC" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="2NC-NV-Axc">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="umU-y5-X8h">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                            </tableViewCell>
-                        </prototypes>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Library" id="0I2-Sb-bMa">
-                        <barButtonItem key="rightBarButtonItem" title="Store" id="p1d-sg-Waf">
-                            <connections>
-                                <segue destination="OOc-pY-1yz" kind="modal" modalTransitionStyle="flipHorizontal" id="xc2-7j-lFf"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4io-hO-vAG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="34" y="-1869"/>
-        </scene>
         <!--LibraryNav-->
         <scene sceneID="hqv-vS-eSI">
             <objects>
@@ -142,12 +110,91 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="f3a-A6-Ndl" kind="relationship" relationship="rootViewController" id="SMA-CE-i8A"/>
+                        <segue destination="jj3-UZ-Rpz" kind="relationship" relationship="rootViewController" id="9y5-fC-dzG"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nKX-5p-WBG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-467" y="-1869"/>
+        </scene>
+        <!--LibraryVC - Library-->
+        <scene sceneID="5zI-uV-WCf">
+            <objects>
+                <viewController id="jj3-UZ-Rpz" customClass="LibraryVC" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MoW-2n-X1v">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Jju-xH-eD3">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="jj3-UZ-Rpz" id="IJc-sz-TqP"/>
+                                    <outlet property="delegate" destination="jj3-UZ-Rpz" id="u3E-qo-5jt"/>
+                                </connections>
+                            </tableView>
+                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="KKu-lI-U9s">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="sMf-FX-HGX">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="IJR-Zn-HE8">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="jj3-UZ-Rpz" id="9eV-N4-i1v"/>
+                                    <outlet property="delegate" destination="jj3-UZ-Rpz" id="pMD-Of-OKz"/>
+                                </connections>
+                            </collectionView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackOpaque" translatesAutoresizingMaskIntoConstraints="NO" id="pg6-h1-eB0">
+                                <items>
+                                    <barButtonItem title="Item" id="OF0-n1-KEw">
+                                        <connections>
+                                            <action selector="didTapLayoutButton:" destination="jj3-UZ-Rpz" id="1yz-Ch-ogd"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Jju-xH-eD3" firstAttribute="leading" secondItem="MoW-2n-X1v" secondAttribute="leading" type="default" id="E8S-qh-62M"/>
+                            <constraint firstItem="KKu-lI-U9s" firstAttribute="leading" secondItem="MoW-2n-X1v" secondAttribute="leading" type="default" id="GS3-T6-HkS"/>
+                            <constraint firstItem="Jju-xH-eD3" firstAttribute="trailing" secondItem="MoW-2n-X1v" secondAttribute="trailing" type="default" id="Otg-Jg-hge"/>
+                            <constraint firstItem="pg6-h1-eB0" firstAttribute="leading" secondItem="MoW-2n-X1v" secondAttribute="leading" type="default" id="RsO-aw-NUI"/>
+                            <constraint firstItem="KKu-lI-U9s" firstAttribute="centerX" secondItem="Jju-xH-eD3" secondAttribute="centerX" type="default" id="WYa-uX-FVW"/>
+                            <constraint firstItem="pg6-h1-eB0" firstAttribute="trailing" secondItem="MoW-2n-X1v" secondAttribute="trailing" type="default" id="aZm-L6-0j5"/>
+                            <constraint firstItem="pg6-h1-eB0" firstAttribute="bottom" secondItem="MoW-2n-X1v" secondAttribute="bottom" type="default" id="cNh-xC-KYa"/>
+                            <constraint firstItem="pg6-h1-eB0" firstAttribute="top" secondItem="KKu-lI-U9s" secondAttribute="bottom" type="default" id="mAQ-Ck-qWe"/>
+                            <constraint firstItem="KKu-lI-U9s" firstAttribute="top" secondItem="MoW-2n-X1v" secondAttribute="top" type="default" id="o1a-aX-0gf"/>
+                            <constraint firstItem="Jju-xH-eD3" firstAttribute="top" secondItem="MoW-2n-X1v" secondAttribute="top" type="default" id="oHt-Sj-83v"/>
+                            <constraint firstItem="pg6-h1-eB0" firstAttribute="top" secondItem="Jju-xH-eD3" secondAttribute="bottom" type="default" id="rlU-bL-2Rr"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Library" id="edX-rG-zQ3">
+                        <barButtonItem key="rightBarButtonItem" title="Store" id="5Nz-rx-8RF">
+                            <connections>
+                                <segue destination="OOc-pY-1yz" kind="modal" modalTransitionStyle="flipHorizontal" id="tVj-mi-xfQ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="KKu-lI-U9s" id="gmi-ok-KGC"/>
+                        <outlet property="tableView" destination="Jju-xH-eD3" id="ZUA-5V-kaQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sca-6f-3Pr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="43" y="-1871"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="f3L-Or-5Ze">
@@ -293,8 +340,16 @@
         <image name="star.png" width="26" height="26"/>
     </resources>
     <classes>
-        <class className="LibraryVC" superclassName="UITableViewController">
+        <class className="LibraryVC" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LibraryVC.h"/>
+            <relationships>
+                <relationship kind="action" name="didTapLayoutButton:"/>
+                <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
         </class>
         <class className="StoreAuthorsVC" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreAuthorsVC.h"/>
@@ -313,6 +368,15 @@
             <relationships>
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
             </relationships>
+        </class>
+        <class className="UICollectionReusableView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
+        </class>
+        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
+        </class>
+        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

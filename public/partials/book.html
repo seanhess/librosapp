@@ -15,7 +15,8 @@
   <label class="cover">cover</label>
   <div>
     <div class="cover" dragupload="onDropCoverImage">
-      <img ng-src="{{book.imageUrl}}">
+      <img ng-show="book.imageUrl" ng-src="{{book.imageUrl}}">
+      <button ng-show="book.imageUrl" class="clear" ng-click="clearImage()">clear</button>
     </div>
   </div>
 
