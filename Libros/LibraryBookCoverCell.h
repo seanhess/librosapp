@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Book.h"
 
 @interface LibraryBookCoverCell : UICollectionViewCell
+@property (nonatomic, strong) Book * book;
 
 @end

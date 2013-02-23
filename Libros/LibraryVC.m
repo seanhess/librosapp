@@ -22,6 +22,7 @@
 @property (nonatomic, strong) Book * selectedBook;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *layoutButton;
 @end
 
 
@@ -31,6 +32,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.wantsFullScreenLayout = NO;
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+    [self.navigationController setNavigationBarHidden:NO];
     
     [self.collectionView registerClass:[LibraryBookCoverCell class] forCellWithReuseIdentifier:@"LibraryBookCover"];
     
@@ -44,7 +49,9 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    self.wantsFullScreenLayout = NO;
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+    [self.navigationController setNavigationBarHidden:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -69,6 +76,16 @@
 
 - (IBAction)didTapLayoutButton:(id)sender {
     // hide the table and show the collection view!
+    if (self.collectionView.hidden) {
+        self.collectionView.hidden = NO;
+        self.tableView.hidden = YES;
+        self.layoutButton.title = @"List";
+    }
+    else {
+        self.collectionView.hidden = YES;
+        self.tableView.hidden = NO;
+        self.layoutButton.title = @"Grid";
+    }
 }
 
 
@@ -128,8 +145,7 @@
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)selectBookAtIndexPath:(NSIndexPath*)indexPath {
     Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     if (book.audioFilesValue && book.textFilesValue) {
@@ -153,6 +169,11 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self selectBookAtIndexPath:indexPath];
+}
+
 #pragma mark - UICollectionViewDelegate
 #pragma mark UICollectionViewDelegate
 
@@ -169,29 +190,32 @@
     // sizes correct at this point
     NSLog(@"WAHOO %@", indexPath);
     static NSString * cellId = @"LibraryBookCover";
-    UICollectionViewCell * cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
+    LibraryBookCoverCell * cell = (LibraryBookCoverCell*)[self.collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
     // TODO add image view and WORK IT
-    cell.backgroundColor = [UIColor redColor];
+    cell.book = [self.fetchedResultsController objectAtIndexPath:indexPath];
     return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(96, 140);
+    return CGSizeMake(91, 130);
 }
 
 // This is the SECTION inset. not the cell inset. OHHHH
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-    return UIEdgeInsetsMake(8, 8, 8, 8);
+    return UIEdgeInsetsMake(11, 11, 11, 11);
 }
 
 - (CGFloat) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 8;
+    return 11;
 }
 
 - (CGFloat) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return 8;
+    return 11;
 }
 
+- (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self selectBookAtIndexPath:indexPath];
+}
 
 
 

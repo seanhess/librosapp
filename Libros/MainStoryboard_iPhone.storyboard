@@ -133,6 +133,7 @@
                                 </connections>
                             </tableView>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="KKu-lI-U9s">
+                                <color key="backgroundColor" red="0.24623745854156609" green="0.25" blue="0.23047976752982482" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="sMf-FX-HGX">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -157,7 +158,7 @@
                             </collectionView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackOpaque" translatesAutoresizingMaskIntoConstraints="NO" id="pg6-h1-eB0">
                                 <items>
-                                    <barButtonItem title="Item" id="OF0-n1-KEw">
+                                    <barButtonItem title="List" id="OF0-n1-KEw">
                                         <connections>
                                             <action selector="didTapLayoutButton:" destination="jj3-UZ-Rpz" id="1yz-Ch-ogd"/>
                                         </connections>
@@ -189,6 +190,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="KKu-lI-U9s" id="gmi-ok-KGC"/>
+                        <outlet property="layoutButton" destination="OF0-n1-KEw" id="I8H-63-zPr"/>
                         <outlet property="tableView" destination="Jju-xH-eD3" id="ZUA-5V-kaQ"/>
                     </connections>
                 </viewController>
@@ -345,6 +347,7 @@
             <relationships>
                 <relationship kind="action" name="didTapLayoutButton:"/>
                 <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
+                <relationship kind="outlet" name="layoutButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
         </class>
