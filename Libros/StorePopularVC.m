@@ -15,12 +15,22 @@
 
 @implementation StorePopularVC
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar-icon-popular-selected"] withFinishedUnselectedImage:[UIImage imageNamed:@"tabbar-icon-popular"]];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     // reload the store. this is the first tab, so refresh.
     [[BookService shared] loadStore];
     
     self.fetchRequest = [[BookService shared] popular];
+    
+    self.title = NSLocalizedString(@"Popular", @"Popular");
     
     [super viewDidLoad];
 	// Do any additional setup after loading the view.

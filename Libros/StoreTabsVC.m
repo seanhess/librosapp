@@ -29,7 +29,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -39,11 +38,7 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if (sender && [sender class] == [StoreDetailsVC class]) {
-        LibraryVC * library = (LibraryVC*)((UINavigationController*)segue.destinationViewController).topViewController;
-        StoreDetailsVC * details = (StoreDetailsVC*)sender;
-        library.loadBook = details.book;
-    }
+    return;
 }
 
 @end

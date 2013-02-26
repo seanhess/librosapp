@@ -18,6 +18,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // override point for customization after application launch.
+    UIImage *tabBarBackground = [UIImage imageNamed:@"tabbar-background"];
+    UIImage *tabBarBackgroundSelected = [UIImage imageNamed:@"tabbar-background-selected"];
+    [[UITabBar appearance] setBackgroundImage:tabBarBackground];
+    [[UITabBar appearance] setSelectionIndicatorImage:tabBarBackgroundSelected];
+    
     return YES;
 }
 

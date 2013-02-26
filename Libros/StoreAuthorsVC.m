@@ -19,9 +19,19 @@
 
 @implementation StoreAuthorsVC
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        self.title = NSLocalizedString(@"Authors", @"Authors");
+        [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar-icon-authors-selected"] withFinishedUnselectedImage:[UIImage imageNamed:@"tabbar-icon-authors"]];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     [[AuthorService shared] load];
     NSFetchRequest * request = [[AuthorService shared] allAuthors];
     

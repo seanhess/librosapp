@@ -18,9 +18,19 @@
 
 @implementation StoreGenresVC
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        self.title = NSLocalizedString(@"Genres", @"Genres");
+        [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar-icon-genres-selected"] withFinishedUnselectedImage:[UIImage imageNamed:@"tabbar-icon-genres"]];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     [[GenreService shared] load];
     NSFetchRequest * request = [[GenreService shared] allGenres];
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:ObjectStore.shared.context sectionNameKeyPath:nil cacheName:nil];
