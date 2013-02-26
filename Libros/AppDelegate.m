@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "ObjectStore.h"
 #import "ReaderFormatter.h"
+#import "IAPurchaseCommand.h"
 
 @implementation AppDelegate
 

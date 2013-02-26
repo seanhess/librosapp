@@ -14,8 +14,13 @@
 #import "FileService.h"
 #import "MBProgressHUD.h"
 #import "LibraryVC.h"
+#import "IAPurchaseCommand.h"
+#import <StoreKit/StoreKit.h>
 
-@interface StoreDetailsVC ()
+// TODO should download the product details when this page loads to get the price
+// because it will be different per-locale
+
+@interface StoreDetailsVC () <IAPurchaseCommandDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
@@ -27,6 +32,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *textIcon;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *coverImage;
+
+@property (strong, nonatomic) IAPurchaseCommand * purchaseCommand;
 
 @property (strong, nonatomic) MBProgressHUD * hud;
 
@@ -152,17 +159,36 @@
 - (IBAction)didTapBuy:(id)sender {
     
     if (self.book.purchased && self.book.downloadedValue == 1.0) {
-        UINavigationController * nav = [self.navigationController.storyboard instantiateViewControllerWithIdentifier:@"LibraryNav"];
-        LibraryVC * library = (LibraryVC*)nav.topViewController;
-        library.loadBook = self.book;
-        nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-        [self presentViewController:nav animated:YES completion:nil];
+        [self viewInLibrary];
     }
     
     else {
-        [UserService.shared addBook:self.book];
-        [self renderButtonAndDownload];
+        [self downloadBook];
     }
+}
+
+- (void)viewInLibrary {
+    UINavigationController * nav = [self.navigationController.storyboard instantiateViewControllerWithIdentifier:@"LibraryNav"];
+    LibraryVC * library = (LibraryVC*)nav.topViewController;
+    library.loadBook = self.book;
+    nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)downloadBook {
+    // 1 // "buy" the product via IAP
+    // 2 // "download" the book if it succeeded, otherwise error out
+    self.purchaseCommand = [IAPurchaseCommand new];
+    [self.purchaseCommand runWithBook:self.book delegate:self];
+}
+
+- (void)didErrorPurchase:(NSError *)error {
+    NSLog(@"FAILED PURCHASE %@", error);
+}
+
+- (void)didCompletePurchase:(Book *)book {
+    [UserService.shared addBook:self.book];
+    [self renderButtonAndDownload];
 }
 
 - (void)didReceiveMemoryWarning

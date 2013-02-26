@@ -102,7 +102,9 @@ function toFile(source:IUploadFile):IFile {
 }
 
 function generateFileId(source:IUploadFile):string {
-  var fileId = source.size + "_" + source.name.replace(/[^\w\.]+/g, "")
+  var ext = source.name.split('.').pop() // txt
+  var name = path.basename(source.name, "."+ext)
+  var fileId = name.replace(/[^\w\.]+/g, "") + "_" + source.size + "." + ext
   return fileId
 }
 

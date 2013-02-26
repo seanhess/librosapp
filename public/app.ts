@@ -16,4 +16,6 @@
 ///<reference path="directives/dragupload.ts"/>
 ///<reference path="directives/blur.ts"/>
 
+///<reference path="filters/toProductId.ts"/>
+
 angular.bootstrap($(document), ['app'])

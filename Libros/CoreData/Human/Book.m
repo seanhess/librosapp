@@ -21,4 +21,8 @@
     return [NSString stringWithFormat:@"%i.%02i", dollars, pennies];
 }
 
+-(NSString*)productId {
+    return [self.bookId stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
+}
+
 @end

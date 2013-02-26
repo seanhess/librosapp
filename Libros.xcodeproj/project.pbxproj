@@ -120,6 +120,8 @@
 		78CA26E816B1DF65003EC00D /* ReaderFramesetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CA26E716B1DF65003EC00D /* ReaderFramesetter.m */; };
 		78CA26F416B2F6E2003EC00D /* ReaderFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CA26F316B2F6E2003EC00D /* ReaderFormatter.m */; };
 		78CA26F716B30E75003EC00D /* ReaderPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CA26F616B30E75003EC00D /* ReaderPage.m */; };
+		78CC657116D97BC400E68FFB /* IAPurchaseCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CC657016D97BC400E68FFB /* IAPurchaseCommand.m */; };
+		78CC657316D97C0400E68FFB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78CC657216D97C0400E68FFB /* StoreKit.framework */; };
 		78D0542016C95B6D0037311C /* LibraryBookCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D0541F16C95B6D0037311C /* LibraryBookCell.m */; };
 		78D0542416C987250037311C /* LibraryBookCellOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78D0542316C987240037311C /* LibraryBookCellOverlay.xib */; };
 		78D0542716C988130037311C /* UIView+Nibs.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D0542616C988130037311C /* UIView+Nibs.m */; };
@@ -284,6 +286,9 @@
 		78CA26F316B2F6E2003EC00D /* ReaderFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderFormatter.m; sourceTree = "<group>"; };
 		78CA26F516B30E75003EC00D /* ReaderPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderPage.h; sourceTree = "<group>"; };
 		78CA26F616B30E75003EC00D /* ReaderPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderPage.m; sourceTree = "<group>"; };
+		78CC656F16D97BC400E68FFB /* IAPurchaseCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPurchaseCommand.h; sourceTree = "<group>"; };
+		78CC657016D97BC400E68FFB /* IAPurchaseCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPurchaseCommand.m; sourceTree = "<group>"; };
+		78CC657216D97C0400E68FFB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		78D0541E16C95B6D0037311C /* LibraryBookCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryBookCell.h; sourceTree = "<group>"; };
 		78D0541F16C95B6D0037311C /* LibraryBookCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryBookCell.m; sourceTree = "<group>"; };
 		78D0542316C987240037311C /* LibraryBookCellOverlay.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LibraryBookCellOverlay.xib; sourceTree = "<group>"; };
@@ -323,6 +328,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78CC657316D97C0400E68FFB /* StoreKit.framework in Frameworks */,
 				7809F96316AF3CA30045C4D9 /* CoreText.framework in Frameworks */,
 				7827BD90169CE4A900053231 /* UIKit.framework in Frameworks */,
 				7827BD92169CE4A900053231 /* Foundation.framework in Frameworks */,
@@ -416,6 +422,7 @@
 			isa = PBXGroup;
 			children = (
 				78C0E2C616D83C670033F509 /* Podfile */,
+				78CC657216D97C0400E68FFB /* StoreKit.framework */,
 				7809F96216AF3CA30045C4D9 /* CoreText.framework */,
 				7827BD97169CE4A900053231 /* Libros */,
 				7827BDB9169CE4A900053231 /* LibrosTests */,
@@ -587,6 +594,8 @@
 				785DD98416B894DD00C6925A /* NSArray+Functional.m */,
 				780B8F4316C2D2FC00A04EFC /* NSString+FetchedGroupByString.h */,
 				780B8F4416C2D2FC00A04EFC /* NSString+FetchedGroupByString.m */,
+				78CC656F16D97BC400E68FFB /* IAPurchaseCommand.h */,
+				78CC657016D97BC400E68FFB /* IAPurchaseCommand.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -905,6 +914,7 @@
 				780A2E6816CC645000ABCB4E /* LBParsedString.m in Sources */,
 				78FD1BB316CEBADC003BB3E5 /* ReaderTableOfContentsVC.m in Sources */,
 				78C0E2CA16D844AE0033F509 /* LibraryBookCoverCell.m in Sources */,
+				78CC657116D97BC400E68FFB /* IAPurchaseCommand.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1014,10 +1024,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 85FD0834AAB242A7BA71588D /* Pods.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Audiolibros y libros en espanol LLC";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Audiolibros y libros en espanol LLC";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Libros/Libros-Prefix.pch";
 				INFOPLIST_FILE = "Libros/Libros-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9A1E8037-5D24-4B9F-ABD8-21A4C69EF418";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9A1E8037-5D24-4B9F-ABD8-21A4C69EF418";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

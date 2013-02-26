@@ -16,6 +16,7 @@ export interface IdentifiedBook {
 }
 
 
+// TODO what is up?
 /// QUERIES //////////////////////////////////////////
 
 export function init(db) {

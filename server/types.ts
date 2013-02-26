@@ -13,6 +13,7 @@ interface IFile {
 
 interface IBook {
   bookId: string;
+  productId: string;
   title: string;
   author: string;
   genre: string; // just the name

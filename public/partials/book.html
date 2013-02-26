@@ -9,6 +9,9 @@
   <div><a href="/books/{{book.bookId}}" target="_blank">Data</a></div>
   <br/>
 
+  <label>productId</label>
+  <div>{{book.bookId | toProductId}}</div>
+
   <label>title</label>
   <div><input ng-model="book.title" placeholder="A Tale of Two Cities"/></div>
 
