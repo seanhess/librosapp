@@ -51,8 +51,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 @interface ReaderVC () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, ReaderFramesetterDelegate, ReaderTableOfContentsDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
-@property (weak, nonatomic) IBOutlet UIView *controlsView;
-
 @property (nonatomic) NSInteger currentChapter;
 @property (nonatomic) NSInteger currentPage;
 @property (nonatomic) CGFloat currentPercent;
@@ -63,6 +61,9 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 @property (nonatomic) NSInteger numChapters;
 
 @property (nonatomic) BOOL scrolling;
+
+@property (weak, nonatomic) IBOutlet UIView *bottomControlsView;
+@property (weak, nonatomic) IBOutlet UIView *topControlsView;
 
 @end
 
@@ -89,10 +90,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     NSArray * allFiles = [fs byBookId:self.book.bookId];
     self.files = [fs filterFiles:allFiles byFormat:FileFormatText];
     self.numChapters = self.files.count;
-    self.wantsFullScreenLayout = YES;
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-    UIBarButtonItem * barButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(toc:)];
-    self.navigationItem.rightBarButtonItem = barButton;
     
     [self hideControlsInABit];
     
@@ -105,7 +102,9 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-//    NSLog(@"VIEW WILL APPEAR %@", NSStringFromCGRect(self.view.bounds));
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    
+    //    NSLog(@"VIEW WILL APPEAR %@", NSStringFromCGRect(self.view.bounds));
     // OK TO DRAW - has correct size
     self.currentPage = 0;
     self.currentChapter = 0;
@@ -180,7 +179,11 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.framesetter.delegate = self;
 }
 
-- (void)toc:(id)sender {
+- (IBAction)didTapBack:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)didTapToC:(id)sender {
     NSLog(@"TOC");
     ReaderTableOfContentsVC * toc = [ReaderTableOfContentsVC new];
     toc.files = self.files;
@@ -210,11 +213,12 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     
 }
 
-- (IBAction)didTapControls:(id)sender {
-    [self hideControls];
-}
-
 - (IBAction)didTapText:(UITapGestureRecognizer*)tap {
+    
+    if (self.isControlsShown) {
+        [self hideControls];
+        return;
+    }
     
     if (!self.scrollViewIsAtRest) return;
     
@@ -280,6 +284,11 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [self updateCurrentPage];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if (self.isControlsShown)
+        [self hideControls];
 }
 
 // NOT SAFE to calculate current page when changing interface orientations
@@ -358,13 +367,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     }
 }
 
-- (void)toggleControls {
-    if (self.navigationController.navigationBarHidden) {
-        [self showControls];
-    }
-    else {
-        [self hideControls];
-    }
+- (BOOL)isControlsShown {
+    return (self.bottomControlsView.alpha > 0);
 }
 
 - (void)hideControlsInABit {
@@ -372,16 +376,15 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (void)hideControls {
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    
     [UIView beginAnimations:@"controls" context:nil];
-    self.controlsView.alpha = 0.0;
+    self.bottomControlsView.alpha = 0.0;
+    self.topControlsView.alpha = 0.0;
     [UIView commitAnimations];
 }
 - (void)showControls {
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
     [UIView beginAnimations:@"controls" context:nil];
-    self.controlsView.alpha = 1.0;
+    self.bottomControlsView.alpha = 1.0;
+    self.topControlsView.alpha = 1.0;
     [UIView commitAnimations];
 }
 
