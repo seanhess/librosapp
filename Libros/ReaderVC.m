@@ -64,6 +64,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 @property (weak, nonatomic) IBOutlet UIView *bottomControlsView;
 @property (weak, nonatomic) IBOutlet UIView *topControlsView;
+@property (weak, nonatomic) IBOutlet UIButton *fontButton;
 
 @end
 
@@ -90,6 +91,9 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     NSArray * allFiles = [fs byBookId:self.book.bookId];
     self.files = [fs filterFiles:allFiles byFormat:FileFormatText];
     self.numChapters = self.files.count;
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+    [self updateControlsFromBook];
     
     [self hideControlsInABit];
     
@@ -102,10 +106,10 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    // OK TO DRAW - has correct size (IF you set navigation bar hidden to the same thing here as in viewDidLoad
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     
-    //    NSLog(@"VIEW WILL APPEAR %@", NSStringFromCGRect(self.view.bounds));
-    // OK TO DRAW - has correct size
+//    NSLog(@"VIEW WILL APPEAR %@", NSStringFromCGRect(self.view.bounds));
     self.currentPage = 0;
     self.currentChapter = 0;
     
@@ -177,6 +181,11 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 - (void)newFramesetterWithSize:(CGSize)size {
     self.framesetter = [[ReaderFramesetter alloc] initWithSize:size];
     self.framesetter.delegate = self;
+}
+
+- (void)updateControlsFromBook {
+    self.bottomControlsView.hidden = (self.book.audioFilesValue ==  0);
+    self.fontButton.hidden = (self.book.textFilesValue == 0);
 }
 
 - (IBAction)didTapBack:(id)sender {
