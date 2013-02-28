@@ -2,17 +2,21 @@
 #import "FileService.h"
 #import "NSArray+Functional.h"
 
+@interface Book ()
+@property (nonatomic, strong) NSArray * orderedFiles;
+@end
+
 @implementation Book
+@synthesize orderedFiles;
 
 // Custom logic goes here.
 // only loads them once! will cache
 -(NSArray *)allFiles {
-    if (![self.files count]) {
-        NSArray * files = [[FileService shared] byBookId:self.bookId];
-        [self addFiles:[NSSet setWithArray:files]];
+    if (!self.orderedFiles) {
+        self.orderedFiles = [[FileService shared] byBookId:self.bookId];
     }
     
-    return [self.files allObjects];
+    return self.orderedFiles;
 }
 
 -(NSString*)priceString {

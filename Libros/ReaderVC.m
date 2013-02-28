@@ -65,6 +65,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 @property (weak, nonatomic) IBOutlet UIView *bottomControlsView;
 @property (weak, nonatomic) IBOutlet UIView *topControlsView;
 @property (weak, nonatomic) IBOutlet UIButton *fontButton;
+@property (weak, nonatomic) IBOutlet UILabel *bookTitle;
+@property (weak, nonatomic) IBOutlet UILabel *chapterTitle;
 
 @end
 
@@ -88,6 +90,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     FileService * fs = [FileService shared];
     
     self.title = self.book.title;
+    self.bookTitle.text = self.book.title;
     NSArray * allFiles = [fs byBookId:self.book.bookId];
     self.files = [fs filterFiles:allFiles byFormat:FileFormatText];
     self.numChapters = self.files.count;
@@ -266,6 +269,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     // Update the variables as well
     self.currentChapter = chapter;
     self.currentPage = page;
+    
+    [self displayChapter];
 }
 
 - (NSInteger)cellOffsetForChapter:(NSInteger)chapter page:(NSInteger)page {
@@ -328,8 +333,13 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     NSInteger page = cellIndexPath.item;
     self.currentChapter = chapter;
     self.currentPage = page;
+    [self displayChapter];
 }
 
+- (void)displayChapter {
+    File * file = self.book.allFiles[self.currentChapter];
+    self.chapterTitle.text = file.name;
+}
 
 - (NSInteger)cellsDisplayedInChapter:(NSInteger)chapter {
     // Each chapter has 1 page to start
