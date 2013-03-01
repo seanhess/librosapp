@@ -12,9 +12,9 @@
 
 @implementation ReaderFormatter
 
--(NSAttributedString*)textForFile:(File*)file {
+-(NSAttributedString*)textForFile:(File*)file withFont:(ReaderFont)font fontSize:(NSInteger)size {
     LBParsedString * parsedString = [[FileService shared] readAsText:file];
-    NSAttributedString * chapterText = [self attributedStringForParsed:parsedString];
+    NSAttributedString * chapterText = [self attributedStringForParsed:parsedString withFont:font fontSize:size];
     return chapterText;
 }
 
@@ -60,18 +60,34 @@
     return parsedString;
 }
 
+-(NSString*)boldFontName:(ReaderFont)font {
+    if (font == ReaderFontPalatino) return @"Palatino-Bold";
+    else return @"Palatino-Bold";
+}
+
+-(NSString*)italicFontName:(ReaderFont)font {
+    if (font == ReaderFontPalatino) return @"Palatino-Italic";
+    else return @"Palatino-Italic";
+}
+
+-(NSString*)normalFontName:(ReaderFont)font {
+    if (font == ReaderFontPalatino) return @"Palatino-Roman";
+    else return @"Palatino-Roman";
+}
+
 // Parses simple, TextEdit-generated
--(NSAttributedString*)attributedStringForParsed:(LBParsedString *)parsed {
+-(NSAttributedString*)attributedStringForParsed:(LBParsedString *)parsed withFont:(ReaderFont)font fontSize:(NSInteger)size {
     
     // TODO: create fonts is slow! Create them on initialization, or lazily
     // make sure you get the font names right or it is REALLY slow
     
-    CTFontRef mainFont = CTFontCreateWithName((CFStringRef)@"Palatino-Roman", 18, NULL);
-    CTFontRef boldFont = CTFontCreateWithName((CFStringRef)@"Palatino-Bold", 18, NULL);
-    CTFontRef italicFont = CTFontCreateWithName((CFStringRef)@"Palatino-Italic", 18, NULL);
+    CTFontRef mainFont = CTFontCreateWithName((__bridge CFStringRef)[self normalFontName:font], size, NULL);
+    CTFontRef boldFont = CTFontCreateWithName((__bridge CFStringRef)[self boldFontName:font], size, NULL);
+    CTFontRef italicFont = CTFontCreateWithName((__bridge CFStringRef)[self italicFontName:font], size, NULL);
     
     CGFloat lineSpacing = 3.0;
     CTTextAlignment alignment = kCTJustifiedTextAlignment;
+//    CTTextAlignment alignment = kCTKernAttributeName;
     
     CTParagraphStyleSetting settings[] = {
         {kCTParagraphStyleSpecifierAlignment, sizeof(alignment), &alignment},

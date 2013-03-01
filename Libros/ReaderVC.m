@@ -45,10 +45,12 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 #import "ReaderFormatter.h"
 #import <CoreText/CoreText.h>
 #import "ReaderTableOfContentsVC.h"
+#import "ReaderFontVC.h"
+#import "UIViewController+MiniModal.h"
 
 #define DRAG_GRAVITY 15
 
-@interface ReaderVC () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, ReaderFramesetterDelegate, ReaderTableOfContentsDelegate>
+@interface ReaderVC () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, ReaderFramesetterDelegate, ReaderTableOfContentsDelegate, ReaderFontDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (nonatomic) NSInteger currentChapter;
@@ -68,6 +70,9 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 @property (weak, nonatomic) IBOutlet UILabel *bookTitle;
 @property (weak, nonatomic) IBOutlet UILabel *chapterTitle;
 
+@property (strong, nonatomic) UIViewController * modal;
+@property (strong, nonatomic) ReaderFontVC * fontController;
+
 @end
 
 @implementation ReaderVC
@@ -84,6 +89,9 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.fontController = [ReaderFontVC new];
+    self.fontController.delegate = self;
     
     [self.collectionView registerClass:[ReaderPageView class] forCellWithReuseIdentifier:@"BookPage"];
     
@@ -127,9 +135,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    CGFloat currentPercent = [self.framesetter percentThroughChapter:self.currentChapter page:self.currentPage];
-    NSLog(@"WILL ROTATE %i %i %f", self.currentChapter, self.currentPage, currentPercent);
-    NSInteger currentChapter = self.currentChapter;
     
     CGSize newSize;
     CGSize oldSize = self.collectionView.frame.size;
@@ -142,31 +147,13 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
         newSize.height = MAX(oldSize.width, oldSize.height);
     }
     
-    // creates a new framesetter, does NOT currently load the table or chapter
-    [self newFramesetterWithSize:newSize];
-    
-    self.currentPercent = currentPercent;
-    
-    [self.collectionView.collectionViewLayout invalidateLayout];
-    [UIView beginAnimations:@"fade" context:nil];
-    self.collectionView.alpha = 0.0;
-    [UIView commitAnimations];
-    
-    [self ensurePagesForChapter:currentChapter];
+    [self prepareLayoutWithSize:newSize];
 
-    self.currentChapter = currentChapter;
-    self.currentPage = [self.framesetter pageForChapter:currentChapter percent:currentPercent];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 //    NSLog(@"DID ROTATE %@", NSStringFromCGRect(self.collectionView.bounds));
-    NSLog(@"DID ROTATE, moving to %i %i", self.currentChapter, self.currentPage);
-    
-    [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
-    
-    [UIView beginAnimations:@"fade" context:nil];
-    self.collectionView.alpha = 1.0;
-    [UIView commitAnimations];
+    [self commitLayout];
 }
 
 - (void)didReceiveMemoryWarning
@@ -179,6 +166,28 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     // not sure if these are actually necessary
     [self ensurePagesForChapter:self.currentChapter];
     [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
+}
+
+- (void)prepareLayoutWithSize:(CGSize)size {
+    CGFloat currentPercent = [self.framesetter percentThroughChapter:self.currentChapter page:self.currentPage];
+    
+    // creates a new framesetter, does NOT currently load the table or chapter
+    [self newFramesetterWithSize:size];
+    
+    [self.collectionView.collectionViewLayout invalidateLayout];
+    [UIView beginAnimations:@"fade" context:nil];
+    self.collectionView.alpha = 0.0;
+    [UIView commitAnimations];
+    
+    [self ensurePagesForChapter:self.currentChapter];
+    self.currentPage = [self.framesetter pageForChapter:self.currentChapter percent:currentPercent];
+}
+
+- (void)commitLayout {
+    [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
+    [UIView beginAnimations:@"fade" context:nil];
+    self.collectionView.alpha = 1.0;
+    [UIView commitAnimations];
 }
 
 - (void)newFramesetterWithSize:(CGSize)size {
@@ -220,9 +229,24 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
 - (IBAction)didTapFont:(id)sender {
-    
+    if (self.modal) {
+        [self dismissMiniModal];
+    }
+    else {
+        self.modal = self.fontController;
+        [self presentMiniViewController:self.modal animated:YES];
+    }
+}
+
+- (void)didChangeFont {
+    [self prepareLayoutWithSize:self.view.bounds.size];
+    [self commitLayout];
+}
+
+- (void)dismissMiniModal {
+    [self dismissMiniViewController:self.modal animated:YES];
+    self.modal = nil;
 }
 
 - (IBAction)didTapText:(UITapGestureRecognizer*)tap {
@@ -322,7 +346,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (NSAttributedString*)textForChapter:(NSInteger)chapter {
-    return [self.formatter textForFile:self.files[chapter]];
+    NSLog(@"TEXT FOR CHAPTER %i size=%i", chapter, self.fontController.currentSize);
+    return [self.formatter textForFile:self.files[chapter] withFont:self.fontController.currentFace fontSize:self.fontController.currentSize];
 }
 
 - (void)updateCurrentPage {
@@ -399,6 +424,10 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.bottomControlsView.alpha = 0.0;
     self.topControlsView.alpha = 0.0;
     [UIView commitAnimations];
+    
+    if (self.modal) {
+        [self dismissMiniModal];
+    }
 }
 - (void)showControls {
     [UIView beginAnimations:@"controls" context:nil];

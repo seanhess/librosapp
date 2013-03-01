@@ -156,6 +156,9 @@
 		78DAEFA916BC471900A7A840 /* Genre.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DAEFA716BC471900A7A840 /* Genre.m */; };
 		78E2FD9516C03A3900AEFE81 /* FileDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E2FD9416C03A3900AEFE81 /* FileDownloadOperation.m */; };
 		78EC890116BC64F500CD0093 /* StoreSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EC890016BC64F500CD0093 /* StoreSearchVC.m */; };
+		78F3B3D516DFEE9900277771 /* ReaderFontVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F3B3D316DFEE9900277771 /* ReaderFontVC.m */; };
+		78F3B3D616DFEE9900277771 /* ReaderFontVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78F3B3D416DFEE9900277771 /* ReaderFontVC.xib */; };
+		78F3B3DC16DFF60900277771 /* UIViewController+MiniModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F3B3DB16DFF60900277771 /* UIViewController+MiniModal.m */; };
 		78FD1BB316CEBADC003BB3E5 /* ReaderTableOfContentsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78FD1BB116CEBADC003BB3E5 /* ReaderTableOfContentsVC.m */; };
 		78FD1BB416CEBADC003BB3E5 /* ReaderTableOfContentsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78FD1BB216CEBADC003BB3E5 /* ReaderTableOfContentsVC.xib */; };
 		7E8DDCC9AFCF41519ED19920 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE66A380EC74E55884892D6 /* libPods.a */; };
@@ -356,6 +359,11 @@
 		78E2FD9416C03A3900AEFE81 /* FileDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileDownloadOperation.m; sourceTree = "<group>"; };
 		78EC88FF16BC64F500CD0093 /* StoreSearchVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreSearchVC.h; sourceTree = "<group>"; };
 		78EC890016BC64F500CD0093 /* StoreSearchVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreSearchVC.m; sourceTree = "<group>"; };
+		78F3B3D216DFEE9900277771 /* ReaderFontVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderFontVC.h; sourceTree = "<group>"; };
+		78F3B3D316DFEE9900277771 /* ReaderFontVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderFontVC.m; sourceTree = "<group>"; };
+		78F3B3D416DFEE9900277771 /* ReaderFontVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReaderFontVC.xib; sourceTree = "<group>"; };
+		78F3B3DA16DFF60900277771 /* UIViewController+MiniModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MiniModal.h"; sourceTree = "<group>"; };
+		78F3B3DB16DFF60900277771 /* UIViewController+MiniModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MiniModal.m"; sourceTree = "<group>"; };
 		78FD1BB016CEBADC003BB3E5 /* ReaderTableOfContentsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderTableOfContentsVC.h; sourceTree = "<group>"; };
 		78FD1BB116CEBADC003BB3E5 /* ReaderTableOfContentsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderTableOfContentsVC.m; sourceTree = "<group>"; };
 		78FD1BB216CEBADC003BB3E5 /* ReaderTableOfContentsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReaderTableOfContentsVC.xib; sourceTree = "<group>"; };
@@ -409,6 +417,9 @@
 				78CA26F316B2F6E2003EC00D /* ReaderFormatter.m */,
 				78CA26F516B30E75003EC00D /* ReaderPage.h */,
 				78CA26F616B30E75003EC00D /* ReaderPage.m */,
+				78F3B3D216DFEE9900277771 /* ReaderFontVC.h */,
+				78F3B3D316DFEE9900277771 /* ReaderFontVC.m */,
+				78F3B3D416DFEE9900277771 /* ReaderFontVC.xib */,
 			);
 			name = Reader;
 			sourceTree = "<group>";
@@ -453,7 +464,6 @@
 				78D0541E16C95B6D0037311C /* LibraryBookCell.h */,
 				78D0541F16C95B6D0037311C /* LibraryBookCell.m */,
 				78D0542316C987240037311C /* LibraryBookCellOverlay.xib */,
-				7809F96516AF3CB70045C4D9 /* Reader */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -593,6 +603,7 @@
 			isa = PBXGroup;
 			children = (
 				784D21A9169F3AAE003AC6F2 /* MainStoryboard_iPhone.storyboard */,
+				7809F96516AF3CB70045C4D9 /* Reader */,
 				781EF88516A9C67B000CB62E /* Library */,
 				781EF88416A9C673000CB62E /* Store */,
 				789C987E16B987DA00EA9B06 /* Components */,
@@ -713,6 +724,8 @@
 				789C988316B9AA0200EA9B06 /* Icons.m */,
 				78D0542516C988130037311C /* UIView+Nibs.h */,
 				78D0542616C988130037311C /* UIView+Nibs.m */,
+				78F3B3DA16DFF60900277771 /* UIViewController+MiniModal.h */,
+				78F3B3DB16DFF60900277771 /* UIViewController+MiniModal.m */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -895,6 +908,7 @@
 				78AF2FF816DD770100EA4023 /* tabbar-icon-search-selected@2x.png in Resources */,
 				78AF2FF916DD770100EA4023 /* tabbar-icon-search.png in Resources */,
 				78AF2FFA16DD770100EA4023 /* tabbar-icon-search@2x.png in Resources */,
+				78F3B3D616DFEE9900277771 /* ReaderFontVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1004,6 +1018,8 @@
 				78FD1BB316CEBADC003BB3E5 /* ReaderTableOfContentsVC.m in Sources */,
 				78C0E2CA16D844AE0033F509 /* LibraryBookCoverCell.m in Sources */,
 				78CC657116D97BC400E68FFB /* IAPurchaseCommand.m in Sources */,
+				78F3B3D516DFEE9900277771 /* ReaderFontVC.m in Sources */,
+				78F3B3DC16DFF60900277771 /* UIViewController+MiniModal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

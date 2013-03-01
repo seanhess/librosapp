@@ -10,10 +10,14 @@
 #import "LBParsedString.h"
 #import "File.h"
 
+typedef enum {
+    ReaderFontPalatino,
+} ReaderFont;
+
 @interface ReaderFormatter : NSObject
 
--(NSAttributedString*)textForFile:(File*)file;
+-(NSAttributedString*)textForFile:(File*)file withFont:(ReaderFont)font fontSize:(NSInteger)size;
 -(LBParsedString*)parsedStringForMarkup:(NSString*)html;
--(NSAttributedString*)attributedStringForParsed:(LBParsedString *)parsed;
+-(NSAttributedString*)attributedStringForParsed:(LBParsedString *)parsed withFont:(ReaderFont)font fontSize:(NSInteger)size;
 
 @end
