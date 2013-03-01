@@ -70,7 +70,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 @property (weak, nonatomic) IBOutlet UILabel *bookTitle;
 @property (weak, nonatomic) IBOutlet UILabel *chapterTitle;
 
-@property (strong, nonatomic) UIViewController * modal;
 @property (strong, nonatomic) ReaderFontVC * fontController;
 
 @end
@@ -230,23 +229,15 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (IBAction)didTapFont:(id)sender {
-    if (self.modal) {
-        [self dismissMiniModal];
-    }
-    else {
-        self.modal = self.fontController;
-        [self presentMiniViewController:self.modal animated:YES];
-    }
+    if (self.hasCurrentMiniModal)
+        [self dismissMiniViewController];
+    else
+        [self presentMiniViewController:self.fontController];
 }
 
 - (void)didChangeFont {
     [self prepareLayoutWithSize:self.view.bounds.size];
     [self commitLayout];
-}
-
-- (void)dismissMiniModal {
-    [self dismissMiniViewController:self.modal animated:YES];
-    self.modal = nil;
 }
 
 - (IBAction)didTapText:(UITapGestureRecognizer*)tap {
@@ -425,9 +416,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.topControlsView.alpha = 0.0;
     [UIView commitAnimations];
     
-    if (self.modal) {
-        [self dismissMiniModal];
-    }
+    if ([self hasCurrentMiniModal])
+        [self dismissMiniViewController];
 }
 - (void)showControls {
     [UIView beginAnimations:@"controls" context:nil];

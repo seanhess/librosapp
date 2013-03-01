@@ -9,7 +9,12 @@
 
 @interface UIViewController (MiniModal)
 
-- (void)presentMiniViewController:(UIViewController *)vc animated:(BOOL)animated;
-- (void)dismissMiniViewController:(UIViewController *)vc animated:(BOOL)animated;
+- (void)presentMiniViewController:(UIViewController *)vc;
+- (void)dismissMiniViewController;
+
+- (void)setCurrentMiniModal:(UIViewController*)vc;
+- (UIViewController*)currentMiniModal;
+- (void)clearCurrentMiniModal;
+- (BOOL)hasCurrentMiniModal;
 
 @end

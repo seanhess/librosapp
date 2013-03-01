@@ -39,11 +39,11 @@
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
     [[ObjectStore shared] saveContext];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    // this is a test. This is a test. Wahoo if I ever foreget about my test.
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
@@ -56,6 +56,7 @@
 {
     // Saves changes in the application's managed object context before the application terminates.
     [[ObjectStore shared] saveContext];
+    NSLog(@"WILL TERMINATE");
 }
 
 #pragma mark - Application's Documents directory

@@ -12,6 +12,8 @@
 #define DEF_SIZE 18
 #define MAX_SIZE 32
 
+#define FONT_SIZE_KEY @"fontSize"
+
 @interface ReaderFontVC ()
 @end
 
@@ -22,7 +24,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.currentSize = DEF_SIZE;
+        self.currentSize = [[NSUserDefaults standardUserDefaults] integerForKey:FONT_SIZE_KEY];
+        if (!self.currentSize) self.currentSize = DEF_SIZE;
         self.currentFace = ReaderFontPalatino;
     }
     return self;
@@ -41,11 +44,13 @@
 
 - (IBAction)decreaseFontSize:(id)sender {
     self.currentSize = [self stepSizeDown:self.currentSize];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.currentSize forKey:FONT_SIZE_KEY];
     [self.delegate didChangeFont];
 }
 
 - (IBAction)increaseFontSize:(id)sender {
     self.currentSize = [self stepSizeUp:self.currentSize];
+    [[NSUserDefaults standardUserDefaults] setInteger:self.currentSize forKey:FONT_SIZE_KEY];
     [self.delegate didChangeFont];
 }
 
