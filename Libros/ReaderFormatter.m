@@ -62,16 +62,22 @@
 
 -(NSString*)boldFontName:(ReaderFont)font {
     if (font == ReaderFontPalatino) return @"Palatino-Bold";
+    if (font == ReaderFontTimesNewRoman) return @"TimesNewRomanPSMT-Bold";
+    if (font == ReaderFontHelvetica) return @"Helvetica-Bold";
     else return @"Palatino-Bold";
 }
 
 -(NSString*)italicFontName:(ReaderFont)font {
     if (font == ReaderFontPalatino) return @"Palatino-Italic";
+    if (font == ReaderFontTimesNewRoman) return @"TimesNewRomanPSMT-Italic";
+    if (font == ReaderFontHelvetica) return @"Helvetica-Italic";
     else return @"Palatino-Italic";
 }
 
 -(NSString*)normalFontName:(ReaderFont)font {
     if (font == ReaderFontPalatino) return @"Palatino-Roman";
+    if (font == ReaderFontTimesNewRoman) return @"TimesNewRomanPSMT";
+    if (font == ReaderFontHelvetica) return @"Helvetica";
     else return @"Palatino-Roman";
 }
 

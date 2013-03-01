@@ -11,7 +11,10 @@
 #import "File.h"
 
 typedef enum {
-    ReaderFontPalatino,
+    ReaderFontEmpty = 0,
+    ReaderFontPalatino = 1,
+    ReaderFontTimesNewRoman,
+    ReaderFontHelvetica,
 } ReaderFont;
 
 @interface ReaderFormatter : NSObject

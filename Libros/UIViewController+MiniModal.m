@@ -36,21 +36,26 @@ static void *MiniModalKey;
     frame.origin.y = self.view.bounds.size.height;
     vc.view.frame = frame;
     [self.view addSubview:vc.view];
+    [vc viewWillAppear:YES];
     [UIView animateWithDuration:0.200 animations:^{
         CGRect frame = vc.view.frame;
         frame.origin.y -= frame.size.height;
         vc.view.frame = frame;
+    } completion:^(BOOL finished) {
+        [vc viewDidAppear:YES];
     }];
     self.currentMiniModal = vc;
 }
 
 - (void)dismissMiniViewController {
     UIViewController * vc = self.currentMiniModal;
+    [vc viewWillDisappear:YES];
     [UIView animateWithDuration:0.200 animations:^{
         CGRect frame = vc.view.bounds;
         frame.origin.y = self.view.bounds.size.height;
         vc.view.frame = frame;
     } completion:^(BOOL finished) {
+        [vc viewDidDisappear:YES];
         [vc.view removeFromSuperview];
         [self clearCurrentMiniModal];
     }];
