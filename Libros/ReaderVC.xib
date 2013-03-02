@@ -601,6 +601,30 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">audioProgress</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="917037389"/>
+					</object>
+					<int key="connectionID">334</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">audioTimeLabel</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="293005595"/>
+					</object>
+					<int key="connectionID">335</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">audioRemainingLabel</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="288704846"/>
+					</object>
+					<int key="connectionID">337</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">dataSource</string>
 						<reference key="source" ref="175763529"/>
 						<reference key="destination" ref="372490531"/>
@@ -632,6 +656,15 @@
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">288</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">didSlideAudio:</string>
+						<reference key="source" ref="917037389"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">13</int>
+					</object>
+					<int key="connectionID">338</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -891,14 +924,71 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">332</int>
+			<int key="maxID">338</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">ReaderVC</string>
 					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="didClickNextChapter:">id</string>
+						<string key="didClickPlay:">id</string>
+						<string key="didClickPrevChapter:">id</string>
+						<string key="didClickRate:">id</string>
+						<string key="didSlideAudio:">id</string>
+						<string key="didTapBack:">id</string>
+						<string key="didTapFont:">id</string>
+						<string key="didTapLibrary:">id</string>
+						<string key="didTapText:">UITapGestureRecognizer</string>
+						<string key="didTapToC:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="didClickNextChapter:">
+							<string key="name">didClickNextChapter:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didClickPlay:">
+							<string key="name">didClickPlay:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didClickPrevChapter:">
+							<string key="name">didClickPrevChapter:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didClickRate:">
+							<string key="name">didClickRate:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didSlideAudio:">
+							<string key="name">didSlideAudio:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didTapBack:">
+							<string key="name">didTapBack:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didTapFont:">
+							<string key="name">didTapFont:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didTapLibrary:">
+							<string key="name">didTapLibrary:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didTapText:">
+							<string key="name">didTapText:</string>
+							<string key="candidateClassName">UITapGestureRecognizer</string>
+						</object>
+						<object class="IBActionInfo" key="didTapToC:">
+							<string key="name">didTapToC:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="audioProgress">UISlider</string>
+						<string key="audioRemainingLabel">UILabel</string>
+						<string key="audioTimeLabel">UILabel</string>
 						<string key="bookTitle">UILabel</string>
 						<string key="bottomControlsView">UIView</string>
 						<string key="chapterTitle">UILabel</string>
@@ -909,6 +999,18 @@
 						<string key="topControlsView">UIView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="audioProgress">
+							<string key="name">audioProgress</string>
+							<string key="candidateClassName">UISlider</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="audioRemainingLabel">
+							<string key="name">audioRemainingLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="audioTimeLabel">
+							<string key="name">audioTimeLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="bookTitle">
 							<string key="name">bookTitle</string>
 							<string key="candidateClassName">UILabel</string>

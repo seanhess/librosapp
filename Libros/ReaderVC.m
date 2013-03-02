@@ -74,9 +74,14 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 @property (strong, nonatomic) ReaderFontVC * fontController;
 
+@property (strong, nonatomic) NSTimer * playbackTimer;
 @property (strong, nonatomic) AVAudioPlayer * player;
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
 @property (weak, nonatomic) IBOutlet UIButton *rateButton;
+@property (weak, nonatomic) IBOutlet UISlider *audioProgress;
+@property (weak, nonatomic) IBOutlet UILabel *audioTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *audioRemainingLabel;
+
 @property (nonatomic) float currentRate;
 
 @end
@@ -123,6 +128,9 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     // TOO EARLY TO DRAW! View Size is wrong
     // you can call reloadData early and it doesn't fire twice
 //    NSLog(@"VIEW DID LOAD %@", NSStringFromCGRect(self.view.bounds));
+    
+    
+    self.audioProgress.value = 0;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -141,6 +149,10 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 - (void)viewDidAppear:(BOOL)animated {
 //    NSLog(@"VIEW DID APPEAR %@", NSStringFromCGRect(self.view.bounds));
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.playbackTimer invalidate];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -523,6 +535,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.player.enableRate = YES;
     self.player.rate = self.currentRate;
     self.player.delegate = self;
+    self.playbackTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(onPlaybackTimer) userInfo:nil repeats:YES];
 }
 
 - (File*)audioFileForChapter:(NSInteger)chapter {
@@ -543,7 +556,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
             [self playerAtChapter:self.currentChapter];
         }
         
-        NSLog(@"PLAY?");
         [self.player play];
     }
 }
@@ -577,5 +589,27 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     if (playing) [self.player play];
 }
 
+- (void)onPlaybackTimer {
+    if (self.audioProgress.isTracking) return;
+    [self updateAudioProgress];
+}
+
+- (void)updateAudioProgress {
+    self.audioTimeLabel.text = [self formatTime:self.player.currentTime];
+    self.audioRemainingLabel.text = [NSString stringWithFormat:@"-%@", [self formatTime:self.player.duration - self.player.currentTime]];
+    self.audioProgress.value = self.player.currentTime / self.player.duration;
+}
+
+-(NSString*)formatTime:(float)time{
+    int minutes = time / 60;
+    int seconds = (int)time % 60;
+    return [NSString stringWithFormat:@"%@%d:%@%d", minutes / 10 ? [NSString stringWithFormat:@"%d", minutes / 10] : @"", minutes % 10, [NSString stringWithFormat:@"%d", seconds / 10], seconds % 10];
+}
+
+- (IBAction)didSlideAudio:(id)sender {
+    NSTimeInterval currentTime = self.audioProgress.value * self.player.duration;
+    self.player.currentTime = currentTime;
+    [self updateAudioProgress];
+}
 
 @end
