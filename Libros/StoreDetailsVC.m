@@ -16,6 +16,7 @@
 #import "LibraryVC.h"
 #import "IAPurchaseCommand.h"
 #import <StoreKit/StoreKit.h>
+#import "Settings.h"
 
 // TODO should download the product details when this page loads to get the price
 // because it will be different per-locale
@@ -163,7 +164,7 @@
     }
     
     else {
-        [self downloadBook];
+        [self purchaseBook];
     }
 }
 
@@ -175,9 +176,13 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-- (void)downloadBook {
-    // 1 // "buy" the product via IAP
-    // 2 // "download" the book if it succeeded, otherwise error out
+- (void)purchaseBook {
+    
+    if (IAP_SKIP) {
+        [self didCompletePurchase:self.book];
+        return;
+    }
+    
     self.purchaseCommand = [IAPurchaseCommand new];
     [self.purchaseCommand runWithBook:self.book delegate:self];
 }

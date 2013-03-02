@@ -9,6 +9,7 @@
 #import "FileDownloadOperation.h"
 #import "ReaderFormatter.h"
 #import "LBParsedString.h"
+#import "FileService.h"
 
 @interface FileDownloadOperation ()
 @property (strong, nonatomic) NSURLConnection * connection;
@@ -81,10 +82,17 @@
     // 1 // convert to NSAttributedString, then save the data
     NSLog(@"DID FINISH LOADING");
     
-    ReaderFormatter * formatter = [ReaderFormatter new];
-    NSString * string = [[NSString alloc] initWithData:self.data encoding:NSUTF8StringEncoding];
-    LBParsedString * text = [formatter parsedStringForMarkup:string];
-    [NSKeyedArchiver archiveRootObject:text toFile:self.localPath];
+    if ([FileService.shared isFile:self.file format:FileFormatText]) {
+        ReaderFormatter * formatter = [ReaderFormatter new];
+        NSString * string = [[NSString alloc] initWithData:self.data encoding:NSUTF8StringEncoding];
+        LBParsedString * text = [formatter parsedStringForMarkup:string];
+        [NSKeyedArchiver archiveRootObject:text toFile:self.localPath];
+    }
+    
+    else {
+        [self.data writeToFile:self.localPath options:NSDataWritingAtomic error:nil];
+    }
+    
     [self finish];
 }
 

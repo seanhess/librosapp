@@ -100,9 +100,13 @@
 }
 
 -(LBParsedString*)readAsText:(File *)file {
-    NSData * data = [NSData dataWithContentsOfFile:[self localPath:file] options:NSDataReadingMapped error:nil];
+    NSData * data = [self readAsData:file];
     LBParsedString * string = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     return string;
+}
+
+-(NSData*)readAsData:(File *)file {
+    return [NSData dataWithContentsOfFile:[self localPath:file] options:NSDataReadingMapped error:nil];
 }
 
 
@@ -125,6 +129,18 @@
     return [files filter:^(File*file) {
         return [file.ext isEqualToString:format];
     }];
+}
+
+-(NSArray*)textFiles:(NSArray*)array {
+    return [self filterFiles:array byFormat:FileFormatText];
+}
+
+-(NSArray*)audioFiles:(NSArray*)array {
+    return [self filterFiles:array byFormat:FileFormatAudio];
+}
+
+-(BOOL)isFile:(File *)file format:(NSString *)format {
+    return [file.ext isEqualToString:format];
 }
 
 -(void)removeFiles:(NSArray*)files {

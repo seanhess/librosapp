@@ -47,10 +47,11 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 #import "ReaderTableOfContentsVC.h"
 #import "ReaderFontVC.h"
 #import "UIViewController+MiniModal.h"
+#import <AVFoundation/AVFoundation.h>
 
 #define DRAG_GRAVITY 15
 
-@interface ReaderVC () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, ReaderFramesetterDelegate, ReaderTableOfContentsDelegate, ReaderFontDelegate>
+@interface ReaderVC () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, ReaderFramesetterDelegate, ReaderTableOfContentsDelegate, ReaderFontDelegate, AVAudioPlayerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (nonatomic) NSInteger currentChapter;
@@ -59,7 +60,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 @property (strong, nonatomic) ReaderFramesetter * framesetter;
 @property (strong, nonatomic) ReaderFormatter * formatter;
-@property (strong, nonatomic) NSArray * files;
+@property (strong, nonatomic) NSArray * textFiles;
+@property (strong, nonatomic) NSArray * audioFiles;
 @property (nonatomic) NSInteger numChapters;
 
 @property (nonatomic) BOOL scrolling;
@@ -71,6 +73,11 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 @property (weak, nonatomic) IBOutlet UILabel *chapterTitle;
 
 @property (strong, nonatomic) ReaderFontVC * fontController;
+
+@property (strong, nonatomic) AVAudioPlayer * player;
+@property (weak, nonatomic) IBOutlet UIButton *playButton;
+@property (weak, nonatomic) IBOutlet UIButton *rateButton;
+@property (nonatomic) float currentRate;
 
 @end
 
@@ -92,6 +99,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.fontController = [ReaderFontVC new];
     self.fontController.delegate = self;
     
+    self.currentRate = 1.0;
+    
     [self.collectionView registerClass:[ReaderPageView class] forCellWithReuseIdentifier:@"BookPage"];
     
     FileService * fs = [FileService shared];
@@ -99,8 +108,9 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.title = self.book.title;
     self.bookTitle.text = self.book.title;
     NSArray * allFiles = [fs byBookId:self.book.bookId];
-    self.files = [fs filterFiles:allFiles byFormat:FileFormatText];
-    self.numChapters = self.files.count;
+    self.textFiles = [fs textFiles:allFiles];
+    self.audioFiles = [fs audioFiles:allFiles];
+    self.numChapters = self.textFiles.count;
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     
     [self updateControlsFromBook];
@@ -206,7 +216,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 - (IBAction)didTapToC:(id)sender {
     NSLog(@"TOC");
     ReaderTableOfContentsVC * toc = [ReaderTableOfContentsVC new];
-    toc.files = self.files;
+    toc.files = self.textFiles;
     toc.delegate = self;
     [self.navigationController presentViewController:toc animated:YES completion:nil];
 }
@@ -338,7 +348,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 - (NSAttributedString*)textForChapter:(NSInteger)chapter {
     NSLog(@"TEXT FOR CHAPTER %i size=%i", chapter, self.fontController.currentSize);
-    return [self.formatter textForFile:self.files[chapter] withFont:self.fontController.currentFace fontSize:self.fontController.currentSize];
+    return [self.formatter textForFile:self.textFiles[chapter] withFont:self.fontController.currentFace fontSize:self.fontController.currentSize];
 }
 
 - (void)updateCurrentPage {
@@ -380,7 +390,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     }
     else {
         NSInteger nextChapter = chapter + 1;
-        if (nextChapter >= self.files.count)
+        if (nextChapter >= self.textFiles.count)
             return nil;
         else {
             [self ensurePagesForChapter:nextChapter];
@@ -488,5 +498,84 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
     return UIEdgeInsetsMake(0, 0, 0, 0);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/// AUDIO STUFFF
+
+- (void)playerAtChapter:(NSInteger)chapter {
+    File * audioFile = [self audioFileForChapter:chapter];
+    NSData * data = [FileService.shared readAsData:audioFile];
+    self.player = [[AVAudioPlayer alloc] initWithData:data error:nil];
+    self.player.enableRate = YES;
+    self.player.rate = self.currentRate;
+    self.player.delegate = self;
+}
+
+- (File*)audioFileForChapter:(NSInteger)chapter {
+    return self.audioFiles[chapter];
+}
+
+- (IBAction)didClickPlay:(id)sender {
+    
+    if (self.player.isPlaying){
+        [self.player pause];
+        [self.playButton setTitle:@">" forState:UIControlStateNormal];
+    }
+    
+    else {
+        [self.playButton setTitle:@"||" forState:UIControlStateNormal];
+        
+        if (!self.player) {
+            [self playerAtChapter:self.currentChapter];
+        }
+        
+        NSLog(@"PLAY?");
+        [self.player play];
+    }
+}
+
+- (IBAction)didClickRate:(id)sender {
+    if (self.currentRate == 0.5) self.currentRate = 1.0;
+    else if (self.currentRate == 1.0) self.currentRate = 1.5;
+    else if (self.currentRate == 1.5) self.currentRate = 2.0;
+    else self.currentRate = 0.5;
+    
+    self.player.rate = self.currentRate;
+    NSString * rateLabel;
+    if (self.currentRate == 0.5) rateLabel = @"1/2x";
+    else if (self.currentRate == 1.0) rateLabel = @"1x";
+    else if (self.currentRate == 1.5) rateLabel = @"1.5x";
+    else rateLabel = @"2x";
+    [self.rateButton setTitle:rateLabel forState:UIControlStateNormal];
+}
+
+- (IBAction)didClickPrevChapter:(id)sender {
+    BOOL playing = self.player.playing;
+    self.currentChapter -= 1;
+    [self playerAtChapter:self.currentChapter];
+    if (playing) [self.player play];
+}
+
+- (IBAction)didClickNextChapter:(id)sender {
+    BOOL playing = self.player.playing;
+    self.currentChapter += 1;
+    [self playerAtChapter:self.currentChapter];
+    if (playing) [self.player play];
+}
+
 
 @end

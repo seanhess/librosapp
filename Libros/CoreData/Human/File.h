@@ -2,4 +2,5 @@
 
 @interface File : _File {}
 // Custom logic goes here.
+
 @end

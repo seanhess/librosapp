@@ -12,10 +12,12 @@ typedef enum {
     BookFormatAudio
 } BookFormat;
 
+
 @interface Book : _Book {}
 // Custom logic goes here.
 
 -(NSArray*)allFiles;
+
 -(NSString*)priceString;
 -(NSString*)productId;      // In-App Purchase Product Id matching iTunes Connect
 

@@ -156,6 +156,7 @@
 		78DAEFA916BC471900A7A840 /* Genre.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DAEFA716BC471900A7A840 /* Genre.m */; };
 		78E2FD9516C03A3900AEFE81 /* FileDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E2FD9416C03A3900AEFE81 /* FileDownloadOperation.m */; };
 		78EC890116BC64F500CD0093 /* StoreSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EC890016BC64F500CD0093 /* StoreSearchVC.m */; };
+		78F1F3E316E158C700D499D6 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78F1F3E216E158C700D499D6 /* AVFoundation.framework */; };
 		78F3B3D516DFEE9900277771 /* ReaderFontVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F3B3D316DFEE9900277771 /* ReaderFontVC.m */; };
 		78F3B3D616DFEE9900277771 /* ReaderFontVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78F3B3D416DFEE9900277771 /* ReaderFontVC.xib */; };
 		78F3B3DC16DFF60900277771 /* UIViewController+MiniModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F3B3DB16DFF60900277771 /* UIViewController+MiniModal.m */; };
@@ -359,6 +360,7 @@
 		78E2FD9416C03A3900AEFE81 /* FileDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileDownloadOperation.m; sourceTree = "<group>"; };
 		78EC88FF16BC64F500CD0093 /* StoreSearchVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreSearchVC.h; sourceTree = "<group>"; };
 		78EC890016BC64F500CD0093 /* StoreSearchVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreSearchVC.m; sourceTree = "<group>"; };
+		78F1F3E216E158C700D499D6 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		78F3B3D216DFEE9900277771 /* ReaderFontVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderFontVC.h; sourceTree = "<group>"; };
 		78F3B3D316DFEE9900277771 /* ReaderFontVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderFontVC.m; sourceTree = "<group>"; };
 		78F3B3D416DFEE9900277771 /* ReaderFontVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReaderFontVC.xib; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78F1F3E316E158C700D499D6 /* AVFoundation.framework in Frameworks */,
 				78CC657316D97C0400E68FFB /* StoreKit.framework in Frameworks */,
 				7809F96316AF3CA30045C4D9 /* CoreText.framework in Frameworks */,
 				7827BD90169CE4A900053231 /* UIKit.framework in Frameworks */,
@@ -471,14 +474,15 @@
 		7827BD80169CE4A900053231 = {
 			isa = PBXGroup;
 			children = (
-				78C0E2C616D83C670033F509 /* Podfile */,
 				78CC657216D97C0400E68FFB /* StoreKit.framework */,
 				7809F96216AF3CA30045C4D9 /* CoreText.framework */,
+				78F1F3E216E158C700D499D6 /* AVFoundation.framework */,
 				7827BD97169CE4A900053231 /* Libros */,
 				7827BDB9169CE4A900053231 /* LibrosTests */,
 				7827BD8E169CE4A900053231 /* Frameworks */,
 				7827BD8C169CE4A900053231 /* Products */,
 				85FD0834AAB242A7BA71588D /* Pods.xcconfig */,
+				78C0E2C616D83C670033F509 /* Podfile */,
 			);
 			sourceTree = "<group>";
 		};

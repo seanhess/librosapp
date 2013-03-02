@@ -2,6 +2,4 @@
 
 @implementation File
 
-// Custom logic goes here.
-
 @end

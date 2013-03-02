@@ -28,8 +28,12 @@
 -(NSURL*)url:(File*)file;
 -(NSString*)localPath:(File*)file;
 -(LBParsedString*)readAsText:(File*)file;
+-(NSData*)readAsData:(File*)file;
 
 -(NSArray*)filterFiles:(NSArray*)array byFormat:(NSString*)format;
+-(NSArray*)textFiles:(NSArray*)array;
+-(NSArray*)audioFiles:(NSArray*)array;
+-(BOOL)isFile:(File*)file format:(NSString*)format;
 
 -(void)removeFiles:(NSArray*)files;
 
