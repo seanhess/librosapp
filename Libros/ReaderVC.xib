@@ -264,7 +264,7 @@
 								<string key="NSFrame">{{289, 51}, {43, 21}}</string>
 								<reference key="NSSuperview" ref="7138451"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="727829056"/>
+								<reference key="NSNextKeyView" ref="636876392"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -490,15 +490,15 @@
 						</object>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
-					<object class="IBUIView" id="727829056">
+					<object class="IBUIView" id="636876392">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<array class="NSMutableArray" key="NSSubviews">
-							<object class="IBUISlider" id="386609735">
-								<reference key="NSNextResponder" ref="727829056"/>
+							<object class="IBUISlider" id="368474155">
+								<reference key="NSNextResponder" ref="636876392"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{18, 7}, {284, 23}}</string>
-								<reference key="NSSuperview" ref="727829056"/>
+								<reference key="NSSuperview" ref="636876392"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1040387063"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -512,7 +512,7 @@
 						<string key="NSFrame">{{0, 427}, {320, 36}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="386609735"/>
+						<reference key="NSNextKeyView" ref="368474155"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -657,7 +657,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">volumeView</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="727829056"/>
+						<reference key="destination" ref="636876392"/>
 					</object>
 					<int key="connectionID">347</int>
 				</object>
@@ -665,9 +665,33 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">volumeSlider</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="386609735"/>
+						<reference key="destination" ref="368474155"/>
 					</object>
 					<int key="connectionID">349</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">pageSlider</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="333042721"/>
+					</object>
+					<int key="connectionID">351</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">pagesLeftLabel</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="603561388"/>
+					</object>
+					<int key="connectionID">354</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">pagesDoneLabel</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="90221596"/>
+					</object>
+					<int key="connectionID">355</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -786,8 +810,17 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">didSlidePage:</string>
+						<reference key="source" ref="333042721"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">13</int>
+					</object>
+					<int key="connectionID">356</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">didSlideVolume:</string>
-						<reference key="source" ref="386609735"/>
+						<reference key="source" ref="368474155"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">13</int>
 					</object>
@@ -809,7 +842,7 @@
 							<reference ref="175763529"/>
 							<reference ref="1040387063"/>
 							<reference ref="7138451"/>
-							<reference ref="727829056"/>
+							<reference ref="636876392"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -957,16 +990,16 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">341</int>
-						<reference key="object" ref="727829056"/>
+						<reference key="object" ref="636876392"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="386609735"/>
+							<reference ref="368474155"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">348</int>
-						<reference key="object" ref="386609735"/>
-						<reference key="parent" ref="727829056"/>
+						<reference key="object" ref="368474155"/>
+						<reference key="parent" ref="636876392"/>
 					</object>
 				</array>
 			</object>
@@ -1004,7 +1037,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">350</int>
+			<int key="maxID">356</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1018,6 +1051,8 @@
 						<string key="didClickRate:">id</string>
 						<string key="didClickVolume:">id</string>
 						<string key="didSlideAudio:">id</string>
+						<string key="didSlidePage:">id</string>
+						<string key="didSlideVolume:">id</string>
 						<string key="didTapBack:">id</string>
 						<string key="didTapFont:">id</string>
 						<string key="didTapLibrary:">id</string>
@@ -1047,6 +1082,14 @@
 						</object>
 						<object class="IBActionInfo" key="didSlideAudio:">
 							<string key="name">didSlideAudio:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didSlidePage:">
+							<string key="name">didSlidePage:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didSlideVolume:">
+							<string key="name">didSlideVolume:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="didTapBack:">
@@ -1079,6 +1122,9 @@
 						<string key="chapterTitle">UILabel</string>
 						<string key="collectionView">UICollectionView</string>
 						<string key="fontButton">UIButton</string>
+						<string key="pageSlider">UISlider</string>
+						<string key="pagesDoneLabel">UILabel</string>
+						<string key="pagesLeftLabel">UILabel</string>
 						<string key="playButton">UIButton</string>
 						<string key="rateButton">UIButton</string>
 						<string key="topControlsView">UIView</string>
@@ -1117,6 +1163,18 @@
 						<object class="IBToOneOutletInfo" key="fontButton">
 							<string key="name">fontButton</string>
 							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="pageSlider">
+							<string key="name">pageSlider</string>
+							<string key="candidateClassName">UISlider</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="pagesDoneLabel">
+							<string key="name">pagesDoneLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="pagesLeftLabel">
+							<string key="name">pagesLeftLabel</string>
+							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="playButton">
 							<string key="name">playButton</string>

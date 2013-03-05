@@ -73,6 +73,11 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 @property (weak, nonatomic) IBOutlet UILabel *bookTitle;
 @property (weak, nonatomic) IBOutlet UILabel *chapterTitle;
 
+@property (weak, nonatomic) IBOutlet UISlider *pageSlider;
+@property (weak, nonatomic) IBOutlet UILabel *pagesDoneLabel;
+@property (weak, nonatomic) IBOutlet UILabel *pagesLeftLabel;
+
+
 @property (weak, nonatomic) IBOutlet UIView *volumeView;
 @property (weak, nonatomic) IBOutlet UISlider *volumeSlider;
 
@@ -329,6 +334,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.currentPage = page;
     
     [self displayChapter];
+    [self displayPage];
 }
 
 - (NSInteger)cellOffsetForChapter:(NSInteger)chapter page:(NSInteger)page {
@@ -397,11 +403,25 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.currentChapter = chapter;
     self.currentPage = page;
     [self displayChapter];
+    [self displayPage];
 }
 
 - (void)displayChapter {
     File * file = self.book.allFiles[self.currentChapter];
     self.chapterTitle.text = file.name;
+}
+
+- (void)displayPage {
+    NSInteger totalPages = [self.framesetter pagesForChapter:self.currentChapter];
+    self.pageSlider.value = (float) (self.currentPage) / (totalPages-1);
+    self.pagesDoneLabel.text = [NSString stringWithFormat:@"%i", self.currentPage];
+    self.pagesLeftLabel.text = [NSString stringWithFormat:@"%i", totalPages-self.currentPage-1];
+}
+
+- (IBAction)didSlidePage:(id)sender {
+    NSInteger totalPages = [self.framesetter pagesForChapter:self.currentChapter];
+    NSInteger page = self.pageSlider.value * (totalPages-1);
+    [self moveToChapter:self.currentChapter page:page animated:NO];
 }
 
 - (NSInteger)cellsDisplayedInChapter:(NSInteger)chapter {
