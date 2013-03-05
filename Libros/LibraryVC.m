@@ -13,7 +13,7 @@
 #import "Book.h"
 #import "ObjectStore.h"
 #import "ReaderVC.h"
-#import "LibraryBookCell.h"
+#import "StoreBookCell.h"
 #import "LibraryBookCoverCell.h"
 
 @interface LibraryVC () <NSFetchedResultsControllerDelegate, UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
@@ -111,10 +111,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"LibraryBookCell";
-    LibraryBookCell *cell = (LibraryBookCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"StoreBookCell";
+    StoreBookCell *cell = (StoreBookCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[LibraryBookCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[StoreBookCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
