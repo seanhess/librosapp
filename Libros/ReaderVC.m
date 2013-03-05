@@ -48,6 +48,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 #import "ReaderFontVC.h"
 #import "UIViewController+MiniModal.h"
 #import <AVFoundation/AVFoundation.h>
+#import <PopoverView.h>
 
 #define DRAG_GRAVITY 15
 
@@ -72,6 +73,9 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 @property (weak, nonatomic) IBOutlet UILabel *bookTitle;
 @property (weak, nonatomic) IBOutlet UILabel *chapterTitle;
 
+@property (weak, nonatomic) IBOutlet UIView *volumeView;
+@property (weak, nonatomic) IBOutlet UISlider *volumeSlider;
+
 @property (strong, nonatomic) ReaderFontVC * fontController;
 
 @property (strong, nonatomic) NSTimer * playbackTimer;
@@ -83,6 +87,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 @property (weak, nonatomic) IBOutlet UILabel *audioRemainingLabel;
 
 @property (nonatomic) float currentRate;
+@property (nonatomic) float currentVolume;
 
 @end
 
@@ -103,6 +108,10 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     
     self.fontController = [ReaderFontVC new];
     self.fontController.delegate = self;
+    
+    self.currentVolume = 1.0;
+    self.volumeSlider.value = self.currentVolume;
+    self.volumeView.hidden = YES;
     
     self.currentRate = 1.0;
     
@@ -127,10 +136,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     
     // TOO EARLY TO DRAW! View Size is wrong
     // you can call reloadData early and it doesn't fire twice
-//    NSLog(@"VIEW DID LOAD %@", NSStringFromCGRect(self.view.bounds));
-    
-    
-    self.audioProgress.value = 0;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -145,6 +150,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
     [self ensurePagesForChapter:self.currentChapter];
     [self moveToChapter:self.currentChapter page:self.currentPage animated:NO];
+    [self playerAtChapter:self.currentChapter];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -239,11 +245,26 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 -(void)didSelectChapter:(NSInteger)chapter {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self loadChapter:chapter];
+}
+
+- (void)loadChapter:(NSInteger)chapter {
+    if (chapter < 0) return;
+    if (chapter >= self.textFiles.count) return;
+    
+    
+    BOOL playing = self.player.playing;
+    
+    NSLog(@"LOADING CHAPTER %i playing=%i", chapter, playing);
+    
     self.currentChapter = chapter;
     self.currentPage = 0;
     [self ensurePagesForChapter:chapter];
     [self moveToChapter:chapter page:0 animated:NO];
+    [self playerAtChapter:chapter];
     [self hideControlsInABit];
+    
+    if (playing) [self.player play];
 }
 
 - (IBAction)didTapLibrary:(id)sender {
@@ -293,7 +314,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (void)moveToChapter:(NSInteger)chapter page:(NSInteger)page animated:(BOOL)animated {
-    NSLog(@"MOVE TO %i %i", chapter, page);
+//    NSLog(@"MOVE TO %i %i", chapter, page);
     
     // This doesn't always left-align the cells, calculate your own, below
     // [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:chapter] atScrollPosition:UICollectionViewScrollPositionLeft animated:animated];
@@ -369,6 +390,10 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     NSIndexPath * cellIndexPath = [self.collectionView indexPathForItemAtPoint:CGPointMake(self.collectionView.contentOffset.x + self.view.frame.size.width/2, 0)];
     NSInteger chapter = cellIndexPath.section;
     NSInteger page = cellIndexPath.item;
+    
+    // not sure what to do with this. Should it advance the audio???
+//    if (self.currentChapter != chapter) {}
+    
     self.currentChapter = chapter;
     self.currentPage = page;
     [self displayChapter];
@@ -438,6 +463,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.topControlsView.alpha = 0.0;
     [UIView commitAnimations];
     
+    self.volumeView.hidden = YES;
+    
     if ([self hasCurrentMiniModal])
         [self dismissMiniViewController];
 }
@@ -478,7 +505,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     // sizes correct at this point
-    NSLog(@"CELL %i %i %@", indexPath.section, indexPath.item, self.framesetter);
+//    NSLog(@"CELL %i %i %@", indexPath.section, indexPath.item, self.framesetter);
     static NSString * cellId = @"BookPage";
     NSInteger chapter = indexPath.section;
     NSInteger page = indexPath.item;
@@ -535,7 +562,12 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.player.enableRate = YES;
     self.player.rate = self.currentRate;
     self.player.delegate = self;
+    self.player.volume = self.currentVolume;
     self.playbackTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(onPlaybackTimer) userInfo:nil repeats:YES];
+    
+    self.volumeSlider.value = self.currentVolume;
+    self.audioProgress.value = 0;
+    [self updateAudioProgress];
 }
 
 - (File*)audioFileForChapter:(NSInteger)chapter {
@@ -576,17 +608,15 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (IBAction)didClickPrevChapter:(id)sender {
-    BOOL playing = self.player.playing;
-    self.currentChapter -= 1;
-    [self playerAtChapter:self.currentChapter];
-    if (playing) [self.player play];
+    [self loadChapter:self.currentChapter-1];
 }
 
 - (IBAction)didClickNextChapter:(id)sender {
-    BOOL playing = self.player.playing;
-    self.currentChapter += 1;
-    [self playerAtChapter:self.currentChapter];
-    if (playing) [self.player play];
+    [self loadChapter:self.currentChapter+1];
+}
+
+- (IBAction)didClickVolume:(id)sender {
+    self.volumeView.hidden = (!self.volumeView.hidden);
 }
 
 - (void)onPlaybackTimer {
@@ -598,6 +628,11 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.audioTimeLabel.text = [self formatTime:self.player.currentTime];
     self.audioRemainingLabel.text = [NSString stringWithFormat:@"-%@", [self formatTime:self.player.duration - self.player.currentTime]];
     self.audioProgress.value = self.player.currentTime / self.player.duration;
+        
+    if (self.player.isPlaying)
+        [self.playButton setTitle:@"||" forState:UIControlStateNormal];
+    else
+        [self.playButton setTitle:@">" forState:UIControlStateNormal];
 }
 
 -(NSString*)formatTime:(float)time{
@@ -610,6 +645,25 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     NSTimeInterval currentTime = self.audioProgress.value * self.player.duration;
     self.player.currentTime = currentTime;
     [self updateAudioProgress];
+}
+
+-(void)audioPlayerBeginInterruption:(AVAudioPlayer *)player {
+    // Not sure if I need to do something. Pause I guess?
+    // Does it resume for me?
+}
+
+-(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+    if (self.audioProgress.tracking) return;
+    [self updateAudioProgress];
+    if (!flag) return;
+    [self loadChapter:self.currentChapter+1];
+    if (self.currentChapter < self.audioFiles.count)
+        [self.player play];
+}
+
+- (IBAction)didSlideVolume:(id)sender {
+    self.currentVolume = self.volumeSlider.value;
+    self.player.volume = self.currentVolume;
 }
 
 @end

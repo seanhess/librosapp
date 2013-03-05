@@ -9,16 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "Book.h"
 
-@protocol LibraryBookCellDelegate <NSObject>
-
--(void)didTapAudio:(Book*)book;
--(void)didTapText:(Book*)book;
-
-@end
-
 @interface LibraryBookCell : UITableViewCell
 
 @property (nonatomic, strong) Book * book;
-@property (nonatomic, weak) id<LibraryBookCellDelegate>delegate;
 
 @end

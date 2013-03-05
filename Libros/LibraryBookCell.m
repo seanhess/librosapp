@@ -60,13 +60,6 @@
     return self;
 }
 
-- (void)tapButton:(id)button {
-    if (button == self.audioButton)
-        [self.delegate didTapAudio:self.book];
-    else
-        [self.delegate didTapText:self.book];
-}
-
 - (void)setBook:(Book *)book {
     _book = book;
     

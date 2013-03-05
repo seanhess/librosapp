@@ -264,7 +264,7 @@
 								<string key="NSFrame">{{289, 51}, {43, 21}}</string>
 								<reference key="NSSuperview" ref="7138451"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="1040387063"/>
+								<reference key="NSNextKeyView" ref="727829056"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -490,6 +490,36 @@
 						</object>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
+					<object class="IBUIView" id="727829056">
+						<reference key="NSNextResponder" ref="191373211"/>
+						<int key="NSvFlags">292</int>
+						<array class="NSMutableArray" key="NSSubviews">
+							<object class="IBUISlider" id="386609735">
+								<reference key="NSNextResponder" ref="727829056"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{18, 7}, {284, 23}}</string>
+								<reference key="NSSuperview" ref="727829056"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="1040387063"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<int key="IBUIContentHorizontalAlignment">0</int>
+								<int key="IBUIContentVerticalAlignment">0</int>
+								<float key="IBUIValue">0.5</float>
+							</object>
+						</array>
+						<string key="NSFrame">{{0, 427}, {320, 36}}</string>
+						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="386609735"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<object class="NSColor" key="IBUIBackgroundColor">
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MCAwLjUAA</bytes>
+						</object>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+					</object>
 				</array>
 				<string key="NSFrame">{{0, 20}, {320, 548}}</string>
 				<reference key="NSSuperview"/>
@@ -625,6 +655,22 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">volumeView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="727829056"/>
+					</object>
+					<int key="connectionID">347</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">volumeSlider</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="386609735"/>
+					</object>
+					<int key="connectionID">349</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">dataSource</string>
 						<reference key="source" ref="175763529"/>
 						<reference key="destination" ref="372490531"/>
@@ -704,6 +750,15 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">didClickVolume:</string>
+						<reference key="source" ref="169509002"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">340</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">didTapBack:</string>
 						<reference key="source" ref="293429099"/>
 						<reference key="destination" ref="372490531"/>
@@ -729,6 +784,15 @@
 					</object>
 					<int key="connectionID">320</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">didSlideVolume:</string>
+						<reference key="source" ref="386609735"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">13</int>
+					</object>
+					<int key="connectionID">350</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -745,6 +809,7 @@
 							<reference ref="175763529"/>
 							<reference ref="1040387063"/>
 							<reference ref="7138451"/>
+							<reference ref="727829056"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -890,6 +955,19 @@
 						<reference key="object" ref="603561388"/>
 						<reference key="parent" ref="7138451"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">341</int>
+						<reference key="object" ref="727829056"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="386609735"/>
+						</array>
+						<reference key="parent" ref="191373211"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">348</int>
+						<reference key="object" ref="386609735"/>
+						<reference key="parent" ref="727829056"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -919,12 +997,14 @@
 				<string key="316.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="317.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="318.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="341.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="348.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">338</int>
+			<int key="maxID">350</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -936,6 +1016,7 @@
 						<string key="didClickPlay:">id</string>
 						<string key="didClickPrevChapter:">id</string>
 						<string key="didClickRate:">id</string>
+						<string key="didClickVolume:">id</string>
 						<string key="didSlideAudio:">id</string>
 						<string key="didTapBack:">id</string>
 						<string key="didTapFont:">id</string>
@@ -958,6 +1039,10 @@
 						</object>
 						<object class="IBActionInfo" key="didClickRate:">
 							<string key="name">didClickRate:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didClickVolume:">
+							<string key="name">didClickVolume:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="didSlideAudio:">
@@ -997,6 +1082,8 @@
 						<string key="playButton">UIButton</string>
 						<string key="rateButton">UIButton</string>
 						<string key="topControlsView">UIView</string>
+						<string key="volumeSlider">UISlider</string>
+						<string key="volumeView">UIView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="audioProgress">
@@ -1041,6 +1128,14 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="topControlsView">
 							<string key="name">topControlsView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="volumeSlider">
+							<string key="name">volumeSlider</string>
+							<string key="candidateClassName">UISlider</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="volumeView">
+							<string key="name">volumeView</string>
 							<string key="candidateClassName">UIView</string>
 						</object>
 					</dictionary>

@@ -16,7 +16,7 @@
 #import "LibraryBookCell.h"
 #import "LibraryBookCoverCell.h"
 
-@interface LibraryVC () <NSFetchedResultsControllerDelegate, LibraryBookCellDelegate, UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface LibraryVC () <NSFetchedResultsControllerDelegate, UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) NSFetchedResultsController * fetchedResultsController;
 @property (nonatomic, strong) Book * selectedBook;
@@ -118,7 +118,6 @@
     }
     
     Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.delegate = self;
     cell.book = book;
     return cell;
 }
@@ -147,26 +146,7 @@
 
 - (void)selectBookAtIndexPath:(NSIndexPath*)indexPath {
     Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    if (book.audioFilesValue && book.textFilesValue) {
-        if (book.preferredFormatValue) {
-            if (book.preferredFormatValue == BookFormatAudio)
-                [self showPlayer:book];
-            else
-                [self showReader:book];
-        }
-        else {
-            [self promptForFormat:book];
-        }
-    }
-    
-    else if (book.audioFilesValue) {
-        [self showPlayer:book];
-    }
-    
-    else {
-        [self showReader:book];
-    }
+    [self showReader:book];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -188,7 +168,6 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     // sizes correct at this point
-    NSLog(@"WAHOO %@", indexPath);
     static NSString * cellId = @"LibraryBookCover";
     LibraryBookCoverCell * cell = (LibraryBookCoverCell*)[self.collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
     // TODO add image view and WORK IT
@@ -217,55 +196,10 @@
     [self selectBookAtIndexPath:indexPath];
 }
 
-
-
-
-- (void)promptForFormat:(Book*)book {
-    self.selectedBook = book;
-    UIActionSheet * actionSheet = [UIActionSheet new];
-    actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-    actionSheet.delegate = self;
-    [actionSheet setTitle:@"Which format?"];
-    [actionSheet addButtonWithTitle:@"Texto"];
-    [actionSheet addButtonWithTitle:@"Audio"];
-    [actionSheet showInView:self.view];
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        [self showReader:self.selectedBook];
-    }
-    else {
-        [self showPlayer:self.selectedBook];
-    }
-}
-
 - (void)showReader:(Book*)book {
-    [self setBook:book preferredFormat:BookFormatText];
     ReaderVC * readervc = [ReaderVC new];
     readervc.book = book;
     [self.navigationController pushViewController:readervc animated:YES];
 }
-
-- (void)showPlayer:(Book*)book {
-    NSLog(@"AUDIO PLAYER");
-    [self setBook:book preferredFormat:BookFormatAudio];
-    book.preferredFormatValue = BookFormatAudio;
-}
-
-- (void)setBook:(Book*)book preferredFormat:(NSInteger)format {
-    book.preferredFormatValue = format;
-    [self.tableView reloadData];
-}
-
-- (void)didTapText:(Book *)book {
-    [self showReader:book];
-}
-
-- (void)didTapAudio:(Book *)book {
-    [self showPlayer:book];
-}
-
-//-(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {}
 
 @end

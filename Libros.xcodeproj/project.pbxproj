@@ -474,6 +474,7 @@
 		7827BD80169CE4A900053231 = {
 			isa = PBXGroup;
 			children = (
+				78C0E2C616D83C670033F509 /* Podfile */,
 				78CC657216D97C0400E68FFB /* StoreKit.framework */,
 				7809F96216AF3CA30045C4D9 /* CoreText.framework */,
 				78F1F3E216E158C700D499D6 /* AVFoundation.framework */,
@@ -482,7 +483,6 @@
 				7827BD8E169CE4A900053231 /* Frameworks */,
 				7827BD8C169CE4A900053231 /* Products */,
 				85FD0834AAB242A7BA71588D /* Pods.xcconfig */,
-				78C0E2C616D83C670033F509 /* Podfile */,
 			);
 			sourceTree = "<group>";
 		};
@@ -607,8 +607,8 @@
 			isa = PBXGroup;
 			children = (
 				784D21A9169F3AAE003AC6F2 /* MainStoryboard_iPhone.storyboard */,
-				7809F96516AF3CB70045C4D9 /* Reader */,
 				781EF88516A9C67B000CB62E /* Library */,
+				7809F96516AF3CB70045C4D9 /* Reader */,
 				781EF88416A9C673000CB62E /* Store */,
 				789C987E16B987DA00EA9B06 /* Components */,
 			);
