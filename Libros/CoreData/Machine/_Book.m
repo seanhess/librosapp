@@ -7,11 +7,12 @@ const struct BookAttributes BookAttributes = {
 	.audioFiles = @"audioFiles",
 	.author = @"author",
 	.bookId = @"bookId",
+	.currentChapter = @"currentChapter",
+	.currentPage = @"currentPage",
 	.descriptionText = @"descriptionText",
 	.downloaded = @"downloaded",
 	.genre = @"genre",
 	.imageUrl = @"imageUrl",
-	.preferredFormat = @"preferredFormat",
 	.price = @"price",
 	.purchased = @"purchased",
 	.textFiles = @"textFiles",
@@ -56,12 +57,16 @@ const struct BookFetchedProperties BookFetchedProperties = {
 		NSSet *affectingKey = [NSSet setWithObject:@"audioFiles"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
-	if ([key isEqualToString:@"downloadedValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"downloaded"];
+	if ([key isEqualToString:@"currentChapterValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"currentChapter"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
-	if ([key isEqualToString:@"preferredFormatValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"preferredFormat"];
+	if ([key isEqualToString:@"currentPageValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"currentPage"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"downloadedValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"downloaded"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"priceValue"]) {
@@ -123,6 +128,58 @@ const struct BookFetchedProperties BookFetchedProperties = {
 
 
 
+@dynamic currentChapter;
+
+
+
+- (int16_t)currentChapterValue {
+	NSNumber *result = [self currentChapter];
+	return [result shortValue];
+}
+
+- (void)setCurrentChapterValue:(int16_t)value_ {
+	[self setCurrentChapter:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitiveCurrentChapterValue {
+	NSNumber *result = [self primitiveCurrentChapter];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveCurrentChapterValue:(int16_t)value_ {
+	[self setPrimitiveCurrentChapter:[NSNumber numberWithShort:value_]];
+}
+
+
+
+
+
+@dynamic currentPage;
+
+
+
+- (int16_t)currentPageValue {
+	NSNumber *result = [self currentPage];
+	return [result shortValue];
+}
+
+- (void)setCurrentPageValue:(int16_t)value_ {
+	[self setCurrentPage:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitiveCurrentPageValue {
+	NSNumber *result = [self primitiveCurrentPage];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveCurrentPageValue:(int16_t)value_ {
+	[self setPrimitiveCurrentPage:[NSNumber numberWithShort:value_]];
+}
+
+
+
+
+
 @dynamic descriptionText;
 
 
@@ -165,32 +222,6 @@ const struct BookFetchedProperties BookFetchedProperties = {
 
 @dynamic imageUrl;
 
-
-
-
-
-
-@dynamic preferredFormat;
-
-
-
-- (int16_t)preferredFormatValue {
-	NSNumber *result = [self preferredFormat];
-	return [result shortValue];
-}
-
-- (void)setPreferredFormatValue:(int16_t)value_ {
-	[self setPreferredFormat:[NSNumber numberWithShort:value_]];
-}
-
-- (int16_t)primitivePreferredFormatValue {
-	NSNumber *result = [self primitivePreferredFormat];
-	return [result shortValue];
-}
-
-- (void)setPrimitivePreferredFormatValue:(int16_t)value_ {
-	[self setPrimitivePreferredFormat:[NSNumber numberWithShort:value_]];
-}
 
 
 

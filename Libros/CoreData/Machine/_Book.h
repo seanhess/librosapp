@@ -8,11 +8,12 @@ extern const struct BookAttributes {
 	__unsafe_unretained NSString *audioFiles;
 	__unsafe_unretained NSString *author;
 	__unsafe_unretained NSString *bookId;
+	__unsafe_unretained NSString *currentChapter;
+	__unsafe_unretained NSString *currentPage;
 	__unsafe_unretained NSString *descriptionText;
 	__unsafe_unretained NSString *downloaded;
 	__unsafe_unretained NSString *genre;
 	__unsafe_unretained NSString *imageUrl;
-	__unsafe_unretained NSString *preferredFormat;
 	__unsafe_unretained NSString *price;
 	__unsafe_unretained NSString *purchased;
 	__unsafe_unretained NSString *textFiles;
@@ -29,6 +30,7 @@ extern const struct BookFetchedProperties {
 
 @class File;
 @class User;
+
 
 
 
@@ -83,6 +85,30 @@ extern const struct BookFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber* currentChapter;
+
+
+@property int16_t currentChapterValue;
+- (int16_t)currentChapterValue;
+- (void)setCurrentChapterValue:(int16_t)value_;
+
+//- (BOOL)validateCurrentChapter:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* currentPage;
+
+
+@property int16_t currentPageValue;
+- (int16_t)currentPageValue;
+- (void)setCurrentPageValue:(int16_t)value_;
+
+//- (BOOL)validateCurrentPage:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSString* descriptionText;
 
 
@@ -115,18 +141,6 @@ extern const struct BookFetchedProperties {
 
 
 //- (BOOL)validateImageUrl:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) NSNumber* preferredFormat;
-
-
-@property int16_t preferredFormatValue;
-- (int16_t)preferredFormatValue;
-- (void)setPreferredFormatValue:(int16_t)value_;
-
-//- (BOOL)validatePreferredFormat:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -226,6 +240,24 @@ extern const struct BookFetchedProperties {
 
 
 
+- (NSNumber*)primitiveCurrentChapter;
+- (void)setPrimitiveCurrentChapter:(NSNumber*)value;
+
+- (int16_t)primitiveCurrentChapterValue;
+- (void)setPrimitiveCurrentChapterValue:(int16_t)value_;
+
+
+
+
+- (NSNumber*)primitiveCurrentPage;
+- (void)setPrimitiveCurrentPage:(NSNumber*)value;
+
+- (int16_t)primitiveCurrentPageValue;
+- (void)setPrimitiveCurrentPageValue:(int16_t)value_;
+
+
+
+
 - (NSString*)primitiveDescriptionText;
 - (void)setPrimitiveDescriptionText:(NSString*)value;
 
@@ -249,15 +281,6 @@ extern const struct BookFetchedProperties {
 
 - (NSString*)primitiveImageUrl;
 - (void)setPrimitiveImageUrl:(NSString*)value;
-
-
-
-
-- (NSNumber*)primitivePreferredFormat;
-- (void)setPrimitivePreferredFormat:(NSNumber*)value;
-
-- (int16_t)primitivePreferredFormatValue;
-- (void)setPrimitivePreferredFormatValue:(int16_t)value_;
 
 
 

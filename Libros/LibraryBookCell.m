@@ -83,15 +83,6 @@
         self.textButton.hidden = NO;
         self.audioButton.hidden = NO;
         
-        if (book.preferredFormatValue == BookFormatAudio) {
-            self.textButton.style = ColoredButtonStyleGray;
-            self.audioButton.style = ColoredButtonStyleTan;
-        }
-        else if (book.preferredFormatValue == BookFormatText) {
-            self.textButton.style = ColoredButtonStyleTan;
-            self.audioButton.style = ColoredButtonStyleGray;
-        }
-        
         CGRect audioFrame = self.audioFrame;
         audioFrame.origin.y = roundf((self.textFrame.size.height - audioFrame.size.height)/2);
         

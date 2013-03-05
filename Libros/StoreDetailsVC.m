@@ -83,7 +83,7 @@
 - (void)renderButtonAndDownload {
     self.buyButton.enabled = YES;
     
-    if (!self.book.purchasedValue) {
+    if (!self.book.purchasedValue && !self.purchaseCommand) {
         self.buyButton.style = ColoredButtonStyleGreen;
         NSString * buttonLabel = [NSString stringWithFormat:@"Buy for $%@", self.book.priceString];
         [self.buyButton setTitle:buttonLabel forState:UIControlStateNormal];
@@ -92,8 +92,13 @@
     else {
         self.buyButton.style = ColoredButtonStyleGray;
         
+        if (self.purchaseCommand) {
+            [self.buyButton setTitle:@"Purchasing" forState:UIControlStateNormal];
+            self.buyButton.enabled = NO;
+        }
+        
         // well, I should use a total bytes thing so it actually updates
-        if (self.book.downloadedValue < 1.0) {
+        else if (self.book.downloadedValue < 1.0) {
             [self.buyButton setTitle:@"Downloading" forState:UIControlStateNormal];
             self.buyButton.enabled = NO;
             
@@ -185,13 +190,21 @@
     
     self.purchaseCommand = [IAPurchaseCommand new];
     [self.purchaseCommand runWithBook:self.book delegate:self];
+    [self renderButtonAndDownload];
 }
 
 - (void)didErrorPurchase:(NSError *)error {
-    NSLog(@"FAILED PURCHASE %@", error);
+    self.purchaseCommand = nil;
+    [self renderButtonAndDownload];
+}
+
+- (void)didCancelPurchase:(Book *)book {
+    self.purchaseCommand = nil;
+    [self renderButtonAndDownload];
 }
 
 - (void)didCompletePurchase:(Book *)book {
+    self.purchaseCommand = nil;
     [UserService.shared addBook:self.book];
     [self renderButtonAndDownload];
 }

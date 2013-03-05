@@ -39,10 +39,9 @@
 					<object class="IBUIButton" id="1029972660">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">289</int>
-						<string key="NSFrame">{{256, 78}, {44, 44}}</string>
+						<string key="NSFrame">{{170, 78}, {44, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -98,7 +97,7 @@
 					<object class="IBUIButton" id="492027915">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">290</int>
-						<string key="NSFrame">{{20, 20}, {280, 44}}</string>
+						<string key="NSFrame">{{20, 20}, {194, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="715763044"/>
@@ -121,7 +120,7 @@
 					<object class="IBUITableView" id="756777524">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{20, 20}, {280, 135}}</string>
+						<string key="NSFrame">{{20, 20}, {194, 135}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -137,7 +136,7 @@
 						<float key="IBUISectionFooterHeight">22</float>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 175}</string>
+				<string key="NSFrameSize">{234, 175}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="492027915"/>
@@ -232,8 +231,8 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="492027915"/>
 							<reference ref="1029972660"/>
-							<reference ref="715763044"/>
 							<reference ref="756777524"/>
+							<reference ref="715763044"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>

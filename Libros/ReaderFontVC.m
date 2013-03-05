@@ -32,6 +32,7 @@
         
         self.currentFace = [[NSUserDefaults standardUserDefaults] integerForKey:FONT_FACE_KEY];
         if (!self.currentFace) self.currentFace = ReaderFontPalatino;
+        
     }
     return self;
 }
@@ -39,6 +40,7 @@
 // does NOT get called if you just create it
 - (void)viewDidLoad
 {
+    self.contentSizeForViewInPopover = self.view.frame.size;
     [super viewDidLoad];
 }
 

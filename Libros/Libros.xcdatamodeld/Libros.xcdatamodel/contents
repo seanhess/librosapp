@@ -9,11 +9,12 @@
         <attribute name="audioFiles" optional="YES" attributeType="Integer 16" syncable="YES"/>
         <attribute name="author" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="bookId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="currentChapter" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="currentPage" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="descriptionText" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="downloaded" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
         <attribute name="genre" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="preferredFormat" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="purchased" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="textFiles" optional="YES" attributeType="Integer 16" syncable="YES"/>
@@ -38,7 +39,7 @@
     </entity>
     <elements>
         <element name="Author" positionX="160" positionY="192" width="128" height="90"/>
-        <element name="Book" positionX="160" positionY="192" width="128" height="255"/>
+        <element name="Book" positionX="160" positionY="192" width="128" height="270"/>
         <element name="File" positionX="160" positionY="192" width="128" height="120"/>
         <element name="Genre" positionX="160" positionY="192" width="128" height="60"/>
         <element name="User" positionX="160" positionY="192" width="128" height="75"/>
