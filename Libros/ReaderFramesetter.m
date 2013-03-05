@@ -73,7 +73,10 @@
     NSInteger location = 0;
     
     NSAttributedString * text = [self.delegate textForChapter:chapter];
-    NSAssert(text, @"Delegate did not return text");
+    if (!text) {
+        NSLog(@"NO TEXT for chapter %i", chapter);
+        return [NSMutableArray array];
+    }
     
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)text);
     

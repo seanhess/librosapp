@@ -230,6 +230,12 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 - (void)updateControlsFromBook {
     self.bottomControlsView.hidden = (self.book.audioFilesValue ==  0);
     self.fontButton.hidden = (self.book.textFilesValue == 0);
+    
+    if (self.book.textFilesValue == 0) {
+        CGRect frame = self.topControlsView.frame;
+        frame.size.height -= 25;
+        self.topControlsView.frame = frame;
+    }
 }
 
 - (IBAction)didTapBack:(id)sender {
@@ -387,6 +393,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 - (NSAttributedString*)textForChapter:(NSInteger)chapter {
     NSLog(@"TEXT FOR CHAPTER %i size=%i", chapter, self.fontController.currentSize);
+    if (chapter < 0 || chapter >= self.textFiles.count) return nil;
     return [self.formatter textForFile:self.textFiles[chapter] withFont:self.fontController.currentFace fontSize:self.fontController.currentSize];
 }
 
@@ -478,6 +485,10 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (void)hideControls {
+    
+    // this is NOT the right place to do this
+    if (self.textFiles.count == 0) return;
+    
     [UIView beginAnimations:@"controls" context:nil];
     self.bottomControlsView.alpha = 0.0;
     self.topControlsView.alpha = 0.0;
@@ -591,6 +602,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (File*)audioFileForChapter:(NSInteger)chapter {
+    if (chapter < 0 || chapter >= self.audioFiles.count) return nil;
     return self.audioFiles[chapter];
 }
 
