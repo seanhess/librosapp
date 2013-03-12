@@ -60,6 +60,7 @@
 						<array key="IBUIGestureRecognizers" id="0"/>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<bool key="IBUIPagingEnabled">YES</bool>
+						<bool key="IBUIShowsHorizontalScrollIndicator">NO</bool>
 						<bool key="IBUIShowsVerticalScrollIndicator">NO</bool>
 						<float key="IBUIMinimumZoomScale">0.0</float>
 						<float key="IBUIMaximumZoomScale">0.0</float>
@@ -1045,6 +1046,75 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">ReaderVC</string>
 					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="didClickNextChapter:">id</string>
+						<string key="didClickPlay:">id</string>
+						<string key="didClickPrevChapter:">id</string>
+						<string key="didClickRate:">id</string>
+						<string key="didClickVolume:">id</string>
+						<string key="didSlideAudio:">id</string>
+						<string key="didSlidePage:">id</string>
+						<string key="didSlideVolume:">id</string>
+						<string key="didTapBack:">id</string>
+						<string key="didTapFont:">id</string>
+						<string key="didTapLibrary:">id</string>
+						<string key="didTapText:">UITapGestureRecognizer</string>
+						<string key="didTapToC:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="didClickNextChapter:">
+							<string key="name">didClickNextChapter:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didClickPlay:">
+							<string key="name">didClickPlay:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didClickPrevChapter:">
+							<string key="name">didClickPrevChapter:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didClickRate:">
+							<string key="name">didClickRate:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didClickVolume:">
+							<string key="name">didClickVolume:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didSlideAudio:">
+							<string key="name">didSlideAudio:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didSlidePage:">
+							<string key="name">didSlidePage:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didSlideVolume:">
+							<string key="name">didSlideVolume:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didTapBack:">
+							<string key="name">didTapBack:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didTapFont:">
+							<string key="name">didTapFont:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didTapLibrary:">
+							<string key="name">didTapLibrary:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didTapText:">
+							<string key="name">didTapText:</string>
+							<string key="candidateClassName">UITapGestureRecognizer</string>
+						</object>
+						<object class="IBActionInfo" key="didTapToC:">
+							<string key="name">didTapToC:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="audioProgress">UISlider</string>
 						<string key="audioRemainingLabel">UILabel</string>

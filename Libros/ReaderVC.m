@@ -242,9 +242,13 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (IBAction)didTapToC:(id)sender {
-    NSLog(@"TOC");
     ReaderTableOfContentsVC * toc = [ReaderTableOfContentsVC new];
-    toc.files = self.textFiles;
+    
+    if (self.audioFiles.count > self.textFiles.count)
+        toc.files = self.audioFiles;
+    else
+        toc.files = self.textFiles;
+    
     toc.delegate = self;
     [self.navigationController presentViewController:toc animated:YES completion:nil];
 }
