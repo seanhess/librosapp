@@ -12,6 +12,7 @@
 #import "Author.h"
 #import "StoreBookResultsVC.h"
 #import "NSString+FetchedGroupByString.h"
+#import "MetricsService.h"
 
 @interface StoreAuthorsVC ()
 @property (nonatomic, strong) NSFetchedResultsController * fetchedResultsController;
@@ -44,6 +45,10 @@
     [self.fetchedResultsController setDelegate:self];
     NSError *error = nil;
     [self.fetchedResultsController performFetch:&error];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [MetricsService storeAuthorsLoad];
 }
 
 - (void)didReceiveMemoryWarning

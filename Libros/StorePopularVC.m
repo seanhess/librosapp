@@ -8,6 +8,7 @@
 
 #import "StorePopularVC.h"
 #import "BookService.h"
+#import "MetricsService.h"
 
 @interface StorePopularVC ()
 
@@ -21,6 +22,10 @@
         [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar-icon-popular-selected"] withFinishedUnselectedImage:[UIImage imageNamed:@"tabbar-icon-popular"]];
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [MetricsService storePopularLoad];
 }
 
 - (void)viewDidLoad

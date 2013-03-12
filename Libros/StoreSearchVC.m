@@ -15,6 +15,7 @@
 #import "BookService.h"
 #import "StoreDetailsVC.h"
 #import "ObjectStore.h"
+#import "MetricsService.h"
 
 @interface StoreSearchVC ()
 @property (weak, nonatomic) IBOutlet UISearchBar * searchBar;
@@ -38,6 +39,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [MetricsService storeSearchLoad];
 }
 
 - (void)viewDidLoad

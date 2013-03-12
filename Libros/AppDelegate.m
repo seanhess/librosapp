@@ -10,6 +10,7 @@
 #import "ObjectStore.h"
 #import "ReaderFormatter.h"
 #import "IAPurchaseCommand.h"
+#import "MetricsService.h"
 
 @implementation AppDelegate
 
@@ -17,11 +18,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // override point for customization after application launch.
+    // GENERIC tab bar override
     UIImage *tabBarBackground = [UIImage imageNamed:@"tabbar-background"];
     UIImage *tabBarBackgroundSelected = [UIImage imageNamed:@"tabbar-background-selected"];
     [[UITabBar appearance] setBackgroundImage:tabBarBackground];
     [[UITabBar appearance] setSelectionIndicatorImage:tabBarBackgroundSelected];
+    
+    [MetricsService launch];
     
     return YES;
 }

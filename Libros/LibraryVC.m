@@ -15,6 +15,7 @@
 #import "ReaderVC.h"
 #import "StoreBookCell.h"
 #import "LibraryBookCoverCell.h"
+#import "MetricsService.h"
 
 @interface LibraryVC () <NSFetchedResultsControllerDelegate, UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -49,6 +50,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [MetricsService libraryLoad];
     self.wantsFullScreenLayout = NO;
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     [self.navigationController setNavigationBarHidden:NO];
@@ -80,11 +82,13 @@
         self.collectionView.hidden = NO;
         self.tableView.hidden = YES;
         self.layoutButton.title = @"List";
+        [MetricsService libraryListLayout];
     }
     else {
         self.collectionView.hidden = YES;
         self.tableView.hidden = NO;
         self.layoutButton.title = @"Grid";
+        [MetricsService libraryGridLayout];
     }
 }
 

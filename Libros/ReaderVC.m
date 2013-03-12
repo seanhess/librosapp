@@ -49,6 +49,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 #import "UIViewController+MiniModal.h"
 #import <AVFoundation/AVFoundation.h>
 #import <WEPopover/WEPopoverController.h>
+#import "MetricsService.h"
 
 #define DRAG_GRAVITY 15
 
@@ -109,6 +110,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [MetricsService readerLoadedBook:self.book];
     
     self.fontController = [ReaderFontVC new];
     self.fontController.delegate = self;
@@ -243,6 +246,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 - (IBAction)didTapToC:(id)sender {
     ReaderTableOfContentsVC * toc = [ReaderTableOfContentsVC new];
+    [MetricsService readerTappedToc:self.book];
     
     if (self.audioFiles.count > self.textFiles.count)
         toc.files = self.audioFiles;
@@ -260,6 +264,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 -(void)didSelectChapter:(NSInteger)chapter {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     [self loadChapter:chapter];
+    [MetricsService readerSwitchedTocChapter:self.book chapter:chapter];
 }
 
 - (void)loadChapter:(NSInteger)chapter {
@@ -289,9 +294,11 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.fontController.view.frame = CGRectMake(0, 0, 100, 100);
     self.popover = [[WEPopoverController alloc] initWithContentViewController:self.fontController];
     [self.popover presentPopoverFromRect:self.fontButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    [MetricsService readerTappedFont];
 }
 
 - (void)didChangeFont {
+    [MetricsService readerChangedFont:self.fontController.currentFace size:self.fontController.currentSize];
     [self prepareLayoutWithSize:self.view.bounds.size];
     [self commitLayout];
 }
@@ -619,6 +626,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
         [self.playButton setTitle:@"||" forState:UIControlStateNormal];
         
         if (!self.player) {
+            [MetricsService readerPlayedAudio:self.book];
             [self playerAtChapter:self.book.currentChapterValue];
         }
         
@@ -639,6 +647,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     else if (self.currentRate == 1.5) rateLabel = @"1.5x";
     else rateLabel = @"2x";
     [self.rateButton setTitle:rateLabel forState:UIControlStateNormal];
+    [MetricsService readerChangedRate:self.currentRate];
 }
 
 - (IBAction)didClickPrevChapter:(id)sender {

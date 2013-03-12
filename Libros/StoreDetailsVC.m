@@ -17,6 +17,7 @@
 #import "IAPurchaseCommand.h"
 #import <StoreKit/StoreKit.h>
 #import "Settings.h"
+#import "MetricsService.h"
 
 // TODO should download the product details when this page loads to get the price
 // because it will be different per-locale
@@ -49,6 +50,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [MetricsService storeBookLoad:self.book];
     
     // any initialization of nib things needs to happen in here, not in initWithNibName! might not be there.
     self.iconsView.padding = 7;
@@ -182,6 +185,7 @@
 }
 
 - (void)purchaseBook {
+    [MetricsService storeBookBeginBuy:self.book];
     
     if (IAP_SKIP) {
         [self didCompletePurchase:self.book];
@@ -204,6 +208,7 @@
 }
 
 - (void)didCompletePurchase:(Book *)book {
+    [MetricsService storeBookFinishBuy:self.book];
     self.purchaseCommand = nil;
     [UserService.shared addBook:self.book];
     [self renderButtonAndDownload];

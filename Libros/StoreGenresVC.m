@@ -11,6 +11,7 @@
 #import "ObjectStore.h"
 #import "Genre.h"
 #import "StoreBookResultsVC.h"
+#import "MetricsService.h"
 
 @interface StoreGenresVC ()
 @property (nonatomic, strong) NSFetchedResultsController * fetchedResultsController;
@@ -37,6 +38,10 @@
     [self.fetchedResultsController setDelegate:self];
     NSError *error = nil;
     [self.fetchedResultsController performFetch:&error];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [MetricsService storeGenresLoad];
 }
 
 - (void)didReceiveMemoryWarning
