@@ -16,6 +16,7 @@
 #import "StoreBookCell.h"
 #import "LibraryBookCoverCell.h"
 #import "MetricsService.h"
+#import "Texture.h"
 
 @interface LibraryVC () <NSFetchedResultsControllerDelegate, UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -35,8 +36,8 @@
 {
     [super viewDidLoad];
     
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"light-texture-bg.png"]];
-    self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"light-texture-bg.png"]];
+    self.tableView.backgroundColor = Texture.background;
+    self.collectionView.backgroundColor = Texture.background;
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.listButton];
     
@@ -186,20 +187,23 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(91, 130);
+    return CGSizeMake(106, 152);
 }
 
 // This is the SECTION inset. not the cell inset. OHHHH
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-    return UIEdgeInsetsMake(11, 11, 11, 11);
+//    return UIEdgeInsetsMake(11, 11, 11, 11);
+    return UIEdgeInsetsMake(0,0,0,0);
 }
 
 - (CGFloat) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 11;
+//    return 11;
+    return 0;
 }
 
 - (CGFloat) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return 11;
+//    return 11;
+    return 0;
 }
 
 - (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {

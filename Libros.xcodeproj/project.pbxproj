@@ -59,6 +59,13 @@
 		783AC96016F126B00050D966 /* navbar-rows-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 783AC95C16F126B00050D966 /* navbar-rows-icon@2x.png */; };
 		783AC96416F127240050D966 /* navbar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 783AC96216F127240050D966 /* navbar-bg.png */; };
 		783AC96516F127240050D966 /* navbar-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 783AC96316F127240050D966 /* navbar-bg@2x.png */; };
+		783AC96816F12E410050D966 /* Texture.m in Sources */ = {isa = PBXBuildFile; fileRef = 783AC96716F12E410050D966 /* Texture.m */; };
+		783AC96B16F12EF10050D966 /* book-shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 783AC96916F12EF10050D966 /* book-shadow.png */; };
+		783AC96C16F12EF10050D966 /* book-shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 783AC96A16F12EF10050D966 /* book-shadow@2x.png */; };
+		783AC97016F13B780050D966 /* reader-top-controls-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 783AC96E16F13B780050D966 /* reader-top-controls-bg.png */; };
+		783AC97116F13B780050D966 /* reader-top-controls-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 783AC96F16F13B780050D966 /* reader-top-controls-bg@2x.png */; };
+		783AC97416F13D6C0050D966 /* reader-back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 783AC97216F13D6C0050D966 /* reader-back-button.png */; };
+		783AC97516F13D6C0050D966 /* reader-back-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 783AC97316F13D6C0050D966 /* reader-back-button@2x.png */; };
 		7847A4B316A0900800106764 /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 7847A4AF16A0900800106764 /* Book.m */; };
 		7847A4B416A0900800106764 /* _Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 7847A4B216A0900800106764 /* _Book.m */; };
 		7849639D16A47D2300331C80 /* NSObject+Reflection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7849639C16A47D2300331C80 /* NSObject+Reflection.m */; };
@@ -237,6 +244,14 @@
 		783AC95C16F126B00050D966 /* navbar-rows-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar-rows-icon@2x.png"; sourceTree = "<group>"; };
 		783AC96216F127240050D966 /* navbar-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar-bg.png"; sourceTree = "<group>"; };
 		783AC96316F127240050D966 /* navbar-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar-bg@2x.png"; sourceTree = "<group>"; };
+		783AC96616F12E410050D966 /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
+		783AC96716F12E410050D966 /* Texture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Texture.m; sourceTree = "<group>"; };
+		783AC96916F12EF10050D966 /* book-shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "book-shadow.png"; sourceTree = "<group>"; };
+		783AC96A16F12EF10050D966 /* book-shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "book-shadow@2x.png"; sourceTree = "<group>"; };
+		783AC96E16F13B780050D966 /* reader-top-controls-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reader-top-controls-bg.png"; sourceTree = "<group>"; };
+		783AC96F16F13B780050D966 /* reader-top-controls-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reader-top-controls-bg@2x.png"; sourceTree = "<group>"; };
+		783AC97216F13D6C0050D966 /* reader-back-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reader-back-button.png"; sourceTree = "<group>"; };
+		783AC97316F13D6C0050D966 /* reader-back-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reader-back-button@2x.png"; sourceTree = "<group>"; };
 		7847A4AE16A0900800106764 /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
 		7847A4AF16A0900800106764 /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
 		7847A4B116A0900800106764 /* _Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Book.h; sourceTree = "<group>"; };
@@ -585,6 +600,8 @@
 		783AC95816F126B00050D966 /* library */ = {
 			isa = PBXGroup;
 			children = (
+				783AC96916F12EF10050D966 /* book-shadow.png */,
+				783AC96A16F12EF10050D966 /* book-shadow@2x.png */,
 				783AC95916F126B00050D966 /* navbar-grid-icon.png */,
 				783AC95A16F126B00050D966 /* navbar-grid-icon@2x.png */,
 				783AC95B16F126B00050D966 /* navbar-rows-icon.png */,
@@ -602,6 +619,18 @@
 			);
 			name = nav;
 			path = images/nav;
+			sourceTree = SOURCE_ROOT;
+		};
+		783AC96D16F13B780050D966 /* reader */ = {
+			isa = PBXGroup;
+			children = (
+				783AC97216F13D6C0050D966 /* reader-back-button.png */,
+				783AC97316F13D6C0050D966 /* reader-back-button@2x.png */,
+				783AC96E16F13B780050D966 /* reader-top-controls-bg.png */,
+				783AC96F16F13B780050D966 /* reader-top-controls-bg@2x.png */,
+			);
+			name = reader;
+			path = images/reader;
 			sourceTree = SOURCE_ROOT;
 		};
 		7847A4AD16A0900800106764 /* Human */ = {
@@ -648,6 +677,7 @@
 				783AC95316F123E40050D966 /* background */,
 				78AF2FD216DD770100EA4023 /* tabbar */,
 				789C981F16B985C000EA9B06 /* components */,
+				783AC96D16F13B780050D966 /* reader */,
 				789C983D16B985C000EA9B06 /* icons */,
 			);
 			name = images;
@@ -783,6 +813,8 @@
 				78D0542616C988130037311C /* UIView+Nibs.m */,
 				78F3B3DA16DFF60900277771 /* UIViewController+MiniModal.h */,
 				78F3B3DB16DFF60900277771 /* UIViewController+MiniModal.m */,
+				783AC96616F12E410050D966 /* Texture.h */,
+				783AC96716F12E410050D966 /* Texture.m */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -973,6 +1005,12 @@
 				783AC96016F126B00050D966 /* navbar-rows-icon@2x.png in Resources */,
 				783AC96416F127240050D966 /* navbar-bg.png in Resources */,
 				783AC96516F127240050D966 /* navbar-bg@2x.png in Resources */,
+				783AC96B16F12EF10050D966 /* book-shadow.png in Resources */,
+				783AC96C16F12EF10050D966 /* book-shadow@2x.png in Resources */,
+				783AC97016F13B780050D966 /* reader-top-controls-bg.png in Resources */,
+				783AC97116F13B780050D966 /* reader-top-controls-bg@2x.png in Resources */,
+				783AC97416F13D6C0050D966 /* reader-back-button.png in Resources */,
+				783AC97516F13D6C0050D966 /* reader-back-button@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1085,6 +1123,7 @@
 				78F3B3D516DFEE9900277771 /* ReaderFontVC.m in Sources */,
 				78F3B3DC16DFF60900277771 /* UIViewController+MiniModal.m in Sources */,
 				787E8BB916EFD41600338954 /* MetricsService.m in Sources */,
+				783AC96816F12E410050D966 /* Texture.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

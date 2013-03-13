@@ -10,8 +10,12 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <QuartzCore/QuartzCore.h>
 
+#define IMAGE_WIDTH 89
+#define IMAGE_HEIGHT 135
+
 @interface LibraryBookCoverCell ()
 @property (nonatomic, strong) UIImageView * imageView;
+@property (nonatomic, strong) UIImageView * dropShadowImageView;
 @end
 
 @implementation LibraryBookCoverCell
@@ -20,11 +24,19 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.imageView = [[UIImageView alloc] initWithFrame:self.bounds];
-        self.layer.shadowColor = UIColor.blackColor.CGColor;
-        self.layer.shadowOffset = CGSizeMake(-2, 0);
-        self.layer.shadowOpacity = 0.8;
-        self.layer.shadowRadius = 4.0;
+        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(11, 6, IMAGE_WIDTH, IMAGE_HEIGHT)];
+//        self.imageView.contentMode = UIViewContentModeTopLeft;
+        self.dropShadowImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"book-shadow.png"]];
+        self.dropShadowImageView.contentMode = UIViewContentModeTopLeft;
+        //        self.dropShadowImageView
+        NSLog(@"UMMM %@", NSStringFromCGRect(self.bounds));
+        
+//        self.layer.shadowColor = UIColor.blackColor.CGColor;
+//        self.layer.shadowOffset = CGSizeMake(-2, 0);
+//        self.layer.shadowOpacity = 0.8;
+//        self.layer.shadowRadius = 4.0;
+        
+        [self addSubview:self.dropShadowImageView];
         [self addSubview:self.imageView];
     }
     return self;

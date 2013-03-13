@@ -68,6 +68,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 @property (weak, nonatomic) IBOutlet UIView *bottomControlsView;
 @property (weak, nonatomic) IBOutlet UIView *topControlsView;
+@property (weak, nonatomic) IBOutlet UIImageView *topControlsBackground;
 @property (weak, nonatomic) IBOutlet UIButton *fontButton;
 @property (weak, nonatomic) IBOutlet UILabel *bookTitle;
 @property (weak, nonatomic) IBOutlet UILabel *chapterTitle;
@@ -112,6 +113,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     [super viewDidLoad];
     
     [MetricsService readerLoadedBook:self.book];
+    
+    self.topControlsBackground.image = [UIImage imageNamed:@"reader-top-controls-bg.png"];
     
     self.fontController = [ReaderFontVC new];
     self.fontController.delegate = self;
