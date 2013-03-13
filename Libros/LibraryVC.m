@@ -23,16 +23,22 @@
 @property (nonatomic, strong) Book * selectedBook;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *layoutButton;
+@property (strong, nonatomic) IBOutlet UIButton *listButton;
+@property (strong, nonatomic) IBOutlet UIButton *gridButton;
 @end
 
-
+// Image Size: 178 x 270
 
 @implementation LibraryVC
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"light-texture-bg.png"]];
+    self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"light-texture-bg.png"]];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.listButton];
     
     self.wantsFullScreenLayout = NO;
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
@@ -81,13 +87,13 @@
     if (self.collectionView.hidden) {
         self.collectionView.hidden = NO;
         self.tableView.hidden = YES;
-        self.layoutButton.title = @"List";
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.listButton];
         [MetricsService libraryListLayout];
     }
     else {
         self.collectionView.hidden = YES;
         self.tableView.hidden = NO;
-        self.layoutButton.title = @"Grid";
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.gridButton];
         [MetricsService libraryGridLayout];
     }
 }

@@ -24,6 +24,9 @@
     [[UITabBar appearance] setBackgroundImage:tabBarBackground];
     [[UITabBar appearance] setSelectionIndicatorImage:tabBarBackgroundSelected];
     
+    // GENERIC NAVIGATION BAR
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar-bg.png"] forBarMetrics:UIBarMetricsDefault];
+    
     [MetricsService launch];
     
     return YES;

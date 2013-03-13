@@ -22,9 +22,9 @@
     if (self) {
         self.imageView = [[UIImageView alloc] initWithFrame:self.bounds];
         self.layer.shadowColor = UIColor.blackColor.CGColor;
-        self.layer.shadowOffset = CGSizeMake(0, 0);
+        self.layer.shadowOffset = CGSizeMake(-2, 0);
         self.layer.shadowOpacity = 0.8;
-        self.layer.shadowRadius = 7.0;
+        self.layer.shadowRadius = 4.0;
         [self addSubview:self.imageView];
     }
     return self;
