@@ -12,6 +12,7 @@
 #import "Genre.h"
 #import "StoreBookResultsVC.h"
 #import "MetricsService.h"
+#import "Appearance.h"
 
 @interface StoreGenresVC ()
 @property (nonatomic, strong) NSFetchedResultsController * fetchedResultsController;
@@ -31,6 +32,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.tableView.backgroundColor = Appearance.background;
     
     [[GenreService shared] load];
     NSFetchRequest * request = [[GenreService shared] allGenres];

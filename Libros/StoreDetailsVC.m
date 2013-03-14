@@ -18,6 +18,7 @@
 #import <StoreKit/StoreKit.h>
 #import "Settings.h"
 #import "MetricsService.h"
+#import "Appearance.h"
 
 // TODO should download the product details when this page loads to get the price
 // because it will be different per-locale
@@ -50,6 +51,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.scrollView.backgroundColor = Appearance.background;
     
     [MetricsService storeBookLoad:self.book];
     

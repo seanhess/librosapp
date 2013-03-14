@@ -49,8 +49,8 @@
 -(NSFetchRequest*)allAuthors {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Author"];
     fetchRequest.sortDescriptors = @[
-        [NSSortDescriptor sortDescriptorWithKey:@"lastName" ascending:YES],
-        [NSSortDescriptor sortDescriptorWithKey:@"firstName" ascending:YES]
+        [[NSSortDescriptor alloc] initWithKey:@"lastName" ascending:YES selector:@selector(caseInsensitiveCompare:)],
+        [[NSSortDescriptor alloc] initWithKey:@"firstName" ascending:YES selector:@selector(caseInsensitiveCompare:)]
     ];
     return fetchRequest;
 }

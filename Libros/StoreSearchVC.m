@@ -16,6 +16,7 @@
 #import "StoreDetailsVC.h"
 #import "ObjectStore.h"
 #import "MetricsService.h"
+#import "Appearance.h"
 
 @interface StoreSearchVC ()
 @property (weak, nonatomic) IBOutlet UISearchBar * searchBar;
@@ -45,6 +46,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.tableView.backgroundColor = Appearance.background;
+    
     [self.searchBar becomeFirstResponder];
     
     self.authorResults = [[NSFetchedResultsController alloc] initWithFetchRequest:AuthorService.shared.allAuthors managedObjectContext:ObjectStore.shared.context sectionNameKeyPath:nil cacheName:nil];

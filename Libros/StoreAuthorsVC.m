@@ -13,6 +13,7 @@
 #import "StoreBookResultsVC.h"
 #import "NSString+FetchedGroupByString.h"
 #import "MetricsService.h"
+#import "Appearance.h"
 
 @interface StoreAuthorsVC ()
 @property (nonatomic, strong) NSFetchedResultsController * fetchedResultsController;
@@ -32,6 +33,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.tableView.backgroundColor = Appearance.background;
     
     [[AuthorService shared] load];
     NSFetchRequest * request = [[AuthorService shared] allAuthors];

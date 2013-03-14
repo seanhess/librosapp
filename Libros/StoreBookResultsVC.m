@@ -14,6 +14,7 @@
 #import "StoreBookCell.h"
 #import "StoreDetailsVC.h"
 #import "StoreBookResultsFilterView.h"
+#import "Appearance.h"
 
 @interface StoreBookResultsVC ()
 
@@ -29,6 +30,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.tableView.backgroundColor = Appearance.background;
     
     self.currentFilter = BookFilterEverything;
     self.originalPredicate = self.fetchRequest.predicate;
