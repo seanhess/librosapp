@@ -21,12 +21,12 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(11, 6, COVER_IMAGE_WIDTH, COVER_IMAGE_HEIGHT)];
+        // self.backgroundColor = [UIColor redColor];
+        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(9, 6, COVER_IMAGE_WIDTH, COVER_IMAGE_HEIGHT)];
 //        self.imageView.contentMode = UIViewContentModeTopLeft;
         self.dropShadowImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"book-shadow.png"]];
         self.dropShadowImageView.contentMode = UIViewContentModeTopLeft;
-        //        self.dropShadowImageView
-        NSLog(@"UMMM %@", NSStringFromCGRect(self.bounds));
+        self.dropShadowImageView.frame = CGRectMake(-2, 0, self.dropShadowImageView.image.size.width, self.dropShadowImageView.image.size.height);
         
 //        self.layer.shadowColor = UIColor.blackColor.CGColor;
 //        self.layer.shadowOffset = CGSizeMake(-2, 0);

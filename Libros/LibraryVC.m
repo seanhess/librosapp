@@ -191,7 +191,7 @@
 // This is the SECTION inset. not the cell inset. OHHHH
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
 //    return UIEdgeInsetsMake(11, 11, 11, 11);
-    return UIEdgeInsetsMake(0,0,0,0);
+    return UIEdgeInsetsMake(8,0,0,0);
 }
 
 - (CGFloat) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
