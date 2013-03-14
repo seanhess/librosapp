@@ -11,6 +11,8 @@
 #import "ReaderFormatter.h"
 #import "IAPurchaseCommand.h"
 #import "MetricsService.h"
+#import "Appearance.h"
+
 
 @implementation AppDelegate
 
@@ -18,14 +20,18 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSDictionary * navigationTextAttributes = @{UITextAttributeTextColor: Appearance.lightGray};
+    
     // GENERIC tab bar override
     UIImage *tabBarBackground = [UIImage imageNamed:@"tabbar-background"];
     UIImage *tabBarBackgroundSelected = [UIImage imageNamed:@"tabbar-background-selected"];
     [[UITabBar appearance] setBackgroundImage:tabBarBackground];
     [[UITabBar appearance] setSelectionIndicatorImage:tabBarBackgroundSelected];
+    [[UITabBarItem appearance] setTitleTextAttributes:navigationTextAttributes forState:UIControlStateNormal];
     
     // GENERIC NAVIGATION BAR
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar-bg.png"] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setTitleTextAttributes:navigationTextAttributes];
     
     [MetricsService launch];
     

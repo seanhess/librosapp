@@ -59,7 +59,7 @@
 		783AC96016F126B00050D966 /* navbar-rows-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 783AC95C16F126B00050D966 /* navbar-rows-icon@2x.png */; };
 		783AC96416F127240050D966 /* navbar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 783AC96216F127240050D966 /* navbar-bg.png */; };
 		783AC96516F127240050D966 /* navbar-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 783AC96316F127240050D966 /* navbar-bg@2x.png */; };
-		783AC96816F12E410050D966 /* Texture.m in Sources */ = {isa = PBXBuildFile; fileRef = 783AC96716F12E410050D966 /* Texture.m */; };
+		783AC96816F12E410050D966 /* Appearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 783AC96716F12E410050D966 /* Appearance.m */; };
 		783AC96B16F12EF10050D966 /* book-shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 783AC96916F12EF10050D966 /* book-shadow.png */; };
 		783AC96C16F12EF10050D966 /* book-shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 783AC96A16F12EF10050D966 /* book-shadow@2x.png */; };
 		783AC97016F13B780050D966 /* reader-top-controls-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 783AC96E16F13B780050D966 /* reader-top-controls-bg.png */; };
@@ -250,8 +250,8 @@
 		783AC95C16F126B00050D966 /* navbar-rows-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar-rows-icon@2x.png"; sourceTree = "<group>"; };
 		783AC96216F127240050D966 /* navbar-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar-bg.png"; sourceTree = "<group>"; };
 		783AC96316F127240050D966 /* navbar-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar-bg@2x.png"; sourceTree = "<group>"; };
-		783AC96616F12E410050D966 /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
-		783AC96716F12E410050D966 /* Texture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Texture.m; sourceTree = "<group>"; };
+		783AC96616F12E410050D966 /* Appearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appearance.h; sourceTree = "<group>"; };
+		783AC96716F12E410050D966 /* Appearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appearance.m; sourceTree = "<group>"; };
 		783AC96916F12EF10050D966 /* book-shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "book-shadow.png"; sourceTree = "<group>"; };
 		783AC96A16F12EF10050D966 /* book-shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "book-shadow@2x.png"; sourceTree = "<group>"; };
 		783AC96E16F13B780050D966 /* reader-top-controls-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reader-top-controls-bg.png"; sourceTree = "<group>"; };
@@ -834,8 +834,8 @@
 				78D0542616C988130037311C /* UIView+Nibs.m */,
 				78F3B3DA16DFF60900277771 /* UIViewController+MiniModal.h */,
 				78F3B3DB16DFF60900277771 /* UIViewController+MiniModal.m */,
-				783AC96616F12E410050D966 /* Texture.h */,
-				783AC96716F12E410050D966 /* Texture.m */,
+				783AC96616F12E410050D966 /* Appearance.h */,
+				783AC96716F12E410050D966 /* Appearance.m */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -1148,7 +1148,7 @@
 				78F3B3D516DFEE9900277771 /* ReaderFontVC.m in Sources */,
 				78F3B3DC16DFF60900277771 /* UIViewController+MiniModal.m in Sources */,
 				787E8BB916EFD41600338954 /* MetricsService.m in Sources */,
-				783AC96816F12E410050D966 /* Texture.m in Sources */,
+				783AC96816F12E410050D966 /* Appearance.m in Sources */,
 				783AC98016F142660050D966 /* LibraryOpenAnimationView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

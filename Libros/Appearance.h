@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Texture : NSObject
+@interface Appearance : NSObject
 
 +(UIColor*)background;
++(UIColor*)lightGray;
 
 @end

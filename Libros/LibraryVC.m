@@ -16,7 +16,7 @@
 #import "StoreBookCell.h"
 #import "LibraryBookCoverCell.h"
 #import "MetricsService.h"
-#import "Texture.h"
+#import "Appearance.h"
 #import "LibraryOpenAnimationView.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -38,8 +38,8 @@
 {
     [super viewDidLoad];
     
-    self.tableView.backgroundColor = Texture.background;
-    self.collectionView.backgroundColor = Texture.background;
+    self.tableView.backgroundColor = Appearance.background;
+    self.collectionView.backgroundColor = Appearance.background;
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.listButton];
     
