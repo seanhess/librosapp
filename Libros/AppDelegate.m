@@ -33,6 +33,13 @@
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar-bg.png"] forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setTitleTextAttributes:navigationTextAttributes];
     
+    [[UIBarButtonItem appearance] setBackgroundImage:[UIImage imageNamed:@"navbar-button.png"] forState:UIControlStateNormal style:UIBarButtonItemStyleBordered barMetrics:UIBarMetricsDefault];
+    
+    // TODO: switch to button with arrow in it
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[UIImage imageNamed:@"navbar-button.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
+    [[UISearchBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar-bg.png"]];
+    
     [MetricsService launch];
     
     return YES;

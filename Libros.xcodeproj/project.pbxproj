@@ -72,6 +72,7 @@
 		783AC97D16F1400F0050D966 /* reader-text-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 783AC97916F1400F0050D966 /* reader-text-button@2x.png */; };
 		783AC98016F142660050D966 /* LibraryOpenAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 783AC97F16F142660050D966 /* LibraryOpenAnimationView.m */; };
 		7840CD6E16F22A8A00FFFCE9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7840CD6D16F22A8A00FFFCE9 /* QuartzCore.framework */; };
+		7840CD7016F23B8B00FFFCE9 /* navbar-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7840CD6F16F23B8B00FFFCE9 /* navbar-button@2x.png */; };
 		7847A4B316A0900800106764 /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 7847A4AF16A0900800106764 /* Book.m */; };
 		7847A4B416A0900800106764 /* _Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 7847A4B216A0900800106764 /* _Book.m */; };
 		7849639D16A47D2300331C80 /* NSObject+Reflection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7849639C16A47D2300331C80 /* NSObject+Reflection.m */; };
@@ -265,6 +266,7 @@
 		783AC97E16F142660050D966 /* LibraryOpenAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryOpenAnimationView.h; sourceTree = "<group>"; };
 		783AC97F16F142660050D966 /* LibraryOpenAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryOpenAnimationView.m; sourceTree = "<group>"; };
 		7840CD6D16F22A8A00FFFCE9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		7840CD6F16F23B8B00FFFCE9 /* navbar-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar-button@2x.png"; sourceTree = "<group>"; };
 		7847A4AE16A0900800106764 /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
 		7847A4AF16A0900800106764 /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
 		7847A4B116A0900800106764 /* _Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Book.h; sourceTree = "<group>"; };
@@ -631,6 +633,7 @@
 		783AC96116F127240050D966 /* nav */ = {
 			isa = PBXGroup;
 			children = (
+				7840CD6F16F23B8B00FFFCE9 /* navbar-button@2x.png */,
 				783AC96216F127240050D966 /* navbar-bg.png */,
 				783AC96316F127240050D966 /* navbar-bg@2x.png */,
 			);
@@ -1036,6 +1039,7 @@
 				783AC97B16F1400F0050D966 /* reader-table-of-contents-button@2x.png in Resources */,
 				783AC97C16F1400F0050D966 /* reader-text-button.png in Resources */,
 				783AC97D16F1400F0050D966 /* reader-text-button@2x.png in Resources */,
+				7840CD7016F23B8B00FFFCE9 /* navbar-button@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
