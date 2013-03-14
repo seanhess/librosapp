@@ -135,14 +135,14 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.textFiles = [fs textFiles:allFiles];
     self.audioFiles = [fs audioFiles:allFiles];
     self.numChapters = self.textFiles.count;
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
     
     [self updateControlsFromBook];
     
-    [self hideControlsInABit];
-    
     // INITIALIZE
     self.formatter = [ReaderFormatter new];
+    
+    [self hideControlsInABit];
     
     // TOO EARLY TO DRAW! View Size is wrong
     // you can call reloadData early and it doesn't fire twice
@@ -502,7 +502,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     // this is NOT the right place to do this
     if (self.textFiles.count == 0) return;
     
-    [UIView beginAnimations:@"controls" context:nil];
     [UIView animateWithDuration:0.2 animations:^{
         self.bottomControlsView.alpha = 0.0;
         
