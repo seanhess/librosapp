@@ -426,6 +426,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (void)displayChapter {
+    if (self.book.currentChapterValue >= self.book.allFiles.count) return;
     File * file = self.book.allFiles[self.book.currentChapterValue];
     self.chapterTitle.text = file.name;
 }
@@ -502,9 +503,13 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     if (self.textFiles.count == 0) return;
     
     [UIView beginAnimations:@"controls" context:nil];
-    self.bottomControlsView.alpha = 0.0;
-    self.topControlsView.alpha = 0.0;
-    [UIView commitAnimations];
+    [UIView animateWithDuration:0.2 animations:^{
+        self.bottomControlsView.alpha = 0.0;
+        
+        CGRect topFrame = self.topControlsView.frame;
+        topFrame.origin.y = -topFrame.size.height;
+        self.topControlsView.frame = topFrame;
+    }];
     
     self.volumeView.hidden = YES;
     
@@ -512,10 +517,14 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
         [self dismissMiniViewController];
 }
 - (void)showControls {
-    [UIView beginAnimations:@"controls" context:nil];
-    self.bottomControlsView.alpha = 1.0;
-    self.topControlsView.alpha = 1.0;
-    [UIView commitAnimations];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        self.bottomControlsView.alpha = 1.0;
+        
+        CGRect topFrame = self.topControlsView.frame;
+        topFrame.origin.y = 0;
+        self.topControlsView.frame = topFrame;
+    }];
 }
 
 #pragma mark UICollectionViewDelegate

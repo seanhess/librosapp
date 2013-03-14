@@ -10,9 +10,6 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <QuartzCore/QuartzCore.h>
 
-#define IMAGE_WIDTH 89
-#define IMAGE_HEIGHT 135
-
 @interface LibraryBookCoverCell ()
 @property (nonatomic, strong) UIImageView * imageView;
 @property (nonatomic, strong) UIImageView * dropShadowImageView;
@@ -24,7 +21,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(11, 6, IMAGE_WIDTH, IMAGE_HEIGHT)];
+        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(11, 6, COVER_IMAGE_WIDTH, COVER_IMAGE_HEIGHT)];
 //        self.imageView.contentMode = UIViewContentModeTopLeft;
         self.dropShadowImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"book-shadow.png"]];
         self.dropShadowImageView.contentMode = UIViewContentModeTopLeft;
@@ -45,6 +42,14 @@
 -(void)setBook:(Book *)book {
     _book = book;
     [self.imageView setImageWithURL:[NSURL URLWithString:self.book.imageUrl] placeholderImage:nil completed:nil];
+}
+
+-(UIImage*)cachedImage {
+    return self.imageView.image;
+}
+
+-(CGRect)cachedImageFrame {
+    return self.imageView.frame;
 }
 
 @end

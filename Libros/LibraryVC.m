@@ -17,6 +17,8 @@
 #import "LibraryBookCoverCell.h"
 #import "MetricsService.h"
 #import "Texture.h"
+#import "LibraryOpenAnimationView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface LibraryVC () <NSFetchedResultsControllerDelegate, UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -43,7 +45,7 @@
     
     self.wantsFullScreenLayout = NO;
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-    [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
     
     [self.collectionView registerClass:[LibraryBookCoverCell class] forCellWithReuseIdentifier:@"LibraryBookCover"];
     
@@ -60,7 +62,7 @@
     [MetricsService libraryLoad];
     self.wantsFullScreenLayout = NO;
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-    [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -155,14 +157,10 @@
 
 #pragma mark - Table view delegate
 
-- (void)selectBookAtIndexPath:(NSIndexPath*)indexPath {
-    Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [self showReader:book];
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self selectBookAtIndexPath:indexPath];
+    Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [self showReader:book];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -206,8 +204,36 @@
     return 0;
 }
 
+// This guy owns its own view
+
 - (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self selectBookAtIndexPath:indexPath];
+    Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    LibraryBookCoverCell * cell = (LibraryBookCoverCell*) [collectionView cellForItemAtIndexPath:indexPath];
+    UIImage * image = [UIImage imageWithCGImage:cell.cachedImage.CGImage];
+    CGRect frame = cell.cachedImageFrame;
+    frame.origin.x += cell.frame.origin.x;
+    frame.origin.y += cell.frame.origin.y;
+    LibraryOpenAnimationView * view = [[LibraryOpenAnimationView alloc] initWithImage:image frame:frame];
+    [self.view addSubview:view];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+    // Now, animate it BIGGGGG
+    [UIView animateWithDuration:0.3 animations:^{
+        view.frame = self.view.frame;
+    } completion:^(BOOL finished) {
+        ReaderVC * readervc = [ReaderVC new];
+        readervc.book = book;
+        
+        CATransition * transition = [CATransition animation];
+        transition.duration = 0.3;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
+        transition.type = kCATransitionFade;
+        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+        [self.navigationController pushViewController:readervc animated:NO];
+        
+        [view removeFromSuperview];
+    }];
 }
 
 - (void)showReader:(Book*)book {
