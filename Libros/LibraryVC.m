@@ -26,8 +26,7 @@
 @property (nonatomic, strong) Book * selectedBook;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (strong, nonatomic) IBOutlet UIButton *listButton;
-@property (strong, nonatomic) IBOutlet UIButton *gridButton;
+@property (strong, nonatomic) UIButton *layoutButton;
 @end
 
 // Image Size: 178 x 270
@@ -41,7 +40,11 @@
     self.tableView.backgroundColor = Appearance.background;
     self.collectionView.backgroundColor = Appearance.background;
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.listButton];
+    self.layoutButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.layoutButton.frame = CGRectMake(0, 0, 37, 17); // move it over a little (17x17 normally)
+    [self.layoutButton addTarget:self action:@selector(didTapLayoutButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.layoutButton setImage:[UIImage imageNamed:@"navbar-rows-icon.png"] forState:UIControlStateNormal];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.layoutButton];
     
     self.wantsFullScreenLayout = NO;
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
@@ -90,13 +93,13 @@
     if (self.collectionView.hidden) {
         self.collectionView.hidden = NO;
         self.tableView.hidden = YES;
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.listButton];
+        [self.layoutButton setImage:[UIImage imageNamed:@"navbar-rows-icon.png"] forState:UIControlStateNormal];
         [MetricsService libraryListLayout];
     }
     else {
         self.collectionView.hidden = YES;
         self.tableView.hidden = NO;
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.gridButton];
+        [self.layoutButton setImage:[UIImage imageNamed:@"navbar-grid-icon.png"] forState:UIControlStateNormal];
         [MetricsService libraryGridLayout];
     }
 }
