@@ -7,6 +7,7 @@
 //
 
 #import "ReaderFontVC.h"
+#import "ReaderFormatter.h"
 
 #define MIN_SIZE 10
 #define DEF_SIZE 18
@@ -16,8 +17,8 @@
 #define FONT_FACE_KEY @"fontFace"
 
 @interface ReaderFontVC () <UITableViewDataSource, UITableViewDelegate>
-@property (weak, nonatomic) IBOutlet UIButton *faceButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) ReaderFormatter *formatter;
 @end
 
 @implementation ReaderFontVC
@@ -33,6 +34,7 @@
         self.currentFace = [[NSUserDefaults standardUserDefaults] integerForKey:FONT_FACE_KEY];
         if (!self.currentFace) self.currentFace = ReaderFontPalatino;
         
+        self.formatter = [ReaderFormatter new];
     }
     return self;
 }
@@ -50,9 +52,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self.faceButton setTitle:[self fontName:self.currentFace] forState:UIControlStateNormal];
-    self.tableView.alpha = 0.0;
-    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:self.currentFace-1 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:[self rowForFont:self.currentFace] inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
 
 - (IBAction)decreaseFontSize:(id)sender {
@@ -67,14 +67,8 @@
     [self.delegate didChangeFont];
 }
 
-- (IBAction)didClickFace:(id)sender {
-    [UIView animateWithDuration:0.200 animations:^{
-        self.tableView.alpha = 1.0;
-    }];
-}
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 5;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -83,27 +77,31 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
     }
-    cell.textLabel.text = [self fontName:indexPath.row+1];
+    ReaderFont font = [self fontForRow:indexPath.row];
+    cell.textLabel.text = [self.formatter humanFontName:font];
+    cell.textLabel.font = [UIFont fontWithName:[self.formatter normalFontName:font] size:14];
+    cell.textLabel.textAlignment = NSTextAlignmentCenter;
     return cell;
+}
+
+-(ReaderFont)fontForRow:(NSInteger)row {
+    return row+1;
+}
+
+-(NSInteger)rowForFont:(ReaderFont)font {
+    return font-1;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 30;
 }
 
 //-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.currentFace = indexPath.row+1;
-    [self.faceButton setTitle:[self fontName:self.currentFace] forState:UIControlStateNormal];
+    self.currentFace = [self fontForRow:indexPath.row];
     [[NSUserDefaults standardUserDefaults] setInteger:self.currentFace forKey:FONT_FACE_KEY];
     [self.delegate didChangeFont];
-    [UIView animateWithDuration:0.200 animations:^{
-        self.tableView.alpha = 0.0;
-    }];
-}
-
-- (NSString*)fontName:(ReaderFont)font {
-    if (font == ReaderFontPalatino) return @"Palatino";
-    if (font == ReaderFontTimesNewRoman) return @"Times New Roman";
-    if (font == ReaderFontHelvetica) return @"Helvetica";
-    else return nil;
 }
 
 

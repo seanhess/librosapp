@@ -64,6 +64,8 @@
     if (font == ReaderFontPalatino) return @"Palatino-Bold";
     if (font == ReaderFontTimesNewRoman) return @"TimesNewRomanPSMT-Bold";
     if (font == ReaderFontHelvetica) return @"Helvetica-Bold";
+    if (font == ReaderFontVerdana) return @"Verdana-Bold";
+    if (font == ReaderFontHoefler) return @"HoeflerText-Bold";
     else return @"Palatino-Bold";
 }
 
@@ -71,6 +73,8 @@
     if (font == ReaderFontPalatino) return @"Palatino-Italic";
     if (font == ReaderFontTimesNewRoman) return @"TimesNewRomanPSMT-Italic";
     if (font == ReaderFontHelvetica) return @"Helvetica-Italic";
+    if (font == ReaderFontVerdana) return @"Verdana-Italic";
+    if (font == ReaderFontHoefler) return @"HoeflerText-Italic";
     else return @"Palatino-Italic";
 }
 
@@ -78,7 +82,18 @@
     if (font == ReaderFontPalatino) return @"Palatino-Roman";
     if (font == ReaderFontTimesNewRoman) return @"TimesNewRomanPSMT";
     if (font == ReaderFontHelvetica) return @"Helvetica";
+    if (font == ReaderFontVerdana) return @"Verdana";
+    if (font == ReaderFontHoefler) return @"HoeflerText-Regular";
     else return @"Palatino-Roman";
+}
+
+- (NSString*)humanFontName:(ReaderFont)font {
+    if (font == ReaderFontPalatino) return @"Palatino";
+    if (font == ReaderFontTimesNewRoman) return @"Times New Roman";
+    if (font == ReaderFontHelvetica) return @"Helvetica";
+    if (font == ReaderFontVerdana) return @"Verdana";
+    if (font == ReaderFontHoefler) return @"Hoefler Text";
+    else return nil;
 }
 
 // Parses simple, TextEdit-generated

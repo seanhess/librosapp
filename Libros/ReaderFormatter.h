@@ -13,8 +13,10 @@
 typedef enum {
     ReaderFontEmpty = 0,
     ReaderFontPalatino = 1,
+    ReaderFontHoefler,
     ReaderFontTimesNewRoman,
     ReaderFontHelvetica,
+    ReaderFontVerdana,
 } ReaderFont;
 
 @interface ReaderFormatter : NSObject
@@ -22,5 +24,11 @@ typedef enum {
 -(NSAttributedString*)textForFile:(File*)file withFont:(ReaderFont)font fontSize:(NSInteger)size;
 -(LBParsedString*)parsedStringForMarkup:(NSString*)html;
 -(NSAttributedString*)attributedStringForParsed:(LBParsedString *)parsed withFont:(ReaderFont)font fontSize:(NSInteger)size;
+
+-(NSString*)boldFontName:(ReaderFont)font;
+-(NSString*)italicFontName:(ReaderFont)font;
+-(NSString*)normalFontName:(ReaderFont)font;
+-(NSString*)humanFontName:(ReaderFont)font;
+    
 
 @end

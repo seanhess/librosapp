@@ -132,6 +132,7 @@
         }
         
         else {
+            self.libraryButton.enabled = YES;
             [self.libraryButton setTitle:@"View in Library" forState:UIControlStateNormal];
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             self.hud = nil;
