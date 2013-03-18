@@ -114,6 +114,10 @@
 
 #pragma mark - Table view data source
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return STORE_BOOK_CELL_HEIGHT;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.

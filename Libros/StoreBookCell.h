@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "Book.h"
 
+#define STORE_BOOK_CELL_HEIGHT 81;
+
 @interface StoreBookCell : UITableViewCell
 
 @property (strong, nonatomic) Book * book;

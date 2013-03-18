@@ -9,6 +9,7 @@
 #import "LibraryBookCoverCell.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <QuartzCore/QuartzCore.h>
+#import "Covers.h"
 
 @interface LibraryBookCoverCell ()
 @property (nonatomic, strong) UIImageView * imageView;
