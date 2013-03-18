@@ -18,6 +18,7 @@
 
 @interface ReaderFontVC () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UISlider *brightnessSlider;
 @property (strong, nonatomic) ReaderFormatter *formatter;
 @end
 
@@ -52,6 +53,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    self.brightnessSlider.value = [[UIScreen mainScreen] brightness];
     [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:[self rowForFont:self.currentFace] inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
 
@@ -65,6 +67,10 @@
     self.currentSize = [self stepSizeUp:self.currentSize];
     [[NSUserDefaults standardUserDefaults] setInteger:self.currentSize forKey:FONT_SIZE_KEY];
     [self.delegate didChangeFont];
+}
+
+- (IBAction)didSlideBrightness:(id)sender {
+    [[UIScreen mainScreen] setBrightness:self.brightnessSlider.value];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
