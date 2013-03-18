@@ -28,6 +28,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 @property (weak, nonatomic) IBOutlet ColoredButton *buyButton;
+@property (weak, nonatomic) IBOutlet ColoredButton *libraryButton;
+@property (weak, nonatomic) IBOutlet ColoredButton *buyAllButton;
+
 @property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (weak, nonatomic) IBOutlet UILabel *formatsLabel;
 @property (weak, nonatomic) IBOutlet HorizontalFlowView *iconsView;
@@ -89,24 +92,35 @@
 - (void)renderButtonAndDownload {
     self.buyButton.enabled = YES;
     
+    self.buyButton.style = ColoredButtonStyleGreen;
+    NSString * buttonLabel = [NSString stringWithFormat:@"Buy for $%@", self.book.priceString];
+    [self.buyButton setTitle:buttonLabel forState:UIControlStateNormal];
+    
+    self.libraryButton.style = ColoredButtonStyleGray;
+    self.buyAllButton.style = ColoredButtonStyleBlue;
+    NSString * allLabel = [NSString stringWithFormat:@"Unlock all books for $%@", @"4.99"];
+    [self.buyAllButton setTitle:allLabel forState:UIControlStateNormal];
+    
     if (!self.book.purchasedValue && !self.purchaseCommand) {
-        self.buyButton.style = ColoredButtonStyleGreen;
-        NSString * buttonLabel = [NSString stringWithFormat:@"Buy for $%@", self.book.priceString];
-        [self.buyButton setTitle:buttonLabel forState:UIControlStateNormal];
+        self.buyButton.hidden = NO;
+        self.buyAllButton.hidden = NO;
+        self.libraryButton.hidden = YES;
     }
     
     else {
-        self.buyButton.style = ColoredButtonStyleGray;
+        self.buyButton.hidden = YES;
+        self.buyAllButton.hidden = YES;
+        self.libraryButton.hidden = NO;
         
         if (self.purchaseCommand) {
-            [self.buyButton setTitle:@"Purchasing" forState:UIControlStateNormal];
-            self.buyButton.enabled = NO;
+            [self.libraryButton setTitle:@"Purchasing" forState:UIControlStateNormal];
+            self.libraryButton.enabled = NO;
         }
         
         // well, I should use a total bytes thing so it actually updates
         else if (self.book.downloadedValue < 1.0) {
-            [self.buyButton setTitle:@"Downloading" forState:UIControlStateNormal];
-            self.buyButton.enabled = NO;
+            [self.libraryButton setTitle:@"Downloading" forState:UIControlStateNormal];
+            self.libraryButton.enabled = NO;
             
             // only if it hasn't been displayed yet!
             if (!self.hud) {
@@ -118,7 +132,7 @@
         }
         
         else {
-            [self.buyButton setTitle:@"View in Library" forState:UIControlStateNormal];
+            [self.libraryButton setTitle:@"View in Library" forState:UIControlStateNormal];
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             self.hud = nil;
         }

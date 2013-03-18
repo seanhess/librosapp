@@ -15,8 +15,10 @@
 #import "ReaderPage.h"
 #import <CoreText/CoreText.h>
 
-#define FRAME_X_OFFSET 25
-#define FRAME_Y_OFFSET 25
+#define FRAME_LEFT_OFFSET 15
+#define FRAME_TOP_OFFSET 12
+#define FRAME_RIGHT_OFFSET 15
+#define FRAME_BOTTOM_OFFSET 10
 
 @interface ReaderFramesetter ()
 @property (strong, nonatomic) NSMutableDictionary * chapters;
@@ -81,12 +83,13 @@
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)text);
     
     NSMutableArray * pages = [NSMutableArray array];
-    CGRect bounds = CGRectMake(0, 0, self.size.width, self.size.height);
+    // CGRect bounds = CGRectMake(0, 0, self.size.width, self.size.height);
+    // Coordinates are flipped or something. Top and bottom are swapped but not left and right. Coordinate system is bottom-left
+    CGRect textFrame = CGRectMake(FRAME_LEFT_OFFSET, FRAME_BOTTOM_OFFSET, self.size.width-FRAME_RIGHT_OFFSET-FRAME_LEFT_OFFSET, self.size.height-FRAME_BOTTOM_OFFSET-FRAME_TOP_OFFSET);
     
     while(location < text.length) {
         CGMutablePathRef path = CGPathCreateMutable();
-        CGRect insetFrame = CGRectInset(bounds, FRAME_X_OFFSET, FRAME_Y_OFFSET);
-        CGPathAddRect(path, NULL, insetFrame);
+        CGPathAddRect(path, NULL, textFrame);
         
         CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(location, 0), path, NULL);
         NSInteger length = CTFrameGetVisibleStringRange(frame).length;

@@ -92,8 +92,8 @@
     CTFontRef italicFont = CTFontCreateWithName((__bridge CFStringRef)[self italicFontName:font], size, NULL);
     
     CGFloat lineSpacing = 3.0;
-    CTTextAlignment alignment = kCTJustifiedTextAlignment;
-//    CTTextAlignment alignment = kCTKernAttributeName;
+    // CTTextAlignment alignment = kCTJustifiedTextAlignment;
+    CTTextAlignment alignment = kCTLeftTextAlignment;
     
     CTParagraphStyleSetting settings[] = {
         {kCTParagraphStyleSpecifierAlignment, sizeof(alignment), &alignment},
