@@ -1,6 +1,7 @@
 #import "Book.h"
 #import "FileService.h"
 #import "NSArray+Functional.h"
+#import "BookService.h"
 
 @interface Book ()
 @property (nonatomic, strong) NSArray * orderedFiles;
@@ -20,9 +21,7 @@
 }
 
 -(NSString*)priceString {
-    NSInteger dollars = floorf(self.priceValue / 100);
-    NSInteger pennies = self.priceValue % 100;
-    return [NSString stringWithFormat:@"%i.%02i", dollars, pennies];
+    return [[BookService shared] priceString:self];
 }
 
 -(NSString*)productId {

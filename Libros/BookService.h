@@ -20,4 +20,6 @@
 
 -(NSPredicate*)filterByType:(BookFilter)filter;
 
+-(NSString*)priceString:(Book*)book;
+
 @end

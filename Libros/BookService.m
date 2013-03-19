@@ -88,4 +88,14 @@
     else return nil;
 }
 
+
+
+
+
+-(NSString *)priceString:(Book *)book {
+    NSInteger dollars = floorf(book.priceValue / 100);
+    NSInteger pennies = book.priceValue % 100;
+    return [NSString stringWithFormat:@"%i.%02i", dollars, pennies];
+}
+
 @end
