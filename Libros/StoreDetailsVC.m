@@ -12,13 +12,13 @@
 #import "Icons.h"
 #import "UserService.h"
 #import "FileService.h"
-#import "MBProgressHUD.h"
 #import "LibraryVC.h"
 #import "IAPurchaseCommand.h"
 #import <StoreKit/StoreKit.h>
 #import "Settings.h"
 #import "MetricsService.h"
 #import "Appearance.h"
+#import <QuartzCore/QuartzCore.h>
 
 // TODO should download the product details when this page loads to get the price
 // because it will be different per-locale
@@ -38,10 +38,10 @@
 @property (weak, nonatomic) IBOutlet UIImageView *textIcon;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *coverImage;
+@property (weak, nonatomic) IBOutlet UIView *downloadProgressView;
+@property (weak, nonatomic) IBOutlet UIProgressView *downloadProgress;
 
 @property (strong, nonatomic) IAPurchaseCommand * purchaseCommand;
-
-@property (strong, nonatomic) MBProgressHUD * hud;
 
 @end
 
@@ -56,6 +56,7 @@
     [super viewDidLoad];
     
     self.scrollView.backgroundColor = Appearance.background;
+    self.downloadProgress.alpha = 0.7;
     
     [MetricsService storeBookLoad:self.book];
     
@@ -80,7 +81,7 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:BookAttributes.downloaded]) {
-        self.hud.progress = self.book.downloadedValue;
+        self.downloadProgress.progress = self.book.downloadedValue;
         [self renderButtonAndDownload];
     }
     
@@ -105,12 +106,14 @@
         self.buyButton.hidden = NO;
         self.buyAllButton.hidden = NO;
         self.libraryButton.hidden = YES;
+        self.downloadProgressView.hidden = YES;
     }
     
     else {
         self.buyButton.hidden = YES;
         self.buyAllButton.hidden = YES;
         self.libraryButton.hidden = NO;
+        self.downloadProgressView.hidden = YES;
         
         if (self.purchaseCommand) {
             [self.libraryButton setTitle:@"Purchasing" forState:UIControlStateNormal];
@@ -119,23 +122,15 @@
         
         // well, I should use a total bytes thing so it actually updates
         else if (self.book.downloadedValue < 1.0) {
-            [self.libraryButton setTitle:@"Downloading" forState:UIControlStateNormal];
+            [self.libraryButton setTitle:@"" forState:UIControlStateNormal];
             self.libraryButton.enabled = NO;
-            
-            // only if it hasn't been displayed yet!
-            if (!self.hud) {
-                self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                self.hud.mode = MBProgressHUDModeDeterminate;
-                self.hud.labelText = @"Downloading Book";
-                self.hud.progress = self.book.downloadedValue;
-            }
+            self.downloadProgressView.hidden = NO;
+            self.downloadProgress.progress = self.book.downloadedValue;
         }
         
         else {
             self.libraryButton.enabled = YES;
             [self.libraryButton setTitle:@"View in Library" forState:UIControlStateNormal];
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            self.hud = nil;
         }
     }
 }
