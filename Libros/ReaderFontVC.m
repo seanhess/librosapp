@@ -85,7 +85,7 @@
     }
     ReaderFont font = [self fontForRow:indexPath.row];
     cell.textLabel.text = [self.formatter humanFontName:font];
-    cell.textLabel.font = [UIFont fontWithName:[self.formatter normalFontName:font] size:14];
+    cell.textLabel.font = [UIFont fontWithName:[self.formatter normalFontName:font] size:15];
     cell.textLabel.textAlignment = NSTextAlignmentCenter;
     return cell;
 }
@@ -99,7 +99,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 30;
+    return 36;
 }
 
 //-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {}

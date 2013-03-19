@@ -62,17 +62,17 @@
 
 -(NSString*)boldFontName:(ReaderFont)font {
     if (font == ReaderFontPalatino) return @"Palatino-Bold";
-    if (font == ReaderFontTimesNewRoman) return @"TimesNewRomanPSMT-Bold";
+    if (font == ReaderFontTimesNewRoman) return @"TimesNewRomanPS-BoldMT";
     if (font == ReaderFontHelvetica) return @"Helvetica-Bold";
     if (font == ReaderFontVerdana) return @"Verdana-Bold";
-    if (font == ReaderFontHoefler) return @"HoeflerText-Bold";
+    if (font == ReaderFontHoefler) return @"HoeflerText-Black";
     else return @"Palatino-Bold";
 }
 
 -(NSString*)italicFontName:(ReaderFont)font {
     if (font == ReaderFontPalatino) return @"Palatino-Italic";
-    if (font == ReaderFontTimesNewRoman) return @"TimesNewRomanPSMT-Italic";
-    if (font == ReaderFontHelvetica) return @"Helvetica-Italic";
+    if (font == ReaderFontTimesNewRoman) return @"TimesNewRomanPS-ItalicMT";
+    if (font == ReaderFontHelvetica) return @"Helvetica-Oblique";
     if (font == ReaderFontVerdana) return @"Verdana-Italic";
     if (font == ReaderFontHoefler) return @"HoeflerText-Italic";
     else return @"Palatino-Italic";
@@ -96,11 +96,26 @@
     else return nil;
 }
 
+- (void)dumpFonts {
+    // Get all the fonts on the system
+	NSArray *familyNames = [UIFont familyNames];
+	for( NSString *familyName in familyNames ){
+		printf( "Family: %s \n", [familyName UTF8String] );
+		NSArray *fontNames = [UIFont fontNamesForFamilyName:familyName];
+		for( NSString *fontName in fontNames ){
+			printf( "\tFont: %s \n", [fontName UTF8String] );
+		}
+	}
+}
+
 // Parses simple, TextEdit-generated
 -(NSAttributedString*)attributedStringForParsed:(LBParsedString *)parsed withFont:(ReaderFont)font fontSize:(NSInteger)size {
     
-    // TODO: create fonts is slow! Create them on initialization, or lazily
-    // make sure you get the font names right or it is REALLY slow
+    // [self dumpFonts];
+    
+    // WARNING! make sure you get the font names EXACTLY right or it is REALLY slow
+    // See dumpFonts for more information. The font names are NOT standard, and each one
+    // has a different way of saying bold and italic. 
     
     CTFontRef mainFont = CTFontCreateWithName((__bridge CFStringRef)[self normalFontName:font], size, NULL);
     CTFontRef boldFont = CTFontCreateWithName((__bridge CFStringRef)[self boldFontName:font], size, NULL);
@@ -147,7 +162,7 @@
     
     CFRelease(mainFont);
     CFRelease(boldFont);
-//    CFRelease(italicFont);
+    CFRelease(italicFont);
     CFRelease(paragraphStyle);
     
     return text;
