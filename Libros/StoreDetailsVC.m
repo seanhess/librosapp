@@ -31,7 +31,6 @@
 @property (weak, nonatomic) IBOutlet ColoredButton *libraryButton;
 @property (weak, nonatomic) IBOutlet ColoredButton *buyAllButton;
 
-@property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (weak, nonatomic) IBOutlet UILabel *formatsLabel;
 @property (weak, nonatomic) IBOutlet HorizontalFlowView *iconsView;
 @property (weak, nonatomic) IBOutlet UIImageView *audioIcon;
@@ -39,6 +38,8 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *coverImage;
 @property (weak, nonatomic) IBOutlet UIView *downloadProgressBackground;
+
+@property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
 
 @property (strong, nonatomic) IAPurchaseCommand * purchaseCommand;
 
