@@ -82,6 +82,7 @@
 		784D21B2169F432D003AC6F2 /* BookService.m in Sources */ = {isa = PBXBuildFile; fileRef = 784D21B1169F432D003AC6F2 /* BookService.m */; };
 		785DD97A16B88B7500C6925A /* StoreBookCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 785DD97916B88B7500C6925A /* StoreBookCell.m */; };
 		785DD98516B894DD00C6925A /* NSArray+Functional.m in Sources */ = {isa = PBXBuildFile; fileRef = 785DD98416B894DD00C6925A /* NSArray+Functional.m */; };
+		7861E7D616F899C7003FC0D6 /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7861E7D516F899C7003FC0D6 /* AirshipConfig.plist */; };
 		787D363816C42BD000A102ED /* StoreTabsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 787D363716C42BCF00A102ED /* StoreTabsVC.m */; };
 		787D363C16C4370700A102ED /* StoreBookResultsFilterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 787D363B16C4370700A102ED /* StoreBookResultsFilterView.xib */; };
 		787D363F16C437DE00A102ED /* StoreBookResultsFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 787D363E16C437DD00A102ED /* StoreBookResultsFilterView.m */; };
@@ -284,6 +285,7 @@
 		785DD97916B88B7500C6925A /* StoreBookCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreBookCell.m; sourceTree = "<group>"; };
 		785DD98316B894DD00C6925A /* NSArray+Functional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Functional.h"; sourceTree = "<group>"; };
 		785DD98416B894DD00C6925A /* NSArray+Functional.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Functional.m"; sourceTree = "<group>"; };
+		7861E7D516F899C7003FC0D6 /* AirshipConfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = AirshipConfig.plist; sourceTree = "<group>"; };
 		787D363616C42BCF00A102ED /* StoreTabsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreTabsVC.h; sourceTree = "<group>"; };
 		787D363716C42BCF00A102ED /* StoreTabsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreTabsVC.m; sourceTree = "<group>"; };
 		787D363B16C4370700A102ED /* StoreBookResultsFilterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreBookResultsFilterView.xib; sourceTree = "<group>"; };
@@ -760,6 +762,7 @@
 				78CC657016D97BC400E68FFB /* IAPurchaseCommand.m */,
 				787E8BB716EFD41600338954 /* MetricsService.h */,
 				787E8BB816EFD41600338954 /* MetricsService.m */,
+				7861E7D516F899C7003FC0D6 /* AirshipConfig.plist */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -1042,6 +1045,7 @@
 				783AC97C16F1400F0050D966 /* reader-text-button.png in Resources */,
 				783AC97D16F1400F0050D966 /* reader-text-button@2x.png in Resources */,
 				7840CD7016F23B8B00FFFCE9 /* navbar-button@2x.png in Resources */,
+				7861E7D616F899C7003FC0D6 /* AirshipConfig.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1235,7 +1239,8 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Audiolibros y libros en espanol LLC";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Audiolibros y libros en espanol LLC";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1243,6 +1248,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "2362DC1D-F0D1-46F7-9091-781CBB0DE9D5";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2362DC1D-F0D1-46F7-9091-781CBB0DE9D5";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1265,14 +1272,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 85FD0834AAB242A7BA71588D /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Audiolibros y libros en espanol LLC";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Audiolibros y libros en espanol LLC";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Libros/Libros-Prefix.pch";
 				INFOPLIST_FILE = "Libros/Libros-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9A1E8037-5D24-4B9F-ABD8-21A4C69EF418";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9A1E8037-5D24-4B9F-ABD8-21A4C69EF418";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

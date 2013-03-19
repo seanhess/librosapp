@@ -44,10 +44,10 @@
     [bookMapping addAttributeMappingsFromArray:propertyNames];
     [bookMapping addAttributeMappingsFromDictionary:@{@"description": @"descriptionText"}];
     
-    RKResponseDescriptor * responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:bookMapping pathPattern:@"/books" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    RKResponseDescriptor * responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:bookMapping pathPattern:@"/books/" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     
     [ObjectStore.shared addResponseDescriptor:responseDescriptor];
-    [ObjectStore.shared syncWithFetchRequest:self.allBooks forPath:@"/books"];
+    [ObjectStore.shared syncWithFetchRequest:self.allBooks forPath:@"/books/"];
 }
 
 // So you can compose with compoundPredicates. Wahoo.
@@ -58,7 +58,8 @@
 // OR you can make a fetched results controller and give it a fetch request
 
 -(void)loadStore {
-    [[ObjectStore shared].objectManager getObjectsAtPath:@"/books" parameters:nil success:^(RKObjectRequestOperation * operation, RKMappingResult *mappingResult) {
+    [[ObjectStore shared].objectManager getObjectsAtPath:@"/books/" parameters:nil success:^(RKObjectRequestOperation * operation, RKMappingResult *mappingResult) {
+        //NSLog(@"MAPPED %@", mappingResult);
     } failure: ^(RKObjectRequestOperation * operation, NSError * error) {
         NSLog(@"FAILURE %@", error);
     }];

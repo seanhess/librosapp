@@ -12,6 +12,10 @@
 #import "IAPurchaseCommand.h"
 #import "MetricsService.h"
 #import "Appearance.h"
+#import "LibraryVC.h"
+#import "Settings.h"
+
+#import <Parse/Parse.h>
 
 
 @implementation AppDelegate
@@ -42,7 +46,48 @@
     
     [MetricsService launch];
     
+    [Parse setApplicationId:PARSE_APP_ID clientKey:PARSE_CLIENT_KEY];
+    NSLog(@"PARSE: %@", PARSE_MODE);
+    
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound];
+    
+    // DEBUG: uncomment to test push notifications working
+    //[self loadStoreWithApplication:application];
+    
+    // No idea why it doesn't call didReceiveRemoteNotification on its own
+    // This is only needed if they open a notification from a cold boot
+    NSDictionary * remoteNotification = [launchOptions valueForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"];
+    if (remoteNotification) [self application:application didReceiveRemoteNotification:remoteNotification];
+    
     return YES;
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSLog(@"APN Registered");
+    // Store the deviceToken in the current installation and save it to Parse.
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    [currentInstallation saveInBackground];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"APN FAIL %@", error);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    [PFPush handlePush:userInfo];
+    [self loadStoreWithApplication:application];
+    [self resetBadge];
+}
+
+- (void)resetBadge {
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+}
+
+- (void)loadStoreWithApplication:(UIApplication*)application {
+    self.window.rootViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Store"];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

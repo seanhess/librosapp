@@ -71,7 +71,7 @@
 
 - (void)syncWithFetchRequest:(NSFetchRequest *)request forPath:(NSString *)path {
     [self.objectManager addFetchRequestBlock:^(NSURL* url) {
-        RKPathMatcher * matcher = [RKPathMatcher pathMatcherWithPattern:@"/books"];
+        RKPathMatcher * matcher = [RKPathMatcher pathMatcherWithPattern:path];
         NSFetchRequest * matchingRequest = nil;
         BOOL match = [matcher matchesPath:[url relativePath] tokenizeQueryStrings:NO parsedArguments:nil];
         if (match) {
