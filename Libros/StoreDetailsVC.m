@@ -38,8 +38,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *textIcon;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *coverImage;
-@property (weak, nonatomic) IBOutlet UIView *downloadProgressView;
-@property (weak, nonatomic) IBOutlet UIProgressView *downloadProgress;
+@property (weak, nonatomic) IBOutlet UIView *downloadProgressBackground;
 
 @property (strong, nonatomic) IAPurchaseCommand * purchaseCommand;
 
@@ -56,7 +55,8 @@
     [super viewDidLoad];
     
     self.scrollView.backgroundColor = Appearance.background;
-    self.downloadProgress.alpha = 0.7;
+    self.downloadProgressBackground.layer.cornerRadius = 5;
+    self.downloadProgressBackground.userInteractionEnabled = NO;
     
     [MetricsService storeBookLoad:self.book];
     
@@ -81,7 +81,7 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:BookAttributes.downloaded]) {
-        self.downloadProgress.progress = self.book.downloadedValue;
+        [self setDownloadProgressValue:self.book.downloadedValue];
         [self renderButtonAndDownload];
     }
     
@@ -106,14 +106,14 @@
         self.buyButton.hidden = NO;
         self.buyAllButton.hidden = NO;
         self.libraryButton.hidden = YES;
-        self.downloadProgressView.hidden = YES;
+        self.downloadProgressBackground.hidden = YES;
     }
     
     else {
         self.buyButton.hidden = YES;
         self.buyAllButton.hidden = YES;
         self.libraryButton.hidden = NO;
-        self.downloadProgressView.hidden = YES;
+        self.downloadProgressBackground.hidden = YES;
         
         if (self.purchaseCommand) {
             [self.libraryButton setTitle:@"Purchasing" forState:UIControlStateNormal];
@@ -122,17 +122,26 @@
         
         // well, I should use a total bytes thing so it actually updates
         else if (self.book.downloadedValue < 1.0) {
-            [self.libraryButton setTitle:@"" forState:UIControlStateNormal];
+            [self.libraryButton setTitle:@"Downloading" forState:UIControlStateNormal];
             self.libraryButton.enabled = NO;
-            self.downloadProgressView.hidden = NO;
-            self.downloadProgress.progress = self.book.downloadedValue;
+            
+            self.downloadProgressBackground.hidden = NO;
+            [self setDownloadProgressValue:self.book.downloadedValue];
         }
         
         else {
+            self.downloadProgressBackground.hidden = NO;
+            [self setDownloadProgressValue:self.book.downloadedValue];
             self.libraryButton.enabled = YES;
             [self.libraryButton setTitle:@"View in Library" forState:UIControlStateNormal];
         }
     }
+}
+
+-(void)setDownloadProgressValue:(float)value {
+    CGRect frame = self.downloadProgressBackground.frame;
+    frame.size.width = (self.libraryButton.frame.size.width) * value;
+    self.downloadProgressBackground.frame = frame;
 }
 
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
