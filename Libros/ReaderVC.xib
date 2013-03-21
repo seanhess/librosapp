@@ -125,7 +125,7 @@
 							</object>
 							<object class="IBUILabel" id="830571326">
 								<reference key="NSNextResponder" ref="7138451"/>
-								<int key="NSvFlags">292</int>
+								<int key="NSvFlags">290</int>
 								<string key="NSFrame">{{52, 2}, {180, 21}}</string>
 								<reference key="NSSuperview" ref="7138451"/>
 								<reference key="NSWindow"/>
@@ -161,7 +161,7 @@
 							</object>
 							<object class="IBUILabel" id="784373805">
 								<reference key="NSNextResponder" ref="7138451"/>
-								<int key="NSvFlags">292</int>
+								<int key="NSvFlags">290</int>
 								<string key="NSFrame">{{52, 16}, {180, 21}}</string>
 								<reference key="NSSuperview" ref="7138451"/>
 								<reference key="NSWindow"/>
@@ -194,7 +194,7 @@
 							</object>
 							<object class="IBUIButton" id="475336390">
 								<reference key="NSNextResponder" ref="7138451"/>
-								<int key="NSvFlags">292</int>
+								<int key="NSvFlags">289</int>
 								<string key="NSFrame">{{233, 0}, {44, 44}}</string>
 								<reference key="NSSuperview" ref="7138451"/>
 								<reference key="NSWindow"/>
@@ -220,7 +220,7 @@
 							</object>
 							<object class="IBUIButton" id="613409755">
 								<reference key="NSNextResponder" ref="7138451"/>
-								<int key="NSvFlags">292</int>
+								<int key="NSvFlags">289</int>
 								<string key="NSFrame">{{282, 0}, {33, 44}}</string>
 								<reference key="NSSuperview" ref="7138451"/>
 								<reference key="NSWindow"/>
@@ -245,7 +245,7 @@
 							</object>
 							<object class="IBUISlider" id="333042721">
 								<reference key="NSNextResponder" ref="7138451"/>
-								<int key="NSvFlags">292</int>
+								<int key="NSvFlags">290</int>
 								<string key="NSFrame">{{45, 51}, {229, 23}}</string>
 								<reference key="NSSuperview" ref="7138451"/>
 								<reference key="NSWindow"/>
@@ -293,7 +293,7 @@
 							</object>
 							<object class="IBUILabel" id="603561388">
 								<reference key="NSNextResponder" ref="7138451"/>
-								<int key="NSvFlags">292</int>
+								<int key="NSvFlags">289</int>
 								<string key="NSFrame">{{289, 51}, {43, 21}}</string>
 								<reference key="NSSuperview" ref="7138451"/>
 								<reference key="NSWindow"/>
@@ -587,10 +587,10 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUITapGestureRecognizer" id="767817456"/>
-			<object class="IBUISwipeGestureRecognizer" id="239087512">
+			<object class="IBUISwipeGestureRecognizer" id="677992201">
 				<int key="IBUIDirection">4</int>
 			</object>
-			<object class="IBUISwipeGestureRecognizer" id="575185206">
+			<object class="IBUISwipeGestureRecognizer" id="448679416">
 				<int key="IBUIDirection">8</int>
 			</object>
 		</array>
@@ -770,7 +770,7 @@
 					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
 						<string key="label">gestureRecognizers</string>
 						<reference key="source" ref="175763529"/>
-						<reference key="destination" ref="239087512"/>
+						<reference key="destination" ref="677992201"/>
 						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
 						<bool key="addsContentToExistingCollection">YES</bool>
 					</object>
@@ -780,7 +780,7 @@
 					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
 						<string key="label">gestureRecognizers</string>
 						<reference key="source" ref="175763529"/>
-						<reference key="destination" ref="575185206"/>
+						<reference key="destination" ref="448679416"/>
 						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
 						<bool key="addsContentToExistingCollection">YES</bool>
 					</object>
@@ -896,7 +896,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">didSwipeUp:</string>
-						<reference key="source" ref="239087512"/>
+						<reference key="source" ref="677992201"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">366</int>
@@ -904,7 +904,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">didSwipeDown:</string>
-						<reference key="source" ref="575185206"/>
+						<reference key="source" ref="448679416"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">367</int>
@@ -1092,13 +1092,13 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">360</int>
-						<reference key="object" ref="239087512"/>
+						<reference key="object" ref="677992201"/>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Swipe Up</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">362</int>
-						<reference key="object" ref="575185206"/>
+						<reference key="object" ref="448679416"/>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Swipe Down</string>
 					</object>
@@ -1148,85 +1148,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">ReaderVC</string>
 					<string key="superclassName">UIViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="didClickNextChapter:">id</string>
-						<string key="didClickPlay:">id</string>
-						<string key="didClickPrevChapter:">id</string>
-						<string key="didClickRate:">id</string>
-						<string key="didClickVolume:">id</string>
-						<string key="didSlideAudio:">id</string>
-						<string key="didSlidePage:">id</string>
-						<string key="didSlideVolume:">id</string>
-						<string key="didSwipeDown:">id</string>
-						<string key="didSwipeUp:">id</string>
-						<string key="didTapBack:">id</string>
-						<string key="didTapFont:">id</string>
-						<string key="didTapLibrary:">id</string>
-						<string key="didTapText:">UITapGestureRecognizer</string>
-						<string key="didTapToC:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="didClickNextChapter:">
-							<string key="name">didClickNextChapter:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didClickPlay:">
-							<string key="name">didClickPlay:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didClickPrevChapter:">
-							<string key="name">didClickPrevChapter:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didClickRate:">
-							<string key="name">didClickRate:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didClickVolume:">
-							<string key="name">didClickVolume:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didSlideAudio:">
-							<string key="name">didSlideAudio:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didSlidePage:">
-							<string key="name">didSlidePage:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didSlideVolume:">
-							<string key="name">didSlideVolume:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didSwipeDown:">
-							<string key="name">didSwipeDown:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didSwipeUp:">
-							<string key="name">didSwipeUp:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didTapBack:">
-							<string key="name">didTapBack:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didTapFont:">
-							<string key="name">didTapFont:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didTapLibrary:">
-							<string key="name">didTapLibrary:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didTapText:">
-							<string key="name">didTapText:</string>
-							<string key="candidateClassName">UITapGestureRecognizer</string>
-						</object>
-						<object class="IBActionInfo" key="didTapToC:">
-							<string key="name">didTapToC:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="audioProgress">UISlider</string>
 						<string key="audioRemainingLabel">UILabel</string>

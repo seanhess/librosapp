@@ -18,6 +18,8 @@
 #import "MetricsService.h"
 #import "Appearance.h"
 
+#define DEFAULT_TABLE_CELL_HEIGHT 44
+
 @interface StoreSearchVC ()
 @property (weak, nonatomic) IBOutlet UISearchBar * searchBar;
 
@@ -132,7 +134,8 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return STORE_BOOK_CELL_HEIGHT;
+    if (indexPath.section == 0) return DEFAULT_TABLE_CELL_HEIGHT;
+    else return STORE_BOOK_CELL_HEIGHT;
 }
 
 #pragma mark - Table view delegate
