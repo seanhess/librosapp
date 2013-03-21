@@ -20,7 +20,7 @@ declare module "rethinkdb" {
     (err:Error, data?:any);
   }
 
-  interface IQuery {
+  interface IQuery extends ISelection {
     run(cb?:Function):ICursor;
     runp(cb:Function);
     del():IQuery;

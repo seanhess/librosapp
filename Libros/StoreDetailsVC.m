@@ -100,7 +100,7 @@
     
     self.libraryButton.style = ColoredButtonStyleGray;
     self.buyAllButton.style = ColoredButtonStyleBlue;
-    NSString * allLabel = [NSString stringWithFormat:@"Unlock all books for $%@", @"4.99"];
+    NSString * allLabel = [NSString stringWithFormat:@"Buy all books for $%@", @"4.99"];
     [self.buyAllButton setTitle:allLabel forState:UIControlStateNormal];
     
     if (!self.book.purchasedValue && !self.purchaseCommand) {

@@ -85,7 +85,7 @@
 -(NSPredicate*)filterByType:(BookFilter)filter {
     if (filter == BookFilterHasAudio) return [NSPredicate predicateWithFormat:@"audioFiles > 0"];
     else if (filter == BookFilterHasText) return [NSPredicate predicateWithFormat:@"textFiles > 0"];
-    else return nil;
+    else return [NSPredicate predicateWithFormat:@"audioFiles > 0 OR textFiles > 0"];
 }
 
 
