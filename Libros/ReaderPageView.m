@@ -25,6 +25,10 @@
         self.backgroundColor = [UIColor clearColor];
         self.chapter = -1;
         self.page = -1;
+        
+//        UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//        button.frame = CGRectMake(0, 0, 100, 100);
+//        [self addSubview:button];
     }
     return self;
 }
@@ -42,11 +46,9 @@
 -(void)setFrame:(id)ctFrame chapter:(NSInteger)chapter page:(NSInteger)page {
 //    if (self.chapter == chapter && self.page == page)
 //        return;
-//
     
     if (!ctFrame) self.backgroundColor = [UIColor redColor];
     else self.backgroundColor = [UIColor clearColor];
-    
     self.chapter = chapter;
     self.page = page;
     self.ctFrame = ctFrame;

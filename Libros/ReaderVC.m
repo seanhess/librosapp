@@ -52,6 +52,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 #import "MetricsService.h"
 
 #define DRAG_GRAVITY 15
+#define STATUS_BAR_OFFSET 20
 
 @interface ReaderVC () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, ReaderFramesetterDelegate, ReaderTableOfContentsDelegate, ReaderFontDelegate, AVAudioPlayerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -152,12 +153,11 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     // OK TO DRAW - has correct size (IF you set navigation bar hidden to the same thing here as in viewDidLoad
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     
-//    NSLog(@"VIEW WILL APPEAR %@", NSStringFromCGRect(self.view.bounds));
 //    self.book.currentPageValue = 0;
 //    self.book.currentChapterValue = 0;
     
     [self newFramesetterWithSize:self.collectionView.bounds.size];
-
+    
     [self ensurePagesForChapter:self.book.currentChapterValue];
     [self moveToChapter:self.book.currentChapterValue page:self.book.currentPageValue animated:NO];
     [self playerAtChapter:self.book.currentChapterValue];
@@ -172,16 +172,15 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    
     CGSize newSize;
-    CGSize oldSize = self.collectionView.frame.size;
+    CGSize oldSize = self.collectionView.bounds.size;
     if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
         newSize.width = MAX(oldSize.width, oldSize.height);
-        newSize.height = MIN(oldSize.width, oldSize.height);
+        newSize.height = MIN(oldSize.width, oldSize.height) - STATUS_BAR_OFFSET;
     }
     else {
         newSize.width = MIN(oldSize.width, oldSize.height);
-        newSize.height = MAX(oldSize.width, oldSize.height);
+        newSize.height = MAX(oldSize.width, oldSize.height) - STATUS_BAR_OFFSET;
     }
     
     [self prepareLayoutWithSize:newSize];
@@ -212,9 +211,10 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     [self newFramesetterWithSize:size];
     
     [self.collectionView.collectionViewLayout invalidateLayout];
-    [UIView beginAnimations:@"fade" context:nil];
-    self.collectionView.alpha = 0.0;
-    [UIView commitAnimations];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        self.collectionView.alpha = 0.0;
+    }];
     
     [self ensurePagesForChapter:self.book.currentChapterValue];
     self.book.currentPageValue = [self.framesetter pageForChapter:self.book.currentChapterValue percent:currentPercent];
@@ -222,9 +222,9 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 - (void)commitLayout {
     [self moveToChapter:self.book.currentChapterValue page:self.book.currentPageValue animated:NO];
-    [UIView beginAnimations:@"fade" context:nil];
-    self.collectionView.alpha = 1.0;
-    [UIView commitAnimations];
+    [UIView animateWithDuration:0.2 animations:^{
+        self.collectionView.alpha = 1.0;
+    }];
 }
 
 - (void)newFramesetterWithSize:(CGSize)size {
@@ -414,7 +414,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (NSAttributedString*)textForChapter:(NSInteger)chapter {
-    NSLog(@"TEXT FOR CHAPTER %i size=%i", chapter, self.fontController.currentSize);
     if (chapter < 0 || chapter >= self.textFiles.count) return nil;
     return [self.formatter textForFile:self.textFiles[chapter] withFont:self.fontController.currentFace fontSize:self.fontController.currentSize];
 }
@@ -591,7 +590,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGSize size = self.view.bounds.size;
+    CGSize size = self.collectionView.bounds.size;
     return size;
 }
 

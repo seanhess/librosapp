@@ -85,6 +85,7 @@
     NSMutableArray * pages = [NSMutableArray array];
     // CGRect bounds = CGRectMake(0, 0, self.size.width, self.size.height);
     // Coordinates are flipped or something. Top and bottom are swapped but not left and right. Coordinate system is bottom-left
+    // remember! this is layed out FROM THE BOTTOM, so if it goes off the top of the screen, that is a SIZE problem, not an offset problem
     CGRect textFrame = CGRectMake(FRAME_LEFT_OFFSET, FRAME_BOTTOM_OFFSET, self.size.width-FRAME_RIGHT_OFFSET-FRAME_LEFT_OFFSET, self.size.height-FRAME_BOTTOM_OFFSET-FRAME_TOP_OFFSET);
     
     while(location < text.length) {
@@ -110,7 +111,6 @@
 // if the frames don't exist, generate them!
 -(void)ensurePagesForChapter:(NSInteger)chapter {
     if (![self hasPagesForChapter:chapter]) {
-        NSLog(@"GENERATING PAGES %i", chapter);
         self.chapters[[self key:chapter]] = [self generatePagesForChapter:chapter];
     }
 }

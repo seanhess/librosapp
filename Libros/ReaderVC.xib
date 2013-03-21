@@ -297,7 +297,7 @@
 								<string key="NSFrame">{{289, 51}, {43, 21}}</string>
 								<reference key="NSSuperview" ref="7138451"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="756948930"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -378,7 +378,6 @@
 								<string key="NSFrame">{{279, 56}, {43, 21}}</string>
 								<reference key="NSSuperview" ref="1040387063"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -588,10 +587,10 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUITapGestureRecognizer" id="767817456"/>
-			<object class="IBUISwipeGestureRecognizer" id="286512806">
+			<object class="IBUISwipeGestureRecognizer" id="239087512">
 				<int key="IBUIDirection">4</int>
 			</object>
-			<object class="IBUISwipeGestureRecognizer" id="483987333">
+			<object class="IBUISwipeGestureRecognizer" id="575185206">
 				<int key="IBUIDirection">8</int>
 			</object>
 		</array>
@@ -771,7 +770,7 @@
 					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
 						<string key="label">gestureRecognizers</string>
 						<reference key="source" ref="175763529"/>
-						<reference key="destination" ref="286512806"/>
+						<reference key="destination" ref="239087512"/>
 						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
 						<bool key="addsContentToExistingCollection">YES</bool>
 					</object>
@@ -781,7 +780,7 @@
 					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
 						<string key="label">gestureRecognizers</string>
 						<reference key="source" ref="175763529"/>
-						<reference key="destination" ref="483987333"/>
+						<reference key="destination" ref="575185206"/>
 						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
 						<bool key="addsContentToExistingCollection">YES</bool>
 					</object>
@@ -897,7 +896,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">didSwipeUp:</string>
-						<reference key="source" ref="286512806"/>
+						<reference key="source" ref="239087512"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">366</int>
@@ -905,7 +904,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">didSwipeDown:</string>
-						<reference key="source" ref="483987333"/>
+						<reference key="source" ref="575185206"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">367</int>
@@ -1093,13 +1092,13 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">360</int>
-						<reference key="object" ref="286512806"/>
+						<reference key="object" ref="239087512"/>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Swipe Up</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">362</int>
-						<reference key="object" ref="483987333"/>
+						<reference key="object" ref="575185206"/>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Swipe Down</string>
 					</object>
@@ -1142,7 +1141,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">367</int>
+			<int key="maxID">369</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
