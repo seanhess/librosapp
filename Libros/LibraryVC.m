@@ -66,6 +66,9 @@
     self.wantsFullScreenLayout = NO;
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     [self.navigationController setNavigationBarHidden:NO animated:NO];
+    NSIndexPath * selectedRow = [self.tableView indexPathForSelectedRow];
+    if (selectedRow)
+        [self.tableView deselectRowAtIndexPath:selectedRow animated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

@@ -51,6 +51,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    NSIndexPath * selectedRow = [self.tableView indexPathForSelectedRow];
+    if (selectedRow)
+        [self.tableView deselectRowAtIndexPath:selectedRow animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

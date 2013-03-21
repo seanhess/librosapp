@@ -26,6 +26,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [MetricsService storePopularLoad];
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidLoad

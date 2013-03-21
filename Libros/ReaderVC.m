@@ -336,6 +336,16 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     }
 }
 
+- (IBAction)didSwipeUp:(id)sender {
+    NSIndexPath * newLocation = [self next:self.book.currentChapterValue page:self.book.currentPageValue];
+    if (newLocation) [self moveToChapter:newLocation.section page:newLocation.item animated:YES];
+}
+
+- (IBAction)didSwipeDown:(id)sender {
+    NSIndexPath * newLocation = [self prev:self.book.currentChapterValue page:self.book.currentPageValue];
+    if (newLocation) [self moveToChapter:newLocation.section page:newLocation.item animated:YES];
+}
+
 - (void)moveToChapter:(NSInteger)chapter page:(NSInteger)page animated:(BOOL)animated {
 //    NSLog(@"MOVE TO %i %i", chapter, page);
     

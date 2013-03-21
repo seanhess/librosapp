@@ -41,6 +41,9 @@
 - (void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [MetricsService storeSearchLoad];
+    NSIndexPath * selectedRow = [self.tableView indexPathForSelectedRow];
+    if (selectedRow)
+        [self.tableView deselectRowAtIndexPath:selectedRow animated:YES];
 }
 
 - (void)viewDidLoad
