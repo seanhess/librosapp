@@ -37,7 +37,7 @@
 -(void)finish {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
-    NSLog(@" - complete  %@", self.file.url);
+    NSLog(@"DOWNLOADED %@", self.file.url);
     
     [self willChangeValueForKey:@"isExecuting"];
     [self willChangeValueForKey:@"isFinished"];
@@ -47,7 +47,7 @@
 }
 
 -(void)start {
-    NSLog(@"DOWNLOADING %@", self.file.url);
+    // NSLog(@"DOWNLOADING %@", self.file.url);
     dispatch_async(dispatch_get_main_queue(), ^{
         self.finished = NO;
         NSURL * url = [NSURL URLWithString:self.file.url];
@@ -80,7 +80,6 @@
 - (void) connectionDidFinishLoading:(NSURLConnection *)connection {
     
     // 1 // convert to NSAttributedString, then save the data
-    NSLog(@"DID FINISH LOADING");
     
     if ([FileService.shared isFile:self.file format:FileFormatText]) {
         ReaderFormatter * formatter = [ReaderFormatter new];

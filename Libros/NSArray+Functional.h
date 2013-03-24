@@ -13,5 +13,6 @@
 -(NSArray*)filter:(BOOL(^)(id))block;
 -(NSArray*)map:(id(^)(id))block;
 -(void)forEach:(void(^)(id))block;
+-(id)find:(BOOL(^)(id))block;
 
 @end

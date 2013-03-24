@@ -35,4 +35,10 @@
     [self map:ignore];
 }
 
+-(id)find:(BOOL(^)(id))match {
+    NSArray * matches = [self filter:match];
+    if (matches.count == 0) return nil;
+    return matches[0];
+}
+
 @end

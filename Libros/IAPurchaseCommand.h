@@ -10,23 +10,9 @@
 #import <StoreKit/StoreKit.h>
 #import "Book.h"
 
-#define ALL_BOOKS_PRODUCT_ID @"libros_all"
-
-@protocol IAPurchaseCommandDelegate <NSObject>
-- (void)didCompletePurchase;
-@optional
-- (void)didCancelPurchase;
-- (void)didErrorPurchase:(NSError*)error;
-@end
-
 @interface IAPurchaseCommand : NSObject
-
-@property (nonatomic, strong) NSString * productId;
-@property (nonatomic, weak) id<IAPurchaseCommandDelegate>delegate;
-
-@property (nonatomic) BOOL isAllBooksPurchase;
-
-- (void)runWithBook:(Book*)book delegate:(id<IAPurchaseCommandDelegate>)delegate;
-- (void)runForAllBooksWithDelegate:(id<IAPurchaseCommandDelegate>)delegate;
-
+@property (nonatomic, strong) SKProduct * product;
+@property (nonatomic, strong) NSError * error;
+@property (nonatomic) BOOL completed;
+- (void)purchaseProduct:(SKProduct*)product cb:(void(^)(IAPurchaseCommand*))cb;
 @end

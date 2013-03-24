@@ -12,6 +12,7 @@
 #import "Icons.h"
 #import "UserService.h"
 #import "FileService.h"
+#import "BookService.h"
 #import "LibraryVC.h"
 #import "IAPurchaseCommand.h"
 #import <StoreKit/StoreKit.h>
@@ -19,11 +20,13 @@
 #import "MetricsService.h"
 #import "Appearance.h"
 #import <QuartzCore/QuartzCore.h>
+#import "IAPInfoCommand.h"
+#import "IAPurchaseStatusCommand.h"
 
 // TODO should download the product details when this page loads to get the price
 // because it will be different per-locale
 
-@interface StoreDetailsVC () <IAPurchaseCommandDelegate>
+@interface StoreDetailsVC ()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
@@ -42,6 +45,15 @@
 @property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
 
 @property (strong, nonatomic) IAPurchaseCommand * purchaseCommand;
+@property (strong, nonatomic) IAPInfoCommand * infoCommand;
+
+@property (strong, nonatomic) SKProduct * bookProduct;
+@property (strong, nonatomic) SKProduct * allBooksProduct;
+
+// STEP 1, load the purchase information for the two products, get the prices, etc
+// get the two SKPayment objects (each one associated with each button)
+
+// STEP 2, if they pay, then run the purchase with a payment
 
 @end
 
@@ -82,6 +94,14 @@
     
     [self.book addObserver:self forKeyPath:BookAttributes.downloaded options:NSKeyValueObservingOptionNew context:nil];
     [self.book addObserver:self forKeyPath:BookAttributes.purchased options:NSKeyValueObservingOptionNew context:nil];
+    
+    
+    self.infoCommand = [IAPInfoCommand new];
+    [self.infoCommand loadInfoForBook:self.book cb:^(IAPInfoCommand* info) {
+        self.bookProduct = info.bookProduct;
+        self.allBooksProduct = info.allBooksProduct;
+        [self renderButtonAndDownload];
+    }];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -111,12 +131,17 @@
     // downloaded
     
     if (!alreadyPurchased && !self.isPurchasing) {
+        if (self.bookProduct) {
+            NSString* bookPriceString = [NSNumberFormatter localizedStringFromNumber:self.bookProduct.price numberStyle:NSNumberFormatterCurrencyStyle];
+            [self.buyButton setTitle:[NSString stringWithFormat:@"Buy for %@", bookPriceString] forState:UIControlStateNormal];
+            NSString* allPriceString = [NSNumberFormatter localizedStringFromNumber:self.allBooksProduct.price numberStyle:NSNumberFormatterCurrencyStyle];
+            [self.buyAllButton setTitle:[NSString stringWithFormat:@"Buy All Books for %@", allPriceString] forState:UIControlStateNormal];
+        }
         
-        NSString * buttonLabel = [NSString stringWithFormat:@"Buy for $%@", self.book.priceString];
-        [self.buyButton setTitle:buttonLabel forState:UIControlStateNormal];
-        
-        NSString * allLabel = [NSString stringWithFormat:@"Buy all books for $%@", @"4.99"];
-        [self.buyAllButton setTitle:allLabel forState:UIControlStateNormal];
+        else {
+            [self.buyButton setTitle:@"Buy" forState:UIControlStateNormal];
+            [self.buyAllButton setTitle:@"Buy all Books" forState:UIControlStateNormal];
+        }
     }
     
     else if (alreadyPurchased && !self.isPurchasing && !self.book.isDownloading && !self.book.isDownloadComplete) {
@@ -238,38 +263,36 @@
 - (void)purchaseBook {
     [MetricsService storeBookBeginBuy:self.book];
     
-    if (IAP_SKIP) {
-        [self didCompletePurchase];
-        return;
-    }
-    
     self.purchaseCommand = [IAPurchaseCommand new];
-    [self.purchaseCommand runWithBook:self.book delegate:self];
+    [self.purchaseCommand purchaseProduct:self.bookProduct cb:^(IAPurchaseCommand*purchase) {
+        if (purchase.completed) [self completePurchase];
+        else [self cancelPurchase];
+    }];
     [self renderButtonAndDownload];
 }
 
 - (void)purchaseAll {
     self.purchaseCommand = [IAPurchaseCommand new];
-    [self.purchaseCommand runForAllBooksWithDelegate:self];
+
+    [self.purchaseCommand purchaseProduct:self.allBooksProduct cb:^(IAPurchaseCommand*purchase) {
+        if (purchase.completed) {
+            [UserService.shared purchasedAllBooks];
+            [self completePurchase];
+        }
+        else [self cancelPurchase];
+    }];
     [self renderButtonAndDownload];
 }
 
-- (void)didErrorPurchase:(NSError *)error {
+- (void)cancelPurchase {
     self.purchaseCommand = nil;
     [self renderButtonAndDownload];
 }
 
-- (void)didCancelPurchase {
-    self.purchaseCommand = nil;
-    [self renderButtonAndDownload];
-}
-
-- (void)didCompletePurchase {
+- (void)completePurchase {
     [MetricsService storeBookFinishBuy:self.book];
-    if (self.purchaseCommand.isAllBooksPurchase)
-        [UserService.shared purchasedAllBooks];
-    self.purchaseCommand = nil;
     [UserService.shared addBook:self.book];
+    self.purchaseCommand = nil;
     [self renderButtonAndDownload];
 }
 
