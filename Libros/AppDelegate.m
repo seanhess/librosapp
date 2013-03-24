@@ -25,13 +25,16 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     NSDictionary * navigationTextAttributes = @{UITextAttributeTextColor: Appearance.lightGray};
+    NSDictionary * tabBarTextAttributes = @{UITextAttributeTextColor: Appearance.darkTabBarColor};
+    NSDictionary * tabBarSelectedAttributes = @{UITextAttributeTextColor: Appearance.lightTabBarColor};
     
     // GENERIC tab bar override
     UIImage *tabBarBackground = [UIImage imageNamed:@"tabbar-background"];
     UIImage *tabBarBackgroundSelected = [UIImage imageNamed:@"tabbar-background-selected"];
     [[UITabBar appearance] setBackgroundImage:tabBarBackground];
     [[UITabBar appearance] setSelectionIndicatorImage:tabBarBackgroundSelected];
-    [[UITabBarItem appearance] setTitleTextAttributes:navigationTextAttributes forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:tabBarTextAttributes forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:tabBarSelectedAttributes forState:UIControlStateSelected];
     
     // GENERIC NAVIGATION BAR
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar-bg.png"] forBarMetrics:UIBarMetricsDefault];
@@ -40,7 +43,7 @@
     [[UIBarButtonItem appearance] setBackgroundImage:[UIImage imageNamed:@"navbar-button.png"] forState:UIControlStateNormal style:UIBarButtonItemStyleBordered barMetrics:UIBarMetricsDefault];
     
     // TODO: switch to button with arrow in it
-    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[UIImage imageNamed:@"navbar-button.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[UIImage imageNamed:@"navbar-back-button.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
     [[UISearchBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar-bg.png"]];
     

@@ -211,6 +211,11 @@
 									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 								</object>
 								<reference key="IBUINormalTitleShadowColor" ref="487938722"/>
+								<object class="NSCustomResource" key="IBUIHighlightedImage" id="126862875">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">reader-text-button-selected.png</string>
+								</object>
+								<reference key="IBUISelectedImage" ref="126862875"/>
 								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">reader-text-button.png</string>
@@ -1128,6 +1133,7 @@
 				<string key="311.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="312.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="313.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="2" key="313.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="314.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="316.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="317.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -1268,6 +1274,7 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="reader-back-button.png">{37, 44}</string>
 			<string key="reader-table-of-contents-button.png">{24, 19}</string>
+			<string key="reader-text-button-selected.png">{46, 44}</string>
 			<string key="reader-text-button.png">{46, 44}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>

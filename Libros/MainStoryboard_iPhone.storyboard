@@ -308,7 +308,7 @@
         <!--Navigation Controller - Search-->
         <scene sceneID="XjL-Ge-b3A">
             <objects>
-                <navigationController definesPresentationContext="YES" id="pFT-ke-1EX" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SearchNavController" definesPresentationContext="YES" id="pFT-ke-1EX" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Search" id="XXs-PJ-A7L"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="aKg-V8-njp">
                         <autoresizingMask key="autoresizingMask"/>

@@ -12,5 +12,7 @@
 
 +(UIColor*)background;
 +(UIColor*)lightGray;
++(UIColor*)darkTabBarColor;
++(UIColor*)lightTabBarColor;
 
 @end

@@ -20,4 +20,12 @@
     return UIColorFromRGB(0xE5E5E5);
 }
 
++(UIColor*)darkTabBarColor {
+    return UIColorFromRGB(0x838383);
+}
+
++(UIColor*)lightTabBarColor {
+    return UIColorFromRGB(0xCECECE);
+}
+
 @end

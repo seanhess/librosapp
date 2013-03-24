@@ -46,7 +46,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 #import <CoreText/CoreText.h>
 #import "ReaderTableOfContentsVC.h"
 #import "ReaderFontVC.h"
-#import "UIViewController+MiniModal.h"
 #import <AVFoundation/AVFoundation.h>
 #import <WEPopover/WEPopoverController.h>
 #import "MetricsService.h"
@@ -54,7 +53,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 #define DRAG_GRAVITY 15
 #define STATUS_BAR_OFFSET 20
 
-@interface ReaderVC () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, ReaderFramesetterDelegate, ReaderTableOfContentsDelegate, ReaderFontDelegate, AVAudioPlayerDelegate>
+@interface ReaderVC () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, ReaderFramesetterDelegate, ReaderTableOfContentsDelegate, ReaderFontDelegate, AVAudioPlayerDelegate, WEPopoverControllerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (nonatomic) CGFloat currentPercent;
@@ -297,7 +296,17 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.fontController.view.frame = CGRectMake(0, 0, 100, 100);
     self.popover = [[WEPopoverController alloc] initWithContentViewController:self.fontController];
     [self.popover presentPopoverFromRect:self.fontButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    self.popover.delegate = self;
     [MetricsService readerTappedFont];
+    self.fontButton.selected = YES;
+}
+
+- (void)popoverControllerDidDismissPopover:(WEPopoverController *)popoverController {
+    self.fontButton.selected = NO;
+}
+
+- (BOOL)popoverControllerShouldDismissPopover:(WEPopoverController *)popoverController {
+    return YES;
 }
 
 - (void)didChangeFont {
@@ -511,6 +520,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     // this is NOT the right place to do this
     if (self.textFiles.count == 0) return;
     
+    [self.popover dismissPopoverAnimated:YES];
+    
     [UIView animateWithDuration:0.2 animations:^{
         self.bottomControlsView.alpha = 0.0;
         
@@ -520,10 +531,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     }];
     
     self.volumeView.hidden = YES;
-    
-    if ([self hasCurrentMiniModal])
-        [self dismissMiniViewController];
 }
+
 - (void)showControls {
     
     [UIView animateWithDuration:0.2 animations:^{

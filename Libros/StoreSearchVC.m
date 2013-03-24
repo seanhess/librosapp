@@ -165,19 +165,20 @@
 #pragma UISearchBarDelegate
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    // if the search has at least 3 letters!
-    if (searchText.length >= 3)
+    // if the search has at least 2 letters!
+    if (searchText.length >= 2)
         [self performSearch:searchBar.text];
     else [self performSearch:@""];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [searchBar resignFirstResponder];
+    // [searchBar resignFirstResponder];
     [self performSearch:searchBar.text];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar {
     [searchBar resignFirstResponder];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 //- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {}
