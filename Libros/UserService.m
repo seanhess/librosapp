@@ -15,6 +15,10 @@
 
 #import <RestKit.h>
 
+#define FONT_SIZE_KEY @"fontSize"
+#define FONT_FACE_KEY @"fontFace"
+#define ALL_BOOKS_PURCHASED_KEY @"purchasedAllBooks"
+
 @interface UserService ()
 @property (strong, nonatomic) Book * book;
 
@@ -63,10 +67,40 @@
     }
 }
 
+
+
+// USER PREFERENCES
+
+-(ReaderFont)fontFace {
+    return [[NSUserDefaults standardUserDefaults] integerForKey:FONT_FACE_KEY];
+}
+
+-(void)setFontFace:(ReaderFont)fontFace {
+    [[NSUserDefaults standardUserDefaults] setInteger:fontFace forKey:FONT_FACE_KEY];
+}
+
+-(NSInteger)fontSize {
+    return [[NSUserDefaults standardUserDefaults] integerForKey:FONT_SIZE_KEY];
+}
+
+-(void)setFontSize:(NSInteger)fontSize {
+    [[NSUserDefaults standardUserDefaults] setInteger:fontSize forKey:FONT_SIZE_KEY];
+}
+
+-(void)purchasedAllBooks {
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:ALL_BOOKS_PURCHASED_KEY];
+}
+
+-(BOOL)hasPurchasedBook:(Book*)book {
+    return book.purchasedValue || [[NSUserDefaults standardUserDefaults] boolForKey:ALL_BOOKS_PURCHASED_KEY];
+}
+
+
+
 // use key-value observing instead of 
 -(void)addBook:(Book *)book {
     book.purchasedValue = YES;
-    book.downloadedValue = 0.0;
+    book.downloadedValue = 0.01; // want to start at a little, meaning it is not currently downloading
     
     [FileService.shared
         downloadFiles:[FileService.shared byBookId:book.bookId]
@@ -80,7 +114,7 @@
 }
 
 -(void)archiveBook:(Book *)book {
-    book.purchasedValue = NO;
+    book.purchasedValue = YES; // stays purchased, but not downloaded. Therefore it won't show up
     book.downloadedValue = 0.0;
     FileService * fs = [FileService shared];
     [fs removeFiles:[fs byBookId:book.bookId]];
@@ -90,7 +124,7 @@
 -(NSFetchRequest*)libraryBooks {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"purchased == YES"];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"purchased == YES AND downloaded == 1.0"];
     fetchRequest.predicate = predicate;
     fetchRequest.sortDescriptors = @[descriptor];
     return fetchRequest;

@@ -19,17 +19,28 @@
 
 -(void)runWithBook:(Book *)book delegate:(id<IAPurchaseCommandDelegate>)delegate {
     self.delegate = delegate;
-    self.book = book;
+    self.productId = book.productId;
+    [self run];
+}
+
+- (void)runForAllBooksWithDelegate:(id<IAPurchaseCommandDelegate>)delegate {
+    self.delegate = delegate;
+    self.productId = ALL_BOOKS_PRODUCT_ID;
     [self run];
 }
 
 - (void)run {
     [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
     
-    NSSet * ids = [NSSet setWithArray:@[self.book.productId]];
+    NSSet * ids = [NSSet setWithArray:@[self.productId]];
     self.request = [[SKProductsRequest alloc] initWithProductIdentifiers:ids];
     self.request.delegate = self;
     [self.request start];
+}
+
+
+-(BOOL)isAllBooksPurchase {
+    return [self.productId isEqualToString:ALL_BOOKS_PRODUCT_ID];
 }
 
 //
@@ -73,18 +84,18 @@
         if (transaction.transactionState == SKPaymentTransactionStatePurchased) {
             NSLog(@"PURCHASED");
             [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-            [self.delegate didCompletePurchase:self.book];
+            [self.delegate didCompletePurchase];
         }
         else if(transaction.transactionState == SKPaymentTransactionStateFailed) {
             NSLog(@"FAILED");
             [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-            if ([self.delegate respondsToSelector:@selector(didCancelPurchase:)])
-                [self.delegate didCancelPurchase:self.book];
+            if ([self.delegate respondsToSelector:@selector(didCancelPurchase)])
+                [self.delegate didCancelPurchase];
         }
         else if(transaction.transactionState == SKPaymentTransactionStateRestored) {
             NSLog(@"RESTORED");
             [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-            [self.delegate didCompletePurchase:self.book];
+            [self.delegate didCompletePurchase];
         }
         else {
             NSLog(@"payment???");

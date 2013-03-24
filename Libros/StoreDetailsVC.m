@@ -55,6 +55,10 @@
 {
     [super viewDidLoad];
     
+    self.buyButton.style = ColoredButtonStyleGreen;
+    self.libraryButton.style = ColoredButtonStyleGray;
+    self.buyAllButton.style = ColoredButtonStyleBlue;
+    
     self.scrollView.backgroundColor = Appearance.background;
     self.downloadProgressBackground.layer.cornerRadius = 5;
     self.downloadProgressBackground.userInteractionEnabled = NO;
@@ -92,40 +96,50 @@
 }
 
 - (void)renderButtonAndDownload {
-    self.buyButton.enabled = YES;
+    BOOL alreadyPurchased = [[UserService shared] hasPurchasedBook:self.book];
     
-    self.buyButton.style = ColoredButtonStyleGreen;
-    NSString * buttonLabel = [NSString stringWithFormat:@"Buy for $%@", self.book.priceString];
-    [self.buyButton setTitle:buttonLabel forState:UIControlStateNormal];
+    // Defaults = what you see on first load
+    self.buyButton.hidden = NO;
+    self.buyAllButton.hidden = NO;
+    self.libraryButton.hidden = YES;
+    self.downloadProgressBackground.hidden = YES;
     
-    self.libraryButton.style = ColoredButtonStyleGray;
-    self.buyAllButton.style = ColoredButtonStyleBlue;
-    NSString * allLabel = [NSString stringWithFormat:@"Buy all books for $%@", @"4.99"];
-    [self.buyAllButton setTitle:allLabel forState:UIControlStateNormal];
+    // States:
+    // not purchased, not downloaded, not downloading
+    // YES purchased, not downloaded
+    // downloading
+    // downloaded
     
-    if (!self.book.purchasedValue && !self.purchaseCommand) {
-        self.buyButton.hidden = NO;
-        self.buyAllButton.hidden = NO;
-        self.libraryButton.hidden = YES;
-        self.downloadProgressBackground.hidden = YES;
+    if (!alreadyPurchased && !self.isPurchasing) {
+        
+        NSString * buttonLabel = [NSString stringWithFormat:@"Buy for $%@", self.book.priceString];
+        [self.buyButton setTitle:buttonLabel forState:UIControlStateNormal];
+        
+        NSString * allLabel = [NSString stringWithFormat:@"Buy all books for $%@", @"4.99"];
+        [self.buyAllButton setTitle:allLabel forState:UIControlStateNormal];
     }
     
+    else if (alreadyPurchased && !self.isPurchasing && !self.book.isDownloading && !self.book.isDownloadComplete) {
+        self.buyAllButton.hidden = YES;
+        [self.buyButton setTitle:@"Download Free" forState:UIControlStateNormal];
+    }
+    
+    // these all use the library button
     else {
+        
         self.buyButton.hidden = YES;
         self.buyAllButton.hidden = YES;
         self.libraryButton.hidden = NO;
         self.downloadProgressBackground.hidden = YES;
         
-        if (self.purchaseCommand) {
+        if (self.isPurchasing) {
             [self.libraryButton setTitle:@"Purchasing" forState:UIControlStateNormal];
             self.libraryButton.enabled = NO;
         }
         
-        // well, I should use a total bytes thing so it actually updates
-        else if (self.book.downloadedValue < 1.0) {
+        else if (self.book.isDownloading) {
             [self.libraryButton setTitle:@"Downloading" forState:UIControlStateNormal];
             self.libraryButton.enabled = NO;
-            
             self.downloadProgressBackground.hidden = NO;
             [self setDownloadProgressValue:self.book.downloadedValue];
         }
@@ -137,6 +151,10 @@
             [self.libraryButton setTitle:@"View in Library" forState:UIControlStateNormal];
         }
     }
+}
+
+-(BOOL)isPurchasing {
+    return (self.purchaseCommand != nil);
 }
 
 -(void)setDownloadProgressValue:(float)value {
@@ -189,14 +207,24 @@
 
 
 - (IBAction)didTapBuy:(id)sender {
-    
-    if (self.book.purchased && self.book.downloadedValue == 1.0) {
+    BOOL alreadyPurchased = [[UserService shared] hasPurchasedBook:self.book];
+             
+    if (alreadyPurchased && self.book.isDownloadComplete) {
         [self viewInLibrary];
     }
     
+    else if (alreadyPurchased) {
+        [UserService.shared addBook:self.book];
+        [self renderButtonAndDownload];
+    }
+             
     else {
         [self purchaseBook];
     }
+}
+
+- (IBAction)didTapBuyAll:(id)sender {
+    [self purchaseAll];
 }
 
 - (void)viewInLibrary {
@@ -211,7 +239,7 @@
     [MetricsService storeBookBeginBuy:self.book];
     
     if (IAP_SKIP) {
-        [self didCompletePurchase:self.book];
+        [self didCompletePurchase];
         return;
     }
     
@@ -220,18 +248,26 @@
     [self renderButtonAndDownload];
 }
 
+- (void)purchaseAll {
+    self.purchaseCommand = [IAPurchaseCommand new];
+    [self.purchaseCommand runForAllBooksWithDelegate:self];
+    [self renderButtonAndDownload];
+}
+
 - (void)didErrorPurchase:(NSError *)error {
     self.purchaseCommand = nil;
     [self renderButtonAndDownload];
 }
 
-- (void)didCancelPurchase:(Book *)book {
+- (void)didCancelPurchase {
     self.purchaseCommand = nil;
     [self renderButtonAndDownload];
 }
 
-- (void)didCompletePurchase:(Book *)book {
+- (void)didCompletePurchase {
     [MetricsService storeBookFinishBuy:self.book];
+    if (self.purchaseCommand.isAllBooksPurchase)
+        [UserService.shared purchasedAllBooks];
     self.purchaseCommand = nil;
     [UserService.shared addBook:self.book];
     [self renderButtonAndDownload];

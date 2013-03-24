@@ -8,13 +8,11 @@
 
 #import "ReaderFontVC.h"
 #import "ReaderFormatter.h"
+#import "UserService.h"
 
 #define MIN_SIZE 10
 #define DEF_SIZE 18
 #define MAX_SIZE 32
-
-#define FONT_SIZE_KEY @"fontSize"
-#define FONT_FACE_KEY @"fontFace"
 
 @interface ReaderFontVC () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -29,10 +27,10 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.currentSize = [[NSUserDefaults standardUserDefaults] integerForKey:FONT_SIZE_KEY];
+        self.currentSize = UserService.shared.fontSize;
         if (!self.currentSize) self.currentSize = DEF_SIZE;
         
-        self.currentFace = [[NSUserDefaults standardUserDefaults] integerForKey:FONT_FACE_KEY];
+        self.currentFace = UserService.shared.fontFace;
         if (!self.currentFace) self.currentFace = ReaderFontPalatino;
         
         self.formatter = [ReaderFormatter new];
@@ -59,13 +57,13 @@
 
 - (IBAction)decreaseFontSize:(id)sender {
     self.currentSize = [self stepSizeDown:self.currentSize];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.currentSize forKey:FONT_SIZE_KEY];
+    UserService.shared.fontSize = self.currentSize;
     [self.delegate didChangeFont];
 }
 
 - (IBAction)increaseFontSize:(id)sender {
     self.currentSize = [self stepSizeUp:self.currentSize];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.currentSize forKey:FONT_SIZE_KEY];
+    UserService.shared.fontSize = self.currentSize;
     [self.delegate didChangeFont];
 }
 
@@ -106,7 +104,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.currentFace = [self fontForRow:indexPath.row];
-    [[NSUserDefaults standardUserDefaults] setInteger:self.currentFace forKey:FONT_FACE_KEY];
+    UserService.shared.fontFace = self.currentFace;
     [self.delegate didChangeFont];
 }
 

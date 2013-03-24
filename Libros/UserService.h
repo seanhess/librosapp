@@ -9,10 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "Book.h"
 #import "User.h"
+#import "ReaderFormatter.h"
 
 @interface UserService : NSObject
 
 @property (nonatomic, strong) User * main;
+
+@property (nonatomic) ReaderFont fontFace;
+@property (nonatomic) NSInteger fontSize;
 
 +(UserService*)shared;
 -(User*)main;
@@ -20,6 +24,10 @@
 -(void)addBook:(Book*)book;
 -(void)archiveBook:(Book*)book;
 
+-(void)purchasedAllBooks;
+-(BOOL)hasPurchasedBook:(Book*)book;
+
 -(NSFetchRequest*)libraryBooks;
 
 @end
+

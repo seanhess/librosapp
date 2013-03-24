@@ -28,4 +28,12 @@
     return [self.bookId stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
 }
 
+-(BOOL)isDownloading {
+    return (0.0 < self.downloadedValue) && (self.downloadedValue < 1.0);
+}
+
+-(BOOL)isDownloadComplete {
+    return (self.downloadedValue == 1.0);
+}
+
 @end
