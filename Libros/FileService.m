@@ -38,6 +38,18 @@
     RKResponseDescriptor * responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:self.fileMapping pathPattern:@"/books/:bookId/files" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
 
     [ObjectStore.shared addResponseDescriptor:responseDescriptor];
+    
+    [ObjectStore.shared.objectManager addFetchRequestBlock:^(NSURL* url) {
+        RKPathMatcher * matcher = [RKPathMatcher pathMatcherWithPattern:@"/books/:bookId/files"];
+        NSFetchRequest * matchingRequest = nil;
+        NSDictionary * args;
+        BOOL match = [matcher matchesPath:[url relativePath] tokenizeQueryStrings:NO parsedArguments:&args];
+        if (match) {
+            NSString * bookId = args[@"bookId"];
+            matchingRequest = [self byBookIdRequest:bookId];
+        }
+        return matchingRequest;
+    }];
 }
 
 -(void)loadFilesForBook:(NSString *)bookId cb:(void (^)(void))cb {
@@ -50,13 +62,17 @@
 }
 
 -(NSArray*)byBookId:(NSString *)bookId {
-    NSFetchRequest * fetch = [NSFetchRequest fetchRequestWithEntityName:@"File"];
-    fetch.predicate = [NSPredicate predicateWithFormat:@"bookId == %@", bookId];
+    NSFetchRequest * fetch = [self byBookIdRequest:bookId];
     fetch.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
-    
     NSError * error = nil;
     NSArray * files = [ObjectStore.shared.context executeFetchRequest:fetch error:&error];
     return files;
+}
+
+-(NSFetchRequest*)byBookIdRequest:(NSString*)bookId {
+    NSFetchRequest * fetch = [NSFetchRequest fetchRequestWithEntityName:@"File"];
+    fetch.predicate = [NSPredicate predicateWithFormat:@"bookId == %@", bookId];
+    return fetch;
 }
 
 // you already have the files
@@ -66,7 +82,12 @@
     operations.maxConcurrentOperationCount = 1;
     __block NSInteger completedFiles = 0;
     
-    [files forEach:^(File* file) {
+    // during a mistake, some bad files got in there. Just add one more system that can catch it
+    NSArray * validFiles = [files filter:^(File*file) {
+        return (BOOL)(file.url != nil);
+    }];
+    
+    [validFiles forEach:^(File* file) {
         FileDownloadOperation * download = [FileDownloadOperation new];
         download.file = file;
         download.localPath = [self localPath:file];

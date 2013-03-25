@@ -114,8 +114,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     
     [MetricsService readerLoadedBook:self.book];
     
-    self.topControlsBackground.image = [UIImage imageNamed:@"reader-top-controls-bg.png"];
-    
     self.fontController = [ReaderFontVC new];
     self.fontController.delegate = self;
     

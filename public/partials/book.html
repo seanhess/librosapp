@@ -49,7 +49,7 @@
   <label>{{book.audioFiles}} audio files</label>
 
   <div class="files" dragupload="onDrop">
-    <div class="instructions">Drop files here (.mp3 or .txt)</div>
+    <div class="instructions">Drop files here (.mp3 or .html)</div>
 
     <div class="file" ng-class="{loading: isLoading(file), active: isFileUploadActive(file)}" ng-repeat="file in book.files | orderBy:'name'">
       <div ng-hide="isEditing(file)">

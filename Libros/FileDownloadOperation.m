@@ -48,6 +48,7 @@
 
 -(void)start {
     // NSLog(@"DOWNLOADING %@", self.file.url);
+    // why did I put this in the main queue? I think it has something to do with the operation
     dispatch_async(dispatch_get_main_queue(), ^{
         self.finished = NO;
         NSURL * url = [NSURL URLWithString:self.file.url];
@@ -69,7 +70,7 @@
 }
 
 - (void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    NSLog(@"ERROR %@", error);
+    NSLog(@"ERROR (%@) %@", self.file.url, error);
     [self finish];
 }
 

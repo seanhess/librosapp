@@ -39,6 +39,7 @@ app.factory('Files', function($http: ng.IHttpService):IFileService {
       Files.upload(currentOp.file)
       .then((file:IFile) => currentOp.cb(file))
       .then(function() {
+        currentOp = null
         if (queue.length) nextUpload()
       })
     }

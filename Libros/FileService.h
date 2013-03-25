@@ -24,6 +24,7 @@
 -(void)downloadFiles:(NSArray*)files progress:(void(^)(float))cb complete:(void(^)(void))cb;
 
 -(NSArray*)byBookId:(NSString*)bookId;
+-(NSFetchRequest*)byBookIdRequest:(NSString*)bookId;
 
 -(NSURL*)url:(File*)file;
 -(NSString*)localPath:(File*)file;
