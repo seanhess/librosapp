@@ -42,10 +42,15 @@
     
     [[UIBarButtonItem appearance] setBackgroundImage:[UIImage imageNamed:@"navbar-button.png"] forState:UIControlStateNormal style:UIBarButtonItemStyleBordered barMetrics:UIBarMetricsDefault];
     
-    // TODO: switch to button with arrow in it
     [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[UIImage imageNamed:@"navbar-back-button.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
+    // SEARCH BAR
     [[UISearchBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar-bg.png"]];
+    
+    [[UISlider appearance] setMinimumTrackTintColor:Appearance.highlightBlue];
+    [[UIProgressView appearance] setTrackTintColor:Appearance.highlightBlue];
+    [[UISwitch appearance] setOnTintColor:Appearance.highlightBlue];
+    [[UISegmentedControl appearance] setBackgroundColor:Appearance.highlightBlue];
     
     [MetricsService launch];
     

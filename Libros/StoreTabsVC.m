@@ -68,12 +68,12 @@
     return YES;
 }
 
--(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-    NSLog(@"SELECTING %i", self.selectedIndex);
-    // selected index is currently equal to the OLD one
-//    if (item.i == 3) {
-//        self.selectedIndex = self.currentIndex;
-//    }
-}
+//-(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+//    NSLog(@"SELECTING %i", self.selectedIndex);
+//    // selected index is currently equal to the OLD one
+////    if (item.i == 3) {
+////        self.selectedIndex = self.currentIndex;
+////    }
+//}
 
 @end

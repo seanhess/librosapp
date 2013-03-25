@@ -97,4 +97,12 @@
     [self.mixpanel track:@"store book buy finish" properties:[self bookProperties:book]];
 }
 
++(void)storeBookBeginBuyAll {
+    [self.mixpanel track:@"store buyall start"];
+}
+
++(void)storeBookFinishBuyAll {
+    [self.mixpanel track:@"store buyall finish"];
+}
+
 @end

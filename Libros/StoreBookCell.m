@@ -12,6 +12,7 @@
 #import "Icons.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Covers.h"
+#import "Appearance.h"
 
 #define COVER_HEIGHT 66
 #define COVER_PADDING_LEFT 7
@@ -46,6 +47,8 @@
         
         self.audioFrame = self.audioIconView.frame;
         self.textFrame = self.textIconView.frame;
+        
+        self.selectedBackgroundView = Appearance.tableSelectedBackgroundView;
         
         self.coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(COVER_PADDING_LEFT, COVER_PADDING_TOP, COVER_WIDTH, COVER_HEIGHT)];
         [self.contentView addSubview:self.coverImageView];

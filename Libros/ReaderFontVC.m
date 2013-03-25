@@ -9,6 +9,7 @@
 #import "ReaderFontVC.h"
 #import "ReaderFormatter.h"
 #import "UserService.h"
+#import "Appearance.h"
 
 #define MIN_SIZE 10
 #define DEF_SIZE 18
@@ -80,6 +81,7 @@
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        cell.selectedBackgroundView = Appearance.tableSelectedBackgroundView;
     }
     ReaderFont font = [self fontForRow:indexPath.row];
     cell.textLabel.text = [self.formatter humanFontName:font];

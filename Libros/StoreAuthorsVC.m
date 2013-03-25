@@ -51,6 +51,9 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    NSIndexPath * selectedRow = [self.tableView indexPathForSelectedRow];
+    if (selectedRow)
+        [self.tableView deselectRowAtIndexPath:selectedRow animated:YES];
     [MetricsService storeAuthorsLoad];
 }
 
@@ -95,6 +98,7 @@
     UITableViewCell *cell = (UITableViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.selectedBackgroundView = Appearance.tableSelectedBackgroundView;
     }
     
     Author * author = [self.fetchedResultsController objectAtIndexPath:indexPath];

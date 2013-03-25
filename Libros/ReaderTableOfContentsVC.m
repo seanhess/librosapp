@@ -8,6 +8,7 @@
 
 #import "ReaderTableOfContentsVC.h"
 #import "File.h"
+#import "Appearance.h"
 
 @interface ReaderTableOfContentsVC () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -55,6 +56,7 @@
     UITableViewCell *cell = (UITableViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.selectedBackgroundView = Appearance.tableSelectedBackgroundView;
     }
     
     File * file = self.files[indexPath.row];

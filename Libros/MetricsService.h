@@ -37,4 +37,7 @@
 +(void)storeBookBeginBuy:(Book*)book;
 +(void)storeBookFinishBuy:(Book*)book;
 
++(void)storeBookBeginBuyAll;
++(void)storeBookFinishBuyAll;
+
 @end

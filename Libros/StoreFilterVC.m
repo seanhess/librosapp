@@ -7,6 +7,7 @@
 //
 
 #import "StoreFilterVC.h"
+#import "Appearance.h"
 
 @interface StoreFilterVC ()
 
@@ -65,6 +66,7 @@
     UITableViewCell *cell = (UITableViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.selectedBackgroundView = Appearance.tableSelectedBackgroundView;
     }
     
     if (indexPath.row == BookFilterEverything) cell.textLabel.text = @"Everything";

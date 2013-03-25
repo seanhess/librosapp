@@ -241,7 +241,7 @@
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">2</int>
-									<bytes key="NSRGB">MC4yMzUyOTQxMzM0IDAuNTAxOTYwODE0IDAuODAwMDAwMDcxNSAwLjIAA</bytes>
+									<bytes key="NSRGB">MC4wNjI3NDUxMDE3NSAwLjY0NzA1ODg0NDYgMC44NjY2NjY3MzQyIDAuMgA</bytes>
 								</object>
 								<object class="IBUIAccessibilityConfiguration" key="IBUIAccessibilityConfiguration">
 									<integer value="256" key="IBUIAccessibilityTraits"/>
@@ -323,6 +323,7 @@
 								<string key="NSFrame">{{20, 227}, {280, 312}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<bool key="IBUIMultipleTouchEnabled">YES</bool>

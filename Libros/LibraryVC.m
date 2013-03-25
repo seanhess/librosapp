@@ -75,6 +75,7 @@
     if (self.loadBook) {
         NSIndexPath * indexPath = [self.fetchedResultsController indexPathForObject:self.loadBook];
         [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        self.loadBook = nil;
     }
 }
 

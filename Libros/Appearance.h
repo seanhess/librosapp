@@ -14,5 +14,7 @@
 +(UIColor*)lightGray;
 +(UIColor*)darkTabBarColor;
 +(UIColor*)lightTabBarColor;
++(UIColor*)highlightBlue;
++(UIView*)tableSelectedBackgroundView;
 
 @end

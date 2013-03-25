@@ -28,4 +28,14 @@
     return UIColorFromRGB(0xCECECE);
 }
 
++(UIColor*)highlightBlue {
+    return UIColorFromRGB(0x10A5DD);
+}
+
++(UIView*)tableSelectedBackgroundView {
+    UIView * colorView = [UIView new];
+    colorView.backgroundColor = self.highlightBlue;
+    return colorView;
+}
+
 @end

@@ -114,6 +114,7 @@
     UITableViewCell *cell = (UITableViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.selectedBackgroundView = Appearance.tableSelectedBackgroundView;
     }
     
     Author * author = [self.authorResults objectAtIndexPath:indexPath];

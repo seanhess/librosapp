@@ -262,20 +262,23 @@
 
 - (void)purchaseBook {
     [MetricsService storeBookBeginBuy:self.book];
-    
     self.purchaseCommand = [IAPurchaseCommand new];
     [self.purchaseCommand purchaseProduct:self.bookProduct cb:^(IAPurchaseCommand*purchase) {
-        if (purchase.completed) [self completePurchase];
+        if (purchase.completed) {
+            [MetricsService storeBookFinishBuy:self.book];
+            [self completePurchase];
+        }
         else [self cancelPurchase];
     }];
     [self renderButtonAndDownload];
 }
 
 - (void)purchaseAll {
+    [MetricsService storeBookBeginBuyAll];
     self.purchaseCommand = [IAPurchaseCommand new];
-
     [self.purchaseCommand purchaseProduct:self.allBooksProduct cb:^(IAPurchaseCommand*purchase) {
         if (purchase.completed) {
+            [MetricsService storeBookBeginBuyAll];
             [UserService.shared purchasedAllBooks];
             [self completePurchase];
         }
@@ -290,7 +293,6 @@
 }
 
 - (void)completePurchase {
-    [MetricsService storeBookFinishBuy:self.book];
     [UserService.shared addBook:self.book];
     self.purchaseCommand = nil;
     [self renderButtonAndDownload];
