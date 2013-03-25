@@ -105,7 +105,9 @@
         
         self.textIconView.frame = textFrame;
         self.audioIconView.frame = audioFrame;
-        self.iconsView.frame = CGRectMake(0, 0, textFrame.origin.x + textFrame.size.width, MAX(textFrame.size.height, audioFrame.size.height));
+        CGRect frame = self.iconsView.frame;
+        frame.size = CGSizeMake(textFrame.origin.x + textFrame.size.width, MAX(textFrame.size.height, audioFrame.size.height));
+        self.iconsView.frame = frame;
     }
     
     else if (book.audioFilesValue) {
