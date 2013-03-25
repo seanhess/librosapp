@@ -244,6 +244,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     ReaderTableOfContentsVC * toc = [ReaderTableOfContentsVC new];
     [MetricsService readerTappedToc:self.book];
     toc.chapters = self.chapters;
+    toc.currentChapter = self.book.currentChapterValue;
     toc.delegate = self;
     [self.navigationController presentViewController:toc animated:YES completion:nil];
 }

@@ -18,6 +18,7 @@
 @interface ReaderTableOfContentsVC : UIViewController
 
 @property (strong, nonatomic) NSArray * chapters;
+@property (nonatomic) NSInteger currentChapter;
 @property (weak, nonatomic) id<ReaderTableOfContentsDelegate>delegate;
 
 @end
