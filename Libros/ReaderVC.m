@@ -119,7 +119,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     
     self.currentVolume = 1.0;
     self.volumeSlider.value = self.currentVolume;
-    self.volumeView.hidden = YES;
+    self.volumeView.alpha = 0.0;
     
     self.currentRate = 1.0;
     
@@ -506,7 +506,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (BOOL)isControlsShown {
-    return (self.bottomControlsView.alpha > 0);
+    return (self.bottomControlsView.frame.origin.y < self.view.frame.size.height);
 }
 
 - (void)hideControlsInABit {
@@ -521,20 +521,24 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     [self.popover dismissPopoverAnimated:YES];
     
     [UIView animateWithDuration:0.2 animations:^{
-        self.bottomControlsView.alpha = 0.0;
+        CGRect bottomFrame = self.bottomControlsView.frame;
+        bottomFrame.origin.y = self.view.frame.size.height;
+        self.bottomControlsView.frame = bottomFrame;
         
         CGRect topFrame = self.topControlsView.frame;
         topFrame.origin.y = -topFrame.size.height;
         self.topControlsView.frame = topFrame;
+        
+        self.volumeView.alpha = 0.0;
     }];
-    
-    self.volumeView.hidden = YES;
 }
 
 - (void)showControls {
     
     [UIView animateWithDuration:0.2 animations:^{
-        self.bottomControlsView.alpha = 1.0;
+        CGRect bottomFrame = self.bottomControlsView.frame;
+        bottomFrame.origin.y = self.view.frame.size.height - bottomFrame.size.height;
+        self.bottomControlsView.frame = bottomFrame;
         
         CGRect topFrame = self.topControlsView.frame;
         topFrame.origin.y = 0;
@@ -646,12 +650,9 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     
     if (self.player.isPlaying){
         [self.player pause];
-        [self.playButton setTitle:@">" forState:UIControlStateNormal];
     }
     
     else {
-        [self.playButton setTitle:@"||" forState:UIControlStateNormal];
-        
         if (!self.player) {
             [MetricsService readerPlayedAudio:self.book];
             [self playerAtChapter:self.book.currentChapterValue];
@@ -659,6 +660,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
         
         [self.player play];
     }
+    
+    [self updatePlayButton];
 }
 
 - (IBAction)didClickRate:(id)sender {
@@ -668,12 +671,12 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     else self.currentRate = 0.5;
     
     self.player.rate = self.currentRate;
-    NSString * rateLabel;
-    if (self.currentRate == 0.5) rateLabel = @"1/2x";
-    else if (self.currentRate == 1.0) rateLabel = @"1x";
-    else if (self.currentRate == 1.5) rateLabel = @"1.5x";
-    else rateLabel = @"2x";
-    [self.rateButton setTitle:rateLabel forState:UIControlStateNormal];
+    NSString * rateImage;
+    if (self.currentRate == 0.5) rateImage = @"reader-speed-icon-0.5.png";
+    else if (self.currentRate == 1.0) rateImage = @"reader-speed-icon-1.png";
+    else if (self.currentRate == 1.5) rateImage = @"reader-speed-icon-1.5.png";
+    else rateImage = @"reader-speed-icon-2.png";
+    [self.rateButton setImage:[UIImage imageNamed:rateImage] forState:UIControlStateNormal];
     [MetricsService readerChangedRate:self.currentRate];
 }
 
@@ -686,7 +689,9 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (IBAction)didClickVolume:(id)sender {
-    self.volumeView.hidden = (!self.volumeView.hidden);
+    [UIView animateWithDuration:0.2 animations:^{
+        self.volumeView.alpha = (self.volumeView.alpha > 0.0) ? 0.0 : 1.0;
+    }];
 }
 
 - (void)onPlaybackTimer {
@@ -698,11 +703,14 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.audioTimeLabel.text = [self formatTime:self.player.currentTime];
     self.audioRemainingLabel.text = [NSString stringWithFormat:@"-%@", [self formatTime:self.player.duration - self.player.currentTime]];
     self.audioProgress.value = self.player.currentTime / self.player.duration;
-        
+    [self updatePlayButton];
+}
+
+- (void)updatePlayButton {
     if (self.player.isPlaying)
-        [self.playButton setTitle:@"||" forState:UIControlStateNormal];
+        [self.playButton setImage:[UIImage imageNamed:@"reader-pause-icon.png"] forState:UIControlStateNormal];
     else
-        [self.playButton setTitle:@">" forState:UIControlStateNormal];
+        [self.playButton setImage:[UIImage imageNamed:@"reader-play-icon.png"] forState:UIControlStateNormal];
 }
 
 -(NSString*)formatTime:(float)time{
