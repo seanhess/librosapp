@@ -16,7 +16,7 @@
 #import "StoreBookResultsFilterView.h"
 #import "Appearance.h"
 
-@interface StoreBookResultsVC ()
+@interface StoreBookResultsVC () <StoreBookResultsFilterDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController * fetchedResultsController;
 @property (nonatomic) BookFilter currentFilter;
@@ -46,7 +46,6 @@
     [self.filterView setDelegate:self];
     self.tableView.tableHeaderView = self.filterView;
     [self.tableView setContentOffset:CGPointMake(0, self.filterView.frame.size.height)];
-    [self renderFilterTitle];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -54,6 +53,10 @@
     NSIndexPath * selectedRow = [self.tableView indexPathForSelectedRow];
     if (selectedRow)
         [self.tableView deselectRowAtIndexPath:selectedRow animated:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self.filterView renderSelectedSegment];
 }
 
 - (void)didReceiveMemoryWarning
@@ -128,24 +131,10 @@
 
 #pragma mark - Filtering
 
-- (void)renderFilterTitle {
-    if (self.currentFilter == BookFilterEverything) self.filterView.buttonTitle = @"Filter: Everything";
-    else if (self.currentFilter == BookFilterHasText) self.filterView.buttonTitle = @"Filter: Has Text";
-    else if (self.currentFilter == BookFilterHasAudio) self.filterView.buttonTitle = @"Filter: Has Audio";
-}
-
-- (void)didTapFilterButton {
-    StoreFilterVC * filters = [StoreFilterVC new];
-    filters.delegate = self;
-    filters.filter = self.currentFilter;
-    [self.navigationController presentViewController:filters animated:YES completion:nil];
-}
-
 - (void)didSelectFilter:(BookFilter)filter {
     self.currentFilter = filter;
     [self generateFetchedResults];
     [self.tableView reloadData];
-    [self renderFilterTitle];
 }
 
 #pragma mark - Table view delegate

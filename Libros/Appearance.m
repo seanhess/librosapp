@@ -32,6 +32,10 @@
     return UIColorFromRGB(0x10A5DD);
 }
 
++(UIColor*)boringGrayColor {
+    return UIColorFromRGB(0xBBBBBB);
+}
+
 +(UIView*)tableSelectedBackgroundView {
     UIView * colorView = [UIView new];
     colorView.backgroundColor = self.highlightBlue;

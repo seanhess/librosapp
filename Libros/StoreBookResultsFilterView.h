@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "ColoredButton.h"
+#import "Book.h"
 
 @protocol StoreBookResultsFilterDelegate <NSObject>
--(void)didTapFilterButton;
+-(void)didSelectFilter:(BookFilter)filter;
 @end
 
 @interface StoreBookResultsFilterView : UIView
 @property (weak, nonatomic) id<StoreBookResultsFilterDelegate>delegate;
--(void)setButtonTitle:(NSString*)title;
 +(StoreBookResultsFilterView*)filterView;
+- (void)renderSelectedSegment;
 @end

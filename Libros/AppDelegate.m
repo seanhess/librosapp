@@ -50,7 +50,7 @@
     [[UISlider appearance] setMinimumTrackTintColor:Appearance.highlightBlue];
     [[UIProgressView appearance] setTrackTintColor:Appearance.highlightBlue];
     [[UISwitch appearance] setOnTintColor:Appearance.highlightBlue];
-    [[UISegmentedControl appearance] setBackgroundColor:Appearance.highlightBlue];
+    // [[UISegmentedControl appearance] setTintColor:Appearance.highlightBlue]; (changes the whole background)
     
     [MetricsService launch];
     

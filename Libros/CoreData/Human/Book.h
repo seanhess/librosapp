@@ -3,8 +3,8 @@
 
 typedef enum {
     BookFilterEverything = 0,
-    BookFilterHasAudio,
-    BookFilterHasText
+    BookFilterHasText,
+    BookFilterHasAudio
 } BookFilter;
 
 typedef enum {
