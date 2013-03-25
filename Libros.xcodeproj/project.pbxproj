@@ -71,6 +71,7 @@
 		783AC98016F142660050D966 /* LibraryOpenAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 783AC97F16F142660050D966 /* LibraryOpenAnimationView.m */; };
 		7840CD6E16F22A8A00FFFCE9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7840CD6D16F22A8A00FFFCE9 /* QuartzCore.framework */; };
 		7840CD7016F23B8B00FFFCE9 /* navbar-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7840CD6F16F23B8B00FFFCE9 /* navbar-button@2x.png */; };
+		78440EE61700F9A700812765 /* Chapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 78440EE51700F9A700812765 /* Chapter.m */; };
 		7844B70F1700C8B600AF4653 /* reader-bottom-controls-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 7844B70D1700C8B600AF4653 /* reader-bottom-controls-bg.png */; };
 		7844B7101700C8B600AF4653 /* reader-bottom-controls-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7844B70E1700C8B600AF4653 /* reader-bottom-controls-bg@2x.png */; };
 		7844B7181700C8DB00AF4653 /* reader-fastforward-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7844B7111700C8DB00AF4653 /* reader-fastforward-icon@2x.png */; };
@@ -287,6 +288,8 @@
 		783AC97F16F142660050D966 /* LibraryOpenAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryOpenAnimationView.m; sourceTree = "<group>"; };
 		7840CD6D16F22A8A00FFFCE9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7840CD6F16F23B8B00FFFCE9 /* navbar-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar-button@2x.png"; sourceTree = "<group>"; };
+		78440EE41700F9A700812765 /* Chapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chapter.h; sourceTree = "<group>"; };
+		78440EE51700F9A700812765 /* Chapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chapter.m; sourceTree = "<group>"; };
 		7844B70D1700C8B600AF4653 /* reader-bottom-controls-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reader-bottom-controls-bg.png"; sourceTree = "<group>"; };
 		7844B70E1700C8B600AF4653 /* reader-bottom-controls-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reader-bottom-controls-bg@2x.png"; sourceTree = "<group>"; };
 		7844B7111700C8DB00AF4653 /* reader-fastforward-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reader-fastforward-icon@2x.png"; sourceTree = "<group>"; };
@@ -794,6 +797,8 @@
 				7827BDA9169CE4A900053231 /* Libros.xcdatamodeld */,
 				780FFEFF16A09A85003AE067 /* ObjectStore.h */,
 				780FFF0016A09A85003AE067 /* ObjectStore.m */,
+				78440EE41700F9A700812765 /* Chapter.h */,
+				78440EE51700F9A700812765 /* Chapter.m */,
 				7847A4AD16A0900800106764 /* Human */,
 				7847A4B016A0900800106764 /* Machine */,
 				780A2E6616CC645000ABCB4E /* LBParsedString.h */,
@@ -1250,6 +1255,7 @@
 				783AC98016F142660050D966 /* LibraryOpenAnimationView.m in Sources */,
 				78E6C05716FF65970030D976 /* IAPInfoCommand.m in Sources */,
 				78DE4F5316FF7B570053F952 /* IAPurchaseStatusCommand.m in Sources */,
+				78440EE61700F9A700812765 /* Chapter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1329,8 +1335,8 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Audiolibros y libros en espanol LLC";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Audiolibros y libros en espanol LLC";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1338,8 +1344,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "2362DC1D-F0D1-46F7-9091-781CBB0DE9D5";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2362DC1D-F0D1-46F7-9091-781CBB0DE9D5";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

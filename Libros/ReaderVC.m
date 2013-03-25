@@ -49,6 +49,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 #import <AVFoundation/AVFoundation.h>
 #import <WEPopover/WEPopoverController.h>
 #import "MetricsService.h"
+#import "Chapter.h"
 
 #define DRAG_GRAVITY 15
 #define STATUS_BAR_OFFSET 20
@@ -60,9 +61,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 @property (strong, nonatomic) ReaderFramesetter * framesetter;
 @property (strong, nonatomic) ReaderFormatter * formatter;
-@property (strong, nonatomic) NSArray * textFiles;
-@property (strong, nonatomic) NSArray * audioFiles;
-@property (nonatomic) NSInteger numChapters;
+@property (strong, nonatomic) NSArray * chapters;
 
 @property (nonatomic) BOOL scrolling;
 
@@ -129,10 +128,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     
     self.title = self.book.title;
     self.bookTitle.text = self.book.title;
-    NSArray * allFiles = [fs byBookId:self.book.bookId];
-    self.textFiles = [fs textFiles:allFiles];
-    self.audioFiles = [fs audioFiles:allFiles];
-    self.numChapters = self.textFiles.count;
+    self.chapters = [fs chaptersForFiles:[fs byBookId:self.book.bookId]];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     
     [self updateControlsFromBook];
@@ -247,12 +243,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 - (IBAction)didTapToC:(id)sender {
     ReaderTableOfContentsVC * toc = [ReaderTableOfContentsVC new];
     [MetricsService readerTappedToc:self.book];
-    
-    if (self.audioFiles.count > self.textFiles.count)
-        toc.files = self.audioFiles;
-    else
-        toc.files = self.textFiles;
-    
+    toc.chapters = self.chapters;
     toc.delegate = self;
     [self.navigationController presentViewController:toc animated:YES completion:nil];
 }
@@ -269,8 +260,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 - (void)loadChapter:(NSInteger)chapter {
     if (chapter < 0) return;
-    if (chapter >= self.textFiles.count) return;
-    
+    if (chapter >= self.chapters.count) return;
     
     BOOL playing = self.player.playing;
     
@@ -281,7 +271,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     [self ensurePagesForChapter:chapter];
     [self moveToChapter:chapter page:0 animated:NO];
     [self playerAtChapter:chapter];
-    [self hideControlsInABit];
+    // [self hideControlsInABit];
     
     if (playing) [self.player play];
 }
@@ -420,9 +410,11 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 //    [self moveToChapter:self.book.currentChapterValue page:self.book.currentPageValue animated:NO];
 }
 
-- (NSAttributedString*)textForChapter:(NSInteger)chapter {
-    if (chapter < 0 || chapter >= self.textFiles.count) return nil;
-    return [self.formatter textForFile:self.textFiles[chapter] withFont:self.fontController.currentFace fontSize:self.fontController.currentSize];
+- (NSAttributedString*)textForChapter:(NSInteger)chapterIndex {
+    if (chapterIndex < 0 || chapterIndex >= self.chapters.count) return nil;
+    Chapter * chapter = self.chapters[chapterIndex];
+    if (!chapter.textFile) return nil;
+    return [self.formatter textForFile:chapter.textFile withFont:self.fontController.currentFace fontSize:self.fontController.currentSize];
 }
 
 - (void)updateCurrentPage {
@@ -442,9 +434,9 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (void)displayChapter {
-    if (self.book.currentChapterValue >= self.book.allFiles.count) return;
-    File * file = self.book.allFiles[self.book.currentChapterValue];
-    self.chapterTitle.text = file.name;
+    if (self.book.currentChapterValue >= self.chapters.count) return;
+    Chapter * chapter = self.chapters[self.book.currentChapterValue];
+    self.chapterTitle.text = chapter.name;
 }
 
 - (void)displayPage {
@@ -483,7 +475,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     }
     else {
         NSInteger nextChapter = chapter + 1;
-        if (nextChapter >= self.textFiles.count)
+        if (nextChapter >= self.chapters.count)
             return nil;
         else {
             [self ensurePagesForChapter:nextChapter];
@@ -514,10 +506,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (void)hideControls {
-    
-    // this is NOT the right place to do this
-    if (self.textFiles.count == 0) return;
-    
     [self.popover dismissPopoverAnimated:YES];
     
     [UIView animateWithDuration:0.2 animations:^{
@@ -549,7 +537,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 #pragma mark UICollectionViewDelegate
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return self.numChapters;
+    return self.chapters.count;
 }
 
 // this gets called DURING first initialization
@@ -558,7 +546,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 -(BOOL)isChapterNext:(NSInteger)chapter page:(NSInteger)page {
-    return (page == [self.framesetter pagesForChapter:chapter]-1 && chapter < self.numChapters-1);
+    return (page == [self.framesetter pagesForChapter:chapter]-1 && chapter < self.chapters.count-1);
 }
 
 -(BOOL)isChapterPrev:(NSInteger)chapter page:(NSInteger)page {
@@ -634,16 +622,23 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.player.rate = self.currentRate;
     self.player.delegate = self;
     self.player.volume = self.currentVolume;
+    [self.playbackTimer invalidate];
     self.playbackTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(onPlaybackTimer) userInfo:nil repeats:YES];
     
     self.volumeSlider.value = self.currentVolume;
     self.audioProgress.value = 0;
     [self updateAudioProgress];
+    
+    self.playButton.enabled = (audioFile != nil);
+    self.audioRemainingLabel.enabled = (audioFile != nil);
+    self.audioTimeLabel.enabled = (audioFile != nil);
+    self.audioProgress.enabled = (audioFile != nil);
 }
 
-- (File*)audioFileForChapter:(NSInteger)chapter {
-    if (chapter < 0 || chapter >= self.audioFiles.count) return nil;
-    return self.audioFiles[chapter];
+- (File*)audioFileForChapter:(NSInteger)chapterIndex {
+    if (chapterIndex < 0 || chapterIndex >= self.chapters.count) return nil;
+    Chapter * chapter = self.chapters[chapterIndex];
+    return chapter.audioFile;
 }
 
 - (IBAction)didClickPlay:(id)sender {
@@ -735,7 +730,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     [self updateAudioProgress];
     if (!flag) return;
     [self loadChapter:self.book.currentChapterValue+1];
-    if (self.book.currentChapterValue < self.audioFiles.count)
+    if (self.book.currentChapterValue < self.chapters.count)
         [self.player play];
 }
 

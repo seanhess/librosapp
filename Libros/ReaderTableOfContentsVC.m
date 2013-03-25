@@ -7,7 +7,7 @@
 //
 
 #import "ReaderTableOfContentsVC.h"
-#import "File.h"
+#import "Chapter.h"
 #import "Appearance.h"
 
 @interface ReaderTableOfContentsVC () <UITableViewDataSource, UITableViewDelegate>
@@ -47,7 +47,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.files.count;
+    return self.chapters.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -59,8 +59,8 @@
         cell.selectedBackgroundView = Appearance.tableSelectedBackgroundView;
     }
     
-    File * file = self.files[indexPath.row];
-    cell.textLabel.text = file.name;
+    Chapter * chapter = self.chapters[indexPath.row];
+    cell.textLabel.text = chapter.name;
     return cell;
 }
 

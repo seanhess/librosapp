@@ -130,8 +130,6 @@
     return [NSData dataWithContentsOfFile:[self localPath:file] options:NSDataReadingMapped error:nil];
 }
 
-
-
 -(NSString*)documentsDirectory {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     return [paths objectAtIndex:0];
@@ -170,5 +168,25 @@
         [[NSFileManager defaultManager] removeItemAtPath:localPath error:nil];
     }];
 }
+
+-(NSArray*)chaptersForFiles:(NSArray*)files {
+    NSMutableArray * chapters = [NSMutableArray array];
+    Chapter * chapter = nil;
+    
+    for (File * file in files) {
+        if (![file.name isEqualToString:chapter.name]) {
+            chapter = [Chapter new];
+            chapter.name = file.name;
+            [chapters addObject:chapter];
+        }
+        if ([self isFile:file format:FileFormatAudio])
+            chapter.audioFile = file;
+        else if ([self isFile:file format:FileFormatText])
+            chapter.textFile = file;
+    }
+    
+    return chapters;
+}
+
 
 @end

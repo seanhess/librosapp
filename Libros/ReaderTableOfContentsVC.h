@@ -17,7 +17,7 @@
 
 @interface ReaderTableOfContentsVC : UIViewController
 
-@property (strong, nonatomic) NSArray * files;
+@property (strong, nonatomic) NSArray * chapters;
 @property (weak, nonatomic) id<ReaderTableOfContentsDelegate>delegate;
 
 @end

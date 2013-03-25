@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <RestKit/RestKit.h>
 #import "File.h"
+#import "Chapter.h"
 #import "LBParsedString.h"
 
 #define FileFormatText @"html"
@@ -36,6 +37,8 @@
 -(NSArray*)audioFiles:(NSArray*)array;
 -(BOOL)isFile:(File*)file format:(NSString*)format;
 
+-(NSArray*)chaptersForFiles:(NSArray*)files;
+    
 -(void)removeFiles:(NSArray*)files;
 
 @end
