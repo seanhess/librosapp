@@ -19,6 +19,7 @@ app.controller('BookCtrl', function($scope, Books:IBookService, Files:IFileServi
   var bookId = $scope.bookId = $routeParams.bookId
 
   $scope.book = Books.get({bookId:bookId})
+  $scope.fileStatus = {}
 
   $http.get("/genres/").success(function(genres) {
     $scope.genres = genres
@@ -31,6 +32,26 @@ app.controller('BookCtrl', function($scope, Books:IBookService, Files:IFileServi
 
   function back() {
     $location.path("/admin")
+  }
+
+  function bookValid(book:IBook) {
+    if (!book) return false
+    if (!book.files) return false
+    var validFiles = book.files.filter(fileValid)
+    if (validFiles.length < book.files.length) return false
+    return true
+  }
+
+  function fileValid(file:IFile) {
+    if (!file.url) return false
+    if (!file.fileId) return false
+    if (!file.name) return false
+    if (!file.ext) return false
+    return true
+  }
+
+  $scope.isBookValid = function() {
+    return bookValid($scope.book)
   }
 
   $scope.toggleEditNewGenre = function() {
@@ -90,6 +111,12 @@ app.controller('BookCtrl', function($scope, Books:IBookService, Files:IFileServi
     return (file.fileId === undefined || file.fileId === null)
   }
 
+  $scope.isFileUploadActive = function(file:IFile) {
+    var op = $scope.fileStatus[file.name]
+    if (!op) return false
+    return op.active
+  }
+
   function filesOfType(files:IFile[], ext:string):IFile[] {
     return files.filter(function(file:IFile) {
         return (file.ext == ext)
@@ -115,11 +142,13 @@ app.controller('BookCtrl', function($scope, Books:IBookService, Files:IFileServi
     var pendingFile = toPendingFile(file)
     $scope.book.files.push(pendingFile)
 
-    Files.upload(file)
-    .then(function(file:IFile) {
+    var op = Files.queueUpload(file, function(file:IFile) {
        _.extend(pendingFile, file)
+       delete $scope.fileStatus[file.name]
        calculateNumFiles()
     })
+
+    $scope.fileStatus[pendingFile.name] = op
   }
 })
 

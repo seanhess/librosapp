@@ -51,7 +51,7 @@
   <div class="files" dragupload="onDrop">
     <div class="instructions">Drop files here (.mp3 or .txt)</div>
 
-    <div class="file" ng-class="{loading: isLoading(file)}" ng-repeat="file in book.files | orderBy:'name'">
+    <div class="file" ng-class="{loading: isLoading(file), active: isFileUploadActive(file)}" ng-repeat="file in book.files | orderBy:'name'">
       <div ng-hide="isEditing(file)">
         <small><button class="remove" ng-click="removeFile(file)">x</button> </small>
         <small><button class="rename" ng-click="editFile(file)">rename</button></small>
@@ -67,7 +67,7 @@
   </div>
 
   <p>
-    <input type="submit" ng-disabled="!book" ng-click="save()" value="Save"></input>
+    <input type="submit" ng-disabled="!isBookValid()" ng-click="save()" value="Save"></input>
     <button ng-disabled="!book" ng-click="remove()">Remove</button>
   </p>
 

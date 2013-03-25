@@ -46,10 +46,12 @@ body, html
     .file
       height 25px
       &.loading
-        .remove, .rename
+        .rename
           display: none
         .external_link
           display: none
+        &.active a
+          color #F00
         a
           color #AAA
           text-decoration none

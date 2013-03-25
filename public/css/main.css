@@ -49,12 +49,14 @@ html {
 .book_edit .files .file {
   height: 25px;
 }
-.book_edit .files .file.loading .remove,
 .book_edit .files .file.loading .rename {
   display: none;
 }
 .book_edit .files .file.loading .external_link {
   display: none;
+}
+.book_edit .files .file.loading.active a {
+  color: #f00;
 }
 .book_edit .files .file.loading a {
   color: #aaa;
