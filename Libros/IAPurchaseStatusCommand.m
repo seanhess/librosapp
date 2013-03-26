@@ -51,4 +51,8 @@
     }
 }
 
+- (void)dealloc {
+    [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
+}
+
 @end

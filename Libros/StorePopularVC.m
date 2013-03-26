@@ -9,6 +9,8 @@
 #import "StorePopularVC.h"
 #import "BookService.h"
 #import "MetricsService.h"
+#import "AuthorService.h"
+#import "GenreService.h"
 
 @interface StorePopularVC ()
 
@@ -33,6 +35,8 @@
 {
     // reload the store. this is the first tab, so refresh.
     [[BookService shared] loadStore];
+    [[AuthorService shared] load];
+    [[GenreService shared] load];
     
     self.fetchRequest = [[BookService shared] popular];
     

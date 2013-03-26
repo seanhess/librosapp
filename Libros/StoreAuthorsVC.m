@@ -36,7 +36,6 @@
     
     self.tableView.backgroundColor = Appearance.background;
     
-    [[AuthorService shared] load];
     NSFetchRequest * request = [[AuthorService shared] allAuthors];
     
     self.fetchedResultsController = [[NSFetchedResultsController alloc]

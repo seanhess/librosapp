@@ -35,7 +35,6 @@
     
     self.tableView.backgroundColor = Appearance.background;
     
-    [[GenreService shared] load];
     NSFetchRequest * request = [[GenreService shared] allGenres];
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:ObjectStore.shared.context sectionNameKeyPath:nil cacheName:nil];
     [self.fetchedResultsController setDelegate:self];

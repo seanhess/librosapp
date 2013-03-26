@@ -136,11 +136,15 @@
             [self.buyButton setTitle:[NSString stringWithFormat:@"Buy for %@", bookPriceString] forState:UIControlStateNormal];
             NSString* allPriceString = [NSNumberFormatter localizedStringFromNumber:self.allBooksProduct.price numberStyle:NSNumberFormatterCurrencyStyle];
             [self.buyAllButton setTitle:[NSString stringWithFormat:@"Buy All Books for %@", allPriceString] forState:UIControlStateNormal];
+            self.buyAllButton.enabled = YES;
+            self.buyButton.enabled = YES;
         }
         
         else {
-            [self.buyButton setTitle:@"Buy" forState:UIControlStateNormal];
-            [self.buyAllButton setTitle:@"Buy all Books" forState:UIControlStateNormal];
+            [self.buyButton setTitle:@"Loading..." forState:UIControlStateNormal];
+            [self.buyAllButton setTitle:@"Loading..." forState:UIControlStateNormal];
+            self.buyAllButton.enabled = NO;
+            self.buyButton.enabled = NO;
         }
     }
     
@@ -179,7 +183,8 @@
 }
 
 -(BOOL)isPurchasing {
-    return (self.purchaseCommand != nil);
+    if (!self.purchaseCommand) return NO;
+    return (self.purchaseCommand.purchasing);
 }
 
 -(void)setDownloadProgressValue:(float)value {
@@ -261,9 +266,11 @@
 }
 
 - (void)purchaseBook {
+    NSLog(@"Purchase Book");
     [MetricsService storeBookBeginBuy:self.book];
     self.purchaseCommand = [IAPurchaseCommand new];
     [self.purchaseCommand purchaseProduct:self.bookProduct cb:^(IAPurchaseCommand*purchase) {
+        NSLog(@"Back from purchase command");
         if (purchase.completed) {
             [MetricsService storeBookFinishBuy:self.book];
             [self completePurchase];
@@ -287,14 +294,17 @@
     [self renderButtonAndDownload];
 }
 
+// WARNING: nilling out the purchase command causes a crash for some stupid reason
+// We get back here too early, I guess, then the payment queue keeps going and hits its
+// observer in purchaseCommand. Whatever.
 - (void)cancelPurchase {
-    self.purchaseCommand = nil;
+    NSLog(@"CANCEL PURCHASE");
     [self renderButtonAndDownload];
 }
 
 - (void)completePurchase {
+    NSLog(@"COMPLETE PURCHASE");
     [UserService.shared addBook:self.book];
-    self.purchaseCommand = nil;
     [self renderButtonAndDownload];
 }
 
