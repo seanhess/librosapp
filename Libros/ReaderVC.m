@@ -136,8 +136,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     // INITIALIZE
     self.formatter = [ReaderFormatter new];
     
-    [self hideControlsInABit];
-    
     // TOO EARLY TO DRAW! View Size is wrong
     // you can call reloadData early and it doesn't fire twice
 }
@@ -159,6 +157,9 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
         [self.player play];
         [self updateAudioProgress];
     }
+    
+    Chapter * chapter = self.chapters[self.book.currentChapterValue];
+    if (chapter.textFile) [self hideControlsInABit];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -232,13 +233,12 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 - (void)updateControlsFromBook {
     self.bottomControlsView.hidden = (self.book.audioFilesValue ==  0);
-    self.fontButton.hidden = (self.book.textFilesValue == 0);
-    
-    if (self.book.textFilesValue == 0) {
-        CGRect frame = self.topControlsView.frame;
-        frame.size.height -= 25;
-        self.topControlsView.frame = frame;
-    }
+}
+
+- (void)updateControlsFromChapter {
+    Chapter * chapter = self.chapters[self.book.currentChapterValue];
+    self.fontButton.hidden = (chapter.textFile == nil);
+    self.pageSlider.enabled = (chapter.textFile);
 }
 
 - (IBAction)didTapBack:(id)sender {
@@ -277,7 +277,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     [self ensurePagesForChapter:chapter];
     [self moveToChapter:chapter page:0 animated:NO];
     [self playerAtChapter:chapter];
-    // [self hideControlsInABit];
+    // don't hide controls here. It doesn't make sense after TOC change or chapter advance (audio)
     
     if (playing) [self.player play];
 }
@@ -310,6 +310,10 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (IBAction)didTapText:(UITapGestureRecognizer*)tap {
+    
+    // you can't hide it if the current chapter doesn't have anything
+    Chapter * chapter = self.chapters[self.book.currentChapterValue];
+    if (!chapter.textFile) return;
     
     if (self.isControlsShown) {
         [self hideControls];
@@ -443,13 +447,16 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     if (self.book.currentChapterValue >= self.chapters.count) return;
     Chapter * chapter = self.chapters[self.book.currentChapterValue];
     self.chapterTitle.text = chapter.name;
+    [self updateControlsFromChapter];
 }
 
 - (void)displayPage {
     NSInteger totalPages = [self.framesetter pagesForChapter:self.book.currentChapterValue];
     self.pageSlider.value = (float) (self.book.currentPageValue) / (totalPages-1);
     self.pagesDoneLabel.text = [NSString stringWithFormat:@"%i", self.book.currentPageValue];
-    self.pagesLeftLabel.text = [NSString stringWithFormat:@"%i", totalPages-self.book.currentPageValue-1];
+    NSInteger pagesLeft = totalPages-self.book.currentPageValue-1;
+    if (pagesLeft < 0) pagesLeft = 0;
+    self.pagesLeftLabel.text = [NSString stringWithFormat:@"%i", pagesLeft];
 }
 
 - (IBAction)didSlidePage:(id)sender {
