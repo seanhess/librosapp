@@ -63,19 +63,19 @@
 }
 
 - (void)dealloc {
-    NSLog(@"IAPurchaseCommand - dealloc");
+//    NSLog(@"IAPurchaseCommand - dealloc");
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
 }
 
 -(void)error:(NSError*)error {
-    NSLog(@"IAPurchase Command - ERROR %@", error);
+//    NSLog(@"IAPurchase Command - ERROR %@", error);
     self.error = error;
     [self finishAndCallback];
 }
 
 -(void)finishAndCallback {
     self.purchasing = NO;
-    NSLog(@"IAPurchase Command - done");
+//    NSLog(@"IAPurchase Command - done");
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
     self.cb(self);
 }

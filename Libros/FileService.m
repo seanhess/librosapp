@@ -77,7 +77,7 @@
 
 // you already have the files
 // download them one at a time
--(void)downloadFiles:(NSArray *)files progress:(void (^)(float))progressCb complete:(void (^)(void))cb {
+-(NSOperationQueue*)downloadFiles:(NSArray *)files progress:(void (^)(float))progressCb complete:(void (^)(void))cb {
     NSOperationQueue * operations = [NSOperationQueue new];
     operations.maxConcurrentOperationCount = 1;
     __block NSInteger completedFiles = 0;
@@ -108,6 +108,8 @@
     [operations addOperationWithBlock:^{
         cb();
     }];
+    
+    return operations;
 }
 
 

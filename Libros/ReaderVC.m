@@ -154,6 +154,11 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     [self ensurePagesForChapter:self.book.currentChapterValue];
     [self moveToChapter:self.book.currentChapterValue page:self.book.currentPageValue animated:NO];
     [self playerAtChapter:self.book.currentChapterValue];
+    if (self.book.currentTimeValue) {
+        self.player.currentTime = self.book.currentTimeValue;
+        [self.player play];
+        [self updateAudioProgress];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -699,6 +704,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.audioTimeLabel.text = [self formatTime:self.player.currentTime];
     self.audioRemainingLabel.text = [NSString stringWithFormat:@"-%@", [self formatTime:self.player.duration - self.player.currentTime]];
     self.audioProgress.value = self.player.currentTime / self.player.duration;
+    if (self.player.currentTime != 0)
+        self.book.currentTimeValue = self.player.currentTime;
     [self updatePlayButton];
 }
 

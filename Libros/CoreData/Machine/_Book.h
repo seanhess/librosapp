@@ -10,6 +10,7 @@ extern const struct BookAttributes {
 	__unsafe_unretained NSString *bookId;
 	__unsafe_unretained NSString *currentChapter;
 	__unsafe_unretained NSString *currentPage;
+	__unsafe_unretained NSString *currentTime;
 	__unsafe_unretained NSString *descriptionText;
 	__unsafe_unretained NSString *downloaded;
 	__unsafe_unretained NSString *genre;
@@ -30,6 +31,7 @@ extern const struct BookFetchedProperties {
 
 @class File;
 @class User;
+
 
 
 
@@ -105,6 +107,18 @@ extern const struct BookFetchedProperties {
 - (void)setCurrentPageValue:(int16_t)value_;
 
 //- (BOOL)validateCurrentPage:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* currentTime;
+
+
+@property double currentTimeValue;
+- (double)currentTimeValue;
+- (void)setCurrentTimeValue:(double)value_;
+
+//- (BOOL)validateCurrentTime:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -254,6 +268,15 @@ extern const struct BookFetchedProperties {
 
 - (int16_t)primitiveCurrentPageValue;
 - (void)setPrimitiveCurrentPageValue:(int16_t)value_;
+
+
+
+
+- (NSNumber*)primitiveCurrentTime;
+- (void)setPrimitiveCurrentTime:(NSNumber*)value;
+
+- (double)primitiveCurrentTimeValue;
+- (void)setPrimitiveCurrentTimeValue:(double)value_;
 
 
 

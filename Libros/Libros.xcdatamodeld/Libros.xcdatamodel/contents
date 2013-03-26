@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12C3006" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Author" representedClassName="Author" syncable="YES">
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
@@ -11,6 +11,7 @@
         <attribute name="bookId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="currentChapter" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="currentPage" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="currentTime" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
         <attribute name="descriptionText" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="downloaded" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
         <attribute name="genre" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
@@ -39,7 +40,7 @@
     </entity>
     <elements>
         <element name="Author" positionX="160" positionY="192" width="128" height="90"/>
-        <element name="Book" positionX="160" positionY="192" width="128" height="270"/>
+        <element name="Book" positionX="160" positionY="192" width="128" height="285"/>
         <element name="File" positionX="160" positionY="192" width="128" height="120"/>
         <element name="Genre" positionX="160" positionY="192" width="128" height="60"/>
         <element name="User" positionX="160" positionY="192" width="128" height="75"/>

@@ -24,6 +24,8 @@
 -(void)addBook:(Book*)book;
 -(void)archiveBook:(Book*)book;
 
+-(BOOL)hasActiveDownload;
+    
 -(void)purchasedAllBooks;
 -(BOOL)hasPurchasedBook:(Book*)book;
 

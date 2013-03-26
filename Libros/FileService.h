@@ -22,7 +22,7 @@
 @property (nonatomic, strong) RKEntityMapping * fileMapping;
 
 -(void)loadFilesForBook:(NSString*)bookId cb:(void(^)(void))cb;
--(void)downloadFiles:(NSArray*)files progress:(void(^)(float))cb complete:(void(^)(void))cb;
+-(NSOperationQueue*)downloadFiles:(NSArray*)files progress:(void(^)(float))cb complete:(void(^)(void))cb;
 
 -(NSArray*)byBookId:(NSString*)bookId;
 -(NSFetchRequest*)byBookIdRequest:(NSString*)bookId;

@@ -9,6 +9,7 @@ const struct BookAttributes BookAttributes = {
 	.bookId = @"bookId",
 	.currentChapter = @"currentChapter",
 	.currentPage = @"currentPage",
+	.currentTime = @"currentTime",
 	.descriptionText = @"descriptionText",
 	.downloaded = @"downloaded",
 	.genre = @"genre",
@@ -63,6 +64,10 @@ const struct BookFetchedProperties BookFetchedProperties = {
 	}
 	if ([key isEqualToString:@"currentPageValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"currentPage"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"currentTimeValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"currentTime"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"downloadedValue"]) {
@@ -174,6 +179,32 @@ const struct BookFetchedProperties BookFetchedProperties = {
 
 - (void)setPrimitiveCurrentPageValue:(int16_t)value_ {
 	[self setPrimitiveCurrentPage:[NSNumber numberWithShort:value_]];
+}
+
+
+
+
+
+@dynamic currentTime;
+
+
+
+- (double)currentTimeValue {
+	NSNumber *result = [self currentTime];
+	return [result doubleValue];
+}
+
+- (void)setCurrentTimeValue:(double)value_ {
+	[self setCurrentTime:[NSNumber numberWithDouble:value_]];
+}
+
+- (double)primitiveCurrentTimeValue {
+	NSNumber *result = [self primitiveCurrentTime];
+	return [result doubleValue];
+}
+
+- (void)setPrimitiveCurrentTimeValue:(double)value_ {
+	[self setPrimitiveCurrentTime:[NSNumber numberWithDouble:value_]];
 }
 
 

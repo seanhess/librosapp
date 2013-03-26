@@ -102,6 +102,8 @@
         self.allBooksProduct = info.allBooksProduct;
         [self renderButtonAndDownload];
     }];
+    
+    [self checkRestartDownload];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -266,11 +268,9 @@
 }
 
 - (void)purchaseBook {
-    NSLog(@"Purchase Book");
     [MetricsService storeBookBeginBuy:self.book];
     self.purchaseCommand = [IAPurchaseCommand new];
     [self.purchaseCommand purchaseProduct:self.bookProduct cb:^(IAPurchaseCommand*purchase) {
-        NSLog(@"Back from purchase command");
         if (purchase.completed) {
             [MetricsService storeBookFinishBuy:self.book];
             [self completePurchase];
@@ -298,14 +298,19 @@
 // We get back here too early, I guess, then the payment queue keeps going and hits its
 // observer in purchaseCommand. Whatever.
 - (void)cancelPurchase {
-    NSLog(@"CANCEL PURCHASE");
     [self renderButtonAndDownload];
 }
 
 - (void)completePurchase {
-    NSLog(@"COMPLETE PURCHASE");
     [UserService.shared addBook:self.book];
     [self renderButtonAndDownload];
+}
+
+- (void)checkRestartDownload {
+    if (self.book.purchasedValue && 0.0 < self.book.downloadedValue && self.book.downloadedValue < 1.0 && !UserService.shared.hasActiveDownload) {
+        NSLog(@"RESTARTING Download");
+        [self completePurchase];
+    }
 }
 
 - (void)didReceiveMemoryWarning

@@ -21,6 +21,7 @@
 
 @interface UserService ()
 @property (strong, nonatomic) Book * book;
+@property (nonatomic) NSInteger activeDownloads;
 
 @end
 
@@ -96,11 +97,16 @@
 }
 
 
+-(BOOL)hasActiveDownload {
+    return (self.activeDownloads > 0);
+}
+
 
 // use key-value observing instead of 
 -(void)addBook:(Book *)book {
     book.purchasedValue = YES;
     book.downloadedValue = 0.01; // want to start at a little, meaning it is not currently downloading
+    self.activeDownloads++;
     
     [FileService.shared
         downloadFiles:[FileService.shared byBookId:book.bookId]
@@ -109,6 +115,7 @@
         }
         complete:^() {
             book.downloadedValue = 1.0;
+            self.activeDownloads--;
         }
     ];
 }
