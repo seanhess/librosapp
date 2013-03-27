@@ -11,6 +11,9 @@
 
   <label>productId</label>
   <div>{{book.bookId | toProductId}}</div>
+  
+  <label>popularity</label>
+  <div>{{book.popularity}}</div>
 
   <label>title</label>
   <div><input ng-model="book.title" placeholder="A Tale of Two Cities"/></div>
@@ -22,9 +25,6 @@
       <button ng-show="book.imageUrl" class="clear" ng-click="clearImage()">clear</button>
     </div>
   </div>
-
-  <label>price (cents)</label>
-  <div><input ng-model="book.price" placeholder="199"/></div>
 
   <label>author</label>
   <div><input ng-model="book.author" placeholder="Charles Dickens"/></div>

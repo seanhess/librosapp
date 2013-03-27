@@ -160,8 +160,16 @@ app.get('/books/:bookId/files', function(req, res) {
   .then(send(res), err(res))
 })
 
+// someone bought the book. track it
+app.post('/books/:bookId/popularity', function(req, res) {
+  db.run(Book.incrementPopularity(req.params.bookId))
+  .then(send(res), ok(res))
+})
 
-
+app.post('/books/migrations/zeroPopularity', function(req, res) {
+  db.run(Book.migrateZeroPopularity())
+  .then(send(res), ok(res))
+})
 
 
 /// FILES //////////////////////////////////////
@@ -199,6 +207,9 @@ app.put('/files/:fileId', function(req, res) {
 app.get(/\/admin[\w\/\-]*$/, function(req, res) {
   res.sendfile(path.join(__dirname, '..', 'public', 'index.html'))
 })
+
+
+
 
 
 if (module == (<any>require).main) {

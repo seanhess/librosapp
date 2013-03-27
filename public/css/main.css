@@ -3,19 +3,27 @@ html {
   font-family: "Helvetica";
   font-size: 14px;
 }
+.admin .books textarea,
 .book_edit textarea {
   width: 500px;
   height: 200px;
 }
+.admin .books div,
+.book_edit div {
+  min-height: 25px;
+}
+.admin .books label,
 .book_edit label {
   clear: both;
   display: block;
   float: left;
   width: 100px;
 }
+.admin .books label.type,
 .book_edit label.type {
   height: 2em;
 }
+.admin .books div.cover,
 .book_edit div.cover {
   display: inline-block;
   border: dashed 2px #777;
@@ -23,17 +31,21 @@ html {
   min-height: 80px;
   position: relative;
 }
+.admin .books div.cover img,
 .book_edit div.cover img {
   width: 100px;
 }
+.admin .books div.cover .clear,
 .book_edit div.cover .clear {
   position: absolute;
   right: 3px;
   bottom: 3px;
 }
+.admin .books .genre a,
 .book_edit .genre a {
   font-size: 0.8em;
 }
+.admin .books .files,
 .book_edit .files {
   clear: both;
   min-height: 200px;
@@ -42,32 +54,40 @@ html {
   position: relative;
   padding-bottom: 25px;
 }
+.admin .books .files.drag,
 .book_edit .files.drag {
   border: solid 2px #33a;
   background-color: #ddf;
 }
+.admin .books .files .file,
 .book_edit .files .file {
   height: 25px;
 }
+.admin .books .files .file.loading .rename,
 .book_edit .files .file.loading .rename {
   display: none;
 }
+.admin .books .files .file.loading .external_link,
 .book_edit .files .file.loading .external_link {
   display: none;
 }
+.admin .books .files .file.loading.active a,
 .book_edit .files .file.loading.active a {
   color: #f00;
 }
+.admin .books .files .file.loading a,
 .book_edit .files .file.loading a {
   color: #aaa;
   text-decoration: none;
   pointer-events: none;
   cursor: normal;
 }
+.admin .books .files .file input,
 .book_edit .files .file input {
   display: inline-block;
   width: 300px;
 }
+.admin .books .files .instructions,
 .book_edit .files .instructions {
   position: absolute;
   bottom: 4px;

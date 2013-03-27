@@ -9,6 +9,7 @@
 ///<reference path="controls/Book.ts"/>
 ///<reference path="controls/Genre.ts"/>
 ///<reference path="controls/Author.ts"/>
+///<reference path="controls/Migrations.ts"/>
 
 ///<reference path="services/Files.ts"/>
 ///<reference path="services/Books.ts"/>

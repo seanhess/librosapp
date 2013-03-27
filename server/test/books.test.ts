@@ -61,7 +61,7 @@ describe("API", function() {
         bookId: this.bookId,
         author: "author",
         genre: "genre",
-        price: 199,
+        popularity: 0,
         description: "description",
       }
 

@@ -12,13 +12,14 @@ interface IFile {
 }
 
 interface IBook {
+  // prices are now tracked only in itunes connect
   bookId: string;
   title: string;
   author: string;
   genre: string; // just the name
-  price: number; // in cents
   description: string;
   imageUrl?: string;
+  popularity: number; // number of times it has been purchased
 
   audioFiles: number;
   textFiles: number;

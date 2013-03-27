@@ -1,3 +1,4 @@
+<div class="admin">
 <h1>Libros Admin</h1>
 
 <!--<pre>{{books}}</pre>-->
@@ -18,9 +19,20 @@
 
 <div class="books">
 <h3>Books</h3>
-<div ng-repeat="book in books">
-  <a href="/admin/books/{{book.bookId}}">{{book.title}}</a>
-</div>
+<table>
+  <tr><th>title</th><th>pop</th><th>text</th><th>audio</th></tr>
+  <tr ng-repeat="book in books">
+    <td><a href="/admin/books/{{book.bookId}}">{{book.title}}</a></td>
+    <td>{{book.popularity}}</td>
+    <td>{{book.textFiles}}</td>
+    <td>{{book.audioFiles}}</td>
+  </tr>
+</table>
+
+<!--<div ng-repeat="book in books">-->
+  <!--<a href="/admin/books/{{book.bookId}}">{{book.title}}</a>-->
+<!--</div>-->
+
 <p><button ng-click="createBook()">Add Book</button></p>
 </div>
 
@@ -33,4 +45,4 @@ EDIT/NEW
   title
   upload files
 -->
-
+</div>

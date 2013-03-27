@@ -41,8 +41,8 @@ describe("API", function() {
         bookId: this.bookId,
         author: "Charles Dickens",
         genre: "genre",
-        price: 199,
         description: "description",
+        popularity: 0,
       }
 
       this.book = book
