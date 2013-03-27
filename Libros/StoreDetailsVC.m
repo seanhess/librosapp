@@ -22,6 +22,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "IAPInfoCommand.h"
 #import "IAPurchaseStatusCommand.h"
+#import "IAPClearCommand.h"
 
 // TODO should download the product details when this page loads to get the price
 // because it will be different per-locale
@@ -44,6 +45,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
 
+@property (strong, nonatomic) IAPClearCommand * clearCommand;
 @property (strong, nonatomic) IAPurchaseCommand * purchaseCommand;
 @property (strong, nonatomic) IAPInfoCommand * infoCommand;
 
@@ -102,6 +104,9 @@
         self.allBooksProduct = info.allBooksProduct;
         [self renderButtonAndDownload];
     }];
+    
+    self.clearCommand = [IAPClearCommand new];
+    [self.clearCommand clearOrphanPurchases];
     
     [self checkRestartDownload];
 }
@@ -186,7 +191,7 @@
 
 -(BOOL)isPurchasing {
     if (!self.purchaseCommand) return NO;
-    return (self.purchaseCommand.purchasing);
+    return (self.purchaseCommand != nil);
 }
 
 -(void)setDownloadProgressValue:(float)value {
@@ -269,6 +274,7 @@
 
 - (void)purchaseBook {
     [MetricsService storeBookBeginBuy:self.book];
+    self.clearCommand = nil;
     self.purchaseCommand = [IAPurchaseCommand new];
     [self.purchaseCommand purchaseProduct:self.bookProduct cb:^(IAPurchaseCommand*purchase) {
         if (purchase.completed) {
@@ -282,6 +288,7 @@
 
 - (void)purchaseAll {
     [MetricsService storeBookBeginBuyAll];
+    self.clearCommand = nil;
     self.purchaseCommand = [IAPurchaseCommand new];
     [self.purchaseCommand purchaseProduct:self.allBooksProduct cb:^(IAPurchaseCommand*purchase) {
         if (purchase.completed) {
@@ -294,14 +301,13 @@
     [self renderButtonAndDownload];
 }
 
-// WARNING: nilling out the purchase command causes a crash for some stupid reason
-// We get back here too early, I guess, then the payment queue keeps going and hits its
-// observer in purchaseCommand. Whatever.
 - (void)cancelPurchase {
+    self.purchaseCommand = nil;
     [self renderButtonAndDownload];
 }
 
 - (void)completePurchase {
+    self.purchaseCommand = nil;
     [UserService.shared addBook:self.book];
     [BookService.shared sendBookPurchased:self.book];
     [self renderButtonAndDownload];

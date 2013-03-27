@@ -190,6 +190,7 @@
 		78B6583417039AA600DFA509 /* reader-speed-icon-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 78B6582C17039AA500DFA509 /* reader-speed-icon-2.png */; };
 		78B6583617039AF700DFA509 /* reader-volume-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 78B6583517039AF700DFA509 /* reader-volume-icon.png */; };
 		78B6583817039B0900DFA509 /* reader-pause-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78B6583717039B0900DFA509 /* reader-pause-icon@2x.png */; };
+		78B6583B1703A8E700DFA509 /* IAPClearCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B6583A1703A8E700DFA509 /* IAPClearCommand.m */; };
 		78C0E2C716D83C670033F509 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 78C0E2C616D83C670033F509 /* Podfile */; };
 		78C0E2CA16D844AE0033F509 /* LibraryBookCoverCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C0E2C916D844AE0033F509 /* LibraryBookCoverCell.m */; };
 		78CA26E416B1AD81003EC00D /* ReaderPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CA26E316B1AD81003EC00D /* ReaderPageView.m */; };
@@ -437,6 +438,8 @@
 		78B6582C17039AA500DFA509 /* reader-speed-icon-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reader-speed-icon-2.png"; sourceTree = "<group>"; };
 		78B6583517039AF700DFA509 /* reader-volume-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reader-volume-icon.png"; sourceTree = "<group>"; };
 		78B6583717039B0900DFA509 /* reader-pause-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reader-pause-icon@2x.png"; sourceTree = "<group>"; };
+		78B658391703A8E700DFA509 /* IAPClearCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPClearCommand.h; sourceTree = "<group>"; };
+		78B6583A1703A8E700DFA509 /* IAPClearCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPClearCommand.m; sourceTree = "<group>"; };
 		78BC28CC16F775FB00356DB0 /* Covers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Covers.h; sourceTree = "<group>"; };
 		78C0E2C616D83C670033F509 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		78C0E2C816D844AE0033F509 /* LibraryBookCoverCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryBookCoverCell.h; sourceTree = "<group>"; };
@@ -868,6 +871,8 @@
 				780B8F4416C2D2FC00A04EFC /* NSString+FetchedGroupByString.m */,
 				78CC656F16D97BC400E68FFB /* IAPurchaseCommand.h */,
 				78CC657016D97BC400E68FFB /* IAPurchaseCommand.m */,
+				78B658391703A8E700DFA509 /* IAPClearCommand.h */,
+				78B6583A1703A8E700DFA509 /* IAPClearCommand.m */,
 				78E6C05516FF65970030D976 /* IAPInfoCommand.h */,
 				78E6C05616FF65970030D976 /* IAPInfoCommand.m */,
 				78DE4F5116FF7B570053F952 /* IAPurchaseStatusCommand.h */,
@@ -1306,6 +1311,7 @@
 				78DE4F5316FF7B570053F952 /* IAPurchaseStatusCommand.m in Sources */,
 				78440EE61700F9A700812765 /* Chapter.m in Sources */,
 				78B65822170395D100DFA509 /* ReaderVolumeVC2.m in Sources */,
+				78B6583B1703A8E700DFA509 /* IAPClearCommand.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

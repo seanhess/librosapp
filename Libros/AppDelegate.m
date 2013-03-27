@@ -17,7 +17,6 @@
 
 #import <Parse/Parse.h>
 
-
 @implementation AppDelegate
 
 // does the app delegate OWN the objectStore?

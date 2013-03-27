@@ -9,9 +9,13 @@
 #import "IAPurchaseCommand.h"
 #import <StoreKit/StoreKit.h>
 
+#define ERROR_CANNOT_CONNECT_ITUNES_STORE 2
+
 @interface IAPurchaseCommand () <SKPaymentTransactionObserver>
 @property (nonatomic, strong) void(^cb)(IAPurchaseCommand*);
 @end
+
+// Add a listener that clears everything out ahead of time
 
 @implementation IAPurchaseCommand
 
@@ -21,19 +25,21 @@
     self.product = product;
     self.cb = cb;
     self.completed = NO;
-    self.purchasing = YES;
     NSLog(@"IAPurchaseCommand - purchase!");
+    
+//    [self completeAllExistingTransactions];
+    
+    NSLog(@"ADDING OVERSERVER %i", [[SKPaymentQueue defaultQueue] transactions].count);
     [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+    
+    // I want to know when the queue is EMPTY
     SKPayment * payment = [SKPayment paymentWithProduct:product];
     [[SKPaymentQueue defaultQueue] addPayment:payment];
 }
 
-//- (void)completeAllExistingTransactions {
-//    NSLog(@"TRANSACTIONs? %i", [[SKPaymentQueue defaultQueue] transactions].count);
-//    for (SKPaymentTransaction * transaction in [[SKPaymentQueue defaultQueue] transactions]) {
-//        NSLog(@"TRANSACTION IN QUEUE %@", transaction);
-//    }
-//}
+- (void)paymentQueue:(SKPaymentQueue *)queue removedTransactions:(NSArray *)transactions {
+    NSLog(@"Removed Transactions");
+}
 
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
 {
@@ -45,9 +51,11 @@
             [self finishAndCallback];
         }
         else if(transaction.transactionState == SKPaymentTransactionStateFailed) {
-            NSLog(@"PAYMENT FAILED");
+            NSLog(@"PAYMENT FAILED %@", transaction.error);
             [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
             self.completed = NO;
+//            if (transaction.error.code != ERROR_CANNOT_CONNECT_ITUNES_STORE)
+//                [self finishAndCallback];
             [self finishAndCallback];
         }
         else if(transaction.transactionState == SKPaymentTransactionStateRestored) {
@@ -74,10 +82,11 @@
 }
 
 -(void)finishAndCallback {
-    self.purchasing = NO;
 //    NSLog(@"IAPurchase Command - done");
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
     self.cb(self);
 }
 
 @end
+
+

@@ -14,6 +14,5 @@
 @property (nonatomic, strong) SKProduct * product;
 @property (nonatomic, strong) NSError * error;
 @property (nonatomic) BOOL completed;
-@property (nonatomic) BOOL purchasing;
 - (void)purchaseProduct:(SKProduct*)product cb:(void(^)(IAPurchaseCommand*))cb;
 @end
