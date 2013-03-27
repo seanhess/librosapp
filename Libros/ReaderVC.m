@@ -93,6 +93,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 @property (weak, nonatomic) IBOutlet UIButton *volumeButton;
 @property (strong, nonatomic) WEPopoverController * volumePopover;
+@property (weak, nonatomic) IBOutlet UITextView *audioOnlyText;
 
 @end
 
@@ -112,6 +113,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     [super viewDidLoad];
     
     [MetricsService readerLoadedBook:self.book];
+    
+    self.audioOnlyText.text = @"This chapter is audio only";
     
     self.fontController = [ReaderFontVC new];
     self.fontController.delegate = self;
@@ -238,6 +241,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     Chapter * chapter = self.chapters[self.book.currentChapterValue];
     self.fontButton.hidden = (chapter.textFile == nil);
     self.pageSlider.enabled = (chapter.textFile);
+    self.collectionView.hidden = (chapter.textFile == nil);
 }
 
 - (IBAction)didTapBack:(id)sender {
