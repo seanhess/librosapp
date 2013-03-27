@@ -18,7 +18,7 @@ typedef enum {
 
 -(NSArray*)allFiles;
 
--(NSString*)priceString;
+//-(NSString*)priceString;
 -(NSString*)productId;      // In-App Purchase Product Id matching iTunes Connect
 
 -(BOOL)isDownloading;

@@ -14,7 +14,7 @@ const struct BookAttributes BookAttributes = {
 	.downloaded = @"downloaded",
 	.genre = @"genre",
 	.imageUrl = @"imageUrl",
-	.price = @"price",
+	.popularity = @"popularity",
 	.purchased = @"purchased",
 	.textFiles = @"textFiles",
 	.title = @"title",
@@ -74,8 +74,8 @@ const struct BookFetchedProperties BookFetchedProperties = {
 		NSSet *affectingKey = [NSSet setWithObject:@"downloaded"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
-	if ([key isEqualToString:@"priceValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"price"];
+	if ([key isEqualToString:@"popularityValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"popularity"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"purchasedValue"]) {
@@ -258,26 +258,26 @@ const struct BookFetchedProperties BookFetchedProperties = {
 
 
 
-@dynamic price;
+@dynamic popularity;
 
 
 
-- (int16_t)priceValue {
-	NSNumber *result = [self price];
+- (int16_t)popularityValue {
+	NSNumber *result = [self popularity];
 	return [result shortValue];
 }
 
-- (void)setPriceValue:(int16_t)value_ {
-	[self setPrice:[NSNumber numberWithShort:value_]];
+- (void)setPopularityValue:(int16_t)value_ {
+	[self setPopularity:[NSNumber numberWithShort:value_]];
 }
 
-- (int16_t)primitivePriceValue {
-	NSNumber *result = [self primitivePrice];
+- (int16_t)primitivePopularityValue {
+	NSNumber *result = [self primitivePopularity];
 	return [result shortValue];
 }
 
-- (void)setPrimitivePriceValue:(int16_t)value_ {
-	[self setPrimitivePrice:[NSNumber numberWithShort:value_]];
+- (void)setPrimitivePopularityValue:(int16_t)value_ {
+	[self setPrimitivePopularity:[NSNumber numberWithShort:value_]];
 }
 
 

@@ -15,7 +15,7 @@ extern const struct BookAttributes {
 	__unsafe_unretained NSString *downloaded;
 	__unsafe_unretained NSString *genre;
 	__unsafe_unretained NSString *imageUrl;
-	__unsafe_unretained NSString *price;
+	__unsafe_unretained NSString *popularity;
 	__unsafe_unretained NSString *purchased;
 	__unsafe_unretained NSString *textFiles;
 	__unsafe_unretained NSString *title;
@@ -159,14 +159,14 @@ extern const struct BookFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSNumber* price;
+@property (nonatomic, strong) NSNumber* popularity;
 
 
-@property int16_t priceValue;
-- (int16_t)priceValue;
-- (void)setPriceValue:(int16_t)value_;
+@property int16_t popularityValue;
+- (int16_t)popularityValue;
+- (void)setPopularityValue:(int16_t)value_;
 
-//- (BOOL)validatePrice:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validatePopularity:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -308,11 +308,11 @@ extern const struct BookFetchedProperties {
 
 
 
-- (NSNumber*)primitivePrice;
-- (void)setPrimitivePrice:(NSNumber*)value;
+- (NSNumber*)primitivePopularity;
+- (void)setPrimitivePopularity:(NSNumber*)value;
 
-- (int16_t)primitivePriceValue;
-- (void)setPrimitivePriceValue:(int16_t)value_;
+- (int16_t)primitivePopularityValue;
+- (void)setPrimitivePopularityValue:(int16_t)value_;
 
 
 

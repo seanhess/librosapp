@@ -20,6 +20,7 @@
 
 -(NSPredicate*)filterByType:(BookFilter)filter;
 
--(NSString*)priceString:(Book*)book;
+//-(NSString*)priceString:(Book*)book;
+-(void)sendBookPurchased:(Book*)book;
 
 @end

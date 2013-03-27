@@ -20,9 +20,9 @@
     return self.orderedFiles;
 }
 
--(NSString*)priceString {
-    return [[BookService shared] priceString:self];
-}
+//-(NSString*)priceString {
+//    return [[BookService shared] priceString:self];
+//}
 
 -(NSString*)productId {
     return [self.bookId stringByReplacingOccurrencesOfString:@"-" withString:@"_"];

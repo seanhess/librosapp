@@ -36,7 +36,7 @@ export function create():r.IQuery {
 export function allBooks():r.IQuery {
   return books
   .filter(db.contains('title'))
-  .orderBy('popularity')
+  .orderBy(r.desc('popularity'), r.asc('title'))
   .without('files')
 }
 
@@ -67,7 +67,8 @@ export function migrateZeroPopularity() {
 }
 
 export function incrementPopularity(bookId:string) {
-  return books.update({popularity: r.row('popularity').add(1)})
+  return getBook(bookId)
+  .update({popularity: r.row('popularity').add(1)})
 }
 
 

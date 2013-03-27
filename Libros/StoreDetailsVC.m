@@ -303,6 +303,7 @@
 
 - (void)completePurchase {
     [UserService.shared addBook:self.book];
+    [BookService.shared sendBookPurchased:self.book];
     [self renderButtonAndDownload];
 }
 

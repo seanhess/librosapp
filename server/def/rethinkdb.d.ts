@@ -10,6 +10,9 @@ declare module "rethinkdb" {
   export function table(name:string):ITable;
 
   export function row(name:string):IRow;
+  
+  export function asc(property:string):ISort;
+  export function desc(property:string):ISort;
 
   interface IHost {
     host:string;
@@ -25,6 +28,7 @@ declare module "rethinkdb" {
     runp(cb:Function);
     del():IQuery;
     orderBy(...keys:string[]):IQuery;
+    orderBy(...sorts:ISort[]):IQuery;
     skip(n:number):IQuery;
     limit(n:number):IQuery;
     slice(start:number, end?:number):IQuery;
@@ -35,6 +39,8 @@ declare module "rethinkdb" {
     map(transformer:(obj:IObjectProxy) => any):IQuery;
     distinct():IQuery;
   }
+  
+  interface ISort {}
 
   interface InsertResult {
     generated_keys:string[];

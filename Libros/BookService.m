@@ -65,11 +65,19 @@
     }];
 }
 
+-(void)sendBookPurchased:(Book*)book {
+    NSString * path = [NSString stringWithFormat:@"/books/%@/popularity", book.bookId];
+    [[ObjectStore shared].objectManager postObject:nil path:path parameters:nil success:^(RKObjectRequestOperation * op, RKMappingResult *mp) {
+    } failure:^(RKObjectRequestOperation * op, NSError * err) {
+    }];
+}
+
 // has the sort descriptor built in
 -(NSFetchRequest*)allBooks {
     NSFetchRequest * fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
-    fetchRequest.sortDescriptors = @[descriptor];
+    NSSortDescriptor *titleSort = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
+    NSSortDescriptor *popularitySort = [NSSortDescriptor sortDescriptorWithKey:@"popularity" ascending:NO];
+    fetchRequest.sortDescriptors = @[popularitySort,titleSort];
     return fetchRequest;
 }
 
@@ -92,10 +100,10 @@
 
 
 
--(NSString *)priceString:(Book *)book {
-    NSInteger dollars = floorf(book.priceValue / 100);
-    NSInteger pennies = book.priceValue % 100;
-    return [NSString stringWithFormat:@"%i.%02i", dollars, pennies];
-}
+//-(NSString *)priceString:(Book *)book {
+//    NSInteger dollars = floorf(book.priceValue / 100);
+//    NSInteger pennies = book.priceValue % 100;
+//    return [NSString stringWithFormat:@"%i.%02i", dollars, pennies];
+//}
 
 @end

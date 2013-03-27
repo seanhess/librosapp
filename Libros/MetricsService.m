@@ -20,8 +20,8 @@
 +(NSMutableDictionary*)bookProperties:(Book*)book {
     NSMutableDictionary * props = [NSMutableDictionary dictionary];
     props[@"bookId"] = book.bookId;
-    if (book.price)
-        props[@"price"] = book.price;
+//    if (book.price)
+//        props[@"price"] = book.price;
     if (book.purchased)
         props[@"purchased"] = book.purchased;
     if (book.currentChapter)
