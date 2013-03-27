@@ -50,11 +50,12 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 #import <WEPopover/WEPopoverController.h>
 #import "MetricsService.h"
 #import "Chapter.h"
+#import "ReaderVolumeVC2.h"
 
 #define DRAG_GRAVITY 15
 #define STATUS_BAR_OFFSET 20
 
-@interface ReaderVC () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, ReaderFramesetterDelegate, ReaderTableOfContentsDelegate, ReaderFontDelegate, AVAudioPlayerDelegate, WEPopoverControllerDelegate>
+@interface ReaderVC () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, ReaderFramesetterDelegate, ReaderTableOfContentsDelegate, ReaderFontDelegate, AVAudioPlayerDelegate, WEPopoverControllerDelegate, ReaderVolumeDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (nonatomic) CGFloat currentPercent;
@@ -76,10 +77,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 @property (weak, nonatomic) IBOutlet UILabel *pagesDoneLabel;
 @property (weak, nonatomic) IBOutlet UILabel *pagesLeftLabel;
 
-
-@property (weak, nonatomic) IBOutlet UIView *volumeView;
-@property (weak, nonatomic) IBOutlet UISlider *volumeSlider;
-
 @property (strong, nonatomic) ReaderFontVC * fontController;
 @property (strong, nonatomic) WEPopoverController * popover;
 
@@ -93,6 +90,9 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 @property (nonatomic) float currentRate;
 @property (nonatomic) float currentVolume;
+
+@property (weak, nonatomic) IBOutlet UIButton *volumeButton;
+@property (strong, nonatomic) WEPopoverController * volumePopover;
 
 @end
 
@@ -117,8 +117,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.fontController.delegate = self;
     
     self.currentVolume = 1.0;
-    self.volumeSlider.value = self.currentVolume;
-    self.volumeView.alpha = 0.0;
+    // self.volumeSlider.value = self.currentVolume;
     
     self.currentRate = 1.0;
     
@@ -287,6 +286,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (IBAction)didTapFont:(id)sender {
+    // gotta give it some size to start?
     self.fontController.view.frame = CGRectMake(0, 0, 100, 100);
     self.popover = [[WEPopoverController alloc] initWithContentViewController:self.fontController];
     [self.popover presentPopoverFromRect:self.fontButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
@@ -520,6 +520,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 - (void)hideControls {
     [self.popover dismissPopoverAnimated:YES];
+    [self.volumePopover dismissPopoverAnimated:YES];
     
     [UIView animateWithDuration:0.2 animations:^{
         CGRect bottomFrame = self.bottomControlsView.frame;
@@ -529,8 +530,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
         CGRect topFrame = self.topControlsView.frame;
         topFrame.origin.y = -topFrame.size.height;
         self.topControlsView.frame = topFrame;
-        
-        self.volumeView.alpha = 0.0;
     }];
 }
 
@@ -638,7 +637,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     [self.playbackTimer invalidate];
     self.playbackTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(onPlaybackTimer) userInfo:nil repeats:YES];
     
-    self.volumeSlider.value = self.currentVolume;
     self.audioProgress.value = 0;
     [self updateAudioProgress];
     
@@ -697,9 +695,13 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (IBAction)didClickVolume:(id)sender {
-    [UIView animateWithDuration:0.2 animations:^{
-        self.volumeView.alpha = (self.volumeView.alpha > 0.0) ? 0.0 : 1.0;
-    }];
+    ReaderVolumeVC2 * volume = [[ReaderVolumeVC2 alloc] init];
+    volume.delegate = self;
+    volume.value = self.currentVolume;
+    CGRect buttonFrame = [self.view convertRect:self.volumeButton.frame fromView:self.bottomControlsView];
+    self.volumePopover = [[WEPopoverController alloc] initWithContentViewController:volume];
+    self.volumePopover.popoverContentSize = volume.view.frame.size;
+    [self.volumePopover presentPopoverFromRect:buttonFrame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
 }
 
 - (void)onPlaybackTimer {
@@ -749,9 +751,9 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
         [self.player play];
 }
 
-- (IBAction)didSlideVolume:(id)sender {
-    self.currentVolume = self.volumeSlider.value;
-    self.player.volume = self.currentVolume;
+-(void)didSlideVolume:(CGFloat)value {
+    self.currentVolume = value;
+    self.player.volume = value;
 }
 
 @end
