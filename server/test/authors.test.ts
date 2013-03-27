@@ -43,6 +43,7 @@ describe("API", function() {
         genre: "genre",
         description: "description",
         popularity: 0,
+        featured: false,
       }
 
       this.book = book

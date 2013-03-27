@@ -160,16 +160,17 @@ app.get('/books/:bookId/files', function(req, res) {
   .then(send(res), err(res))
 })
 
+app.post('/books/migrations/popularity', function(req, res) {
+  db.run(Book.migratePopularityFeatured())
+  .then(send(res), ok(res))
+})
+
 // someone bought the book. track it
 app.post('/books/:bookId/popularity', function(req, res) {
   db.run(Book.incrementPopularity(req.params.bookId))
   .then(send(res), ok(res))
 })
 
-app.post('/books/migrations/zeroPopularity', function(req, res) {
-  db.run(Book.migrateZeroPopularity())
-  .then(send(res), ok(res))
-})
 
 
 /// FILES //////////////////////////////////////

@@ -77,7 +77,8 @@
     NSFetchRequest * fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
     NSSortDescriptor *titleSort = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
     NSSortDescriptor *popularitySort = [NSSortDescriptor sortDescriptorWithKey:@"popularity" ascending:NO];
-    fetchRequest.sortDescriptors = @[popularitySort,titleSort];
+    NSSortDescriptor *featuredSort = [NSSortDescriptor sortDescriptorWithKey:@"featured" ascending:NO];
+    fetchRequest.sortDescriptors = @[featuredSort,popularitySort,titleSort];
     return fetchRequest;
 }
 

@@ -20,6 +20,7 @@ interface IBook {
   description: string;
   imageUrl?: string;
   popularity: number; // number of times it has been purchased
+  featured: bool;
 
   audioFiles: number;
   textFiles: number;

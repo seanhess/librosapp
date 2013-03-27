@@ -62,6 +62,7 @@ describe("API", function() {
         author: "author",
         genre: "genre",
         popularity: 0,
+        featured: false,
         description: "description",
       }
 

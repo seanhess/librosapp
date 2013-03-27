@@ -22,7 +22,7 @@
 <table>
   <tr><th>title</th><th>pop</th><th>text</th><th>audio</th></tr>
   <tr ng-repeat="book in books">
-    <td><a href="/admin/books/{{book.bookId}}">{{book.title}}</a></td>
+    <td><span ng-show="book.featured">★ </span><a href="/admin/books/{{book.bookId}}">{{book.title}}</a></td>
     <td>{{book.popularity}}</td>
     <td>{{book.textFiles}}</td>
     <td>{{book.audioFiles}}</td>

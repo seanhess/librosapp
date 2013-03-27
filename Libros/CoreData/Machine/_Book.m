@@ -12,6 +12,7 @@ const struct BookAttributes BookAttributes = {
 	.currentTime = @"currentTime",
 	.descriptionText = @"descriptionText",
 	.downloaded = @"downloaded",
+	.featured = @"featured",
 	.genre = @"genre",
 	.imageUrl = @"imageUrl",
 	.popularity = @"popularity",
@@ -72,6 +73,10 @@ const struct BookFetchedProperties BookFetchedProperties = {
 	}
 	if ([key isEqualToString:@"downloadedValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"downloaded"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"featuredValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"featured"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"popularityValue"]) {
@@ -238,6 +243,32 @@ const struct BookFetchedProperties BookFetchedProperties = {
 
 - (void)setPrimitiveDownloadedValue:(float)value_ {
 	[self setPrimitiveDownloaded:[NSNumber numberWithFloat:value_]];
+}
+
+
+
+
+
+@dynamic featured;
+
+
+
+- (BOOL)featuredValue {
+	NSNumber *result = [self featured];
+	return [result boolValue];
+}
+
+- (void)setFeaturedValue:(BOOL)value_ {
+	[self setFeatured:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveFeaturedValue {
+	NSNumber *result = [self primitiveFeatured];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveFeaturedValue:(BOOL)value_ {
+	[self setPrimitiveFeatured:[NSNumber numberWithBool:value_]];
 }
 
 

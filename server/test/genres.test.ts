@@ -47,6 +47,7 @@ describe("API", function() {
         author: "Charles Dickens",
         genre: "Comedy",
         popularity: 0,
+        featured: false,
         description: "description",
       }
 
