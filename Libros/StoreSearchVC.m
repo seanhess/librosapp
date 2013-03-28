@@ -34,7 +34,7 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        self.title = NSLocalizedString(@"Search", @"Search");
+        self.title = NSLocalizedString(@"Search",nil);
         [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar-icon-search-selected"] withFinishedUnselectedImage:[UIImage imageNamed:@"tabbar-icon-search"]];
     }
     return self;
@@ -86,8 +86,8 @@
 }
 
 - (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if ([self resultsForSection:section] == self.authorResults) return @"Authors";
-    return @"Books";
+    if ([self resultsForSection:section] == self.authorResults) return NSLocalizedString(@"Authors",nil);
+    return NSLocalizedString(@"Books",nil);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

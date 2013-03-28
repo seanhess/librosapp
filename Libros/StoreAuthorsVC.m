@@ -16,6 +16,7 @@
 #import "Appearance.h"
 
 @interface StoreAuthorsVC ()
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *libraryButton;
 @property (nonatomic, strong) NSFetchedResultsController * fetchedResultsController;
 @end
 
@@ -33,6 +34,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.libraryButton.title = NSLocalizedString(@"Library",nil);
     
     self.tableView.backgroundColor = Appearance.background;
     

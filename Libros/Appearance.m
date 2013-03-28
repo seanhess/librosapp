@@ -32,8 +32,16 @@
     return UIColorFromRGB(0x10A5DD);
 }
 
++(UIColor*)adjustedHighlightBlueForShadows {
+    return UIColorFromRGB(0x2DBFFD);
+}
+
 +(UIColor*)boringGrayColor {
     return UIColorFromRGB(0xBBBBBB);
+}
+
++(UIColor*)darkControlGrayColor {
+    return UIColorFromRGB(0x3D3D3D);
 }
 
 +(UIView*)tableSelectedBackgroundView {

@@ -15,6 +15,7 @@
 #import "Appearance.h"
 
 @interface StoreGenresVC ()
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *libraryButton;
 @property (nonatomic, strong) NSFetchedResultsController * fetchedResultsController;
 @end
 
@@ -23,7 +24,7 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        self.title = NSLocalizedString(@"Genres", @"Genres");
+        self.title = NSLocalizedString(@"Genres",nil);
         [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar-icon-genres-selected"] withFinishedUnselectedImage:[UIImage imageNamed:@"tabbar-icon-genres"]];
     }
     return self;
@@ -32,6 +33,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.libraryButton.title = NSLocalizedString(@"Library",nil);
     
     self.tableView.backgroundColor = Appearance.background;
     

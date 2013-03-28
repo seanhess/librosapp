@@ -30,6 +30,7 @@
 		780FFF0B16A0C675003AE067 /* UserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 780FFF0A16A0C675003AE067 /* UserService.m */; };
 		781B15FF170495F800831184 /* navbar-secondary-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 781B15FD170495F800831184 /* navbar-secondary-bg.png */; };
 		781B1600170495F800831184 /* navbar-secondary-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 781B15FE170495F800831184 /* navbar-secondary-bg@2x.png */; };
+		781B161617049C1400831184 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 781B161417049B8B00831184 /* Localizable.strings */; };
 		781EF87C16A9BCAD000CB62E /* FileService.m in Sources */ = {isa = PBXBuildFile; fileRef = 781EF87B16A9BCAD000CB62E /* FileService.m */; };
 		781EF88016A9BE5B000CB62E /* File.m in Sources */ = {isa = PBXBuildFile; fileRef = 781EF87F16A9BE5B000CB62E /* File.m */; };
 		781EF88316A9BE65000CB62E /* _File.m in Sources */ = {isa = PBXBuildFile; fileRef = 781EF88216A9BE65000CB62E /* _File.m */; };
@@ -252,6 +253,10 @@
 		780FFF0A16A0C675003AE067 /* UserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserService.m; sourceTree = "<group>"; };
 		781B15FD170495F800831184 /* navbar-secondary-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar-secondary-bg.png"; sourceTree = "<group>"; };
 		781B15FE170495F800831184 /* navbar-secondary-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar-secondary-bg@2x.png"; sourceTree = "<group>"; };
+		781B160817049A7900831184 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		781B160917049A7900831184 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		781B161317049B8B00831184 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		781B161517049B8C00831184 /* es */ = {isa = PBXFileReference; lastKnownFileType = file; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		781EF87A16A9BCAD000CB62E /* FileService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileService.h; sourceTree = "<group>"; };
 		781EF87B16A9BCAD000CB62E /* FileService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileService.m; sourceTree = "<group>"; };
 		781EF87E16A9BE5B000CB62E /* File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = File.h; sourceTree = "<group>"; };
@@ -658,6 +663,7 @@
 		7827BD98169CE4A900053231 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				781B161417049B8B00831184 /* Localizable.strings */,
 				7827BD99169CE4A900053231 /* Libros-Info.plist */,
 				7827BD9A169CE4A900053231 /* InfoPlist.strings */,
 				7827BD9D169CE4A900053231 /* main.m */,
@@ -1053,6 +1059,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				es,
 			);
 			mainGroup = 7827BD80169CE4A900053231;
 			productRefGroup = 7827BD8C169CE4A900053231 /* Products */;
@@ -1202,6 +1209,7 @@
 				78B6583817039B0900DFA509 /* reader-pause-icon@2x.png in Resources */,
 				781B15FF170495F800831184 /* navbar-secondary-bg.png in Resources */,
 				781B1600170495F800831184 /* navbar-secondary-bg@2x.png in Resources */,
+				781B161617049C1400831184 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1342,10 +1350,21 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		781B161417049B8B00831184 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				781B161317049B8B00831184 /* en */,
+				781B161517049B8C00831184 /* es */,
+			);
+			name = Localizable.strings;
+			path = LibrosTests;
+			sourceTree = SOURCE_ROOT;
+		};
 		7827BD9A169CE4A900053231 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				7827BD9B169CE4A900053231 /* en */,
+				781B160817049A7900831184 /* es */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1354,6 +1373,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				7827BDBD169CE4A900053231 /* en */,
+				781B160917049A7900831184 /* es */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

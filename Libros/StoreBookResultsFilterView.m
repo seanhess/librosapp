@@ -27,13 +27,13 @@
         self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"navbar-secondary-bg.png"]];
         [self addSubview:self.backgroundView];
         
-        NSArray * items = @[@"Todos", @"Texto", @"Audio"];
+        NSArray * items = @[NSLocalizedString(@"Filter All", nil), NSLocalizedString(@"Filter Text",nil), NSLocalizedString(@"Filter Audio",nil)];
         self.frame = CGRectMake(0, 0, 100, 36); // it ignores the width
         self.segments = [[UISegmentedControl alloc] initWithItems:items];
         self.segments.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         self.segments.frame = CGRectMake(8, 6, self.frame.size.width-2*8, 20);
         self.segments.segmentedControlStyle = UISegmentedControlStyleBar;
-        self.segments.tintColor = Appearance.boringGrayColor;
+        self.segments.tintColor = Appearance.darkControlGrayColor;
         [self addSubview:self.segments];
         
         [self.segments addTarget:self action:@selector(selectItem:) forControlEvents:UIControlEventValueChanged];
@@ -50,9 +50,9 @@
 - (void)renderSelectedSegment {
     for (UIButton * segment in self.segments.subviews) {
         if (segment.selected)
-            [segment setTintColor:Appearance.highlightBlue];
+            [segment setTintColor:Appearance.adjustedHighlightBlueForShadows];
         else
-            [segment setTintColor:Appearance.boringGrayColor];
+            [segment setTintColor:Appearance.darkControlGrayColor];
     }
 }
 

@@ -12,7 +12,8 @@
 
 @interface ReaderTableOfContentsVC () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@property (weak, nonatomic) IBOutlet UINavigationItem *navItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeButton;
 @end
 
 @implementation ReaderTableOfContentsVC
@@ -28,6 +29,9 @@
 
 - (void)viewDidLoad
 {
+    self.title = NSLocalizedString(@"Table of Contents",nil);
+    self.navItem.title = NSLocalizedString(@"Table of Contents",nil);
+    self.closeButton.title = NSLocalizedString(@"Close",nil);
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }

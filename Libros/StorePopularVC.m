@@ -13,7 +13,7 @@
 #import "GenreService.h"
 
 @interface StorePopularVC ()
-
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *libraryButton;
 @end
 
 @implementation StorePopularVC
@@ -40,7 +40,8 @@
     
     self.fetchRequest = [[BookService shared] popular];
     
-    self.title = NSLocalizedString(@"Popular", @"Popular");
+    self.libraryButton.title = NSLocalizedString(@"Library",nil);
+    self.title = NSLocalizedString(@"Popular",nil);
     
     [super viewDidLoad];
 	// Do any additional setup after loading the view.

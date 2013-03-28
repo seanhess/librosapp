@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) UIButton *layoutButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *storeButton;
 @end
 
 // Image Size: 178 x 270
@@ -36,6 +37,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.title = NSLocalizedString(@"Library", nil);
+    self.storeButton.title = NSLocalizedString(@"Store",nil);
     
     self.tableView.backgroundColor = Appearance.background;
     self.collectionView.backgroundColor = Appearance.background;
@@ -163,7 +167,7 @@
 }
 
 -(NSString*)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return @"Archive";
+    return NSLocalizedString(@"Archive",nil);
 }
 
 

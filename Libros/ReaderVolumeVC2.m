@@ -37,8 +37,6 @@
     CGFloat h = self.slider.frame.size.height;
     self.slider.frame = CGRectMake(h - self.view.frame.size.width/2 - 4, w + 4, w, h);
     self.slider.transform = trans;
-    
-    NSLog(@"SLIDER %@", self.slider);
 }
 
 - (void)didSlideVolume:(id)slider {

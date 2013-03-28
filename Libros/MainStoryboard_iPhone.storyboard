@@ -31,6 +31,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="libraryButton" destination="nGq-h9-HQe" id="6RK-SB-u4P"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ppi-J0-R51" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -79,6 +82,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="libraryButton" destination="JvE-4Y-kAE" id="uu6-2t-fcz"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="28W-5V-u27" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -178,6 +184,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="KKu-lI-U9s" id="gmi-ok-KGC"/>
+                        <outlet property="storeButton" destination="5Nz-rx-8RF" id="wnq-mK-2EW"/>
                         <outlet property="tableView" destination="Jju-xH-eD3" id="ZUA-5V-kaQ"/>
                     </connections>
                 </viewController>
@@ -233,6 +240,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="libraryButton" destination="CBr-iq-1ih" id="wKM-dK-rWG"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t4n-0R-7Q9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -327,6 +337,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LibraryVC.h"/>
             <relationships>
                 <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
+                <relationship kind="outlet" name="storeButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
         </class>
@@ -335,15 +346,24 @@
         </class>
         <class className="StoreAuthorsVC" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreAuthorsVC.h"/>
+            <relationships>
+                <relationship kind="outlet" name="libraryButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
         </class>
         <class className="StoreBookResultsVC" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreBookResultsVC.h"/>
         </class>
         <class className="StoreGenresVC" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreGenresVC.h"/>
+            <relationships>
+                <relationship kind="outlet" name="libraryButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
         </class>
         <class className="StorePopularVC" superclassName="StoreBookResultsVC">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/StorePopularVC.h"/>
+            <relationships>
+                <relationship kind="outlet" name="libraryButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
         </class>
         <class className="StoreSearchVC" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreSearchVC.h"/>

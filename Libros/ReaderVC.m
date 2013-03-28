@@ -114,7 +114,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     
     [MetricsService readerLoadedBook:self.book];
     
-    self.audioOnlyText.text = @"This chapter is audio only";
+    self.audioOnlyText.text = NSLocalizedString(@"Audio Only",nil);
     
     self.fontController = [ReaderFontVC new];
     self.fontController.delegate = self;

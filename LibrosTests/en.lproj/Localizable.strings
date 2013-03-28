@@ -1,0 +1,32 @@
+/* 
+  Localizable.strings
+  Libros
+
+  Created by Sean Hess on 3/28/13.
+  Copyright (c) 2013 Sean Hess. All rights reserved.
+*/
+
+"Library" = "Library";
+"Store" = "Store";
+"Archive" = "Archive";
+"Audio Only" = "This chapter is audio only";
+"Filter All" = "Everything";
+"Filter Text" = "Text";
+"Filter Audio" = "Audio";
+"Popular" = "Popular";
+"Genres" = "Genres";
+"Authors" = "Authors";
+"Search" = "Search";
+"Books" = "Books";
+"Loading" = "Loading...";
+"Download Free" = "Download Free";
+"Buy for" = "Buy for";
+"Buy All Books for" = "Buy All Books for";
+"Purchasing" = "Purchasing";
+"Downloading" = "Downloading";
+"View in Library" = "View in Library";
+"Format Both" = "Text and Audio";
+"Format Text" = "Text";
+"Format Audio" = "Audiobook";
+"Table of Contents" = "Table of Contents";
+"Close" = "Close";

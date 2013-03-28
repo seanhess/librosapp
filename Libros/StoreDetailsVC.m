@@ -140,16 +140,16 @@
     if (!alreadyPurchased && !self.isPurchasing) {
         if (self.bookProduct) {
             NSString* bookPriceString = [NSNumberFormatter localizedStringFromNumber:self.bookProduct.price numberStyle:NSNumberFormatterCurrencyStyle];
-            [self.buyButton setTitle:[NSString stringWithFormat:@"Buy for %@", bookPriceString] forState:UIControlStateNormal];
+            [self.buyButton setTitle:[NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Buy for", nil), bookPriceString] forState:UIControlStateNormal];
             NSString* allPriceString = [NSNumberFormatter localizedStringFromNumber:self.allBooksProduct.price numberStyle:NSNumberFormatterCurrencyStyle];
-            [self.buyAllButton setTitle:[NSString stringWithFormat:@"Buy All Books for %@", allPriceString] forState:UIControlStateNormal];
+            [self.buyAllButton setTitle:[NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Buy All Books for",nil), allPriceString] forState:UIControlStateNormal];
             self.buyAllButton.enabled = YES;
             self.buyButton.enabled = YES;
         }
         
         else {
-            [self.buyButton setTitle:@"Loading..." forState:UIControlStateNormal];
-            [self.buyAllButton setTitle:@"Loading..." forState:UIControlStateNormal];
+            [self.buyButton setTitle:NSLocalizedString(@"Loading",nil) forState:UIControlStateNormal];
+            [self.buyAllButton setTitle:NSLocalizedString(@"Loading",nil) forState:UIControlStateNormal];
             self.buyAllButton.enabled = NO;
             self.buyButton.enabled = NO;
         }
@@ -157,7 +157,7 @@
     
     else if (alreadyPurchased && !self.isPurchasing && !self.book.isDownloading && !self.book.isDownloadComplete) {
         self.buyAllButton.hidden = YES;
-        [self.buyButton setTitle:@"Download Free" forState:UIControlStateNormal];
+        [self.buyButton setTitle:NSLocalizedString(@"Download Free",nil) forState:UIControlStateNormal];
     }
     
     // these all use the library button
@@ -169,12 +169,12 @@
         self.downloadProgressBackground.hidden = YES;
         
         if (self.isPurchasing) {
-            [self.libraryButton setTitle:@"Purchasing" forState:UIControlStateNormal];
+            [self.libraryButton setTitle:NSLocalizedString(@"Purchasing",nil) forState:UIControlStateNormal];
             self.libraryButton.enabled = NO;
         }
         
         else if (self.book.isDownloading) {
-            [self.libraryButton setTitle:@"Downloading" forState:UIControlStateNormal];
+            [self.libraryButton setTitle:NSLocalizedString(@"Downloading",nil) forState:UIControlStateNormal];
             self.libraryButton.enabled = NO;
             self.downloadProgressBackground.hidden = NO;
             [self setDownloadProgressValue:self.book.downloadedValue];
@@ -184,7 +184,7 @@
             self.downloadProgressBackground.hidden = NO;
             [self setDownloadProgressValue:self.book.downloadedValue];
             self.libraryButton.enabled = YES;
-            [self.libraryButton setTitle:@"View in Library" forState:UIControlStateNormal];
+            [self.libraryButton setTitle:NSLocalizedString(@"View in Library",nil) forState:UIControlStateNormal];
         }
     }
 }
@@ -220,19 +220,19 @@
     if (self.book.audioFilesValue && self.book.textFilesValue) {
         self.textIcon.hidden = NO;
         self.audioIcon.hidden = NO;
-        self.formatsLabel.text = @"Text and Audio";
+        self.formatsLabel.text = NSLocalizedString(@"Format Both", nil);
     }
     
     else if (self.book.audioFilesValue) {
         self.textIcon.hidden = YES;
         self.audioIcon.hidden = NO;
-        self.formatsLabel.text = @"Audiobook";
+        self.formatsLabel.text = NSLocalizedString(@"Format Audio",nil);
     }
     
     else {
         self.textIcon.hidden = NO;
         self.audioIcon.hidden = YES;
-        self.formatsLabel.text = @"Text";
+        self.formatsLabel.text = NSLocalizedString(@"Format Text",nil);
     }
     
     [self.iconsView flow];
