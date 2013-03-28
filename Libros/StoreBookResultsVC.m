@@ -45,7 +45,7 @@
     self.filterView = [StoreBookResultsFilterView filterView];
     [self.filterView setDelegate:self];
     self.tableView.tableHeaderView = self.filterView;
-    [self.tableView setContentOffset:CGPointMake(0, self.filterView.frame.size.height)];
+    // [self.tableView setContentOffset:CGPointMake(0, self.filterView.frame.size.height)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

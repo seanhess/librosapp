@@ -9,12 +9,9 @@
 #import "StoreBookResultsFilterView.h"
 #import "Appearance.h"
 
-#define HORIZONTAL_PADDING 8
-#define VERTICAL_PADDING 8
-#define HEIGHT 40
-
 @interface StoreBookResultsFilterView ()
 @property (strong, nonatomic) UISegmentedControl *segments;
+@property (strong, nonatomic) UIImageView * backgroundView;
 @end
 
 @implementation StoreBookResultsFilterView
@@ -26,11 +23,15 @@
 - (id)init {
     self = [super init];
     if (self) {
+        
+        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"navbar-secondary-bg.png"]];
+        [self addSubview:self.backgroundView];
+        
         NSArray * items = @[@"Todos", @"Texto", @"Audio"];
-        self.frame = CGRectMake(0, 0, 100, HEIGHT); // just gives it an initial height
+        self.frame = CGRectMake(0, 0, 100, 36); // it ignores the width
         self.segments = [[UISegmentedControl alloc] initWithItems:items];
         self.segments.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        self.segments.frame = CGRectMake(HORIZONTAL_PADDING, 12, self.frame.size.width-2*HORIZONTAL_PADDING, self.frame.size.height - 2*VERTICAL_PADDING);
+        self.segments.frame = CGRectMake(8, 6, self.frame.size.width-2*8, 20);
         self.segments.segmentedControlStyle = UISegmentedControlStyleBar;
         self.segments.tintColor = Appearance.boringGrayColor;
         [self addSubview:self.segments];
