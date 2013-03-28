@@ -20,8 +20,9 @@
 #import "LibraryOpenAnimationView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "StoreDetailsVC.h"
+#import "LibraryBuyMoreVC.h"
 
-@interface LibraryVC () <NSFetchedResultsControllerDelegate, UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface LibraryVC () <NSFetchedResultsControllerDelegate, UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LibraryBuyMoreDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController * fetchedResultsController;
 @property (nonatomic, strong) Book * selectedBook;
@@ -29,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) UIButton *layoutButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *storeButton;
+@property (strong, nonatomic) LibraryBuyMoreVC * buyMore;
 @end
 
 // Image Size: 178 x 270
@@ -66,6 +68,7 @@
     // check for download when the CELL is loaded. Is on screen?
     [self.tableView reloadData];
     [self.collectionView reloadData];
+    [self showBuyMore];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -90,6 +93,49 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)showBuyMore {
+    // only want to show this if there aren't too many books, eh?
+    if ([self numberOfBooksInSection:0] > 4) return;
+    
+    self.buyMore = [LibraryBuyMoreVC new];
+    self.buyMore.delegate = self;
+    CGRect frame = self.buyMore.view.frame;
+    frame.origin = CGPointMake(8, self.view.frame.size.height);
+    frame.size.width = self.view.frame.size.width - 16;
+    self.buyMore.view.frame = frame;
+    [self.view addSubview:self.buyMore.view];
+    [self.buyMore viewDidLoad];
+    
+    // need to wait for a minute
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.8 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.5 animations:^{
+            CGRect frame = self.buyMore.view.frame;
+            frame.origin.y = self.view.frame.size.height - frame.size.height;
+            self.buyMore.view.frame = frame;
+        }];
+    });
+}
+
+- (void)didTapBuyMore {
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.buyMore pretendToBeButton];
+        CGRect frame = self.buyMore.view.frame;
+        frame.size.width = 64;
+        frame.size.height = 30;
+        frame.origin.y = -40;
+        frame.origin.x = self.view.frame.size.width - 5 - frame.size.width;
+        self.buyMore.view.frame = frame;
+    } completion:^(BOOL finished) {
+        self.storeButton.tintColor = Appearance.highlightBlue;
+    }];
+}
+
+-(void)didTapBuyMoreClose {
+    [UIView animateWithDuration:0.2 animations:^{
+        self.buyMore.view.alpha = 0.0;
+    }];
 }
 
 #pragma mark NSFetchedResultsControllerDelegate methods
