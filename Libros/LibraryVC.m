@@ -19,6 +19,7 @@
 #import "Appearance.h"
 #import "LibraryOpenAnimationView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "StoreDetailsVC.h"
 
 @interface LibraryVC () <NSFetchedResultsControllerDelegate, UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -36,6 +37,7 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"LIBRARY");
     [super viewDidLoad];
     
     self.title = NSLocalizedString(@"Library", nil);
@@ -61,6 +63,7 @@
    
     NSError *error = nil;
     [self.fetchedResultsController performFetch:&error];
+    // check for download when the CELL is loaded. Is on screen?
     [self.tableView reloadData];
     [self.collectionView reloadData];
 }
@@ -93,7 +96,9 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
+    NSLog(@"LIBRARY change content");
     [self.tableView reloadData];
+    [self.collectionView reloadData];
 }
 
 - (IBAction)didTapLayoutButton:(id)sender {
@@ -147,11 +152,13 @@
     
     Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.book = book;
+    [UserService.shared checkRestartDownload:book];
     return cell;
 }
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+    Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    return (book.isDownloadComplete);
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -176,7 +183,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [self showReader:book];
+    
+    if (book.isDownloading)
+        return [self showDetails:book];
+    
+    ReaderVC * readervc = [ReaderVC new];
+    readervc.book = book;
+    [self.navigationController pushViewController:readervc animated:YES];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -195,8 +208,9 @@
     // sizes correct at this point
     static NSString * cellId = @"LibraryBookCover";
     LibraryBookCoverCell * cell = (LibraryBookCoverCell*)[self.collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
-    // TODO add image view and WORK IT
-    cell.book = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.book = book;
+    [UserService.shared checkRestartDownload:book];
     return cell;
 }
 
@@ -224,6 +238,10 @@
 
 - (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    if (book.isDownloading)
+        return [self showDetails:book];
+    
     LibraryBookCoverCell * cell = (LibraryBookCoverCell*) [collectionView cellForItemAtIndexPath:indexPath];
     UIImage * image = [UIImage imageWithCGImage:cell.cachedImage.CGImage];
     CGRect frame = cell.cachedImageFrame;
@@ -252,10 +270,10 @@
     }];
 }
 
-- (void)showReader:(Book*)book {
-    ReaderVC * readervc = [ReaderVC new];
-    readervc.book = book;
-    [self.navigationController pushViewController:readervc animated:YES];
+- (void)showDetails:(Book*)book {
+    StoreDetailsVC * details = [StoreDetailsVC new];
+    details.book = book;
+    [self.navigationController pushViewController:details animated:YES];
 }
 
 @end

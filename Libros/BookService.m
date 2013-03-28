@@ -58,8 +58,12 @@
 // OR you can make a fetched results controller and give it a fetch request
 
 -(void)loadStore {
+    [self loadStoreWithCb:nil];
+}
+
+-(void)loadStoreWithCb:(void(^)(void))cb {
     [[ObjectStore shared].objectManager getObjectsAtPath:@"/books/" parameters:nil success:^(RKObjectRequestOperation * operation, RKMappingResult *mappingResult) {
-        //NSLog(@"MAPPED %@", mappingResult);
+        if (cb) cb();
     } failure: ^(RKObjectRequestOperation * operation, NSError * error) {
         NSLog(@"FAILURE %@", error);
     }];
@@ -99,12 +103,22 @@
 
 
 
-
-
 //-(NSString *)priceString:(Book *)book {
 //    NSInteger dollars = floorf(book.priceValue / 100);
 //    NSInteger pennies = book.priceValue % 100;
 //    return [NSString stringWithFormat:@"%i.%02i", dollars, pennies];
 //}
+
+-(NSArray*)firstRunBooks {
+    NSString * draculaId = @"b6145fe2-f386-483e-8aeb-84d84de4f65e";
+    NSString * principeMendigoId = @"6b8e637a-2f19-4224-b68f-cba3fe03c79e";
+    NSString * condenadaId = @"5af9d5a2-8515-4a22-80e6-a1404aedce78";
+    NSArray * ids = @[draculaId, principeMendigoId, condenadaId];
+    NSFetchRequest * fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"bookId IN %@", ids];
+    
+    NSArray * books = [ObjectStore.shared.context executeFetchRequest:fetchRequest error:nil];
+    return books;
+}
 
 @end

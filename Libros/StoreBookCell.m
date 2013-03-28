@@ -30,6 +30,8 @@
 @property (nonatomic) CGRect audioFrame;
 @property (nonatomic) CGRect textFrame;
 
+@property (nonatomic, strong) UIProgressView * downloadProgress;
+
 @end
 
 @implementation StoreBookCell
@@ -52,6 +54,14 @@
         
         self.coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(COVER_PADDING_LEFT, COVER_PADDING_TOP, COVER_WIDTH, COVER_HEIGHT)];
         [self.contentView addSubview:self.coverImageView];
+        
+        self.downloadProgress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+        CGRect progressFrame = self.downloadProgress.frame;
+        progressFrame.origin.x = self.coverImageView.frame.origin.x + 4;
+        progressFrame.origin.y = self.coverImageView.frame.size.height - progressFrame.size.height + 2;
+        progressFrame.size.width = COVER_WIDTH - 8;
+        self.downloadProgress.frame = progressFrame;
+        [self.contentView addSubview:self.downloadProgress];
     }
     return self;
 }
@@ -69,6 +79,25 @@
     [self.coverImageView setImageWithURL:[NSURL URLWithString:self.book.imageUrl] placeholderImage:nil completed:^(UIImage * image, NSError*error, SDImageCacheType cacheType) {
         [cell setNeedsLayout];
     }];
+    
+    [self.book addObserver:self forKeyPath:BookAttributes.downloaded options:NSKeyValueObservingOptionNew context:nil];
+    [self renderProgress];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:BookAttributes.downloaded]) {
+        [self renderProgress];
+    }
+}
+
+- (void)renderProgress {
+    if (self.book.downloadedValue < 1.0 && self.book.downloadedValue > 0.0) {
+        self.downloadProgress.hidden = NO;
+        self.downloadProgress.progress = self.book.downloadedValue;
+    }
+    else {
+        self.downloadProgress.hidden = YES;
+    }
 }
 
 - (void)layoutSubviews {
@@ -134,6 +163,10 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)dealloc {
+    [self.book removeObserver:self forKeyPath:BookAttributes.downloaded];
 }
 
 @end

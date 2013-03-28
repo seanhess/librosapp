@@ -82,9 +82,6 @@
     // any initialization of nib things needs to happen in here, not in initWithNibName! might not be there.
     self.iconsView.padding = 7;
     
-    // We need to load the files for the book
-    [[FileService shared] loadFilesForBook:self.book.bookId cb:^{}];
-    
     self.titleLabel.text = self.book.title;
     self.authorLabel.text = [NSString stringWithFormat:@"%@", self.book.author];
     self.descriptionTextView.text = self.book.descriptionText;
@@ -108,7 +105,7 @@
     self.clearCommand = [IAPClearCommand new];
     [self.clearCommand clearOrphanPurchases];
     
-    [self checkRestartDownload];
+    [UserService.shared checkRestartDownload:self.book];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -311,13 +308,6 @@
     [UserService.shared addBook:self.book];
     [BookService.shared sendBookPurchased:self.book];
     [self renderButtonAndDownload];
-}
-
-- (void)checkRestartDownload {
-    if (self.book.purchasedValue && 0.0 < self.book.downloadedValue && self.book.downloadedValue < 1.0 && !UserService.shared.hasActiveDownload) {
-        NSLog(@"RESTARTING Download");
-        [self completePurchase];
-    }
 }
 
 - (void)didReceiveMemoryWarning

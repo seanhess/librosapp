@@ -14,6 +14,7 @@
 @interface LibraryBookCoverCell ()
 @property (nonatomic, strong) UIImageView * imageView;
 @property (nonatomic, strong) UIImageView * dropShadowImageView;
+@property (nonatomic, strong) UIProgressView * downloadProgress;
 @end
 
 @implementation LibraryBookCoverCell
@@ -36,6 +37,15 @@
         
         [self addSubview:self.dropShadowImageView];
         [self addSubview:self.imageView];
+        
+        
+        self.downloadProgress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+        CGRect progressFrame = self.downloadProgress.frame;
+        progressFrame.origin.x = self.imageView.frame.origin.x + 4;
+        progressFrame.origin.y = self.imageView.frame.size.height - progressFrame.size.height;
+        progressFrame.size.width = COVER_IMAGE_WIDTH - 8;
+        self.downloadProgress.frame = progressFrame;
+        [self addSubview:self.downloadProgress];
     }
     return self;
 }
@@ -43,6 +53,21 @@
 -(void)setBook:(Book *)book {
     _book = book;
     [self.imageView setImageWithURL:[NSURL URLWithString:self.book.imageUrl] placeholderImage:nil completed:nil];
+    
+    [self.book addObserver:self forKeyPath:BookAttributes.downloaded options:NSKeyValueObservingOptionNew context:nil];
+    
+    [self renderProgress];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:BookAttributes.downloaded]) {
+        [self renderProgress];
+    }
+}
+
+- (void)renderProgress {
+    self.downloadProgress.hidden = (self.book.downloadedValue == 1.0);
+    self.downloadProgress.progress = self.book.downloadedValue;
 }
 
 -(UIImage*)cachedImage {
@@ -51,6 +76,10 @@
 
 -(CGRect)cachedImageFrame {
     return self.imageView.frame;
+}
+
+- (void)dealloc {
+    [self.book removeObserver:self forKeyPath:BookAttributes.downloaded];
 }
 
 @end

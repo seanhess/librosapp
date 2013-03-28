@@ -22,14 +22,19 @@
 -(User*)main;
 
 -(void)addBook:(Book*)book;
+-(void)addBooks:(NSArray*)books;
 -(void)archiveBook:(Book*)book;
 
 -(BOOL)hasActiveDownload;
-    
+-(BOOL)hasFirstLaunchBooks;
+-(void)setHasFirstLaunchBooks;
+
 -(void)purchasedAllBooks;
 -(BOOL)hasPurchasedBook:(Book*)book;
 
 -(NSFetchRequest*)libraryBooks;
+
+-(void)checkRestartDownload:(Book*)book;
 
 @end
 

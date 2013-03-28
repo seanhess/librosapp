@@ -14,6 +14,8 @@
 #import "Appearance.h"
 #import "LibraryVC.h"
 #import "Settings.h"
+#import "UserService.h"
+#import "BookService.h"
 
 #import <Parse/Parse.h>
 
@@ -47,8 +49,10 @@
     [[UISearchBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar-bg.png"]];
     
     [[UISlider appearance] setMinimumTrackTintColor:Appearance.highlightBlue];
-    [[UIProgressView appearance] setTrackTintColor:Appearance.highlightBlue];
     [[UISwitch appearance] setOnTintColor:Appearance.highlightBlue];
+    
+    [[UIProgressView appearance] setTrackTintColor:Appearance.boringGrayColor];
+    [[UIProgressView appearance] setProgressTintColor:Appearance.highlightBlue];
     // [[UISegmentedControl appearance] setTintColor:Appearance.highlightBlue]; (changes the whole background)
     
     [MetricsService launch];
@@ -66,6 +70,21 @@
     // This is only needed if they open a notification from a cold boot
     NSDictionary * remoteNotification = [launchOptions valueForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"];
     if (remoteNotification) [self application:application didReceiveRemoteNotification:remoteNotification];
+    
+    
+    
+    
+    // get the first launch books yo!
+    NSLog(@"FIRST LAUNCH - LOADING");
+    if (!UserService.shared.hasFirstLaunchBooks) {
+        [BookService.shared loadStoreWithCb:^{
+            NSLog(@"FIRST LAUNCH - LOADED");
+            // now add the 3 books
+            NSArray * books = [BookService.shared firstRunBooks];
+            [UserService.shared addBooks:books];
+            [UserService.shared setHasFirstLaunchBooks];
+        }];
+    }
     
     return YES;
 }

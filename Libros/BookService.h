@@ -13,6 +13,7 @@
 
 +(BookService*)shared;
 -(void)loadStore;
+-(void)loadStoreWithCb:(void(^)(void))cb;
 
 -(NSFetchRequest*)allBooks;
 -(NSFetchRequest*)popular;
@@ -22,5 +23,7 @@
 
 //-(NSString*)priceString:(Book*)book;
 -(void)sendBookPurchased:(Book*)book;
+
+-(NSArray*)firstRunBooks;
 
 @end
