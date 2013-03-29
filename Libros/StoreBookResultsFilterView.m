@@ -25,6 +25,7 @@
     if (self) {
         
         self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"navbar-secondary-bg.png"]];
+        self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self addSubview:self.backgroundView];
         
         NSArray * items = @[NSLocalizedString(@"Filter All", nil), NSLocalizedString(@"Filter Text",nil), NSLocalizedString(@"Filter Audio",nil)];

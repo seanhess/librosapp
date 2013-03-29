@@ -9,6 +9,7 @@ html {
 }
 .admin .books .book img {
   height: 1.2em;
+  display: inline-block;
 }
 .book_edit textarea {
   width: 500px;
