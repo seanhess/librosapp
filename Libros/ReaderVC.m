@@ -146,21 +146,21 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     // OK TO DRAW - has correct size (IF you set navigation bar hidden to the same thing here as in viewDidLoad
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     
-//    self.book.currentPageValue = 0;
-//    self.book.currentChapterValue = 0;
+//    self.book.currentPage = 0;
+//    self.book.currentChapter = 0;
     
     [self newFramesetterWithSize:self.collectionView.bounds.size];
     
-    [self ensurePagesForChapter:self.book.currentChapterValue];
-    [self moveToChapter:self.book.currentChapterValue page:self.book.currentPageValue animated:NO];
-    [self playerAtChapter:self.book.currentChapterValue];
-    if (self.book.currentTimeValue) {
-        self.player.currentTime = self.book.currentTimeValue;
+    [self ensurePagesForChapter:self.book.currentChapter];
+    [self moveToChapter:self.book.currentChapter page:self.book.currentPage animated:NO];
+    [self playerAtChapter:self.book.currentChapter];
+    if (self.book.currentTime) {
+        self.player.currentTime = self.book.currentTime;
         [self.player play];
         [self updateAudioProgress];
     }
     
-    Chapter * chapter = self.chapters[self.book.currentChapterValue];
+    Chapter * chapter = self.chapters[self.book.currentChapter];
     if (chapter.textFile) [self hideControlsInABit];
 }
 
@@ -198,15 +198,15 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     [super didReceiveMemoryWarning];
     
     // Dispose of any resources that can be recreated.
-    [self.framesetter emptyExceptChapter:self.book.currentChapterValue];
+    [self.framesetter emptyExceptChapter:self.book.currentChapter];
     
     // not sure if these are actually necessary
-    [self ensurePagesForChapter:self.book.currentChapterValue];
-    [self moveToChapter:self.book.currentChapterValue page:self.book.currentPageValue animated:NO];
+    [self ensurePagesForChapter:self.book.currentChapter];
+    [self moveToChapter:self.book.currentChapter page:self.book.currentPage animated:NO];
 }
 
 - (void)prepareLayoutWithSize:(CGSize)size {
-    CGFloat currentPercent = [self.framesetter percentThroughChapter:self.book.currentChapterValue page:self.book.currentPageValue];
+    CGFloat currentPercent = [self.framesetter percentThroughChapter:self.book.currentChapter page:self.book.currentPage];
     
     // creates a new framesetter, does NOT currently load the table or chapter
     [self newFramesetterWithSize:size];
@@ -217,12 +217,12 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
         self.collectionView.alpha = 0.0;
     }];
     
-    [self ensurePagesForChapter:self.book.currentChapterValue];
-    self.book.currentPageValue = [self.framesetter pageForChapter:self.book.currentChapterValue percent:currentPercent];
+    [self ensurePagesForChapter:self.book.currentChapter];
+    self.book.currentPage = [self.framesetter pageForChapter:self.book.currentChapter percent:currentPercent];
 }
 
 - (void)commitLayout {
-    [self moveToChapter:self.book.currentChapterValue page:self.book.currentPageValue animated:NO];
+    [self moveToChapter:self.book.currentChapter page:self.book.currentPage animated:NO];
     [UIView animateWithDuration:0.2 animations:^{
         self.collectionView.alpha = 1.0;
     }];
@@ -234,11 +234,11 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (void)updateControlsFromBook {
-    self.bottomControlsView.hidden = (self.book.audioFilesValue ==  0);
+    self.bottomControlsView.hidden = (self.book.audioFiles ==  0);
 }
 
 - (void)updateControlsFromChapter {
-    Chapter * chapter = self.chapters[self.book.currentChapterValue];
+    Chapter * chapter = self.chapters[self.book.currentChapter];
     self.fontButton.hidden = (chapter.textFile == nil);
     self.pageSlider.enabled = (chapter.textFile);
     self.collectionView.hidden = (chapter.textFile == nil);
@@ -252,7 +252,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     ReaderTableOfContentsVC * toc = [ReaderTableOfContentsVC new];
     [MetricsService readerTappedToc:self.book];
     toc.chapters = self.chapters;
-    toc.currentChapter = self.book.currentChapterValue;
+    toc.currentChapter = self.book.currentChapter;
     toc.delegate = self;
     [self.navigationController presentViewController:toc animated:YES completion:nil];
 }
@@ -275,8 +275,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     
     NSLog(@"LOADING CHAPTER %i playing=%i", chapter, playing);
     
-    self.book.currentChapterValue = chapter;
-    self.book.currentPageValue = 0;
+    self.book.currentChapter = chapter;
+    self.book.currentPage = 0;
     [self ensurePagesForChapter:chapter];
     [self moveToChapter:chapter page:0 animated:NO];
     [self playerAtChapter:chapter];
@@ -316,7 +316,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 - (IBAction)didTapText:(UITapGestureRecognizer*)tap {
     
     // you can't hide it if the current chapter doesn't have anything
-    Chapter * chapter = self.chapters[self.book.currentChapterValue];
+    Chapter * chapter = self.chapters[self.book.currentChapter];
     if (!chapter.textFile) return;
     
     if (self.isControlsShown) {
@@ -331,11 +331,11 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     NSIndexPath * newLocation = nil;
     
     if (point.x > 0.8*self.view.bounds.size.width) {
-        newLocation = [self next:self.book.currentChapterValue page:self.book.currentPageValue];
+        newLocation = [self next:self.book.currentChapter page:self.book.currentPage];
     }
     
     else if (point.x < 0.2*self.view.bounds.size.width) {
-        newLocation = [self prev:self.book.currentChapterValue page:self.book.currentPageValue];
+        newLocation = [self prev:self.book.currentChapter page:self.book.currentPage];
     }
     
     else {
@@ -348,12 +348,12 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (IBAction)didSwipeUp:(id)sender {
-    NSIndexPath * newLocation = [self next:self.book.currentChapterValue page:self.book.currentPageValue];
+    NSIndexPath * newLocation = [self next:self.book.currentChapter page:self.book.currentPage];
     if (newLocation) [self moveToChapter:newLocation.section page:newLocation.item animated:YES];
 }
 
 - (IBAction)didSwipeDown:(id)sender {
-    NSIndexPath * newLocation = [self prev:self.book.currentChapterValue page:self.book.currentPageValue];
+    NSIndexPath * newLocation = [self prev:self.book.currentChapter page:self.book.currentPage];
     if (newLocation) [self moveToChapter:newLocation.section page:newLocation.item animated:YES];
 }
 
@@ -369,8 +369,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     [self.collectionView setContentOffset:CGPointMake(totalOffsetX, 0) animated:animated];
     
     // Update the variables as well
-    self.book.currentChapterValue = chapter;
-    self.book.currentPageValue = page;
+    self.book.currentChapter = chapter;
+    self.book.currentPage = page;
     
     [self displayChapter];
     [self displayPage];
@@ -421,7 +421,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     
     // TODO - add support for initializing with chapter
     // but be careful, interface change calls this too!
-//    [self moveToChapter:self.book.currentChapterValue page:self.book.currentPageValue animated:NO];
+//    [self moveToChapter:self.book.currentChapter page:self.book.currentPage animated:NO];
 }
 
 - (NSAttributedString*)textForChapter:(NSInteger)chapterIndex {
@@ -439,34 +439,34 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     NSInteger page = cellIndexPath.item;
     
     // not sure what to do with this. Should it advance the audio???
-//    if (self.book.currentChapterValue != chapter) {}
+//    if (self.book.currentChapter != chapter) {}
     
-    self.book.currentChapterValue = chapter;
-    self.book.currentPageValue = page;
+    self.book.currentChapter = chapter;
+    self.book.currentPage = page;
     [self displayChapter];
     [self displayPage];
 }
 
 - (void)displayChapter {
-    if (self.book.currentChapterValue >= self.chapters.count) return;
-    Chapter * chapter = self.chapters[self.book.currentChapterValue];
+    if (self.book.currentChapter >= self.chapters.count) return;
+    Chapter * chapter = self.chapters[self.book.currentChapter];
     self.chapterTitle.text = chapter.name;
     [self updateControlsFromChapter];
 }
 
 - (void)displayPage {
-    NSInteger totalPages = [self.framesetter pagesForChapter:self.book.currentChapterValue];
-    self.pageSlider.value = (float) (self.book.currentPageValue) / (totalPages-1);
-    self.pagesDoneLabel.text = [NSString stringWithFormat:@"%i", self.book.currentPageValue];
-    NSInteger pagesLeft = totalPages-self.book.currentPageValue-1;
+    NSInteger totalPages = [self.framesetter pagesForChapter:self.book.currentChapter];
+    self.pageSlider.value = (float) (self.book.currentPage) / (totalPages-1);
+    self.pagesDoneLabel.text = [NSString stringWithFormat:@"%i", self.book.currentPage];
+    NSInteger pagesLeft = totalPages-self.book.currentPage-1;
     if (pagesLeft < 0) pagesLeft = 0;
     self.pagesLeftLabel.text = [NSString stringWithFormat:@"%i", pagesLeft];
 }
 
 - (IBAction)didSlidePage:(id)sender {
-    NSInteger totalPages = [self.framesetter pagesForChapter:self.book.currentChapterValue];
+    NSInteger totalPages = [self.framesetter pagesForChapter:self.book.currentChapter];
     NSInteger page = self.pageSlider.value * (totalPages-1);
-    [self moveToChapter:self.book.currentChapterValue page:page animated:NO];
+    [self moveToChapter:self.book.currentChapter page:page animated:NO];
 }
 
 - (NSInteger)cellsDisplayedInChapter:(NSInteger)chapter {
@@ -594,7 +594,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
             [self ensurePagesForChapter:chapter];
             // without scrolling it remembers its scroll offset, not the current cell and jumps back
             // when travelling backwards (loading chapter 1 after a memory warning)
-            [self moveToChapter:self.book.currentChapterValue page:self.book.currentPageValue animated:NO];
+            [self moveToChapter:self.book.currentChapter page:self.book.currentPage animated:NO];
         });
         return cell;
     }
@@ -665,7 +665,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     else {
         if (!self.player) {
             [MetricsService readerPlayedAudio:self.book];
-            [self playerAtChapter:self.book.currentChapterValue];
+            [self playerAtChapter:self.book.currentChapter];
         }
         
         [self.player play];
@@ -691,11 +691,11 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (IBAction)didClickPrevChapter:(id)sender {
-    [self loadChapter:self.book.currentChapterValue-1];
+    [self loadChapter:self.book.currentChapter-1];
 }
 
 - (IBAction)didClickNextChapter:(id)sender {
-    [self loadChapter:self.book.currentChapterValue+1];
+    [self loadChapter:self.book.currentChapter+1];
 }
 
 - (IBAction)didClickVolume:(id)sender {
@@ -718,7 +718,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.audioRemainingLabel.text = [NSString stringWithFormat:@"-%@", [self formatTime:self.player.duration - self.player.currentTime]];
     self.audioProgress.value = self.player.currentTime / self.player.duration;
     if (self.player.currentTime != 0)
-        self.book.currentTimeValue = self.player.currentTime;
+        self.book.currentTime = self.player.currentTime;
     [self updatePlayButton];
 }
 
@@ -750,8 +750,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     if (self.audioProgress.tracking) return;
     [self updateAudioProgress];
     if (!flag) return;
-    [self loadChapter:self.book.currentChapterValue+1];
-    if (self.book.currentChapterValue < self.chapters.count)
+    [self loadChapter:self.book.currentChapter+1];
+    if (self.book.currentChapter < self.chapters.count)
         [self.player play];
 }
 

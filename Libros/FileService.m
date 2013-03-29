@@ -33,7 +33,7 @@
 - (void)addMappings {
     self.fileMapping = [ObjectStore.shared mappingForEntityForName:@"File"];
     [self.fileMapping setIdentificationAttributes:@[@"fileId"]];
-    [self.fileMapping addAttributeMappingsFromArray:[_File propertyNames]];
+    [self.fileMapping addAttributeMappingsFromArray:[File propertyNames]];
     
     RKResponseDescriptor * responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:self.fileMapping pathPattern:@"/books/:bookId/files" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
 

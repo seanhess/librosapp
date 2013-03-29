@@ -91,8 +91,8 @@
     [self resizeContent];
     [self renderButtonAndDownload];
     
-    [self.book addObserver:self forKeyPath:BookAttributes.downloaded options:NSKeyValueObservingOptionNew context:nil];
-    [self.book addObserver:self forKeyPath:BookAttributes.purchased options:NSKeyValueObservingOptionNew context:nil];
+    [self.book addObserver:self forKeyPath:BOOK_ATTRIBUTE_DOWNLOADED options:NSKeyValueObservingOptionNew context:nil];
+    [self.book addObserver:self forKeyPath:BOOK_ATTRIBUTE_PURCHASED options:NSKeyValueObservingOptionNew context:nil];
     
     
     self.infoCommand = [IAPInfoCommand new];
@@ -109,12 +109,12 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:BookAttributes.downloaded]) {
-        [self setDownloadProgressValue:self.book.downloadedValue];
+    if ([keyPath isEqualToString:BOOK_ATTRIBUTE_DOWNLOADED]) {
+        [self setDownloadProgressValue:self.book.downloaded];
         [self renderButtonAndDownload];
     }
     
-    else if ([keyPath isEqualToString:BookAttributes.purchased]) {
+    else if ([keyPath isEqualToString:BOOK_ATTRIBUTE_PURCHASED]) {
         [self renderButtonAndDownload];
     }
 }
@@ -176,12 +176,12 @@
             [self.libraryButton setTitle:NSLocalizedString(@"Downloading",nil) forState:UIControlStateNormal];
             self.libraryButton.enabled = NO;
             self.downloadProgressBackground.hidden = NO;
-            [self setDownloadProgressValue:self.book.downloadedValue];
+            [self setDownloadProgressValue:self.book.downloaded];
         }
         
         else {
             self.downloadProgressBackground.hidden = NO;
-            [self setDownloadProgressValue:self.book.downloadedValue];
+            [self setDownloadProgressValue:self.book.downloaded];
             self.libraryButton.enabled = YES;
             [self.libraryButton setTitle:NSLocalizedString(@"View in Library",nil) forState:UIControlStateNormal];
         }
@@ -216,13 +216,13 @@
 }
 
 - (void)setFormats {
-    if (self.book.audioFilesValue && self.book.textFilesValue) {
+    if (self.book.audioFiles && self.book.textFiles) {
         self.textIcon.hidden = NO;
         self.audioIcon.hidden = NO;
         self.formatsLabel.text = NSLocalizedString(@"Format Both", nil);
     }
     
-    else if (self.book.audioFilesValue) {
+    else if (self.book.audioFiles) {
         self.textIcon.hidden = YES;
         self.audioIcon.hidden = NO;
         self.formatsLabel.text = NSLocalizedString(@"Format Audio",nil);
@@ -318,8 +318,8 @@
 }
 
 -(void)dealloc {
-    [self.book removeObserver:self forKeyPath:BookAttributes.downloaded];
-    [self.book removeObserver:self forKeyPath:BookAttributes.purchased];
+    [self.book removeObserver:self forKeyPath:BOOK_ATTRIBUTE_DOWNLOADED];
+    [self.book removeObserver:self forKeyPath:BOOK_ATTRIBUTE_PURCHASED];
 }
 
 @end

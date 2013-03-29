@@ -13,6 +13,7 @@
 #import "NSObject+Reflection.h"
 #import "FileService.h"
 #import "NSArray+Functional.h"
+#import "BookService.h"
 
 #import <RestKit.h>
 
@@ -44,7 +45,7 @@
 - (void)initMappings {
     RKEntityMapping *bookMapping = [ObjectStore.shared mappingForEntityForName:@"User"];
     [bookMapping setIdentificationAttributes:@[@"userId"]];
-    [bookMapping addAttributeMappingsFromArray:[_User propertyNames]];
+    [bookMapping addAttributeMappingsFromArray:[User propertyNames]];
     
     RKResponseDescriptor * responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:bookMapping pathPattern:@"/books" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     
@@ -95,7 +96,7 @@
 }
 
 -(BOOL)hasPurchasedBook:(Book*)book {
-    return book.purchasedValue || [[NSUserDefaults standardUserDefaults] boolForKey:ALL_BOOKS_PURCHASED_KEY];
+    return book.purchased || [[NSUserDefaults standardUserDefaults] boolForKey:ALL_BOOKS_PURCHASED_KEY];
 }
 
 -(BOOL)hasActiveDownload {
@@ -106,8 +107,8 @@
 // have to load them too!
 -(void)addBook:(Book *)book {
     NSLog(@"Adding Book %@", book.title);
-    book.purchasedValue = YES;
-    book.downloadedValue = 0.01; // want to start at a little, meaning it is currently downloading
+    book.purchased = YES;
+    book.downloaded = 0.01; // want to start at a little, meaning it is currently downloading
     self.activeDownloads++;
     
     // We need to load the files for the book
@@ -115,10 +116,10 @@
         [FileService.shared
             downloadFiles:[FileService.shared byBookId:book.bookId]
             progress:^(float percent) {
-                book.downloadedValue = percent;
+                book.downloaded = percent;
             }
             complete:^() {
-                book.downloadedValue = 1.0;
+                book.downloaded = 1.0;
                 self.activeDownloads--;
             }
         ];
@@ -136,8 +137,8 @@
 }
 
 -(void)archiveBook:(Book *)book {
-    book.purchasedValue = YES;
-    book.downloadedValue = 0.0;
+    book.purchased = YES;
+    book.downloaded = 0.0;
     FileService * fs = [FileService shared];
     [fs removeFiles:[fs byBookId:book.bookId]];
 }
@@ -168,7 +169,7 @@
 
 -(void)checkRestartDownload:(Book*)book {
     // NSLog(@"RESTARTING Check: %@", book.title);
-    if (book.purchasedValue && 0.0 < book.downloadedValue && book.downloadedValue < 1.0 && !self.hasActiveDownload) {
+    if (book.purchased && [BookService.shared isDownloading:book] && !self.hasActiveDownload) {
         NSLog(@"RESTARTING Download: %@", book.title);
         [self addBook:book];
     }

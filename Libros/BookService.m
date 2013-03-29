@@ -35,7 +35,7 @@
     RKEntityMapping *bookMapping = [ObjectStore.shared mappingForEntityForName:@"Book"];
     [bookMapping setIdentificationAttributes:@[@"bookId"]];
     
-    NSMutableArray * propertyNames = [NSMutableArray arrayWithArray:[_Book propertyNames]];
+    NSMutableArray * propertyNames = [NSMutableArray arrayWithArray:[Book propertyNames]];
     NSIndexSet * indices = [propertyNames indexesOfObjectsPassingTest:^(NSString * name, NSUInteger idx, BOOL * stop) {
         return [name isEqualToString:@"descriptionText"];
     }];
@@ -128,11 +128,11 @@
 }
 
 -(BOOL)isDownloading:(Book*)book {
-    return (0.0 < book.downloadedValue) && (book.downloadedValue < 1.0);
+    return (0.0 < book.downloaded) && (book.downloaded < 1.0);
 }
 
 -(BOOL)isDownloadComplete:(Book*)book {
-    return (book.downloadedValue == 1.0);
+    return (book.downloaded == 1.0);
 }
 
 @end

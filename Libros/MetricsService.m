@@ -23,9 +23,9 @@
 //    if (book.price)
 //        props[@"price"] = book.price;
     if (book.purchased)
-        props[@"purchased"] = book.purchased;
+        props[@"purchased"] = [NSNumber numberWithBool:book.purchased];
     if (book.currentChapter)
-        props[@"currentChapter"] = book.currentChapter;
+        props[@"currentChapter"] = [NSNumber numberWithInt:book.currentChapter];
     return props;
 }
 

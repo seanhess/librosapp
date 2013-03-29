@@ -29,7 +29,7 @@
 - (void)addMappings {
     RKEntityMapping *bookMapping = [ObjectStore.shared mappingForEntityForName:@"Author"];
     [bookMapping setIdentificationAttributes:@[@"name"]];
-    [bookMapping addAttributeMappingsFromArray:[_Author propertyNames]];
+    [bookMapping addAttributeMappingsFromArray:[Author propertyNames]];
     
     RKResponseDescriptor * responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:bookMapping pathPattern:@"/authors" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     

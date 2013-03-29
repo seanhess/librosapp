@@ -13,6 +13,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Covers.h"
 #import "Appearance.h"
+#import "BookService.h"
 
 #define COVER_HEIGHT 66
 #define COVER_PADDING_LEFT 7
@@ -80,20 +81,20 @@
         [cell setNeedsLayout];
     }];
     
-    [self.book addObserver:self forKeyPath:BookAttributes.downloaded options:NSKeyValueObservingOptionNew context:nil];
+    [self.book addObserver:self forKeyPath:BOOK_ATTRIBUTE_DOWNLOADED options:NSKeyValueObservingOptionNew context:nil];
     [self renderProgress];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:BookAttributes.downloaded]) {
+    if ([keyPath isEqualToString:BOOK_ATTRIBUTE_DOWNLOADED]) {
         [self renderProgress];
     }
 }
 
 - (void)renderProgress {
-    if (self.book.downloadedValue < 1.0 && self.book.downloadedValue > 0.0) {
+    if (self.book.downloaded < 1.0 && self.book.downloaded > 0.0) {
         self.downloadProgress.hidden = NO;
-        self.downloadProgress.progress = self.book.downloadedValue;
+        self.downloadProgress.progress = self.book.downloaded;
     }
     else {
         self.downloadProgress.hidden = YES;
@@ -122,7 +123,7 @@
 }
 
 - (void)addTypeIcons:(Book*)book {
-    if (book.audioFilesValue && book.textFilesValue) {
+    if (book.audioFiles && book.textFiles) {
         self.textIconView.hidden = NO;
         self.audioIconView.hidden = NO;
         
@@ -139,7 +140,7 @@
         self.iconsView.frame = frame;
     }
     
-    else if (book.audioFilesValue) {
+    else if (book.audioFiles) {
         self.audioIconView.frame = self.audioFrame;
         self.textIconView.hidden = YES;
         self.audioIconView.hidden = NO;
@@ -166,7 +167,7 @@
 }
 
 - (void)dealloc {
-    [self.book removeObserver:self forKeyPath:BookAttributes.downloaded];
+    [self.book removeObserver:self forKeyPath:BOOK_ATTRIBUTE_DOWNLOADED];
 }
 
 @end

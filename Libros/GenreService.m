@@ -29,7 +29,7 @@
 - (void)addMappings {
     RKEntityMapping *bookMapping = [ObjectStore.shared mappingForEntityForName:@"Genre"];
     [bookMapping setIdentificationAttributes:@[@"name"]];
-    [bookMapping addAttributeMappingsFromArray:[_Genre propertyNames]];
+    [bookMapping addAttributeMappingsFromArray:[Genre propertyNames]];
     
     RKResponseDescriptor * responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:bookMapping pathPattern:@"/genres" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     

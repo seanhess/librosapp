@@ -10,6 +10,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <QuartzCore/QuartzCore.h>
 #import "Covers.h"
+#import "BookService.h"
 
 @interface LibraryBookCoverCell ()
 @property (nonatomic, strong) UIImageView * imageView;
@@ -54,20 +55,20 @@
     _book = book;
     [self.imageView setImageWithURL:[NSURL URLWithString:self.book.imageUrl] placeholderImage:nil completed:nil];
     
-    [self.book addObserver:self forKeyPath:BookAttributes.downloaded options:NSKeyValueObservingOptionNew context:nil];
+    [self.book addObserver:self forKeyPath:BOOK_ATTRIBUTE_DOWNLOADED options:NSKeyValueObservingOptionNew context:nil];
     
     [self renderProgress];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:BookAttributes.downloaded]) {
+    if ([keyPath isEqualToString:BOOK_ATTRIBUTE_DOWNLOADED]) {
         [self renderProgress];
     }
 }
 
 - (void)renderProgress {
-    self.downloadProgress.hidden = (self.book.downloadedValue == 1.0);
-    self.downloadProgress.progress = self.book.downloadedValue;
+    self.downloadProgress.hidden = (self.book.downloaded == 1.0);
+    self.downloadProgress.progress = self.book.downloaded;
 }
 
 -(UIImage*)cachedImage {
@@ -79,7 +80,7 @@
 }
 
 - (void)dealloc {
-    [self.book removeObserver:self forKeyPath:BookAttributes.downloaded];
+    [self.book removeObserver:self forKeyPath:BOOK_ATTRIBUTE_DOWNLOADED];
 }
 
 @end

@@ -21,6 +21,9 @@ typedef enum {
     BookFormatAudio
 } BookFormat;
 
+#define BOOK_ATTRIBUTE_DOWNLOADED @"downloaded"
+#define BOOK_ATTRIBUTE_PURCHASED @"purchased"
+
 @interface BookService : NSObject
 
 +(BookService*)shared;
