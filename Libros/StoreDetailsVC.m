@@ -122,6 +122,8 @@
 - (void)renderButtonAndDownload {
     BOOL alreadyPurchased = [[UserService shared] hasPurchasedBook:self.book];
     
+    BookService * bs = [BookService shared];
+    
     // Defaults = what you see on first load
     self.buyButton.hidden = NO;
     self.buyAllButton.hidden = NO;
@@ -152,7 +154,7 @@
         }
     }
     
-    else if (alreadyPurchased && !self.isPurchasing && !self.book.isDownloading && !self.book.isDownloadComplete) {
+    else if (alreadyPurchased && !self.isPurchasing && ![bs isDownloading:self.book] && ![bs isDownloadComplete:self.book]) {
         self.buyAllButton.hidden = YES;
         [self.buyButton setTitle:NSLocalizedString(@"Download Free",nil) forState:UIControlStateNormal];
     }
@@ -170,7 +172,7 @@
             self.libraryButton.enabled = NO;
         }
         
-        else if (self.book.isDownloading) {
+        else if ([bs isDownloading:self.book]) {
             [self.libraryButton setTitle:NSLocalizedString(@"Downloading",nil) forState:UIControlStateNormal];
             self.libraryButton.enabled = NO;
             self.downloadProgressBackground.hidden = NO;
@@ -243,7 +245,7 @@
 - (IBAction)didTapBuy:(id)sender {
     BOOL alreadyPurchased = [[UserService shared] hasPurchasedBook:self.book];
              
-    if (alreadyPurchased && self.book.isDownloadComplete) {
+    if (alreadyPurchased && [BookService.shared isDownloadComplete:self.book]) {
         [self viewInLibrary];
     }
     

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ColoredButton.h"
-#import "Book.h"
+#import "BookService.h"
 
 @protocol StoreBookResultsFilterDelegate <NSObject>
 -(void)didSelectFilter:(BookFilter)filter;

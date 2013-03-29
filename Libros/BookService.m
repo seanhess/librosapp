@@ -121,4 +121,18 @@
     return books;
 }
 
+
+
+-(NSString*)productId:(Book*)book {
+    return [book.bookId stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
+}
+
+-(BOOL)isDownloading:(Book*)book {
+    return (0.0 < book.downloadedValue) && (book.downloadedValue < 1.0);
+}
+
+-(BOOL)isDownloadComplete:(Book*)book {
+    return (book.downloadedValue == 1.0);
+}
+
 @end

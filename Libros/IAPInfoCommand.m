@@ -8,6 +8,7 @@
 
 #import "IAPInfoCommand.h"
 #import "NSArray+Functional.h"
+#import "BookService.h"
 
 
 #define ALL_BOOKS_PRODUCT_ID @"libros_all"
@@ -21,7 +22,7 @@
 @implementation IAPInfoCommand
 
 - (void)loadInfoForBook:(Book*)book cb:(void(^)(IAPInfoCommand*))cb {
-    self.productId = book.productId;
+    self.productId = [BookService.shared productId:book];
     self.cb = cb;
     
     NSSet * ids = [NSSet setWithArray:@[self.productId, ALL_BOOKS_PRODUCT_ID]];

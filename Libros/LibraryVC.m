@@ -204,7 +204,7 @@
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    return (book.isDownloadComplete);
+    return ([BookService.shared isDownloadComplete:book]);
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -230,7 +230,7 @@
 {
     Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    if (book.isDownloading)
+    if ([BookService.shared isDownloading:book])
         return [self showDetails:book];
     
     ReaderVC * readervc = [ReaderVC new];
@@ -285,7 +285,7 @@
 - (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     Book * book = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    if (book.isDownloading)
+    if ([BookService.shared isDownloading:book])
         return [self showDetails:book];
     
     LibraryBookCoverCell * cell = (LibraryBookCoverCell*) [collectionView cellForItemAtIndexPath:indexPath];

@@ -6,8 +6,20 @@
 //  Copyright (c) 2013 Sean Hess. All rights reserved.
 //
 
+
 #import <Foundation/Foundation.h>
 #import "Book.h"
+
+typedef enum {
+    BookFilterEverything = 0,
+    BookFilterHasText,
+    BookFilterHasAudio
+} BookFilter;
+
+typedef enum {
+    BookFormatText = 1,
+    BookFormatAudio
+} BookFormat;
 
 @interface BookService : NSObject
 
@@ -25,5 +37,12 @@
 -(void)sendBookPurchased:(Book*)book;
 
 -(NSArray*)firstRunBooks;
+
+
+
+-(NSString*)productId:(Book*)book;      // In-App Purchase Product Id matching iTunes Connect
+
+-(BOOL)isDownloading:(Book*)book;
+-(BOOL)isDownloadComplete:(Book*)book;
 
 @end
