@@ -18,6 +18,7 @@
 #import "BookService.h"
 
 #import <Parse/Parse.h>
+#import <TestFlight.h>
 
 @implementation AppDelegate
 
@@ -25,6 +26,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [TestFlight takeOff:@"95444ebe-ed2c-4e99-8e79-92541c05f85c"];
+    
     NSDictionary * navigationTextAttributes = @{UITextAttributeTextColor: Appearance.lightGray};
     NSDictionary * tabBarTextAttributes = @{UITextAttributeTextColor: Appearance.darkTabBarColor};
     NSDictionary * tabBarSelectedAttributes = @{UITextAttributeTextColor: Appearance.lightTabBarColor};
