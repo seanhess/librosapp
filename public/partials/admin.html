@@ -21,17 +21,17 @@
 <h3>Books</h3>
 <table>
   <tr><th>title</th><th>pop</th><th>text</th><th>audio</th></tr>
-  <tr ng-repeat="book in books">
-    <td><span ng-show="book.featured">★ </span><a href="/admin/books/{{book.bookId}}">{{book.title}}</a></td>
+  <tr class="book" ng-repeat="book in books">
+    <td>
+      <span class="img"><img ng-src="{{book.imageUrl}}"></img></span>
+      <a href="/admin/books/{{book.bookId}}">{{book.title}}</a>
+      <span ng-show="book.featured">★ </span>
+    </td>
     <td>{{book.popularity}}</td>
     <td>{{book.textFiles}}</td>
     <td>{{book.audioFiles}}</td>
   </tr>
 </table>
-
-<!--<div ng-repeat="book in books">-->
-  <!--<a href="/admin/books/{{book.bookId}}">{{book.title}}</a>-->
-<!--</div>-->
 
 <p><button ng-click="createBook()">Add Book</button></p>
 </div>
