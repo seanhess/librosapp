@@ -9,6 +9,7 @@ var stylus = require('stylus')
 var nib = require('nib')
 var connect = require('connect')
 var path = require('path')
+var basicAuth = require('connect-basic-auth')
 
 import db = module('model/db')
 
@@ -54,15 +55,35 @@ app.configure("development", () => {
   }))
 })
 
-app.configure(() => {
-  console.log("CONFIGURE")
-})
 
 app.use(connect.static(__dirname + '/../public'))
 app.use(connect.cookieParser())
 app.use(connect.multipart())
 app.use(connect.bodyParser())
 app.use(connect.session({secret: 'funky monkey', key: 'blah', store:new connect.session.MemoryStore()}))
+
+app.configure("production", () => {
+  app.use(basicAuth(function(credentials, req, res, next) {
+      if (credentials.username == "admin" && credentials.password == "Librosespanol3")
+        next()
+      else
+        res.send(401)
+  }, 'Please enter your credentials'))
+  
+  function requireAuth(req, res, next) {
+      req.requireAuthorization(req, res, next)
+  }
+  
+  app.all('/admin*', requireAuth)
+  app.del('*', <any> requireAuth)
+  app.post('*', <any> requireAuth)
+  app.put('*', <any> requireAuth)
+})
+
+app.configure(() => {
+  console.log("CONFIGURE")
+})
+
 
 // TODO validation
 function send(res:exp.ServerResponse) {
@@ -89,6 +110,10 @@ function err(res:exp.ServerResponse) {
     res.send(500, err.message)
   }
 }
+
+
+
+
 
 /// GENRES ////////////////////////////
 
@@ -206,9 +231,12 @@ app.put('/files/:fileId', function(req, res) {
 // Send the Angular app for everything under /admin
 // Be careful not to accidentally send it for 404 javascript files, or data routes
 app.get(/\/admin[\w\/\-]*$/, function(req, res) {
-  res.sendfile(path.join(__dirname, '..', 'public', 'index.html'))
+  res.sendfile(path.join(__dirname, '..', 'public', 'app.html'))
 })
 
+app.get('/', function(req, res) {
+    res.send(404)
+})
 
 
 
