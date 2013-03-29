@@ -31,6 +31,7 @@
 @property (strong, nonatomic) UIButton *layoutButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *storeButton;
 @property (strong, nonatomic) LibraryBuyMoreVC * buyMore;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 @end
 
 // Image Size: 178 x 270
@@ -69,6 +70,7 @@
     [self.tableView reloadData];
     [self.collectionView reloadData];
     [self showBuyMore];
+    [self renderActivityIndicator];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -93,6 +95,16 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)renderActivityIndicator {
+    
+    if ([self numberOfBooksInSection:0] > 0)
+        [self.activityView stopAnimating];
+    else
+        [self.activityView startAnimating];
+    
+    // self.activityView.hidden = ([self numberOfBooksInSection:0] > 0);
 }
 
 - (void)showBuyMore {
@@ -145,6 +157,7 @@
     NSLog(@"LIBRARY change content");
     [self.tableView reloadData];
     [self.collectionView reloadData];
+    [self renderActivityIndicator];
 }
 
 - (IBAction)didTapLayoutButton:(id)sender {

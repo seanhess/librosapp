@@ -162,15 +162,22 @@
                                     <outlet property="delegate" destination="jj3-UZ-Rpz" id="pMD-Of-OKz"/>
                                 </connections>
                             </collectionView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="hAF-CU-b5v">
+                                <color key="color" red="0.10588236153125763" green="0.64705884456634521" blue="0.86666673421859741" alpha="1" colorSpace="deviceRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="hAF-CU-b5v" firstAttribute="bottom" secondItem="MoW-2n-X1v" secondAttribute="bottom" type="default" id="2zE-aN-YnW"/>
+                            <constraint firstItem="hAF-CU-b5v" firstAttribute="top" secondItem="MoW-2n-X1v" secondAttribute="top" type="default" id="AjR-OL-eYe"/>
                             <constraint firstItem="Jju-xH-eD3" firstAttribute="bottom" secondItem="MoW-2n-X1v" secondAttribute="bottom" type="default" id="DZK-Xh-8XA"/>
                             <constraint firstItem="Jju-xH-eD3" firstAttribute="leading" secondItem="MoW-2n-X1v" secondAttribute="leading" type="default" id="E8S-qh-62M"/>
                             <constraint firstItem="KKu-lI-U9s" firstAttribute="leading" secondItem="MoW-2n-X1v" secondAttribute="leading" type="default" id="GS3-T6-HkS"/>
                             <constraint firstItem="Jju-xH-eD3" firstAttribute="trailing" secondItem="MoW-2n-X1v" secondAttribute="trailing" type="default" id="Otg-Jg-hge"/>
                             <constraint firstItem="KKu-lI-U9s" firstAttribute="bottom" secondItem="MoW-2n-X1v" secondAttribute="bottom" type="default" id="PAg-Gs-KmZ"/>
+                            <constraint firstItem="hAF-CU-b5v" firstAttribute="leading" secondItem="MoW-2n-X1v" secondAttribute="leading" type="user" id="TiJ-Fk-7rd"/>
                             <constraint firstItem="KKu-lI-U9s" firstAttribute="trailing" secondItem="MoW-2n-X1v" secondAttribute="trailing" type="default" id="Vhs-I2-A3S"/>
+                            <constraint firstItem="hAF-CU-b5v" firstAttribute="trailing" secondItem="MoW-2n-X1v" secondAttribute="trailing" type="default" id="Xoy-Q4-FJE"/>
                             <constraint firstItem="KKu-lI-U9s" firstAttribute="top" secondItem="MoW-2n-X1v" secondAttribute="top" type="default" id="o1a-aX-0gf"/>
                             <constraint firstItem="Jju-xH-eD3" firstAttribute="top" secondItem="MoW-2n-X1v" secondAttribute="top" type="default" id="oHt-Sj-83v"/>
                         </constraints>
@@ -183,6 +190,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityView" destination="hAF-CU-b5v" id="dRf-jZ-Id9"/>
                         <outlet property="collectionView" destination="KKu-lI-U9s" id="gmi-ok-KGC"/>
                         <outlet property="storeButton" destination="5Nz-rx-8RF" id="wnq-mK-2EW"/>
                         <outlet property="tableView" destination="Jju-xH-eD3" id="ZUA-5V-kaQ"/>
@@ -336,6 +344,8 @@
         <class className="LibraryVC" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LibraryVC.h"/>
             <relationships>
+                <relationship kind="action" name="didTapLayoutButton:"/>
+                <relationship kind="outlet" name="activityView" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
                 <relationship kind="outlet" name="storeButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
