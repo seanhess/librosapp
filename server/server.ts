@@ -46,7 +46,6 @@ app.configure("test", () => {
 
 app.configure("development", () => {
   console.log("DEVELOPMENT")
-  connectdb('libros')
   app.use(stylus.middleware({
     src: '../public',
     compile: (str, path) => {
@@ -63,6 +62,7 @@ app.use(connect.bodyParser())
 app.use(connect.session({secret: 'funky monkey', key: 'blah', store:new connect.session.MemoryStore()}))
 
 app.configure("production", () => {
+  console.log("PRODUCTION")
   app.use(basicAuth(function(credentials, req, res, next) {
       if (credentials.username == "admin" && credentials.password == "Librosespanol3")
         next()
@@ -82,6 +82,7 @@ app.configure("production", () => {
 
 app.configure(() => {
   console.log("CONFIGURE")
+  connectdb('libros')
 })
 
 
