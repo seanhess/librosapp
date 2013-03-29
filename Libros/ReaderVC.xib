@@ -43,51 +43,68 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="IBUITextView" id="978620663">
+					<object class="IBUIView" id="566310428">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 163}, {280, 36}}</string>
+						<int key="NSvFlags">274</int>
+						<array class="NSMutableArray" key="NSSubviews">
+							<object class="IBUITextView" id="978620663">
+								<reference key="NSNextResponder" ref="566310428"/>
+								<int key="NSvFlags">290</int>
+								<string key="NSFrame">{{0, 115}, {320, 36}}</string>
+								<reference key="NSSuperview" ref="566310428"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="545535346"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<object class="NSColor" key="IBUIBackgroundColor" id="1049489573">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MCAwAA</bytes>
+								</object>
+								<bool key="IBUIClipsSubviews">YES</bool>
+								<bool key="IBUIMultipleTouchEnabled">YES</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<string key="IBUIText">This chapter is audio only</string>
+								<int key="IBUITextAlignment">1</int>
+								<object class="IBUITextInputTraits" key="IBUITextInputTraits">
+									<int key="IBUIAutocapitalizationType">2</int>
+									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								</object>
+								<object class="IBUIFontDescription" key="IBUIFontDescription" id="1064432244">
+									<int key="type">2</int>
+									<double key="pointSize">14</double>
+								</object>
+								<object class="NSFont" key="IBUIFont" id="877159140">
+									<string key="NSName">Helvetica-Bold</string>
+									<double key="NSSize">14</double>
+									<int key="NSfFlags">16</int>
+								</object>
+							</object>
+							<object class="IBUIImageView" id="545535346">
+								<reference key="NSNextResponder" ref="566310428"/>
+								<int key="NSvFlags">290</int>
+								<string key="NSFrame">{{0, 157}, {320, 21}}</string>
+								<reference key="NSSuperview" ref="566310428"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="175763529"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<int key="IBUIContentMode">4</int>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<object class="NSCustomResource" key="IBUIImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">120-headphones.png</string>
+								</object>
+							</object>
+						</array>
+						<string key="NSFrameSize">{320, 548}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="545535346"/>
+						<reference key="NSNextKeyView" ref="978620663"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<object class="NSColor" key="IBUIBackgroundColor" id="1049489573">
-							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MCAwAA</bytes>
+						<object class="NSColor" key="IBUIBackgroundColor">
+							<int key="NSColorSpace">2</int>
+							<bytes key="NSRGB">MC45MDk4MDM5ODY1IDAuOTA5ODAzOTg2NSAwLjkwOTgwMzk4NjUAA</bytes>
 						</object>
-						<bool key="IBUIClipsSubviews">YES</bool>
-						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">This chapter is audio only</string>
-						<int key="IBUITextAlignment">1</int>
-						<object class="IBUITextInputTraits" key="IBUITextInputTraits">
-							<int key="IBUIAutocapitalizationType">2</int>
-							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						</object>
-						<object class="IBUIFontDescription" key="IBUIFontDescription" id="1064432244">
-							<int key="type">2</int>
-							<double key="pointSize">14</double>
-						</object>
-						<object class="NSFont" key="IBUIFont" id="877159140">
-							<string key="NSName">Helvetica-Bold</string>
-							<double key="NSSize">14</double>
-							<int key="NSfFlags">16</int>
-						</object>
-					</object>
-					<object class="IBUIImageView" id="545535346">
-						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{149, 207}, {22, 21}}</string>
-						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="1040387063"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="IBUIUserInteractionEnabled">NO</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<object class="NSCustomResource" key="IBUIImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">120-headphones.png</string>
-						</object>
 					</object>
 					<object class="IBUICollectionView" id="175763529">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -340,7 +357,7 @@
 								<string key="NSFrame">{{287, 51}, {28, 21}}</string>
 								<reference key="NSSuperview" ref="7138451"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="978620663"/>
+								<reference key="NSNextKeyView" ref="1040387063"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -596,12 +613,9 @@
 				<string key="NSFrame">{{0, 20}, {320, 548}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="175763529"/>
+				<reference key="NSNextKeyView" ref="566310428"/>
 				<string key="NSHuggingPriority">{250, 250}</string>
-				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MC44ODc1Njc5MzQ4IDAuODg3NTY3OTM0OCAwLjg4NzU2NzkzNDgAA</bytes>
-				</object>
+				<reference key="IBUIBackgroundColor" ref="679378305"/>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
 				<object class="IBUIScreenMetrics" key="IBUISimulatedDestinationMetrics">
 					<string key="IBUISimulatedSizeMetricsClass">IBUIScreenMetrics</string>
@@ -775,6 +789,14 @@
 						<reference key="destination" ref="978620663"/>
 					</object>
 					<int key="connectionID">377</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">audioOnlyView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="566310428"/>
+					</object>
+					<int key="connectionID">379</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -952,8 +974,7 @@
 							<reference ref="175763529"/>
 							<reference ref="1040387063"/>
 							<reference ref="7138451"/>
-							<reference ref="978620663"/>
-							<reference ref="545535346"/>
+							<reference ref="566310428"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -1124,14 +1145,23 @@
 						<reference key="parent" ref="1040387063"/>
 					</object>
 					<object class="IBObjectRecord">
+						<int key="objectID">378</int>
+						<reference key="object" ref="566310428"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="978620663"/>
+							<reference ref="545535346"/>
+						</array>
+						<reference key="parent" ref="191373211"/>
+					</object>
+					<object class="IBObjectRecord">
 						<int key="objectID">375</int>
 						<reference key="object" ref="978620663"/>
-						<reference key="parent" ref="191373211"/>
+						<reference key="parent" ref="566310428"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">376</int>
 						<reference key="object" ref="545535346"/>
-						<reference key="parent" ref="191373211"/>
+						<reference key="parent" ref="566310428"/>
 					</object>
 				</array>
 			</object>
@@ -1169,12 +1199,13 @@
 				<string key="370.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="375.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="376.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="378.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">377</int>
+			<int key="maxID">379</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1257,6 +1288,7 @@
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="audioOnlyText">UITextView</string>
+						<string key="audioOnlyView">UIView</string>
 						<string key="audioProgress">UISlider</string>
 						<string key="audioRemainingLabel">UILabel</string>
 						<string key="audioTimeLabel">UILabel</string>
@@ -1278,6 +1310,10 @@
 						<object class="IBToOneOutletInfo" key="audioOnlyText">
 							<string key="name">audioOnlyText</string>
 							<string key="candidateClassName">UITextView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="audioOnlyView">
+							<string key="name">audioOnlyView</string>
+							<string key="candidateClassName">UIView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="audioProgress">
 							<string key="name">audioProgress</string>

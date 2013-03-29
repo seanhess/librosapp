@@ -93,6 +93,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 @property (weak, nonatomic) IBOutlet UIButton *volumeButton;
 @property (strong, nonatomic) WEPopoverController * volumePopover;
+@property (weak, nonatomic) IBOutlet UIView *audioOnlyView;
 @property (weak, nonatomic) IBOutlet UITextView *audioOnlyText;
 
 @end
@@ -242,6 +243,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.fontButton.hidden = (chapter.textFile == nil);
     self.pageSlider.enabled = (chapter.textFile);
     self.collectionView.hidden = (chapter.textFile == nil);
+    self.audioOnlyView.hidden = !self.collectionView.hidden;
 }
 
 - (IBAction)didTapBack:(id)sender {
