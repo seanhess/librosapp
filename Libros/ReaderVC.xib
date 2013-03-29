@@ -475,7 +475,7 @@
 							<object class="IBUIButton" id="194878095">
 								<reference key="NSNextResponder" ref="1040387063"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{22, 12}, {18, 18}}</string>
+								<string key="NSFrame">{{20, 2}, {40, 40}}</string>
 								<reference key="NSSuperview" ref="1040387063"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="842410228"/>
@@ -500,7 +500,7 @@
 							<object class="IBUIButton" id="842410228">
 								<reference key="NSNextResponder" ref="1040387063"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{94, 12}, {18, 18}}</string>
+								<string key="NSFrame">{{79, 2}, {40, 40}}</string>
 								<reference key="NSSuperview" ref="1040387063"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="328965595"/>
@@ -525,7 +525,7 @@
 							<object class="IBUIButton" id="328965595">
 								<reference key="NSNextResponder" ref="1040387063"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{167, 12}, {18, 18}}</string>
+								<string key="NSFrame">{{132, 2}, {40, 40}}</string>
 								<reference key="NSSuperview" ref="1040387063"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="350125985"/>
@@ -549,8 +549,8 @@
 							</object>
 							<object class="IBUIButton" id="350125985">
 								<reference key="NSNextResponder" ref="1040387063"/>
-								<int key="NSvFlags">289</int>
-								<string key="NSFrame">{{238, 12}, {18, 18}}</string>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{186, 2}, {40, 40}}</string>
 								<reference key="NSSuperview" ref="1040387063"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="169509002"/>
@@ -575,7 +575,7 @@
 							<object class="IBUIButton" id="169509002">
 								<reference key="NSNextResponder" ref="1040387063"/>
 								<int key="NSvFlags">289</int>
-								<string key="NSFrame">{{283, 12}, {18, 18}}</string>
+								<string key="NSFrame">{{273, 2}, {40, 40}}</string>
 								<reference key="NSSuperview" ref="1040387063"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="293005595"/>
@@ -1013,14 +1013,14 @@
 						<reference key="object" ref="1040387063"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="288704846"/>
+							<reference ref="293005595"/>
+							<reference ref="915679442"/>
+							<reference ref="917037389"/>
 							<reference ref="194878095"/>
 							<reference ref="842410228"/>
 							<reference ref="328965595"/>
-							<reference ref="350125985"/>
-							<reference ref="293005595"/>
 							<reference ref="169509002"/>
-							<reference ref="915679442"/>
-							<reference ref="917037389"/>
+							<reference ref="350125985"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">Bottom Controls View</string>
@@ -1212,80 +1212,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">ReaderVC</string>
 					<string key="superclassName">UIViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="didClickNextChapter:">id</string>
-						<string key="didClickPlay:">id</string>
-						<string key="didClickPrevChapter:">id</string>
-						<string key="didClickRate:">id</string>
-						<string key="didClickVolume:">id</string>
-						<string key="didSlideAudio:">id</string>
-						<string key="didSlidePage:">id</string>
-						<string key="didSwipeDown:">id</string>
-						<string key="didSwipeUp:">id</string>
-						<string key="didTapBack:">id</string>
-						<string key="didTapFont:">id</string>
-						<string key="didTapLibrary:">id</string>
-						<string key="didTapText:">UITapGestureRecognizer</string>
-						<string key="didTapToC:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="didClickNextChapter:">
-							<string key="name">didClickNextChapter:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didClickPlay:">
-							<string key="name">didClickPlay:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didClickPrevChapter:">
-							<string key="name">didClickPrevChapter:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didClickRate:">
-							<string key="name">didClickRate:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didClickVolume:">
-							<string key="name">didClickVolume:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didSlideAudio:">
-							<string key="name">didSlideAudio:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didSlidePage:">
-							<string key="name">didSlidePage:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didSwipeDown:">
-							<string key="name">didSwipeDown:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didSwipeUp:">
-							<string key="name">didSwipeUp:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didTapBack:">
-							<string key="name">didTapBack:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didTapFont:">
-							<string key="name">didTapFont:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didTapLibrary:">
-							<string key="name">didTapLibrary:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="didTapText:">
-							<string key="name">didTapText:</string>
-							<string key="candidateClassName">UITapGestureRecognizer</string>
-						</object>
-						<object class="IBActionInfo" key="didTapToC:">
-							<string key="name">didTapToC:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="audioOnlyText">UITextView</string>
 						<string key="audioOnlyView">UIView</string>

@@ -241,7 +241,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 - (void)updateControlsFromChapter {
     Chapter * chapter = self.chapters[self.book.currentChapter];
     self.fontButton.hidden = (chapter.textFile == nil);
-    self.pageSlider.enabled = (chapter.textFile);
+    self.pageSlider.enabled = (chapter.textFile != nil); // CAN'T REPRODUCE - the thing is not enabling correctly
     self.collectionView.hidden = (chapter.textFile == nil);
     self.audioOnlyView.hidden = !self.collectionView.hidden;
 }
