@@ -50,10 +50,10 @@
     [self.objectStore createPersistentStoreCoordinator];
     
     NSString *storePath = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"Libros.sqlite"];
-    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
-                             [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
-    
+    NSDictionary *options = @{
+        NSMigratePersistentStoresAutomaticallyOption : @YES,
+        NSInferMappingModelAutomaticallyOption : @YES
+    };
     NSError *error;
     if (![self.objectStore addSQLitePersistentStoreAtPath:storePath fromSeedDatabaseAtPath:nil withConfiguration:nil options:options error:&error]) {
         NSLog(@"Problem with Persistent Store Coordinator %@", error);
