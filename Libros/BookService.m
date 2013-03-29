@@ -92,7 +92,11 @@
 }
 
 -(NSPredicate*)searchForText:(NSString*)text {
-    return [NSPredicate predicateWithFormat:@"title BEGINSWITH[c] %@", [text lowercaseString]];
+    // I initially only used BEGINSWITH for speed, but it might not be slow and people REALLY miss
+    // being able to fuzzy search titles
+    
+    // return [NSPredicate predicateWithFormat:@"title BEGINSWITH[c] %@", [text lowercaseString]];
+    return [NSPredicate predicateWithFormat:@"title CONTAINS[cd] %@", [text lowercaseString]];
 }
 
 -(NSPredicate*)filterByType:(BookFilter)filter {
