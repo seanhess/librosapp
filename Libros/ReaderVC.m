@@ -52,8 +52,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 #import "Chapter.h"
 #import "ReaderVolumeVC2.h"
 
-#define DRAG_GRAVITY 15
 #define STATUS_BAR_OFFSET 20
+#define TAP_SEEK_TIME 15.0
 
 @interface ReaderVC () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, ReaderFramesetterDelegate, ReaderTableOfContentsDelegate, ReaderFontDelegate, AVAudioPlayerDelegate, WEPopoverControllerDelegate, ReaderVolumeDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -692,12 +692,21 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     [MetricsService readerChangedRate:self.currentRate];
 }
 
-- (IBAction)didClickPrevChapter:(id)sender {
-    [self loadChapter:self.book.currentChapter-1];
+- (IBAction)didClickRewind:(id)sender {
+    if (self.player.currentTime < TAP_SEEK_TIME)
+        [self loadChapter:self.book.currentChapter-1];
+    
+    self.player.currentTime -= TAP_SEEK_TIME;
+    [self updateAudioProgress];
 }
 
-- (IBAction)didClickNextChapter:(id)sender {
-    [self loadChapter:self.book.currentChapter+1];
+- (IBAction)didClickFastForward:(id)sender {
+    if (self.player.currentTime > self.player.duration - TAP_SEEK_TIME)
+        [self loadChapter:self.book.currentChapter+1];
+    else {
+        self.player.currentTime += TAP_SEEK_TIME;
+        [self updateAudioProgress];
+    }
 }
 
 - (IBAction)didClickVolume:(id)sender {

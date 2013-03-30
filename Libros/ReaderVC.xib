@@ -863,12 +863,12 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">didClickPrevChapter:</string>
+						<string key="label">didClickRewind:</string>
 						<reference key="source" ref="194878095"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">330</int>
+					<int key="connectionID">380</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -881,12 +881,12 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">didClickNextChapter:</string>
+						<string key="label">didClickFastForward:</string>
 						<reference key="source" ref="328965595"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">332</int>
+					<int key="connectionID">381</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -1205,13 +1205,87 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">379</int>
+			<int key="maxID">381</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">ReaderVC</string>
 					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="didClickFastForward:">id</string>
+						<string key="didClickPlay:">id</string>
+						<string key="didClickRate:">id</string>
+						<string key="didClickRewind:">id</string>
+						<string key="didClickVolume:">id</string>
+						<string key="didSlideAudio:">id</string>
+						<string key="didSlidePage:">id</string>
+						<string key="didSwipeDown:">id</string>
+						<string key="didSwipeUp:">id</string>
+						<string key="didTapBack:">id</string>
+						<string key="didTapFont:">id</string>
+						<string key="didTapLibrary:">id</string>
+						<string key="didTapText:">UITapGestureRecognizer</string>
+						<string key="didTapToC:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="didClickFastForward:">
+							<string key="name">didClickFastForward:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didClickPlay:">
+							<string key="name">didClickPlay:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didClickRate:">
+							<string key="name">didClickRate:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didClickRewind:">
+							<string key="name">didClickRewind:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didClickVolume:">
+							<string key="name">didClickVolume:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didSlideAudio:">
+							<string key="name">didSlideAudio:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didSlidePage:">
+							<string key="name">didSlidePage:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didSwipeDown:">
+							<string key="name">didSwipeDown:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didSwipeUp:">
+							<string key="name">didSwipeUp:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didTapBack:">
+							<string key="name">didTapBack:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didTapFont:">
+							<string key="name">didTapFont:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didTapLibrary:">
+							<string key="name">didTapLibrary:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didTapText:">
+							<string key="name">didTapText:</string>
+							<string key="candidateClassName">UITapGestureRecognizer</string>
+						</object>
+						<object class="IBActionInfo" key="didTapToC:">
+							<string key="name">didTapToC:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="audioOnlyText">UITextView</string>
 						<string key="audioOnlyView">UIView</string>

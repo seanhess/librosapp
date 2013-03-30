@@ -32,7 +32,7 @@
         self.frame = CGRectMake(0, 0, 100, 36); // it ignores the width
         self.segments = [[UISegmentedControl alloc] initWithItems:items];
         self.segments.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        self.segments.frame = CGRectMake(8, 6, self.frame.size.width-2*8, 20);
+        self.segments.frame = CGRectMake(4, 4, self.frame.size.width-2*4, 26);
         self.segments.segmentedControlStyle = UISegmentedControlStyleBar;
         self.segments.tintColor = Appearance.darkControlGrayColor;
         [self addSubview:self.segments];
