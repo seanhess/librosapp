@@ -349,6 +349,9 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     }
     
     if (newLocation) {
+        // reset the position to its new location after reloading the table (happens in next/prev)
+        [self.collectionView setContentOffset:CGPointMake([self xOffsetForChapter:self.book.currentChapter page:self.book.currentPage], 0) animated:NO];
+        // now animate to the new one
         [self moveToChapter:newLocation.section page:newLocation.item animated:YES];
     }
 }
@@ -369,10 +372,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     // This doesn't always left-align the cells, calculate your own, below
     // [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:chapter] atScrollPosition:UICollectionViewScrollPositionLeft animated:animated];
     
-    CGFloat cellWidth = self.collectionView.frame.size.width;
-    NSInteger pageOffset = [self cellOffsetForChapter:chapter page:page];
-    CGFloat totalOffsetX = cellWidth * pageOffset;
-    [self.collectionView setContentOffset:CGPointMake(totalOffsetX, 0) animated:animated];
+    [self.collectionView setContentOffset:CGPointMake([self xOffsetForChapter:chapter page:page], 0) animated:animated];
     
     // Update the variables as well
     self.book.currentChapter = chapter;
@@ -391,6 +391,13 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     
     pages += page;
     return pages;
+}
+
+- (CGFloat)xOffsetForChapter:(NSInteger)chapter page:(NSInteger)page {
+    CGFloat cellWidth = self.collectionView.frame.size.width;
+    NSInteger pageOffset = [self cellOffsetForChapter:chapter page:page];
+    CGFloat totalOffsetX = cellWidth * pageOffset;
+    return totalOffsetX;
 }
 
 - (BOOL)scrollViewIsAtRest {
