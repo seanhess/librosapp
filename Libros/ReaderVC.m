@@ -693,20 +693,11 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (IBAction)didClickRewind:(id)sender {
-    if (self.player.currentTime < TAP_SEEK_TIME)
-        [self loadChapter:self.book.currentChapter-1];
-    
-    self.player.currentTime -= TAP_SEEK_TIME;
-    [self updateAudioProgress];
+    [self rewind];
 }
 
 - (IBAction)didClickFastForward:(id)sender {
-    if (self.player.currentTime > self.player.duration - TAP_SEEK_TIME)
-        [self loadChapter:self.book.currentChapter+1];
-    else {
-        self.player.currentTime += TAP_SEEK_TIME;
-        [self updateAudioProgress];
-    }
+    [self fastForward];
 }
 
 - (IBAction)didClickVolume:(id)sender {
@@ -717,6 +708,23 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.volumePopover = [[WEPopoverController alloc] initWithContentViewController:volume];
     self.volumePopover.popoverContentSize = volume.view.frame.size;
     [self.volumePopover presentPopoverFromRect:buttonFrame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+}
+
+- (void)fastForward {
+    if (self.player.currentTime > self.player.duration - TAP_SEEK_TIME)
+        [self loadChapter:self.book.currentChapter+1];
+    else {
+        self.player.currentTime += TAP_SEEK_TIME;
+        [self updateAudioProgress];
+    }
+}
+
+- (void)rewind {
+    if (self.player.currentTime < TAP_SEEK_TIME)
+        [self loadChapter:self.book.currentChapter-1];
+    
+    self.player.currentTime -= TAP_SEEK_TIME;
+    [self updateAudioProgress];
 }
 
 - (void)onPlaybackTimer {
