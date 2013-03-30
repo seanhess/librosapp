@@ -96,6 +96,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 @property (weak, nonatomic) IBOutlet UIView *audioOnlyView;
 @property (weak, nonatomic) IBOutlet UITextView *audioOnlyText;
 
+@property (strong, nonatomic) NSTimer * hideControlsTimer;
+
 @end
 
 @implementation ReaderVC
@@ -257,6 +259,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     toc.currentChapter = self.book.currentChapter;
     toc.delegate = self;
     [self.navigationController presentViewController:toc animated:YES completion:nil];
+    [self cancelHideControls];
 }
 
 -(void)didCloseToc {
@@ -299,6 +302,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.popover.delegate = self;
     [MetricsService readerTappedFont];
     self.fontButton.selected = YES;
+    [self cancelHideControls];
 }
 
 - (void)popoverControllerDidDismissPopover:(WEPopoverController *)popoverController {
@@ -469,6 +473,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     NSInteger totalPages = [self.framesetter pagesForChapter:self.book.currentChapter];
     NSInteger page = self.pageSlider.value * (totalPages-1);
     [self moveToChapter:self.book.currentChapter page:page animated:NO];
+    [self cancelHideControls];
 }
 
 - (NSInteger)cellsDisplayedInChapter:(NSInteger)chapter {
@@ -520,8 +525,13 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     return (self.bottomControlsView.frame.origin.y < self.view.frame.size.height);
 }
 
+- (void)cancelHideControls {
+    [self.hideControlsTimer invalidate];
+    self.hideControlsTimer = nil;
+}
+
 - (void)hideControlsInABit {
-    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(hideControls) userInfo:nil repeats:NO];
+    self.hideControlsTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(hideControls) userInfo:nil repeats:NO];
 }
 
 - (void)hideControls {
