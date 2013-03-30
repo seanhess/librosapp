@@ -149,9 +149,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     // OK TO DRAW - has correct size (IF you set navigation bar hidden to the same thing here as in viewDidLoad
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     
-//    self.book.currentPage = 0;
-//    self.book.currentChapter = 0;
-    
     [self newFramesetterWithSize:self.collectionView.bounds.size];
     
     [self ensurePagesForChapter:self.book.currentChapter];
@@ -356,12 +353,15 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     }
 }
 
+// These gestures were really weird
 - (IBAction)didSwipeUp:(id)sender {
+    return;
     NSIndexPath * newLocation = [self next:self.book.currentChapter page:self.book.currentPage];
     if (newLocation) [self moveToChapter:newLocation.section page:newLocation.item animated:YES];
 }
 
 - (IBAction)didSwipeDown:(id)sender {
+    return;
     NSIndexPath * newLocation = [self prev:self.book.currentChapter page:self.book.currentPage];
     if (newLocation) [self moveToChapter:newLocation.section page:newLocation.item animated:YES];
 }
@@ -389,7 +389,14 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
         pages += [self cellsDisplayedInChapter:c];
     }
     
-    pages += page;
+    // make sure you don't go too far!
+    // if you switch orientations, and come back in to the book, it'll try to go to a page
+    // that is past the end of the chapter
+    NSInteger currentChapterPages = [self cellsDisplayedInChapter:chapter];
+    if (page < currentChapterPages)
+        pages += page;
+    else
+        pages += currentChapterPages-1;
     return pages;
 }
 
