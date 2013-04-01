@@ -143,6 +143,18 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     
     // TOO EARLY TO DRAW! View Size is wrong
     // you can call reloadData early and it doesn't fire twice
+    NSError * error = nil;
+    [[AVAudioSession sharedInstance] setDelegate:self];
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&error];
+    if (error) NSLog(@"AV ERROR setCategory %@", error);
+    [[AVAudioSession sharedInstance] setActive:YES error:&error];
+    if (error) NSLog(@"AV ERROR setActive %@", error);
+    
+    //Direct audio to speakers when there is no headphone
+//    UInt32 sessionCategory = kAudioSessionCategory_MediaPlayback;
+//    AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(sessionCategory), &sessionCategory);
+//    UInt32 audioRouteOverride = kAudioSessionOverrideAudioRoute_Speaker;
+//    AudioSessionSetProperty (kAudioSessionProperty_OverrideAudioRoute,sizeof (audioRouteOverride),&audioRouteOverride);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -166,10 +178,24 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 - (void)viewDidAppear:(BOOL)animated {
 //    NSLog(@"VIEW DID APPEAR %@", NSStringFromCGRect(self.view.bounds));
+    [super viewDidAppear: animated];
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    [self becomeFirstResponder];
+}
+
+- (BOOL) canBecomeFirstResponder {
+    return YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [self.playbackTimer invalidate];
+    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
+    [self resignFirstResponder];
+    [super viewWillDisappear: animated];    NSLog(@"WILL DISAPPEAR");
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    NSLog(@"DID DISAPPEAR");
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -683,21 +709,32 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 }
 
 - (IBAction)didClickPlay:(id)sender {
+    [self togglePlayPauseAudio];
+}
+
+- (void)playAudio {
+    if (!self.player) {
+        [MetricsService readerPlayedAudio:self.book];
+        [self playerAtChapter:self.book.currentChapter];
+    }
     
+    [self.player play];
+    [self updatePlayButton];
+}
+
+- (void)pauseAudio {
+    [self.player pause];
+    [self updatePlayButton];
+}
+
+- (void)togglePlayPauseAudio {
     if (self.player.isPlaying){
-        [self.player pause];
+        [self pauseAudio];
     }
     
     else {
-        if (!self.player) {
-            [MetricsService readerPlayedAudio:self.book];
-            [self playerAtChapter:self.book.currentChapter];
-        }
-        
-        [self.player play];
+        [self playAudio];
     }
-    
-    [self updatePlayButton];
 }
 
 - (IBAction)didClickRate:(id)sender {
@@ -736,7 +773,8 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 - (void)fastForward {
     if (self.player.currentTime > self.player.duration - TAP_SEEK_TIME)
-        [self loadChapter:self.book.currentChapter+1];
+        [self nextTrack];
+    
     else {
         self.player.currentTime += TAP_SEEK_TIME;
         [self updateAudioProgress];
@@ -745,10 +783,18 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 - (void)rewind {
     if (self.player.currentTime < TAP_SEEK_TIME)
-        [self loadChapter:self.book.currentChapter-1];
+        [self prevTrack];
     
     self.player.currentTime -= TAP_SEEK_TIME;
     [self updateAudioProgress];
+}
+
+- (void)nextTrack {
+    [self loadChapter:self.book.currentChapter+1];
+}
+
+- (void)prevTrack {
+    [self loadChapter:self.book.currentChapter-1];
 }
 
 - (void)onPlaybackTimer {
@@ -801,6 +847,23 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 -(void)didSlideVolume:(CGFloat)value {
     self.currentVolume = value;
     self.player.volume = value;
+}
+
+- (void)remoteControlReceivedWithEvent:(UIEvent *)event {
+    //if it is a remote control event handle it correctly
+    NSLog(@"remoteControlReceivedWithEvent");
+    if (event.type == UIEventTypeRemoteControl) {
+        if (event.subtype == UIEventSubtypeRemoteControlPlay)
+            [self playAudio];
+        else if (event.subtype == UIEventSubtypeRemoteControlPause)
+            [self pauseAudio];
+        else if (event.subtype == UIEventSubtypeRemoteControlTogglePlayPause)
+            [self togglePlayPauseAudio];
+        else if (event.subtype == UIEventSubtypeRemoteControlNextTrack)
+            [self nextTrack];
+        else if (event.subtype == UIEventSubtypeRemoteControlPreviousTrack)
+            [self prevTrack];
+    }
 }
 
 @end
