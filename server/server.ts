@@ -236,7 +236,7 @@ app.get(/\/admin[\w\/\-]*$/, function(req, res) {
 })
 
 app.get('/', function(req, res) {
-    res.send(404)
+    res.send("Libros v1")
 })
 
 
