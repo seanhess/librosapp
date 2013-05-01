@@ -851,7 +851,6 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 
 - (void)remoteControlReceivedWithEvent:(UIEvent *)event {
     //if it is a remote control event handle it correctly
-    NSLog(@"remoteControlReceivedWithEvent");
     if (event.type == UIEventTypeRemoteControl) {
         if (event.subtype == UIEventSubtypeRemoteControlPlay)
             [self playAudio];

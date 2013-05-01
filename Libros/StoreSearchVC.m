@@ -20,7 +20,7 @@
 
 #define DEFAULT_TABLE_CELL_HEIGHT 44
 
-@interface StoreSearchVC ()
+@interface StoreSearchVC () <UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar * searchBar;
 
 @property (strong, nonatomic) NSFetchedResultsController * authorResults;
@@ -163,6 +163,12 @@
 }
 
 
+#pragma mark - UIScrollViewDelegate
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self.searchBar resignFirstResponder];
+}
+
 #pragma UISearchBarDelegate
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
@@ -173,8 +179,18 @@
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    // [searchBar resignFirstResponder];
+    [searchBar resignFirstResponder];
     [self performSearch:searchBar.text];
+    
+    for (UIView *possibleButton in searchBar.subviews)
+    {
+        if ([possibleButton isKindOfClass:[UIButton class]])
+        {
+            UIButton *cancelButton = (UIButton*)possibleButton;
+            cancelButton.enabled = YES;
+            break;
+        }
+    }
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar {

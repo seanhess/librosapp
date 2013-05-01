@@ -6,13 +6,13 @@
   Copyright (c) 2013 Sean Hess. All rights reserved.
 */
 
-"Library" = "Mis Libros";
-"Store" = "Librería";
+"Library" = "Biblioteca";
+"Store" = "Tienda";
 "Archive" = "Archivar";
-"Audio Only" = "Este Capitulo solo tiene audio";
-"Filter All" = "Todos";
-"Filter Text" = "Texto";
-"Filter Audio" = "Audio";
+"Audio Only" = "Audio sólo";
+"Filter All" = "Todo";
+"Filter Text" = "El Texto";
+"Filter Audio" = "El Audio";
 "Popular" = "Popular";
 "Genres" = "Géneros";
 "Authors" = "Autores";
@@ -20,13 +20,13 @@
 "Books" = "Libros";
 "Loading" = "Cargando...";
 "Download Free" = "Descargar Gratis";
-"Buy for" = "Comprar para";
-"Buy All Books for" = "Comprar Todos Libros para";
+"Buy for" = "Comprar a";
+"Buy All Books for" = "Comprar todos los libros por";
 "Purchasing" = "Comprando";
 "Downloading" = "Descargando";
-"View in Library" = "Ver en Mis Libros";
-"Format Both" = "Texto y Audio";
-"Format Text" = "Texto";
+"View in Library" = "Ver en la Biblioteca";
+"Format Both" = "El Texto y Audio";
+"Format Text" = "El Texto";
 "Format Audio" = "Audiolibro";
 "Table of Contents" = "Tabla de Contenidos";
 "Close" = "Cerrar";
