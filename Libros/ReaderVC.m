@@ -191,11 +191,11 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     [self.playbackTimer invalidate];
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
     [self resignFirstResponder];
-    [super viewWillDisappear: animated];    NSLog(@"WILL DISAPPEAR");
+    [super viewWillDisappear: animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    NSLog(@"DID DISAPPEAR");
+    
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {

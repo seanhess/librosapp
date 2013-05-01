@@ -2,6 +2,8 @@
 // Prefix header for all source files of the 'Libros' target in the 'Libros' project
 //
 
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 #import <Availability.h>
 
 #ifndef __IPHONE_3_0
