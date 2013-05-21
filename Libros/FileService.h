@@ -28,7 +28,7 @@
 -(NSFetchRequest*)byBookIdRequest:(NSString*)bookId;
 
 -(NSURL*)url:(File*)file;
--(NSString*)localPath:(File*)file;
+-(NSURL*)localPath:(File*)file;
 -(LBParsedString*)readAsText:(File*)file;
 -(NSData*)readAsData:(File*)file;
 
@@ -38,7 +38,7 @@
 -(BOOL)isFile:(File*)file format:(NSString*)format;
 
 -(NSArray*)chaptersForFiles:(NSArray*)files;
-    
+- (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL;
 -(void)removeFiles:(NSArray*)files;
 
 @end

@@ -118,8 +118,8 @@
     return [NSURL URLWithString:file.url];
 }
 
--(NSString*)localPath:(File *)file {
-    return [NSString stringWithFormat:@"%@/%@.%@", self.documentsDirectory, file.fileId, file.ext];
+-(NSURL*)localPath:(File *)file {
+    return [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@.%@", self.documentsDirectory, file.fileId, file.ext]];
 }
 
 -(LBParsedString*)readAsText:(File *)file {
@@ -129,7 +129,7 @@
 }
 
 -(NSData*)readAsData:(File *)file {
-    return [NSData dataWithContentsOfFile:[self localPath:file] options:NSDataReadingMapped error:nil];
+    return [NSData dataWithContentsOfURL:[self localPath:file] options:NSDataReadingMapped error:nil];
 }
 
 -(NSString*)documentsDirectory {
@@ -137,14 +137,6 @@
     return [paths objectAtIndex:0];
 }
 
--(void)downloadFileSync:(File*)file {
-    NSError * error = nil;
-    NSData * data = [NSData dataWithContentsOfURL:[self url:file] options:NSDataReadingMapped error:&error];
-    
-    if (data) {
-        [data writeToFile:[self localPath:file] atomically:YES];
-    }
-}
 
 -(NSArray*)filterFiles:(NSArray*)files byFormat:(NSString*)format {
     return [files filter:^(File*file) {
@@ -166,9 +158,24 @@
 
 -(void)removeFiles:(NSArray*)files {
     [files forEach:^(File*file) {
-        NSString * localPath = [self localPath:file];
-        [[NSFileManager defaultManager] removeItemAtPath:localPath error:nil];
+        NSURL * localPath = [self localPath:file];
+        [[NSFileManager defaultManager] removeItemAtURL:localPath error:nil];
     }];
+}
+
+
+// so I guess it needs to exist first
+- (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL
+{
+    assert([[NSFileManager defaultManager] fileExistsAtPath: [URL path]]);
+ 
+    NSError *error = nil;
+    BOOL success = [URL setResourceValue: [NSNumber numberWithBool: YES]
+                                  forKey: NSURLIsExcludedFromBackupKey error: &error];
+    if(!success){
+        NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
+    }
+    return success;
 }
 
 -(NSArray*)chaptersForFiles:(NSArray*)files {

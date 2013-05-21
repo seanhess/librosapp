@@ -82,16 +82,23 @@
     
     // 1 // convert to NSAttributedString, then save the data
     
+    
+    // if a text file, then convert into the proper format first
     if ([FileService.shared isFile:self.file format:FileFormatText]) {
         ReaderFormatter * formatter = [ReaderFormatter new];
         NSString * string = [[NSString alloc] initWithData:self.data encoding:NSUTF8StringEncoding];
         LBParsedString * text = [formatter parsedStringForMarkup:string];
-        [NSKeyedArchiver archiveRootObject:text toFile:self.localPath];
+        
+        NSData * data = [NSKeyedArchiver archivedDataWithRootObject:text];
+        [data writeToURL:self.localPath options:NSDataWritingAtomic error:nil];
     }
     
     else {
-        [self.data writeToFile:self.localPath options:NSDataWritingAtomic error:nil];
+        [self.data writeToURL:self.localPath options:NSDataWritingAtomic error:nil];
     }
+    
+    // needs to exist first!
+    [FileService.shared addSkipBackupAttributeToItemAtURL:self.localPath];
     
     [self finish];
 }
