@@ -91,6 +91,12 @@
     return fetchRequest;
 }
 
+-(NSFetchRequest*)purchased {
+    NSFetchRequest * fetchRequest = [self allBooks];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"purchased = YES"];
+    return fetchRequest;
+}
+
 -(NSPredicate*)searchForText:(NSString*)text {
     // I initially only used BEGINSWITH for speed, but it might not be slow and people REALLY miss
     // being able to fuzzy search titles
@@ -118,9 +124,12 @@
     NSString * principeMendigoId = @"6b8e637a-2f19-4224-b68f-cba3fe03c79e";
     NSString * condenadaId = @"5af9d5a2-8515-4a22-80e6-a1404aedce78";
     NSArray * ids = @[draculaId, principeMendigoId, condenadaId];
+    return [self booksWithIds:ids];
+}
+
+-(NSArray*)booksWithIds:(NSArray*)ids {
     NSFetchRequest * fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
     fetchRequest.predicate = [NSPredicate predicateWithFormat:@"bookId IN %@", ids];
-    
     NSArray * books = [ObjectStore.shared.context executeFetchRequest:fetchRequest error:nil];
     return books;
 }
@@ -129,6 +138,10 @@
 
 -(NSString*)productId:(Book*)book {
     return [book.bookId stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
+}
+
+-(NSString*)bookIdFromProductId:(NSString *)productId {
+    return [productId stringByReplacingOccurrencesOfString:@"_" withString:@"-"];
 }
 
 -(BOOL)isDownloading:(Book*)book {

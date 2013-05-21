@@ -64,6 +64,11 @@
     [super didReceiveMemoryWarning];
 }
 
+-(void)reloadData {
+    [self generateFetchedResults];
+    [self.tableView reloadData];
+}
+
 - (void)generateFetchedResults {
     NSPredicate * filterPredicate  = [BookService.shared filterByType:self.currentFilter];
     
@@ -133,8 +138,7 @@
 
 - (void)didSelectFilter:(BookFilter)filter {
     self.currentFilter = filter;
-    [self generateFetchedResults];
-    [self.tableView reloadData];
+    [self reloadData];
 }
 
 #pragma mark - Table view delegate

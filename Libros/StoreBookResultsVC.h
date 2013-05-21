@@ -12,5 +12,5 @@
 @interface StoreBookResultsVC : UITableViewController <NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic) NSFetchRequest * fetchRequest;
-
+-(void)reloadData;
 @end

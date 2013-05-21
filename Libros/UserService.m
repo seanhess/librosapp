@@ -103,11 +103,15 @@
     return (self.activeDownloads > 0);
 }
 
+-(void)setHasPurchasedBook:(Book*)book {
+    book.purchased = YES;
+}
+
 // none of them have any files!
 // have to load them too!
 -(void)addBook:(Book *)book {
     NSLog(@"Adding Book %@", book.title);
-    book.purchased = YES;
+    [self setHasPurchasedBook:book];
     book.downloaded = 0.01; // want to start at a little, meaning it is currently downloading
     self.activeDownloads++;
     

@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import "Book.h"
 
+
 typedef enum {
     BookFilterEverything = 0,
     BookFilterHasText,
@@ -21,6 +22,7 @@ typedef enum {
     BookFormatAudio
 } BookFormat;
 
+#define ALL_BOOKS_PRODUCT_ID @"libros_all"
 #define BOOK_ATTRIBUTE_DOWNLOADED @"downloaded"
 #define BOOK_ATTRIBUTE_PURCHASED @"purchased"
 
@@ -33,6 +35,7 @@ typedef enum {
 -(NSFetchRequest*)allBooks;
 -(NSFetchRequest*)popular;
 -(NSPredicate*)searchForText:(NSString*)text;
+-(NSFetchRequest*)purchased;
 
 -(NSPredicate*)filterByType:(BookFilter)filter;
 
@@ -40,10 +43,11 @@ typedef enum {
 -(void)sendBookPurchased:(Book*)book;
 
 -(NSArray*)firstRunBooks;
+-(NSArray*)booksWithIds:(NSArray*)ids;
 
-
-
--(NSString*)productId:(Book*)book;      // In-App Purchase Product Id matching iTunes Connect
+// In-App Purchase Product Id matching iTunes Connect
+-(NSString*)productId:(Book*)book;
+-(NSString*)bookIdFromProductId:(NSString*)productId;
 
 -(BOOL)isDownloading:(Book*)book;
 -(BOOL)isDownloadComplete:(Book*)book;

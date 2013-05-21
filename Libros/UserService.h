@@ -31,6 +31,7 @@
 
 -(void)purchasedAllBooks;
 -(BOOL)hasPurchasedBook:(Book*)book;
+-(void)setHasPurchasedBook:(Book*)book;
 
 -(NSFetchRequest*)libraryBooks;
 

@@ -11,7 +11,6 @@
 #import "BookService.h"
 
 
-#define ALL_BOOKS_PRODUCT_ID @"libros_all"
 
 @interface IAPInfoCommand () <SKProductsRequestDelegate>
 @property (nonatomic, strong) NSString * productId;

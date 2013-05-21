@@ -7,9 +7,9 @@
 //
 
 #import "StorePopularVC.h"
+#import "AuthorService.h"
 #import "BookService.h"
 #import "MetricsService.h"
-#import "AuthorService.h"
 #import "GenreService.h"
 
 @interface StorePopularVC ()

@@ -182,7 +182,8 @@
                         <segue destination="XD9-fq-8vc" kind="relationship" relationship="viewControllers" id="CUh-mF-rPR"/>
                         <segue destination="CgY-eX-fsP" kind="relationship" relationship="viewControllers" id="nUE-Io-8oD"/>
                         <segue destination="rzt-2R-2Zk" kind="relationship" relationship="viewControllers" id="0ZK-8O-GuQ"/>
-                        <segue destination="pFT-ke-1EX" kind="relationship" relationship="viewControllers" id="ZcI-Wb-NXA"/>
+                        <segue destination="XHs-fD-Yiw" kind="relationship" relationship="viewControllers" id="BQN-Ve-mmK"/>
+                        <segue destination="pFT-ke-1EX" kind="relationship" relationship="viewControllers" id="jXO-wr-PvG"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zkI-3B-sBa" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -229,6 +230,46 @@
             </objects>
             <point key="canvasLocation" x="-495" y="232"/>
         </scene>
+        <!--Store PurchasedVC - Purchased-->
+        <scene sceneID="9mC-3n-YuI">
+            <objects>
+                <tableViewController id="ada-Sr-QSw" customClass="StorePurchasedVC" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="p6h-2i-go2">
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Purchased" id="iVf-fh-xYT">
+                        <barButtonItem key="rightBarButtonItem" title="Library" id="LGi-Vo-txM">
+                            <connections>
+                                <segue destination="gmo-jD-UXA" kind="modal" modalTransitionStyle="flipHorizontal" id="Be8-Me-Fdq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="libraryButton" destination="LGi-Vo-txM" id="R8B-iZ-A6E"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lmR-tE-sDf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="44" y="900"/>
+        </scene>
+        <!--Navigation Controller - Purchased-->
+        <scene sceneID="ZVc-b1-os3">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="XHs-fD-Yiw" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Purchased" id="jgH-QA-nKp"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="lBS-ph-LXc">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="ada-Sr-QSw" kind="relationship" relationship="rootViewController" id="qmC-qR-XaC"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KG1-5X-on1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-490" y="900"/>
+        </scene>
         <!--Store SearchVC - Search-->
         <scene sceneID="K7i-Nd-CGa">
             <objects>
@@ -267,7 +308,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="39" y="870"/>
+            <point key="canvasLocation" x="39" y="1644"/>
         </scene>
         <!--Navigation Controller - Search-->
         <scene sceneID="XjL-Ge-b3A">
@@ -283,60 +324,9 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dct-ls-6ht" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-495" y="870"/>
+            <point key="canvasLocation" x="-495" y="1644"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="LibraryVC" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LibraryVC.h"/>
-            <relationships>
-                <relationship kind="action" name="didTapLayoutButton:"/>
-                <relationship kind="outlet" name="activityView" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
-                <relationship kind="outlet" name="storeButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="StoreAuthorsVC" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreAuthorsVC.h"/>
-            <relationships>
-                <relationship kind="outlet" name="libraryButton" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="StoreBookResultsVC" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreBookResultsVC.h"/>
-        </class>
-        <class className="StoreGenresVC" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreGenresVC.h"/>
-            <relationships>
-                <relationship kind="outlet" name="libraryButton" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="StorePopularVC" superclassName="StoreBookResultsVC">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/StorePopularVC.h"/>
-            <relationships>
-                <relationship kind="outlet" name="libraryButton" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="StoreSearchVC" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreSearchVC.h"/>
-            <relationships>
-                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
-            </relationships>
-        </class>
-        <class className="StoreTabsVC" superclassName="UITabBarController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreTabsVC.h"/>
-        </class>
-        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
-        </class>
-        <class className="UICollectionViewLayout" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
