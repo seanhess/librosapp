@@ -13,6 +13,7 @@
 #import "StoreBookResultsVC.h"
 #import "MetricsService.h"
 #import "Appearance.h"
+#import "StoreSearchVC.h"
 
 @interface StoreGenresVC ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *libraryButton;
@@ -56,6 +57,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)didTapSearch:(id)sender {
+    StoreSearchVC * search = [StoreSearchVC new];
+    UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:search];
+    [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 
 #pragma mark NSFetchedResultsControllerDelegate methods

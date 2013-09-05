@@ -22,6 +22,7 @@
 
 @interface StoreSearchVC () <UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar * searchBar;
+@property (weak, nonatomic) IBOutlet UITableView * tableView;
 
 @property (strong, nonatomic) NSFetchedResultsController * authorResults;
 @property (strong, nonatomic) NSFetchedResultsController * bookResults;
@@ -30,14 +31,33 @@
 
 @implementation StoreSearchVC
 
+- (id)init {
+    self = [super init];
+    if (self) {
+        [self initialize];
+    }
+    return self;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        [self initialize];
+    }
+    return self;
+}
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        self.title = NSLocalizedString(@"Search",nil);
-        [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar-icon-search-selected"] withFinishedUnselectedImage:[UIImage imageNamed:@"tabbar-icon-search"]];
+        [self initialize];
     }
     return self;
+}
+
+- (void)initialize {
+    self.title = NSLocalizedString(@"Search",nil);
+    [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar-icon-search-selected"] withFinishedUnselectedImage:[UIImage imageNamed:@"tabbar-icon-search"]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -167,9 +187,21 @@
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self.searchBar resignFirstResponder];
+    [self enableCancelButton];
 }
 
 #pragma UISearchBarDelegate
+
+- (void)enableCancelButton {
+    for (UIView *possibleButton in self.searchBar.subviews)
+    {
+        if ([possibleButton isKindOfClass:[UIButton class]])
+        {
+            ((UIButton*)possibleButton).enabled = YES;
+            break;
+        }
+    }
+}
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     // if the search has at least 2 letters!
@@ -181,17 +213,9 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [searchBar resignFirstResponder];
     [self performSearch:searchBar.text];
-    
-    for (UIView *possibleButton in searchBar.subviews)
-    {
-        if ([possibleButton isKindOfClass:[UIButton class]])
-        {
-            UIButton *cancelButton = (UIButton*)possibleButton;
-            cancelButton.enabled = YES;
-            break;
-        }
-    }
+    [self enableCancelButton];
 }
+
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar {
     [searchBar resignFirstResponder];

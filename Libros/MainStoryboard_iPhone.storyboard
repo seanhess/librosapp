@@ -14,6 +14,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </tableView>
                     <navigationItem key="navigationItem" title="Popular" id="QKn-VI-YlY">
+                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="XkL-KW-WM6">
+                            <connections>
+                                <action selector="didTapSearch:" destination="Vys-tt-iT2" id="tHg-ux-xBv"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Library" id="nGq-h9-HQe">
                             <connections>
                                 <segue destination="gmo-jD-UXA" kind="modal" modalTransitionStyle="flipHorizontal" id="zc2-fq-hvg"/>
@@ -54,6 +59,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </tableView>
                     <navigationItem key="navigationItem" title="Genres" id="kUf-0P-Q4g">
+                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="Spw-sP-PMl">
+                            <connections>
+                                <action selector="didTapSearch:" destination="Bsc-WL-kTn" id="kI3-9G-6TV"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Library" id="JvE-4Y-kAE">
                             <connections>
                                 <segue destination="gmo-jD-UXA" kind="modal" modalTransitionStyle="flipHorizontal" id="jLU-b1-shG"/>
@@ -183,7 +193,6 @@
                         <segue destination="CgY-eX-fsP" kind="relationship" relationship="viewControllers" id="nUE-Io-8oD"/>
                         <segue destination="rzt-2R-2Zk" kind="relationship" relationship="viewControllers" id="0ZK-8O-GuQ"/>
                         <segue destination="XHs-fD-Yiw" kind="relationship" relationship="viewControllers" id="BQN-Ve-mmK"/>
-                        <segue destination="pFT-ke-1EX" kind="relationship" relationship="viewControllers" id="jXO-wr-PvG"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zkI-3B-sBa" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -200,6 +209,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </tableView>
                     <navigationItem key="navigationItem" title="Authors" id="6bt-Jr-Emp">
+                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="f4p-on-VxO">
+                            <connections>
+                                <action selector="didTapSearch:" destination="wgK-8K-r1Q" id="odT-5T-kmh"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Library" id="CBr-iq-1ih">
                             <connections>
                                 <segue destination="gmo-jD-UXA" kind="modal" modalTransitionStyle="flipHorizontal" id="vjc-RO-A2Z"/>
@@ -270,69 +284,61 @@
             </objects>
             <point key="canvasLocation" x="-490" y="900"/>
         </scene>
-        <!--Store SearchVC - Search-->
-        <scene sceneID="K7i-Nd-CGa">
-            <objects>
-                <tableViewController id="H8I-OS-tPG" customClass="StoreSearchVC" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="cUw-xe-0bb">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" showsCancelButton="YES" id="haI-fY-3Px">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <textInputTraits key="textInputTraits"/>
-                            <scopeButtonTitles>
-                                <string>Title</string>
-                                <string>Title</string>
-                            </scopeButtonTitles>
-                            <connections>
-                                <outlet property="delegate" destination="H8I-OS-tPG" id="8kr-qV-KT4"/>
-                            </connections>
-                        </searchBar>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Search" id="3Mh-xs-9ld"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <connections>
-                        <outlet property="searchBar" destination="haI-fY-3Px" id="tkD-xP-eFX"/>
-                        <outlet property="searchDisplayController" destination="Ofj-fA-Mo5" id="90u-I6-G5F"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fBg-dy-rfP" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="Ofj-fA-Mo5">
-                    <connections>
-                        <outlet property="delegate" destination="H8I-OS-tPG" id="VBN-4e-xkC"/>
-                        <outlet property="searchContentsController" destination="H8I-OS-tPG" id="gf3-J5-kTN"/>
-                        <outlet property="searchResultsDataSource" destination="H8I-OS-tPG" id="Dhg-xH-9uk"/>
-                        <outlet property="searchResultsDelegate" destination="H8I-OS-tPG" id="LHk-fC-y7g"/>
-                    </connections>
-                </searchDisplayController>
-            </objects>
-            <point key="canvasLocation" x="39" y="1644"/>
-        </scene>
-        <!--Navigation Controller - Search-->
-        <scene sceneID="XjL-Ge-b3A">
-            <objects>
-                <navigationController storyboardIdentifier="SearchNavController" definesPresentationContext="YES" id="pFT-ke-1EX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search" id="XXs-PJ-A7L"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="aKg-V8-njp">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="H8I-OS-tPG" kind="relationship" relationship="rootViewController" id="XtU-gA-gtZ"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dct-ls-6ht" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-495" y="1644"/>
-        </scene>
     </scenes>
+    <classes>
+        <class className="LibraryVC" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LibraryVC.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activityView" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
+                <relationship kind="outlet" name="storeButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="StoreAuthorsVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreAuthorsVC.h"/>
+            <relationships>
+                <relationship kind="outlet" name="libraryButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="StoreBookResultsVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreBookResultsVC.h"/>
+        </class>
+        <class className="StoreGenresVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreGenresVC.h"/>
+            <relationships>
+                <relationship kind="outlet" name="libraryButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="StorePopularVC" superclassName="StoreBookResultsVC">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/StorePopularVC.h"/>
+            <relationships>
+                <relationship kind="action" name="didTapSearch:"/>
+                <relationship kind="outlet" name="libraryButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="StorePurchasedVC" superclassName="StoreBookResultsVC">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/StorePurchasedVC.h"/>
+            <relationships>
+                <relationship kind="outlet" name="libraryButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="StoreTabsVC" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreTabsVC.h"/>
+        </class>
+        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="vjc-RO-A2Z"/>
+        <segue reference="zc2-fq-hvg"/>
     </inferredMetricsTieBreakers>
 </document>

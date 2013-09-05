@@ -14,6 +14,7 @@
 #import "NSString+FetchedGroupByString.h"
 #import "MetricsService.h"
 #import "Appearance.h"
+#import "StoreSearchVC.h"
 
 @interface StoreAuthorsVC ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *libraryButton;
@@ -87,6 +88,11 @@
     return [sectionInfo.name uppercaseString];
 }
 
+- (IBAction)didTapSearch:(id)sender {
+    StoreSearchVC * search = [StoreSearchVC new];
+    UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:search];
+    [self.navigationController presentViewController:nav animated:YES completion:nil];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

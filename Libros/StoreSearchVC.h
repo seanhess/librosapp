@@ -9,6 +9,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface StoreSearchVC : UITableViewController <UISearchBarDelegate, NSFetchedResultsControllerDelegate>
+@interface StoreSearchVC : UIViewController <UISearchBarDelegate, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @end

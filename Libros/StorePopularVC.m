@@ -11,6 +11,7 @@
 #import "BookService.h"
 #import "MetricsService.h"
 #import "GenreService.h"
+#import "StoreSearchVC.h"
 
 @interface StorePopularVC ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *libraryButton;
@@ -45,6 +46,12 @@
     
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+}
+
+- (IBAction)didTapSearch:(id)sender {
+    StoreSearchVC * search = [StoreSearchVC new];
+    UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:search];
+    [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning
