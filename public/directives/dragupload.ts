@@ -3,7 +3,7 @@
 
 
 // prevents drops from changing the page
-app.directive('dragignore', function($parse:ng.IParseService) {
+function dragIgnore($parse:ng.IParseService) {
   return function(scope:ng.IScope, element:JQuery, attrs) {
     var target = document
 
@@ -17,10 +17,10 @@ app.directive('dragignore', function($parse:ng.IParseService) {
       return false
     })
   }
-})
+}
 
 // dragupload="onDropFiles" will call scope.onDropFiles(files)
-.directive('dragupload', function($parse:ng.IParseService) {
+function dragUpload($parse:ng.IParseService) {
   return function(scope:ng.IScope, element:JQuery, attrs) {
 
     var target = element.get(0)
@@ -66,5 +66,5 @@ app.directive('dragignore', function($parse:ng.IParseService) {
       })
     })
   }
-})
+}
 

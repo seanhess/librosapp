@@ -1,0 +1,35 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "public",
+            "file_exclude_patterns": ["*.css", "*.js", ".vimrc", "*.js.map", "*.png", "*.sublime*", "Podfile*"],
+            "folder_exclude_patterns": ["certs", "images", "Libros", "*.xc*", "Pods", "LibrosTests"]
+		}
+	],
+
+    "build_systems":
+    [
+        {
+            "name": "Libros Public",
+            "cmd" : ["make"],
+            "working_dir": "$project_path/public",
+            // "cmd": ["node_modules/.bin/tsc", "-m", "commonjs", "server.ts", "test/"],
+            "file_regex": "^(.+?)\\(([0-9]+),([0-9]+)\\)\\: (.+)$",
+            "path":"/usr/local/bin:/usr/bin:/bin:/usr/sbin"
+        }
+
+        // result_file_regex
+        // result_line_regex
+        // result_base_dir
+    ],    
+
+    "settings":
+    {
+        "typescript":
+        [
+            "public/app.ts",
+        ]
+    }	
+}

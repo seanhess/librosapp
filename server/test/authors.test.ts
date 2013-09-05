@@ -1,13 +1,13 @@
-///<reference path='../def/node.d.ts' />
+///<reference path='../def/DefinitelyTyped/node/node.d.ts' />
 ///<reference path='../def/mocha.d.ts' />
 ///<reference path='../def/request.d.ts' />
 ///<reference path='../types' />
 
 var assert = require('assert')
-import server = module('../server')
-import request = module('request')
-import fs = module('fs')
-import path = module('path')
+import server = require('../server')
+import request = require('request')
+import fs = require('fs')
+import path = require('path')
 var http = require('http')
 
 describe("API", function() {
@@ -44,6 +44,9 @@ describe("API", function() {
         description: "description",
         popularity: 0,
         featured: false,
+        audioFiles: 0,
+        textFiles: 0,
+        files: [],
       }
 
       this.book = book

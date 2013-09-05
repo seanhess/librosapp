@@ -1,20 +1,19 @@
 ///<reference path='../def/rethinkdb.d.ts'/>
 ///<reference path='../types.ts'/>
 
-import r = module('rethinkdb')
-import db = module('./db')
-import q = module('q')
-import f = module('../service/functional')
-import File = module('./File')
+import r = require('rethinkdb')
+import db = require('./db')
+import q = require('q')
+import f = require('../service/functional')
+import File = require('./File')
 
-import store = module('../service/s3')
+import store = require('../service/s3')
 
 var books = r.table('books')
 
 export interface IdentifiedBook {
   bookId: string;
 }
-
 
 // TODO what is up?
 /// QUERIES //////////////////////////////////////////

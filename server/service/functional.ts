@@ -1,5 +1,5 @@
-///<reference path='../def/underscore.d.ts'/>
-import _ = module("underscore")
+///<reference path='../def/DefinitelyTyped/underscore/underscore.d.ts'/>
+import _ = require("underscore")
 
 export function map(f:(item:Object) => Object) {
   return function(items:any[]) {

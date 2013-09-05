@@ -1,8 +1,8 @@
-///<reference path='def/node.d.ts' />
+///<reference path='DefinitelyTyped/node/node.d.ts' />
 
 declare module "knox" {
 
-  import http = module("http")
+  import http = require("http")
 
   export function createClient(options:IOptions):IClient;
 

@@ -1,6 +1,6 @@
 declare module "request" {
   
-  import http = module('http')
+  import http = require('http')
 
   interface ResponseCB {
     (err:Error, rs:http.ServerResponse, body:any);

@@ -1,0 +1,1081 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"curr",
+				"currentTick"
+			],
+			[
+				"clid",
+				"clientIdIndex"
+			],
+			[
+				"dis",
+				"disposition"
+			],
+			[
+				"disp",
+				"dispositions"
+			],
+			[
+				"Di",
+				"Disposition"
+			],
+			[
+				"disposi",
+				"dispositionPopup"
+			],
+			[
+				"Write",
+				"Writeable"
+			],
+			[
+				"clie",
+				"clientId"
+			],
+			[
+				"conn",
+				"connectdb"
+			],
+			[
+				"cur",
+				"cursorCb"
+			],
+			[
+				"obj",
+				"objectCb"
+			],
+			[
+				"name",
+				"namesCb"
+			],
+			[
+				"Ad",
+				"AdminResult"
+			],
+			[
+				"Obje",
+				"ObjectExpression"
+			],
+			[
+				"super",
+				"superhero"
+			],
+			[
+				"Curs",
+				"CursorOperation"
+			],
+			[
+				"valu",
+				"ValueExpression"
+			],
+			[
+				"Objec",
+				"ObjectExpression"
+			],
+			[
+				"Obj",
+				"ObjectExpression"
+			],
+			[
+				"RQLFun",
+				"RQLFunctionResult"
+			],
+			[
+				"RQL",
+				"RQLValue"
+			],
+			[
+				"Query",
+				"QueryObject"
+			],
+			[
+				"Q",
+				"QueryObject"
+			],
+			[
+				"error",
+				"Error"
+			],
+			[
+				"Sele",
+				"SelectIndex"
+			],
+			[
+				"IConn",
+				"IConnectionCb"
+			],
+			[
+				"route",
+				"routeProvider"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "server/server.ts",
+			"settings":
+			{
+				"buffer_size": 5840,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 55.0,
+		"selected_items":
+		[
+			[
+				"add fo",
+				"Project: Add Folder"
+			],
+			[
+				"add fol",
+				"Project: Add Folder"
+			],
+			[
+				"type",
+				"Typescript: Open Error Panel"
+			],
+			[
+				"typesc",
+				"Typescript: Open Error Panel"
+			],
+			[
+				"typescript",
+				"Typescript: Open Error Panel"
+			],
+			[
+				"open e",
+				"Typescript: Open Error Panel"
+			],
+			[
+				"types",
+				"Typescript: Inline Errors"
+			],
+			[
+				"package control",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: List Packages"
+			],
+			[
+				"reindent",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"reinden",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"enable",
+				"Package Control: Enable Package"
+			],
+			[
+				"disable",
+				"Package Control: Disable Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"disab",
+				"Package Control: Disable Package"
+			]
+		],
+		"width": 435.0
+	},
+	"console":
+	{
+		"height": 346.0,
+		"history":
+		[
+			"view.run_command('typescript_error_panel', {\"characters\": \"\"})",
+			"view.run_command('typescript_error_panel')",
+			"view.run_command('typescript')",
+			"view.run_command('prefixr')",
+			"view.run_command('example')"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/seanhess/Library/Application Support/Sublime Text 3/Packages/User/Typescript.sublime-settings",
+		"/Users/seanhess/Dropbox/Sean Documents/todo.md",
+		"/Users/seanhess/projects/Libros/server/service/local.ts",
+		"/Users/seanhess/projects/Libros/server/def/underscore.d.ts",
+		"/Users/seanhess/projects/Libros/server/service/functional.ts",
+		"/Users/seanhess/projects/Libros/server/def/knox.d.ts",
+		"/Users/seanhess/projects/Libros/server/d.ts/DefinitelyTyped/express/express.d.ts",
+		"/Users/seanhess/projects/Libros/server/model/File.ts",
+		"/Users/seanhess/projects/Libros/server/Libros-server.sublime-project",
+		"/Users/seanhess/projects/sublime-typescript/.sublimets",
+		"/Users/seanhess/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/seanhess/projects/sublime-typescript/test/test_code.ts",
+		"/Users/seanhess/projects/sublime-typescript/test/test_code_2.ts",
+		"/Users/seanhess/projects/sublime-typescript/notes.md",
+		"/Users/seanhess/Downloads/typescript_support_for_sublime_text/TypeScript support for Sublime Text/README-sublime-typescript.txt",
+		"/Users/seanhess/Downloads/test.ts",
+		"/Users/seanhess/Dropbox/Sean Documents/log.md",
+		"/Users/seanhess/projects/detmer/server/node_modules/mocha/node_modules/ms/Makefile",
+		"/Users/seanhess/projects/Libros/Makefile",
+		"/Users/seanhess/Downloads/node_modules/typescript/README.txt",
+		"/Users/seanhess/Downloads/error.txt",
+		"/Users/seanhess/Downloads/error2.txt",
+		"/Users/seanhess/projects/WizardWar/WizardWar/EngineJS/test.html",
+		"/Users/seanhess/projects/WizardWar/WizardWar/GameTimerService.js",
+		"/Users/seanhess/Downloads/wizardwar-users-export (3).json",
+		"/Users/seanhess/Downloads/wizardwar-users-export.json",
+		"/Users/seanhess/Dropbox/Sean Documents/projects.md",
+		"/Users/seanhess/projects/detmer/.gitignore",
+		"/Users/seanhess/Downloads/dataTypes.ts",
+		"/Users/seanhess/projects/detmer/public/css/style.less",
+		"/Users/seanhess/projects/detmer/public/app/services/Disposition.ts",
+		"/Users/seanhess/projects/detmer/public/app/views/clients.less",
+		"/Users/seanhess/projects/detmer/server/model/DispositionModel.ts",
+		"/Users/seanhess/projects/detmer/public/app/directives/dispositionChart.html",
+		"/Users/seanhess/projects/detmer/public/app/views/clients.ts",
+		"/Users/seanhess/projects/detmer/public/app/directives/dispositionChart.less",
+		"/Users/seanhess/projects/detmer/public/app/directives/dispositionChart.ts",
+		"/Users/seanhess/projects/detmer/server/types.ts",
+		"/Users/seanhess/projects/detmer/public/app/views/client_details.html",
+		"/Users/seanhess/projects/detmer/public/app/services/Client.ts",
+		"/Users/seanhess/projects/detmer/public/app/app.ts",
+		"/Users/seanhess/projects/detmer/server/server.ts",
+		"/Users/seanhess/projects/detmer/server/model/RethinkConnection.ts",
+		"/Users/seanhess/projects/detmer/server/model/ClientsModel.ts",
+		"/Users/seanhess/projects/detmer/server/model/common.ts",
+		"/Users/seanhess/projects/detmer/public/app/directives/blur.ts",
+		"/Users/seanhess/projects/detmer/public/app/directives/popup.ts",
+		"/Users/seanhess/projects/detmer/public/app/directives/popup.html",
+		"/Users/seanhess/projects/detmer/public/app/directives/dispositionSelector.html",
+		"/Users/seanhess/projects/detmer/public/app/directives/dispositionSelector.ts",
+		"/Users/seanhess/projects/detmer/public/app/views/client_disposition.html",
+		"/Users/seanhess/projects/detmer/public/app/directives/dispositionSelector.less",
+		"/Users/seanhess/projects/detmer/public/app/filters/toProductId.ts",
+		"/Users/seanhess/projects/detmer/public/app/filters/toKey.ts",
+		"/Users/seanhess/projects/detmer/public/app/types.ts",
+		"/Users/seanhess/projects/detmer/public/app/directives/formcontrol.ts",
+		"/Users/seanhess/projects/detmer/public/app/directives/dispositionPopup.ts",
+		"/Users/seanhess/projects/detmer/server/Dispositions.ts",
+		"/Users/seanhess/projects/detmer/public/app/filters/key",
+		"/Users/seanhess/projects/detmer/public/app/def/DefinitelyTyped/angularjs/angular-resource.d.ts",
+		"/Users/seanhess/projects/detmer/public/app/def/DefinitelyTyped/angularjs/angular-resource.d.key",
+		"/Users/seanhess/projects/detmer/public/app/directives/dispositionPopup.less",
+		"/Users/seanhess/projects/detmer/public/app/directives/dispositionPopop.html",
+		"/Users/seanhess/projects/detmer/public/app/views/client_add.html",
+		"/Users/seanhess/projects/detmer/public/app/directives/dispositionSelector.css",
+		"/Users/seanhess/projects/detmer/public/app/views/disposition_selector.html",
+		"/Users/seanhess/projects/detmer/public/app/views/clients.html",
+		"/Users/seanhess/projects/detmer/public/app/app.html",
+		"/Users/seanhess/projects/detmer/public/app/directives/formcontrol.html",
+		"/Users/seanhess/projects/detmer/detmer.sublime-project",
+		"/Users/seanhess/projects/detmer/public/app/partials/header.html",
+		"/Users/seanhess/projects/detmer/public/vendor/metronic/css/style-responsive.less",
+		"/Users/seanhess/projects/detmer/README.md",
+		"/Users/seanhess/projects/detmer/public/app/def/DefinitelyTyped/angularjs/angular.d.ts",
+		"/Users/seanhess/projects/detmer/public/vendor/bootstrap/less/tables.less",
+		"/Users/seanhess/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/seanhess/projects/detmer/public/app/views/example_form.html",
+		"/Users/seanhess/projects/detmer/public/vendor/bootstrap/CHANGELOG.md",
+		"/Users/seanhess/projects/detmer/public/vendor/metronic/css/style-metro.less",
+		"/Users/seanhess/projects/detmer/public/app/partials/footer.html",
+		"/Users/seanhess/projects/seanhess.github.com/articles/reactivecocoa.md",
+		"/Users/seanhess/projects/seanhess.github.com/index.html",
+		"/Users/seanhess/projects/orbital.github.io/ww/mosswig.html",
+		"/Users/seanhess/projects/orbital.github.io/ww/index.html",
+		"/Users/seanhess/projects/WizardWar/WizardWar/WizardWar.ipa",
+		"/Users/seanhess/projects/orbital.github.io/index.html",
+		"/Users/seanhess/projects/orbital.github.io/.gitignore",
+		"/Users/seanhess/projects/detmer/public/app.html",
+		"/Users/seanhess/projects/detmer/public/def/DefinitelyTyped/angularjs/angular-resource.d.ts",
+		"/Users/seanhess/projects/detmer/public/def/DefinitelyTyped/angularjs/angular.d.ts",
+		"/Users/seanhess/projects/detmer/public/services/Clients.ts",
+		"/Users/seanhess/Downloads/Gumby-master/ui.html",
+		"/Users/seanhess/Downloads/bootstrap-3.0.0-wip/README.md",
+		"/Users/seanhess/projects/detmer/Makefile",
+		"/Users/seanhess/projects/detmer/public/app.js",
+		"/Users/seanhess/projects/detmer/config/deploy.sh",
+		"/Users/seanhess/projects/detmer/server/package.json",
+		"/Users/seanhess/projects/detmer/config/nginx.conf",
+		"/Users/seanhess/sources/Specs/FirebaseObjects/0.0.1/FirebaseObjects.podspec",
+		"/Users/seanhess/projects/detmer/public/controls/clients.ts",
+		"/Users/seanhess/projects/detmer/public/partials/clients.html",
+		"/Users/seanhess/projects/detmer/server/def/underscore.d.ts",
+		"/Users/seanhess/projects/detmer/public/def/DefinitelyTyped/jquery/jquery.d.ts",
+		"/Users/seanhess/projects/detmer/public/app.ts",
+		"/Users/seanhess/projects/detmer/server/auth.ts",
+		"/Users/seanhess/projects/detmer/server/routing/serialize.ts",
+		"/Users/seanhess/projects/detmer/server/model/Book.ts",
+		"/Users/seanhess/projects/detmer/server/test/rethinkdb.test.ts",
+		"/Users/seanhess/projects/detmer/server/def/rethinkdb.d.ts",
+		"/Users/seanhess/projects/detmer/server/model/crud.ts",
+		"/Users/seanhess/projects/detmer/public/tsd-config.json",
+		"/Users/seanhess/projects/detmer/server/model/db.ts",
+		"/Users/seanhess/projects/detmer/public/controls/Book.ts",
+		"/Users/seanhess/projects/detmer/server/model/File.ts",
+		"/Users/seanhess/projects/detmer/server/def/deferred.d.ts",
+		"/Users/seanhess/projects/detmer/server/bin/test",
+		"/Users/seanhess/projects/detmer/server/def/node.d.ts",
+		"/Users/seanhess/projects/detmer/server/def/DefinitelyTyped/node/node.d.ts",
+		"/Users/seanhess/projects/detmer/server/test/example.test.ts",
+		"/Users/seanhess/projects/detmer/server/test/blah.js",
+		"/Users/seanhess/projects/detmer/server/test/blah.ts",
+		"/Users/seanhess/projects/detmer/public/component.json",
+		"/Users/seanhess/projects/detmer/server/tsd-config.json",
+		"/Users/seanhess/projects/detmer/config/exclude.txt",
+		"/Users/seanhess/projects/detmer/config/rethinkdb.upstart.conf",
+		"/Users/seanhess/projects/detmer/config/setup.sh",
+		"/Users/seanhess/projects/detmer/config/server.upstart.conf",
+		"/Users/seanhess/projects/dave/public/router.ts"
+	],
+	"find":
+	{
+		"height": 33.0
+	},
+	"find_in_files":
+	{
+		"height": 91.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"express",
+			"knox",
+			"LocationService",
+			"DUNS",
+			"concept",
+			"godaddy",
+			"crash",
+			"gameInterval",
+			"player",
+			"snapshot",
+			"FFFFF",
+			"  ",
+			"0B",
+			"shopping",
+			"days",
+			"macu",
+			"history",
+			"initTables",
+			"toObject",
+			"disposition",
+			"show",
+			"toKey",
+			"newDisposition",
+			"Clients.",
+			"Client.",
+			"vertical",
+			"import",
+			"<select>",
+			"extend(",
+			"class=\"span12",
+			"class=\"span12\"",
+			"span12",
+			"Email Address",
+			"container-fluid",
+			"blue",
+			"box-sizing",
+			"client",
+			"IDirective",
+			"tooltip",
+			"horizontal-form",
+			"span",
+			"table-hover",
+			"no-min-height",
+			"box-sizing",
+			"search",
+			"macu",
+			"Baker",
+			"client",
+			"$resource",
+			"macu",
+			"days",
+			"Orbital Labs LLC",
+			"orbital labs llc",
+			" \n",
+			"mana",
+			"clients",
+			"ClientServe",
+			"IResource",
+			"script",
+			"err(res",
+			"declare var _",
+			"$",
+			":",
+			"Immedi",
+			"AnyOperaation",
+			"addClient",
+			"async",
+			"connectdb",
+			"ok",
+			"indexCreate",
+			"TableList",
+			"TableOperation",
+			"tableresult",
+			"Query",
+			"RQL",
+			"Predicate",
+			"contains",
+			"RQLObject",
+			"QueryObject",
+			"nth",
+			"RQLFunction",
+			"RQLPredi",
+			"RQLReduce",
+			"RQLFunctionObject",
+			"RQLFunction",
+			"require",
+			"GetTableOptions",
+			"IndexFunction",
+			"each",
+			"hasNext",
+			"ICursor",
+			"Selection",
+			"RQLReduce",
+			"string",
+			"ISort",
+			"SElectIndex",
+			"interface Index",
+			"ISelection",
+			"ICon",
+			"IConnectionCb",
+			"ITable",
+			"IDb",
+			"IQuery",
+			"orbit",
+			"detmer.orbit.al",
+			"Libros",
+			"det",
+			".comments",
+			"libros",
+			"test",
+			"IHTTP",
+			"signals",
+			"comments",
+			"access",
+			"sean hess llc",
+			"-",
+			"sand",
+			"variable",
+			"cariable",
+			"storage",
+			"keyword",
+			"variable",
+			"keyword",
+			"font",
+			"function",
+			"constant",
+			"line",
+			"select"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			" "
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "server/server.ts",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 5840,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								543,
+								543
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"auto_complete": false,
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"extensions":
+							[
+								"ts"
+							],
+							"gjslint_ignore":
+							[
+								110
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/T3S/Typescript.tmlanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 33.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 194.0
+	},
+	"output.typescript":
+	{
+		"height": 98.0
+	},
+	"output.typescript-errors":
+	{
+		"height": 0.0
+	},
+	"project": "Libros.sublime-project",
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"express",
+				"d.ts/DefinitelyTyped/express/express.d.ts"
+			],
+			[
+				"expres",
+				"d.ts/DefinitelyTyped/express/express.d.ts"
+			],
+			[
+				"server.ts",
+				"server.ts"
+			],
+			[
+				"knox",
+				"def/knox.d.ts"
+			],
+			[
+				"test.html",
+				"EngineJS/test.html"
+			],
+			[
+				"gametimer",
+				"GameTimerService.js"
+			],
+			[
+				"client_deta",
+				"public/app/views/client_details.html"
+			],
+			[
+				"clients.less",
+				"public/app/views/clients.less"
+			],
+			[
+				"types",
+				"server/types.ts"
+			],
+			[
+				"dispos",
+				"server/model/DispositionModel.ts"
+			],
+			[
+				"style.less",
+				"public/css/style.less"
+			],
+			[
+				"client_det",
+				"public/app/views/client_details.html"
+			],
+			[
+				"app.ts",
+				"public/app/app.ts"
+			],
+			[
+				"clients.ts",
+				"public/app/views/clients.ts"
+			],
+			[
+				"disp",
+				"server/model/DispositionModel.ts"
+			],
+			[
+				"db",
+				"public/app/directives/blur.ts"
+			],
+			[
+				"popup.ts",
+				"public/app/directives/popup.ts"
+			],
+			[
+				"popup.html",
+				"public/app/directives/popup.html"
+			],
+			[
+				"dispositionselec",
+				"public/app/directives/dispositionSelector.html"
+			],
+			[
+				"client",
+				"public/app/views/clients.less"
+			],
+			[
+				"client_dis",
+				"public/app/views/client_disposition.html"
+			],
+			[
+				"dispositionsele",
+				"public/app/directives/dispositionSelector.ts"
+			],
+			[
+				"types.ts",
+				"~/projects/detmer/server/types.ts"
+			],
+			[
+				"dis",
+				"server/Dispositions.ts"
+			],
+			[
+				"angular-",
+				"public/app/def/DefinitelyTyped/angularjs/angular-resource.d.ts"
+			],
+			[
+				"angular-d",
+				"public/app/def/DefinitelyTyped/angularjs/angular-resource.d.key"
+			],
+			[
+				"client_add",
+				"public/app/views/client_add.html"
+			],
+			[
+				"client_detail",
+				"public/app/views/client_details.html"
+			],
+			[
+				"formcontro",
+				"public/app/directives/formcontrol.html"
+			],
+			[
+				"formcon",
+				"public/app/directives/formcontrol.ts"
+			],
+			[
+				"form",
+				"public/app/directives/formcontrol.html"
+			],
+			[
+				"app.html",
+				"public/app/app.html"
+			],
+			[
+				"clients.html",
+				"public/app/views/clients.html"
+			],
+			[
+				"header.h",
+				"public/app/partials/header.html"
+			],
+			[
+				"style.les",
+				"public/css/style.less"
+			],
+			[
+				"client_de",
+				"public/app/views/client_details.html"
+			],
+			[
+				"formcontrol.ts",
+				"public/app/directives/formcontrol.ts"
+			],
+			[
+				"angular.d.ts",
+				"public/app/def/DefinitelyTyped/angularjs/angular.d.ts"
+			],
+			[
+				"readem",
+				"README.md"
+			],
+			[
+				"header",
+				"public/app/partials/header.html"
+			],
+			[
+				"_custom",
+				"public/sass/_custom.scss"
+			],
+			[
+				"client.html",
+				"public/partials/client.html"
+			],
+			[
+				"angular.d.t",
+				"public/def/DefinitelyTyped/angularjs/angular-resource.d.ts"
+			],
+			[
+				"clientsmode",
+				"server/model/ClientsModel.ts"
+			],
+			[
+				"rethindb.d.ts",
+				"server/def/rethinkdb.d.ts"
+			],
+			[
+				"angular.d.",
+				"public/def/DefinitelyTyped/angularjs/angular-resource.d.ts"
+			],
+			[
+				"read",
+				"README.md"
+			],
+			[
+				"rethinkdb.d.",
+				"server/def/rethinkdb.d.ts"
+			],
+			[
+				"readme",
+				"README.md"
+			],
+			[
+				"deploy",
+				"config/deploy.sh"
+			],
+			[
+				"nginx",
+				"config/nginx.conf"
+			],
+			[
+				"deploy.sh",
+				"config/deploy.sh"
+			],
+			[
+				"pac",
+				"server/package.json"
+			],
+			[
+				"router",
+				"server/routing/serialize.ts"
+			],
+			[
+				"ser",
+				"server/server.ts"
+			],
+			[
+				"angular-res",
+				"public/def/DefinitelyTyped/angularjs/angular-resource.d.ts"
+			],
+			[
+				"jquery.d.ts",
+				"public/def/DefinitelyTyped/jquery/jquery.d.ts"
+			],
+			[
+				"undr",
+				"server/def/underscore.d.ts"
+			],
+			[
+				"make",
+				"Makefile"
+			],
+			[
+				"db.ts",
+				"server/model/db.ts"
+			],
+			[
+				"book.ts",
+				"server/model/Book.ts"
+			],
+			[
+				"rethinkdb.d.ts",
+				"server/def/rethinkdb.d.ts"
+			],
+			[
+				"rethinkdb.test",
+				"server/test/rethinkdb.test.ts"
+			],
+			[
+				"serialize",
+				"server/routing/serialize.ts"
+			],
+			[
+				"serv",
+				"server/server.ts"
+			],
+			[
+				"exam",
+				"server/test/example.test.ts"
+			],
+			[
+				"bin/test",
+				"server/bin/test"
+			],
+			[
+				"node.d",
+				"server/def/node.d.ts"
+			],
+			[
+				"blah.ts",
+				"server/test/blah.ts"
+			],
+			[
+				"compoe",
+				"public/component.json"
+			],
+			[
+				"pack",
+				"server/package.json"
+			],
+			[
+				"sublime",
+				"dave.sublime-project"
+			],
+			[
+				"compo",
+				"public/component.json"
+			],
+			[
+				"express.d.ts",
+				"server/def/express.d.ts"
+			],
+			[
+				"server.js",
+				"server/package.json"
+			],
+			[
+				"gitig",
+				".gitignore"
+			],
+			[
+				"app.js",
+				"app.js"
+			],
+			[
+				"makefil",
+				"Makefile"
+			],
+			[
+				"main.styl",
+				"css/main.styl"
+			],
+			[
+				"book.html",
+				"partials/book.html"
+			],
+			[
+				"server",
+				"server.ts"
+			],
+			[
+				"book",
+				"model/Book.ts"
+			],
+			[
+				"files.test",
+				"test/files.test.ts"
+			],
+			[
+				"books.ts",
+				"services/Books.ts"
+			],
+			[
+				"files",
+				"services/Files.ts"
+			],
+			[
+				"type",
+				"types.ts"
+			],
+			[
+				"s3",
+				"service/s3.ts"
+			],
+			[
+				"file.ts",
+				"model/File.ts"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 242.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -1,4 +1,5 @@
 ///<reference path="../def/angular.d.ts"/>
+///<reference path="../types.ts" />
 
 interface AdminScope extends ng.IScope {
   message: string;
@@ -10,7 +11,7 @@ interface AdminScope extends ng.IScope {
   newGenre:string;
 }
 
-app.controller('AdminCtrl', function($scope: AdminScope, $http: ng.IHttpService, $location:ng.ILocationService) {
+function AdminCtrl($scope: AdminScope, $http: ng.IHttpService, $location:ng.ILocationService) {
   $scope.message = "hello3"
   load()
 
@@ -33,4 +34,4 @@ app.controller('AdminCtrl', function($scope: AdminScope, $http: ng.IHttpService,
       $location.path("/admin/books/" + book.bookId)
     })
   }
-})
+}

@@ -64,11 +64,11 @@ declare module "rethinkdb" {
     tableCreate(options:ITableOptions):IQuery;
     tableDrop(name:string):IQuery;
     tableList():IQuery;
-    table(name:string, allowOutOfDate?:bool):ITable;
+    table(name:string, allowOutOfDate?:boolean):ITable;
   }
 
   interface ITable extends IQuery, ISelection {
-    insert(obj:Object, overwrite?:bool):IQuery;
+    insert(obj:Object, overwrite?:boolean):IQuery;
     insert(obj:Object[]):IQuery;
     update(obj:Object):IQuery;
     replace(obj:Object):IQuery;
@@ -86,7 +86,7 @@ declare module "rethinkdb" {
     between(lower:any, upper:any, primaryKey?:string):IQuery;
     filter(obj:Object):IQuery;
     filter(rql:IRql):IQuery;
-    filter(predicate:(obj:IObjectProxy) => bool):IQuery;
+    filter(predicate:(obj:IObjectProxy) => boolean):IQuery;
   }
 
   interface IRow {

@@ -1,5 +1,5 @@
+///<reference path='../def/DefinitelyTyped/node/node.d.ts' />
 ///<reference path='../def/rethinkdb.d.ts'/>
-///<reference path='../def/async.d.ts'/>
 ///<reference path='../def/node-uuid.d.ts'/>
 ///<reference path='../def/knox.d.ts'/>
 ///<reference path='../types.ts'/>
@@ -7,17 +7,16 @@
 // FILES are stored in their own table, associated with book via bookId
 // the files are stored on the server, in a single folder, by fileId.ext
 
-import r = module('rethinkdb')
-import fs = module('fs')
-import path = module('path')
-import async = module('async')
-import uuid = module('node-uuid')
-import store = module('../service/s3')
+import r = require('rethinkdb')
+import fs = require('fs')
+import path = require('path')
+import uuid = require('node-uuid')
+import store = require('../service/s3')
 
 // var store:s3.Store = local
 
-import db = module('./db')
-import q = module('q')
+import db = require('./db')
+import q = require('q')
 
 var files = r.table('files')
 
@@ -60,7 +59,6 @@ export function remove(fileId:string) {
 export function filePath(fileId:string) {
   return path.join(__dirname, '..', 'files', fileId)
 }
-
 
 
 /// ACTIONS //////////////////////////////////////////

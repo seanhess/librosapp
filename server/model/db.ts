@@ -1,9 +1,10 @@
 ///<reference path='../def/q.d.ts'/>
+///<reference path='../def/rethinkdb.d.ts'/>
 
 // Contains some functions to help run rethinkdb queries and interface with express
 
-import q = module('q')
-import r = module('rethinkdb')
+import q = require('q')
+import r = require('rethinkdb')
 
 // wait, you're doing this wrong. 
 // it executes it immediately

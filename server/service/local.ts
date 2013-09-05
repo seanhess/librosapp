@@ -3,9 +3,9 @@
 
 // file://localhost/Users/seanhess/Downloads/Dios%20y%20el%20Estado%203%20(1).html
 
-import q = module('q')
-import fs = module('fs')
-import path = module('path')
+import q = require('q')
+import fs = require('fs')
+import path = require('path')
 
 interface FSPromise {
   writeFile(filename:string, data:any);

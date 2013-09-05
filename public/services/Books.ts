@@ -1,10 +1,11 @@
-///<reference path="../types.ts"/>
+/// <reference path="../types.ts"/>
+/// <reference path="../def/angular.d.ts" />
 
 interface IBookService extends ng.resource.IResourceClass {
-  update(book:IBook):ng.IPromise;
+  update(book:IBook):ng.IPromise<IBook>;
 }
 
-app.factory('Books', function($http: ng.IHttpService, $resource: ng.resource.IResourceService):IBookService {
+function Books($http: ng.IHttpService, $resource: ng.resource.IResourceService):IBookService {
     var Books:IBookService = <any> $resource("/books/:bookId", {}, {})
     Books.update = function(book:IBook) {
       return $http
@@ -12,5 +13,5 @@ app.factory('Books', function($http: ng.IHttpService, $resource: ng.resource.IRe
       .then((rs) => rs.data)
     }
     return Books
-})
+}
 

@@ -1,7 +1,9 @@
 ///<reference path='../types.ts'/>
+///<reference path='../def/knox.d.ts'/>
+///<reference path='../def/q.d.ts'/>
 
-import knox = module('knox')
-import q = module('q')
+import knox = require('knox')
+import q = require('q')
 
 var BUCKET = "librosapp"
 var BUCKET_URL = "http://" + BUCKET + ".s3.amazonaws.com"

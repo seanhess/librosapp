@@ -16,15 +16,14 @@
     "stylus": "~0.32.0",
     "nib": "~0.9.1",
     "connect": "~2.7.2",
-    "async": "~0.1.22",
     "knox": "~0.4.6",
     "node-uuid": "~1.4.0",
     "request": "~2.12.0",
     "deferred": "~0.6.1",
     "q": "~0.8.12",
-    "typescript": "~0.8.2",
     "underscore": "~1.4.4",
-    "connect-basic-auth": "~0.1.0"
+    "connect-basic-auth": "~0.1.0",
+    "typescript": "~0.9.1-1"
   },
   "devDependencies": {
     "mocha": "~1.8.1",

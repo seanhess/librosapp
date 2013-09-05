@@ -1,5 +1,3 @@
-///<reference path="./node.d.ts"/>
-
 // See: https://github.com/kriskowal/q
 
 declare module "q" {

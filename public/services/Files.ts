@@ -1,11 +1,13 @@
-///<reference path="../types.ts"/>
+/// <reference path="../types.ts"/>
+/// <reference path="../def/angular.d.ts" />
+/// <reference path="../controls/Book.ts" />
 
 interface IFileCb {
   (file:IFile);
 }
 
 interface IFileService extends ng.resource.IResourceClass {
-  upload(file:IHTMLFile):ng.IPromise;
+  upload(file:IHTMLFile):ng.IPromise<IFile>;
   queueUpload(file:IHTMLFile, cb:IFileCb):FileServiceUploadOperation;
   audioFiles(files:IFile[]):IFile[];
   textFiles(files:IFile[]):IFile[];
@@ -13,13 +15,13 @@ interface IFileService extends ng.resource.IResourceClass {
 
 interface FileServiceUploadOperation {
   file:IHTMLFile;
-  active:bool;
+  active:boolean;
   cb(file:IFile);
 }
 
 // TODO: turn this into a queue
 
-app.factory('Files', function($http: ng.IHttpService):IFileService {
+function Files($http: ng.IHttpService):IFileService {
     function not(f:Function) {
       return function(...args:any[]) {
         return !f.apply(null, args)
@@ -36,7 +38,7 @@ app.factory('Files', function($http: ng.IHttpService):IFileService {
     function nextUpload() {
       currentOp = queue.pop()
       currentOp.active = true
-      Files.upload(currentOp.file)
+      Service.upload(currentOp.file)
       .then((file:IFile) => currentOp.cb(file))
       .then(function() {
         currentOp = null
@@ -47,8 +49,8 @@ app.factory('Files', function($http: ng.IHttpService):IFileService {
     // this can return a promise object thing
     // should be thenable, for when it finishes
     // but also have a progress
-    var Files:IFileService = <any> {}
-    Files.queueUpload = function(file:IHTMLFile, cb:IFileCb) {
+    var Service:IFileService = <any> {}
+    Service.queueUpload = function(file:IHTMLFile, cb:IFileCb) {
       var op:FileServiceUploadOperation = {file:file, cb:cb, active:false}
       queue.push(op)
       // if not started, start now
@@ -56,7 +58,7 @@ app.factory('Files', function($http: ng.IHttpService):IFileService {
       return op
     }
 
-    Files.upload = function(file:IHTMLFile) {
+    Service.upload = function(file:IHTMLFile) {
       console.log("UPLOAD", file.name, file.size)
       // must be a file from the web browser
       var formData = new FormData()
@@ -72,16 +74,16 @@ app.factory('Files', function($http: ng.IHttpService):IFileService {
       .then((rs) => rs.data)
     }
 
-    Files.audioFiles = function(files:IFile[]) {
+    Service.audioFiles = function(files:IFile[]) {
       return files.filter(isAudio)
     }
 
-    Files.textFiles = function(files:IFile[]) {
+    Service.textFiles = function(files:IFile[]) {
       return files.filter(not(isAudio))
     }
 
     // simple queueing method for uploading?
 
-    return Files
-})
+    return Service
+}
 

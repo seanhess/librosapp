@@ -1,21 +1,16 @@
 ///<reference path="../def/angular.d.ts"/>
 ///<reference path="../def/underscore.d.ts"/>
 ///<reference path="../types.ts"/>
+///<reference path="../services/Books"/>
 
 ///<reference path="../services/Files.ts"/>
 
-interface IHTMLFile {
-  lastModifiedDate: Date;
-  name: string;
-  type: string; // mime type
-  size: number; // bytes
-}
 
 interface BookParams extends ng.IRouteParamsService {
   bookId: string;
 }
 
-app.controller('BookCtrl', function($scope, Books:IBookService, Files:IFileService, $routeParams: BookParams, $location:ng.ILocationService, $http:ng.IHttpService) {
+function BookCtrl($scope, Books:IBookService, Files:IFileService, $routeParams: BookParams, $location:ng.ILocationService, $http:ng.IHttpService) {
   var bookId = $scope.bookId = $routeParams.bookId
 
   $scope.book = Books.get({bookId:bookId})
@@ -150,5 +145,5 @@ app.controller('BookCtrl', function($scope, Books:IBookService, Files:IFileServi
 
     $scope.fileStatus[pendingFile.name] = op
   }
-})
+}
 

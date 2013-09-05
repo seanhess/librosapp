@@ -1,1 +1,1 @@
-///<reference path="../components/DefinitelyTyped/underscore/underscore.d.ts"/>
+///<reference path="DefinitelyTyped/underscore/underscore.d.ts"/>

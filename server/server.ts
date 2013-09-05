@@ -1,22 +1,22 @@
-///<reference path='def/node.d.ts' />
-///<reference path='def/express.d.ts'/>
+///<reference path='def/DefinitelyTyped/express/express.d.ts' />
+///<reference path='def/DefinitelyTyped/node/node.d.ts' />
 ///<reference path='def/rethinkdb.d.ts'/>
 
 var PORT = process.env.PORT || 3000
-import exp = module('express')
-import http = module('http')
+import express = require('express')
+import http = require('http')
 var stylus = require('stylus')
 var nib = require('nib')
 var connect = require('connect')
 var path = require('path')
 var basicAuth = require('connect-basic-auth')
 
-import db = module('model/db')
+import db = require('model/db')
 
-import r = module('rethinkdb')
+import r = require('rethinkdb')
 
-import Book = module('model/Book')
-import File = module('model/File')
+import Book = require('model/Book')
+import File = require('model/File')
 
 function dbError(err) {
   throw new Error("RETHINKDB: " + err.message)
@@ -37,7 +37,7 @@ function connectdb(dbname:string) {
   }, dbError)
 }
 
-export var app:exp.ServerApplication = exp()
+export var app = express()
 
 app.configure("test", () => {
   console.log("TEST")
@@ -87,26 +87,26 @@ app.configure(() => {
 
 
 // TODO validation
-function send(res:exp.ServerResponse) {
+function send(res:ExpressServerResponse) {
   return function(value:any) {
-    if (value) res.json(value)
+    if (value) res.send(value)
     else res.send(404)
   }
 }
 
-function code(res:exp.ServerResponse, code:number) {
+function code(res:ExpressServerResponse, code:number) {
   return function() {
     res.send(code)
   }
 }
 
-function ok(res:exp.ServerResponse) {
+function ok(res:ExpressServerResponse) {
   return function() {
     res.send(200)
   }
 }
 
-function err(res:exp.ServerResponse) {
+function err(res:ExpressServerResponse) {
   return function(err:Error) {
     res.send(500, err.message)
   }
