@@ -152,12 +152,12 @@ app.get('/authors/:authorName/books', function(req, res) {
 
 // does NOT include files!
 app.get('/books', function(req, res) {
-  db.collect(Book.allBooks())
+  Book.loadAllBooks()
   .then(send(res), err(res))
 })
 
 app.get('/books/:bookId', function(req, res) {
-  db.run(Book.getBook(req.params.bookId))
+  Book.loadBook(req.params.bookId)
   .then(send(res), err(res))
 })
 
@@ -218,6 +218,9 @@ app.get('/files/:fileId', function(req, res) {
   db.run(File.byFileId(req.params.fileId))
   .then(send(res), err(res))
 })
+
+// raw downloads are set to my public folder?
+// or are otherwise publicly accessible? no, I'd rather control it I guess? Might as well though. nginx can serve files just fine
 
 // edit the file metadata. move the file if you change the name?
 // ALSO update the file on s3?

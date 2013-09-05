@@ -11,7 +11,7 @@ import r = require('rethinkdb')
 import fs = require('fs')
 import path = require('path')
 import uuid = require('node-uuid')
-import store = require('../service/s3')
+import store = require('../service/local')
 
 // var store:s3.Store = local
 
@@ -73,7 +73,7 @@ export function deleteFile(fileId:string) {
   })
 }
 
-export function createFileFromUpload(uploadedFile:IUploadFile):q.IPromise {
+export function createFileFromUpload(uploadedFile:IUploadFile):q.IPromise<IFile> {
   var file = toFile(uploadedFile)
   return store.fileUpload(file, uploadedFile)
   .then(() => db.run(insert(file)))
@@ -95,8 +95,13 @@ function toFile(source:IUploadFile):IFile {
    name: name,
    ext: ext,
   }
-  file.url = store.fileToUrl(file)
+  // file.url = store.fileToUrl(file)
   return file
+}
+
+export function addFileUrl(file:IFile):IFile {
+  file.url = store.fileToUrl(file);
+  return file;
 }
 
 function generateFileId(source:IUploadFile):string {

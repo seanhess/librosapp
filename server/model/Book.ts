@@ -6,8 +6,7 @@ import db = require('./db')
 import q = require('q')
 import f = require('../service/functional')
 import File = require('./File')
-
-import store = require('../service/s3')
+import store = require('../service/local')
 
 var books = r.table('books')
 
@@ -85,8 +84,18 @@ export function updateBook(book:IBook) {
   return db.run(saveBook(book))
 }
 
-export function files(bookId:string) {
+export function loadBook(bookId:string) {
   return db.run(getBook(bookId))
+  .then(fixUrls)
+}
+
+export function loadAllBooks() {
+  return db.collect(allBooks())
+  .then((books) => books.map(fixImageUrl))
+}
+
+export function files(bookId:string) {
+  return loadBook(bookId)
   .then((book) => book.files.map(setFileBookId(bookId)))
 }
 
@@ -104,7 +113,7 @@ export function distinctAuthors() {
   .distinct()
 }
 
-export function getDistinctAuthors():q.IPromise {
+export function getDistinctAuthors():q.IPromise<IAuthor[]> {
   return db.collect(distinctAuthors())
   .then(f.map(toNamedObject))
   .then(f.map(toFullAuthor))
@@ -176,6 +185,21 @@ function toFullAuthor(no:INamedObject):IAuthor {
 
 function authorLastFirst(author:IAuthor):string {
   return author.lastName + ", " + author.firstName
+}
+
+function fixImageUrl(book:IBook):IBook {
+  if (book.imageUrl)
+    book.imageUrl = store.repairUrl(book.imageUrl)
+  return book
+}
+
+function fixFileUrls(book:IBook):IBook {
+  book.files = book.files.map(File.addFileUrl)
+  return book  
+}
+
+function fixUrls(book:IBook):IBook {
+  return fixFileUrls(fixImageUrl(book))
 }
 
 

@@ -13,19 +13,13 @@ var s3client = knox.createClient({
   bucket:BUCKET,
 })
 
-export function fileUploadAndSetUrl(file:IFile, source:IUploadFile) {
-  return upload(fileToUrlPath(file), source)
-  .then(function() {
-    file.url = fileToUrl(file)
-    return file
-  })
-}
+export var bucketUrl = BUCKET_URL
 
 export function fileUpload(file:IFile, source:IUploadFile) {
   return upload(fileToUrlPath(file), source)
 }
 
-export function fileRemove(file:IFile):q.IPromise {
+export function fileRemove(file:IFile):q.IPromise<void> {
   return remove(fileToUrlPath(file))
 }
 
@@ -46,6 +40,7 @@ export function fullUrl(remotePath:string) {
 }
 
 export function fileToUrl(file:IFile):string {
+  // return "bob"
   return fullUrl(fileToUrlPath(file))
 }
 
