@@ -23,7 +23,7 @@ var fsp:FSPromise = {
   unlink: <any> q.nfbind(fs.unlink),
 }
 
-var BASE_URL = "http://librosapp.tk/files_data"
+var BASE_URL = "http://libros.orbit.al/files_data"
 
 // need more info that that! need the extention, etc
 function toLocalPath(file:IFile):string {
