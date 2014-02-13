@@ -50,6 +50,10 @@
     [self.delegate didCloseToc];
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }

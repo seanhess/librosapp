@@ -56,7 +56,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [self.filterView renderSelectedSegment];
+//    [self.filterView renderSelectedSegment];
 }
 
 - (void)didReceiveMemoryWarning

@@ -60,6 +60,10 @@
     [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar-icon-search-selected"] withFinishedUnselectedImage:[UIImage imageNamed:@"tabbar-icon-search"]];
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [MetricsService storeSearchLoad];

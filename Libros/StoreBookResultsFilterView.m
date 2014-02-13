@@ -34,7 +34,7 @@
         self.segments.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         self.segments.frame = CGRectMake(4, 4, self.frame.size.width-2*4, 26);
         self.segments.segmentedControlStyle = UISegmentedControlStyleBar;
-        self.segments.tintColor = Appearance.darkControlGrayColor;
+//        self.segments.tintColor = Appearance.darkControlGrayColor;
         [self addSubview:self.segments];
         
         [self.segments addTarget:self action:@selector(selectItem:) forControlEvents:UIControlEventValueChanged];
@@ -44,18 +44,18 @@
 }
 
 - (void)selectItem:(id)sender {
-    [self renderSelectedSegment];
+//    [self renderSelectedSegment];
     [self.delegate didSelectFilter:self.segments.selectedSegmentIndex];
 }
 
-- (void)renderSelectedSegment {
-    for (UIButton * segment in self.segments.subviews) {
-        if (segment.selected)
-            [segment setTintColor:Appearance.adjustedHighlightBlueForShadows];
-        else
-            [segment setTintColor:Appearance.darkControlGrayColor];
-    }
-}
+//- (void)renderSelectedSegment {
+//    for (UIButton * segment in self.segments.subviews) {
+//        if (segment.selected)
+//            [segment setTintColor:Appearance.adjustedHighlightBlueForShadows];
+//        else
+//            [segment setTintColor:Appearance.darkControlGrayColor];
+//    }
+//}
 
 /*
 // Only override drawRect: if you perform custom drawing.

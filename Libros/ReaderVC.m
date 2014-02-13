@@ -211,7 +211,9 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     }
     
     [self prepareLayoutWithSize:newSize];
-
+}
+- (BOOL)prefersStatusBarHidden {
+    return YES;
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
