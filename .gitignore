@@ -10,6 +10,7 @@ Pods/
 *.perspective
 *.perspectivev3
 xcuserdata
+xcshareddata
 
 *.mode1v3
 *.mode2v3
