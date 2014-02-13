@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="gmo-jD-UXA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="gmo-jD-UXA">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
         <!--Store PopularVC - Popular-->
         <scene sceneID="kwl-Wx-tJz">
             <objects>
                 <tableViewController id="Vys-tt-iT2" customClass="StorePopularVC" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="4nN-P5-eku">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="4nN-P5-eku">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </tableView>
@@ -53,8 +54,8 @@
         <scene sceneID="l87-dG-Df4">
             <objects>
                 <tableViewController id="Bsc-WL-kTn" customClass="StoreGenresVC" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="mJH-2G-kfJ">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="mJH-2G-kfJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </tableView>
@@ -98,8 +99,8 @@
         <scene sceneID="hqv-vS-eSI">
             <objects>
                 <navigationController restorationIdentifier="LibraryNav" storyboardIdentifier="LibraryNav" definesPresentationContext="YES" id="gmo-jD-UXA" userLabel="LibraryNav" sceneMemberID="viewController">
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackOpaque" prompted="NO"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="blackOpaque" id="HdW-Zj-Qx3">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="HdW-Zj-Qx3">
                         <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -115,11 +116,16 @@
         <scene sceneID="5zI-uV-WCf">
             <objects>
                 <viewController id="jj3-UZ-Rpz" customClass="LibraryVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8iK-T5-jlk"/>
+                        <viewControllerLayoutGuide type="bottom" id="2r0-HZ-gal"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="MoW-2n-X1v">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Jju-xH-eD3">
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Jju-xH-eD3">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="jj3-UZ-Rpz" id="IJc-sz-TqP"/>
@@ -127,6 +133,7 @@
                                 </connections>
                             </tableView>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="KKu-lI-U9s">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="sMf-FX-HGX">
                                     <size key="itemSize" width="50" height="50"/>
@@ -141,23 +148,24 @@
                                 </connections>
                             </collectionView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="hAF-CU-b5v">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="color" red="0.10588236153125763" green="0.64705884456634521" blue="0.86666673421859741" alpha="1" colorSpace="deviceRGB"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="hAF-CU-b5v" firstAttribute="bottom" secondItem="MoW-2n-X1v" secondAttribute="bottom" type="default" id="2zE-aN-YnW"/>
-                            <constraint firstItem="hAF-CU-b5v" firstAttribute="top" secondItem="MoW-2n-X1v" secondAttribute="top" type="default" id="AjR-OL-eYe"/>
-                            <constraint firstItem="Jju-xH-eD3" firstAttribute="bottom" secondItem="MoW-2n-X1v" secondAttribute="bottom" type="default" id="DZK-Xh-8XA"/>
-                            <constraint firstItem="Jju-xH-eD3" firstAttribute="leading" secondItem="MoW-2n-X1v" secondAttribute="leading" type="default" id="E8S-qh-62M"/>
-                            <constraint firstItem="KKu-lI-U9s" firstAttribute="leading" secondItem="MoW-2n-X1v" secondAttribute="leading" type="default" id="GS3-T6-HkS"/>
-                            <constraint firstItem="Jju-xH-eD3" firstAttribute="trailing" secondItem="MoW-2n-X1v" secondAttribute="trailing" type="default" id="Otg-Jg-hge"/>
-                            <constraint firstItem="KKu-lI-U9s" firstAttribute="bottom" secondItem="MoW-2n-X1v" secondAttribute="bottom" type="default" id="PAg-Gs-KmZ"/>
-                            <constraint firstItem="hAF-CU-b5v" firstAttribute="leading" secondItem="MoW-2n-X1v" secondAttribute="leading" type="user" id="TiJ-Fk-7rd"/>
-                            <constraint firstItem="KKu-lI-U9s" firstAttribute="trailing" secondItem="MoW-2n-X1v" secondAttribute="trailing" type="default" id="Vhs-I2-A3S"/>
-                            <constraint firstItem="hAF-CU-b5v" firstAttribute="trailing" secondItem="MoW-2n-X1v" secondAttribute="trailing" type="default" id="Xoy-Q4-FJE"/>
-                            <constraint firstItem="KKu-lI-U9s" firstAttribute="top" secondItem="MoW-2n-X1v" secondAttribute="top" type="default" id="o1a-aX-0gf"/>
-                            <constraint firstItem="Jju-xH-eD3" firstAttribute="top" secondItem="MoW-2n-X1v" secondAttribute="top" type="default" id="oHt-Sj-83v"/>
+                            <constraint firstItem="hAF-CU-b5v" firstAttribute="bottom" secondItem="MoW-2n-X1v" secondAttribute="bottom" id="2zE-aN-YnW"/>
+                            <constraint firstItem="hAF-CU-b5v" firstAttribute="top" secondItem="MoW-2n-X1v" secondAttribute="top" id="AjR-OL-eYe"/>
+                            <constraint firstItem="Jju-xH-eD3" firstAttribute="bottom" secondItem="MoW-2n-X1v" secondAttribute="bottom" id="DZK-Xh-8XA"/>
+                            <constraint firstItem="Jju-xH-eD3" firstAttribute="leading" secondItem="MoW-2n-X1v" secondAttribute="leading" id="E8S-qh-62M"/>
+                            <constraint firstItem="KKu-lI-U9s" firstAttribute="leading" secondItem="MoW-2n-X1v" secondAttribute="leading" id="GS3-T6-HkS"/>
+                            <constraint firstItem="Jju-xH-eD3" firstAttribute="trailing" secondItem="MoW-2n-X1v" secondAttribute="trailing" id="Otg-Jg-hge"/>
+                            <constraint firstItem="KKu-lI-U9s" firstAttribute="bottom" secondItem="MoW-2n-X1v" secondAttribute="bottom" id="PAg-Gs-KmZ"/>
+                            <constraint firstItem="hAF-CU-b5v" firstAttribute="leading" secondItem="MoW-2n-X1v" secondAttribute="leading" id="TiJ-Fk-7rd"/>
+                            <constraint firstItem="KKu-lI-U9s" firstAttribute="trailing" secondItem="MoW-2n-X1v" secondAttribute="trailing" id="Vhs-I2-A3S"/>
+                            <constraint firstItem="hAF-CU-b5v" firstAttribute="trailing" secondItem="MoW-2n-X1v" secondAttribute="trailing" id="Xoy-Q4-FJE"/>
+                            <constraint firstItem="KKu-lI-U9s" firstAttribute="top" secondItem="MoW-2n-X1v" secondAttribute="top" id="o1a-aX-0gf"/>
+                            <constraint firstItem="Jju-xH-eD3" firstAttribute="top" secondItem="MoW-2n-X1v" secondAttribute="top" id="oHt-Sj-83v"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Library" id="edX-rG-zQ3">
@@ -203,8 +211,8 @@
         <scene sceneID="PP5-fS-1yy">
             <objects>
                 <tableViewController id="wgK-8K-r1Q" customClass="StoreAuthorsVC" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="W1K-uo-W6G">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="W1K-uo-W6G">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </tableView>
@@ -248,8 +256,8 @@
         <scene sceneID="9mC-3n-YuI">
             <objects>
                 <tableViewController id="ada-Sr-QSw" customClass="StorePurchasedVC" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="p6h-2i-go2">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="p6h-2i-go2">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </tableView>
@@ -285,54 +293,6 @@
             <point key="canvasLocation" x="-490" y="900"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="LibraryVC" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LibraryVC.h"/>
-            <relationships>
-                <relationship kind="outlet" name="activityView" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
-                <relationship kind="outlet" name="storeButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="StoreAuthorsVC" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreAuthorsVC.h"/>
-            <relationships>
-                <relationship kind="outlet" name="libraryButton" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="StoreBookResultsVC" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreBookResultsVC.h"/>
-        </class>
-        <class className="StoreGenresVC" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreGenresVC.h"/>
-            <relationships>
-                <relationship kind="outlet" name="libraryButton" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="StorePopularVC" superclassName="StoreBookResultsVC">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/StorePopularVC.h"/>
-            <relationships>
-                <relationship kind="action" name="didTapSearch:"/>
-                <relationship kind="outlet" name="libraryButton" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="StorePurchasedVC" superclassName="StoreBookResultsVC">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/StorePurchasedVC.h"/>
-            <relationships>
-                <relationship kind="outlet" name="libraryButton" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="StoreTabsVC" superclassName="UITabBarController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/StoreTabsVC.h"/>
-        </class>
-        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

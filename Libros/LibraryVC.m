@@ -71,6 +71,10 @@
     [self.collectionView reloadData];
     [self showBuyMore];
     [self renderActivityIndicator];
+    
+    // ios7 content fix
+    if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
+        self.edgesForExtendedLayout = UIRectEdgeNone;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
