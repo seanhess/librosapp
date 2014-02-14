@@ -17,5 +17,4 @@
 @interface StoreBookResultsFilterView : UIView
 @property (weak, nonatomic) id<StoreBookResultsFilterDelegate>delegate;
 +(StoreBookResultsFilterView*)filterView;
-- (void)renderSelectedSegment;
 @end

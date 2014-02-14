@@ -44,18 +44,8 @@
 }
 
 - (void)selectItem:(id)sender {
-//    [self renderSelectedSegment];
     [self.delegate didSelectFilter:self.segments.selectedSegmentIndex];
 }
-
-//- (void)renderSelectedSegment {
-//    for (UIButton * segment in self.segments.subviews) {
-//        if (segment.selected)
-//            [segment setTintColor:Appearance.adjustedHighlightBlueForShadows];
-//        else
-//            [segment setTintColor:Appearance.darkControlGrayColor];
-//    }
-//}
 
 /*
 // Only override drawRect: if you perform custom drawing.
