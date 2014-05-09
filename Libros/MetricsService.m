@@ -64,7 +64,7 @@
     [self.mixpanel track:@"reader font tap"];
 }
 +(void)readerChangedFont:(ReaderFont)face size:(NSInteger)size {
-    [self.mixpanel track:@"reader font change" properties:@{@"font":[NSNumber numberWithInt:face], @"size": [NSNumber numberWithInt:size]}];
+    [self.mixpanel track:@"reader font change" properties:@{@"font":[NSNumber numberWithInt:face], @"size": [NSNumber numberWithLong:size]}];
 }
 
 +(void)readerPlayedAudio:(Book*)book {

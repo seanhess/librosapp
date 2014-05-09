@@ -303,7 +303,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     
     BOOL playing = self.player.playing;
     
-    NSLog(@"LOADING CHAPTER %i playing=%i", chapter, playing);
+    NSLog(@"LOADING CHAPTER %li playing=%i", (long)chapter, playing);
     
     self.book.currentChapter = chapter;
     self.book.currentPage = 0;
@@ -465,7 +465,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
 // you MUST know the size at this point
 // do not call too early!
 - (void)initReaderWithSize:(CGSize)size chapter:(NSInteger)chapter {
-    NSLog(@"INIT READER chapter=%i", chapter);
+    NSLog(@"INIT READER chapter=%li", (long)chapter);
     
     // TODO - add support for initializing with chapter
     // but be careful, interface change calls this too!
@@ -508,7 +508,7 @@ ALL POSSIBLE SCENARIOS - THE CHECKLIST
     self.pagesDoneLabel.text = [NSString stringWithFormat:@"%i", self.book.currentPage];
     NSInteger pagesLeft = totalPages-self.book.currentPage-1;
     if (pagesLeft < 0) pagesLeft = 0;
-    self.pagesLeftLabel.text = [NSString stringWithFormat:@"%i", pagesLeft];
+    self.pagesLeftLabel.text = [NSString stringWithFormat:@"%li", (long)pagesLeft];
 }
 
 - (IBAction)didSlidePage:(id)sender {

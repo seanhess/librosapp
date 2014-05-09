@@ -44,7 +44,7 @@
 }
 
 - (void)selectItem:(id)sender {
-    [self.delegate didSelectFilter:self.segments.selectedSegmentIndex];
+    [self.delegate didSelectFilter:(BookFilter)self.segments.selectedSegmentIndex];
 }
 
 /*

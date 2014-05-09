@@ -76,7 +76,7 @@
 // USER PREFERENCES
 
 -(ReaderFont)fontFace {
-    return [[NSUserDefaults standardUserDefaults] integerForKey:FONT_FACE_KEY];
+    return (ReaderFont) [[NSUserDefaults standardUserDefaults] integerForKey:FONT_FACE_KEY];
 }
 
 -(void)setFontFace:(ReaderFont)fontFace {

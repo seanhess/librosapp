@@ -42,7 +42,7 @@
         }
         
         else {
-            NSLog(@"IGNORED %i", transaction.transactionState);
+            NSLog(@"IGNORED %li", (long)transaction.transactionState);
         }
     }
     

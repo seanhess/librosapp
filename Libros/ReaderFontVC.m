@@ -91,7 +91,7 @@
 }
 
 -(ReaderFont)fontForRow:(NSInteger)row {
-    return row+1;
+    return (ReaderFont)row+1;
 }
 
 -(NSInteger)rowForFont:(ReaderFont)font {

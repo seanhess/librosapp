@@ -25,7 +25,7 @@
         NSRange range;
         [value getValue:&range];
         self.range = range;
-        self.attribute = [decoder decodeIntegerForKey:@"attribute"];
+        self.attribute = (LBParsedStringAttribute) [decoder decodeIntegerForKey:@"attribute"];
     }
     return self;
 }
@@ -38,7 +38,7 @@
 }
 
 -(NSString*)description {
-    return [NSString stringWithFormat:@"%@ attribute=%i range={%i, %i}", [super description], self.attribute, self.range.location, self.range.length];
+    return [NSString stringWithFormat:@"%@ attribute=%i range={%lu, %lu}", [super description], self.attribute, (unsigned long)self.range.location, (unsigned long)self.range.length];
 }
 
 @end

@@ -29,7 +29,7 @@
     
 //    [self completeAllExistingTransactions];
     
-    NSLog(@"ADDING OVERSERVER %i", [[SKPaymentQueue defaultQueue] transactions].count);
+    NSLog(@"ADDING OVERSERVER %lu", (unsigned long)[[SKPaymentQueue defaultQueue] transactions].count);
     [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
     
     // I want to know when the queue is EMPTY
@@ -65,7 +65,7 @@
             // [self.delegate didCompletePurchase];
         }
         else {
-            NSLog(@"PAYMENT %i", transaction.transactionState);
+            NSLog(@"PAYMENT %li", (long)transaction.transactionState);
         }
     };
 }

@@ -76,7 +76,7 @@
     
     NSAttributedString * text = [self.delegate textForChapter:chapter];
     if (!text) {
-        NSLog(@"NO TEXT for chapter %i", chapter);
+        NSLog(@"NO TEXT for chapter %li", (long)chapter);
         return [NSMutableArray array];
     }
     

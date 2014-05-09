@@ -73,7 +73,7 @@
         
         self.restoreButton.style = ColoredButtonStyleGray;
         self.restoreButton.enabled = NO;
-        [self.restoreButton setTitle:[NSString stringWithFormat:@"%i %@", command.books.count, NSLocalizedString(@"Books Restored", nil)] forState:UIControlStateNormal];
+        [self.restoreButton setTitle:[NSString stringWithFormat:@"%lu %@", (unsigned long)command.books.count, NSLocalizedString(@"Books Restored", nil)] forState:UIControlStateNormal];
         [self reloadData];
     }];
 }
