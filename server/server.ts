@@ -25,6 +25,7 @@ function dbError(err) {
 function ignoreError(err) {}
 
 function connectdb(dbname:string) {
+  return
   console.log("rethinkdb://localhost:28015/" + dbname)
   r.connect({host:'localhost', port: 28015}, function(conn) {
       conn.run(r.dbCreate(dbname), function(err) {
@@ -239,7 +240,7 @@ app.get(/\/admin[\w\/\-]*$/, function(req, res) {
 })
 
 app.get('/', function(req, res) {
-    res.send("Libros v1")
+    res.sendfile(__dirname+'/index.html')
 })
 
 
