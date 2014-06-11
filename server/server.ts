@@ -25,7 +25,6 @@ function dbError(err) {
 function ignoreError(err) {}
 
 function connectdb(dbname:string) {
-  return
   console.log("rethinkdb://localhost:28015/" + dbname)
   r.connect({host:'localhost', port: 28015}, function(conn) {
       conn.run(r.dbCreate(dbname), function(err) {
