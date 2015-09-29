@@ -10,8 +10,8 @@ install:
 
 upload:
 	# sync all the files
-	rsync -rav -e ssh --delete --exclude-from config/exclude.txt . root@librosapp.tk:~/libros
+	rsync -rav -e ssh --delete --exclude-from config/exclude.txt . root@libros.orbit.al:~/libros
 
 deploy: upload
 	# run the remote commands
-	ssh -t root@librosapp.tk "cd ~/libros && bash config/deploy.sh"
+	ssh -t root@libros.orbit.al "cd ~/libros && bash config/deploy.sh"
